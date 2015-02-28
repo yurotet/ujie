@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ujieservice'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,8 +59,11 @@ WSGI_APPLICATION = 'ujie.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ujietrip',
+        'HOST': 'aliyun.invalo.com',
+        'USER': 'ujietrip',
+        'PASSWORD': 'ujie2015'
     }
 }
 
