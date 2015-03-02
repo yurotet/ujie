@@ -14,6 +14,5 @@ urlpatterns = patterns('',
 
     (r'^$', 'ujieservice.wechat.api.hello'),
     url(r'^admin/', include(admin.site.urls)),
-    (r'^api/', include(v1_api.urls)),
-    (r'^wechat/verify', 'ujieservice.wechat.api.verify'),
+    (r'^api/verify', 'ujieservice.wechat.api.verify'),
 )
