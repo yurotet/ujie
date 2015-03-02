@@ -1,24 +1,15 @@
 # myapp/api.py
-import hashlib, binascii, hmac
+import hashlib
+import json
+import urllib2
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
-from tastypie import fields
-from tastypie.resources import Resource
 from ujieservice import constant
 
 
-class VerifyResource(Resource):
-    class Meta:
-        resource_name = 'verify'
-    def get_object_list(self, request):
-    	return "test";
-
-    def obj_get_list(self, bundle, **kwargs):
-        # Filtering disabled for brevity...
-        return self.get_object_list(bundle.request)
-
 def hello(req):
     return HttpResponse('helloworld')
+
 
 def verify(req):
     try:
@@ -29,7 +20,35 @@ def verify(req):
     except:
         return HttpResponse('error')
 
-#check signature
+
+# {
+#    "access_token":"ACCESS_TOKEN",
+#    "expires_in":7200,
+#    "refresh_token":"REFRESH_TOKEN",
+#    "openid":"OPENID",
+#    "scope":"SCOPE"
+# }
+def authorize(req):
+    code = req.REQUEST.get('code', '')
+    state = req.REQUEST.get('state', '')
+    if code == '':
+        return HttpResponse('error')
+    else:
+        request_url = ['https://api.weixin.qq.com/sns/oauth2/access_token?appid=', constant.APPID, '&secret=', constant.APPSECRET, '&code=', code,  '&grant_type=authorization_code']
+        request_url = ''.join(request_url)
+        print request_url
+        req2 = urllib2.Request(request_url)
+        res2 = json.loads(req2.read())
+        access_info = {
+            "access_token": res2['access_token'],
+            "expires_in": res2['expires_in'],
+            "refresh_token": res2['refresh_token'],
+            "openid": res2['openid'],
+            "scope": res2['scope']
+        }
+        return HttpResponse(access_info)
+
+# check signature
 def checksignature(req):
     assert isinstance(req, HttpRequest)
     signature = req.REQUEST['signature']
