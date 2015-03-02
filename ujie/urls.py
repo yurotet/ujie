@@ -12,8 +12,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'ujie.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    ('', 'ujieservice.wechat.api.hello'),
     url(r'^admin/', include(admin.site.urls)),
     (r'^api/', include(v1_api.urls)),
     (r'^wechat/verify', 'ujieservice.wechat.api.verify'),
+    (r'', 'ujieservice.wechat.api.hello'),
 )
