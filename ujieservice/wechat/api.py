@@ -17,6 +17,9 @@ class VerifyResource(Resource):
 
 TOKEN = '75CD9F8F7A3D452392CEEC2A9573C3B7'
 
+def hello(req):
+    return HttpResponse('helloworld')
+
 def verify(req):
     ispass = checksignature(req)
     if ispass:
