@@ -13,6 +13,14 @@ from django.contrib.auth.models import AbstractBaseUser, User
 from django.db import models
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User)
+    access_token = models.CharField(max_length=100, blank=True)
+    expiration = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'profile'
+
 class Driver(models.Model):
     user = models.OneToOneField(User)
     driver_id = models.AutoField(primary_key=True)

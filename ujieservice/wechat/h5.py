@@ -1,6 +1,7 @@
 import hashlib
 import json
 import urllib2
+import requests
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, UserManager
 from django.http import HttpRequest, HttpResponse
@@ -22,11 +23,13 @@ def authorize(req):
     if code == '':
         return HttpResponse('error')
     else:
-        request_url = ['https://api.weixin.qq.com/sns/oauth2/access_token?appid=', settings.APPID, '&secret=', settings.APPSECRET, '&code=', code,  '&grant_type=authorization_code']
-        request_url = ''.join(request_url)
-        stream = urllib2.urlopen(request_url)
-        res2_str = stream.read()
-        res2_json = json.loads(res2_str)
+        req2 = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token', params={
+           'appid': settings.APPID,
+           'secret': settings.APPSECRET,
+           'code': code,
+           'grant_type': 'authorization_code'
+        })
+        res2_json = json.loads(req2.text)
         #retrieve userinfo
         open_id = res2_json['openid']
         user = authenticate(username=open_id, password=open_id)
