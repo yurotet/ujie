@@ -21,9 +21,10 @@ class Profile(models.Model):
     class Meta:
         db_table = 'profile'
 
+
 class Driver(models.Model):
-    user = models.OneToOneField(User)
     driver_id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User)
     name = models.CharField(max_length=100, blank=True)
     birth = models.DateField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True)
@@ -33,9 +34,9 @@ class Driver(models.Model):
 
 
 class Order(models.Model):
-    user = models.OneToOneField(User)
     order_id = models.AutoField(primary_key=True)
-    driver_id = models.IntegerField(blank=True, null=True)
+    user = models.ForeignKey(User)
+    driver = models.ForeignKey(Driver)
     status = models.IntegerField(blank=True, null=True)
     flight_no = models.CharField(max_length=45, blank=True)
     passenger_number = models.IntegerField(blank=True, null=True)

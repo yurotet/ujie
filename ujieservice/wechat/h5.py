@@ -43,4 +43,4 @@ def authorize(req):
         req.session['expires_in'] = res2_json['expires_in']
         req.session['refresh_token'] = res2_json['refresh_token']
         req.session['scope'] = res2_json['scope']
-        return HttpResponse(res2_str)
+        return HttpResponse(req2.text)
