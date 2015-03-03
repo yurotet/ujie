@@ -37,8 +37,8 @@ def authorize(req):
         request_url = ['https://api.weixin.qq.com/sns/oauth2/access_token?appid=', constant.APPID, '&secret=', constant.APPSECRET, '&code=', code,  '&grant_type=authorization_code']
         request_url = ''.join(request_url)
         print request_url
-        req2 = urllib2.Request(request_url)
-        res2 = json.loads(req2.read())
+        stream = urllib2.urlopen(request_url)
+        res2 = json.loads(stream.read())
         access_info = {
             "access_token": res2['access_token'],
             "expires_in": res2['expires_in'],
