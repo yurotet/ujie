@@ -30,7 +30,7 @@ def authorize(req):
         open_id = req.session.get('open_id', '')
         if open_id == '':
             open_id = _get_access_token(code)['openid']
-            req.session['open_id', open_id]
+            req.session['open_id'] = open_id
         else:
             print 'session open_id:' + open_id
         user = authenticate(username=open_id, password=open_id)
