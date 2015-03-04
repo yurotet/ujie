@@ -27,15 +27,11 @@ def authorize(req):
     if code == '':
         return HttpResponse('error')
     else:
-        req2 = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token', params={
-           'appid': settings.APPID,
-           'secret': settings.APPSECRET,
-           'code': code,
-           'grant_type': 'authorization_code'
-        })
-        res2_json = json.loads(req2.text)
-        #retrieve userinfo
-        open_id = res2_json['openid']
+        open_id = req.session.get('open_id', '')
+        if open_id == '':
+            open_id = _get_access_token(code)['openid']
+        else:
+            print 'session open_id:' + open_id
         user = authenticate(username=open_id, password=open_id)
         if user is None:
             user = User.objects.create_user(username=open_id, password=open_id)
@@ -50,7 +46,19 @@ def authorize(req):
         # req.session['expires_in'] = res2_json['expires_in']
         # req.session['refresh_token'] = res2_json['refresh_token']
         # req.session['scope'] = res2_json['scope']
-        return HttpResponse(req2.text)
+        return HttpResponse(open_id)
+
+
+def _get_access_token(code):
+    req2 = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token', params={
+       'appid': settings.APPID,
+       'secret': settings.APPSECRET,
+       'code': code,
+       'grant_type': 'authorization_code'
+    })
+    res2_json = json.loads(req2.text)
+    #retrieve userinfo
+    return res2_json
 
 def push(req):
     assert isinstance(req, HttpRequest)
