@@ -46,6 +46,8 @@ def authorize(req):
         profile = user.profile
         profile.access_token = res2_json['access_token']
         profile.save()
+        print profile.access_token
+        print 'saved'
 
         user = authenticate(username=open_id, password=open_id)
         req.session['access_token'] = res2_json['access_token']
