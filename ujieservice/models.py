@@ -17,6 +17,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User)
     access_token = models.CharField(max_length=100, blank=True)
     expiration = models.DateTimeField(blank=True, null=True)
+    mobile = models.CharField(max_length=50, blank=True)
 
     class Meta:
         db_table = 'profile'
