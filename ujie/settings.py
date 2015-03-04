@@ -91,6 +91,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#user profile
+AUTH_PROFILE_MODULE = "ujieservice.Profile"
+
 #wechat settings
 APPID = 'wxe2c38ce50f1ccb58'
 APPSECRET = '7f6607f8256daeb23bd0bfe98eba9603'

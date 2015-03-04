@@ -22,6 +22,9 @@ class Profile(models.Model):
         db_table = 'profile'
 
 
+User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
+
+
 class Driver(models.Model):
     driver_id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User)
