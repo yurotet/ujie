@@ -24,9 +24,6 @@ def authorize(req):
     code = req.REQUEST.get('code', '')
     state = req.REQUEST.get('state', '')
     target = req.REQUEST.get('target', '')
-    print(code)
-    print(state)
-    print(target)
     if code == '':
         return HttpResponse('error')
     else:
@@ -44,10 +41,10 @@ def authorize(req):
             return HttpResponse('user found')
         else:
             user = User.objects.create_user(username=open_id, password=open_id)
-            profile = Profile.objects.create(user=user, mobile='111111')
+            profile = Profile.objects.create(user=user)
             profile.save()
         profile = user.profile
-        profile.mobile = '2222222'
+        profile.access_token = res2_json['access_token']
         profile.save()
 
         user = authenticate(username=open_id, password=open_id)
@@ -56,3 +53,6 @@ def authorize(req):
         req.session['refresh_token'] = res2_json['refresh_token']
         req.session['scope'] = res2_json['scope']
         return HttpResponse(req2.text)
+
+def push(req):
+    assert isinstance(req, HttpRequest)
