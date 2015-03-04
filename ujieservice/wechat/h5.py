@@ -41,15 +41,15 @@ def authorize(req):
             user = User.objects.create_user(username=open_id, password=open_id)
             profile = Profile.objects.create(user=user)
             profile.save()
-        profile = user.profile
-        profile.access_token = res2_json['access_token']
-        profile.save()
-
-        user = authenticate(username=open_id, password=open_id)
-        req.session['access_token'] = res2_json['access_token']
-        req.session['expires_in'] = res2_json['expires_in']
-        req.session['refresh_token'] = res2_json['refresh_token']
-        req.session['scope'] = res2_json['scope']
+        # profile = user.profile
+        # profile.access_token = res2_json['access_token']
+        # profile.save()
+        #
+        # user = authenticate(username=open_id, password=open_id)
+        # req.session['access_token'] = res2_json['access_token']
+        # req.session['expires_in'] = res2_json['expires_in']
+        # req.session['refresh_token'] = res2_json['refresh_token']
+        # req.session['scope'] = res2_json['scope']
         return HttpResponse(req2.text)
 
 def push(req):
