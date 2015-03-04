@@ -14,16 +14,13 @@ from django.db import models
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='profile')
     access_token = models.CharField(max_length=100, blank=True)
     expiration = models.DateTimeField(blank=True, null=True)
     mobile = models.CharField(max_length=50, blank=True)
 
     class Meta:
         db_table = 'profile'
-
-
-User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 
 
 class Driver(models.Model):

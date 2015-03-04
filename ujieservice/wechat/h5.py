@@ -16,6 +16,9 @@ from ujie import settings
 #    "scope":"SCOPE"
 # }
 # https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2c38ce50f1ccb58&redirect_uri=http%3A%2F%2Fwx.ujietrip.com%2Fh5%2Fauthorize%3Ftarget%3Dtmodel&response_type=code&scope=snsapi_base&state=123#wechat_redirect
+from ujieservice.models import Profile
+
+
 def authorize(req):
     assert isinstance(req, HttpRequest)
     code = req.REQUEST.get('code', '')
@@ -41,10 +44,12 @@ def authorize(req):
             return HttpResponse('user found')
         else:
             user = User.objects.create_user(username=open_id, password=open_id)
-        profile = user.get_profile()
-        profile.mobile = "12345678"
-        user.save()
-        user.profile.save()
+            profile = Profile.objects.create(user=user, mobile='111111')
+            profile.save()
+        profile = user.profile
+        profile.mobile = '2222222'
+        profile.save()
+
         user = authenticate(username=open_id, password=open_id)
         req.session['access_token'] = res2_json['access_token']
         req.session['expires_in'] = res2_json['expires_in']
