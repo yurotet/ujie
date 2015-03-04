@@ -43,6 +43,7 @@ def authorize(req):
             user = User.objects.create_user(username=open_id, password=open_id)
             user.profile.mobile = "12345678"
             user.save()
+            user.profile.save()
             user = authenticate(username=open_id, password=open_id)
         req.session['access_token'] = res2_json['access_token']
         req.session['expires_in'] = res2_json['expires_in']
