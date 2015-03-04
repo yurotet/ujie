@@ -15,7 +15,7 @@ from django.db import models
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    access_token = models.CharField(max_length=100, blank=True)
+    access_token = models.CharField(max_length=200, blank=True)
     expiration = models.DateTimeField(blank=True, null=True)
     mobile = models.CharField(max_length=50, blank=True)
 
