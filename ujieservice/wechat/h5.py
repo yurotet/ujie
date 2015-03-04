@@ -37,17 +37,13 @@ def authorize(req):
         #retrieve userinfo
         open_id = res2_json['openid']
         user = authenticate(username=open_id, password=open_id)
-        if user is not None:
-            return HttpResponse('user found')
-        else:
+        if user is None:
             user = User.objects.create_user(username=open_id, password=open_id)
             profile = Profile.objects.create(user=user)
             profile.save()
         profile = user.profile
         profile.access_token = res2_json['access_token']
         profile.save()
-        print profile.access_token
-        print 'saved'
 
         user = authenticate(username=open_id, password=open_id)
         req.session['access_token'] = res2_json['access_token']
