@@ -1,3 +1,4 @@
+#coding:utf-8
 import hashlib
 import json
 import urllib2
@@ -17,20 +18,21 @@ from ujie import settings
 # }
 # https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2c38ce50f1ccb58&redirect_uri=http%3A%2F%2Fwx.ujietrip.com%2Fh5%2Fauthorize%3Ftarget%3Dtmodel&response_type=code&scope=snsapi_base&state=123#wechat_redirect
 from ujieservice.models import Profile
+from ujieservice.wechat import token
 
 
-def authorize(req):
-    assert isinstance(req, HttpRequest)
-    code = req.REQUEST.get('code', '')
-    state = req.REQUEST.get('state', '')
-    target = req.REQUEST.get('target', '')
+def authorize(request):
+    assert isinstance(request, HttpRequest)
+    code = request.REQUEST.get('code', '')
+    state = request.REQUEST.get('state', '')
+    target = request.REQUEST.get('target', '')
     if code == '':
         return HttpResponse('error')
     else:
-        open_id = req.session.get('open_id', '')
+        open_id = request.session.get('open_id', '')
         if open_id == '':
             open_id = _get_access_token(code)['openid']
-            req.session['open_id'] = open_id
+            request.session['open_id'] = open_id
         else:
             print 'session open_id:' + open_id
         user = authenticate(username=open_id, password=open_id)
@@ -51,15 +53,53 @@ def authorize(req):
 
 
 def _get_access_token(code):
-    req2 = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token', params={
+    req = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token', params={
        'appid': settings.APPID,
        'secret': settings.APPSECRET,
        'code': code,
        'grant_type': 'authorization_code'
     })
-    res2_json = json.loads(req2.text)
+    result = json.loads(req.text)
     #retrieve userinfo
-    return res2_json
+    return result
 
-def push(req):
-    assert isinstance(req, HttpRequest)
+
+def order_detail(request):
+    return HttpResponse("order detail")
+
+
+def notify_order(request):
+    assert isinstance(request, HttpRequest)
+    url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + token.ACCESS_TOKEN
+    for u in User.objects:
+        if u.profile.open_id != '':
+            payload = {
+                "touser": u.profile.open_id,
+                "template_id": "jLXU9N-7IJBN5NGn7m2R1MjM-24IsCiNZhyv0KXBnHo",
+                "url": "http://wx.ujietrip.com/h5/order_detail",
+                "topcolor":"#FF0000",
+                "data": {
+                    "first": {
+                       "value": "恭喜你购买成功！",
+                       "color": "#173177"
+                    },
+                    "keynote1": {
+                        "value": "巧克力",
+                        "color": "#173177"
+                    },
+                    "keynote2": {
+                        "value": "39.8元",
+                        "color": "#173177"
+                    },
+                    "keynote3": {
+                        "value": "2014年9月16日",
+                        "color": "#173177"
+                    },
+                    "remark": {
+                        "value": "欢迎再次购买！",
+                        "color": "#173177"
+                    }
+                }
+            }
+            res = requests.post(url, json.dumps(payload))
+    return HttpResponse('all users notified!')
