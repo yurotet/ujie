@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from ujieservice.models import Order, UjieUser
+from ujieservice.models import Order, Profile
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
 # Register your models here.
 
 class UserProfileInline(admin.TabularInline):
-    model = UjieUser
+    model = Profile
 
 
 class UserAdmin(DjangoUserAdmin):

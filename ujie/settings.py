@@ -86,12 +86,7 @@ USE_TZ = True
 #     'django.contrib.auth.backends.ModelBackend'
 # ]
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'ujieservice.auth.UjieUserModelBackend',
-)
-
-CUSTOM_USER_MODEL = 'ujieservice.UjieUser'
+# CUSTOM_USER_MODEL = 'ujieservice.UjieUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -99,7 +94,7 @@ CUSTOM_USER_MODEL = 'ujieservice.UjieUser'
 STATIC_URL = '/static/'
 
 #user profile
-# AUTH_PROFILE_MODULE = "ujieservice.Profile"
+AUTH_PROFILE_MODULE = "ujieservice.Profile"
 
 #wechat settings
 APPID = 'wxe2c38ce50f1ccb58'

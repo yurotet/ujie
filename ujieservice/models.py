@@ -8,12 +8,12 @@
 # Also note: You'll have to insert the output of 'django-admin.py sqlcustom [app_label]'
 # into your database.
 from __future__ import unicode_literals
-from django.contrib.auth.models import AbstractBaseUser, User, UserManager
+from django.contrib.auth.models import User, UserManager
 
 from django.db import models
 
-
-class UjieUser(User):
+class Profile(models.Model):
+    user = models.OneToOneField(User, related_name='profile')
     USER_TYPE = (
         ('driver', 'Driver'),
         ('customer', 'Customer'),
@@ -44,14 +44,13 @@ class UjieUser(User):
     driver_driving_license = models.FilePathField(max_length=255, blank=True)
 
     #customer_info
-
     class Meta:
-        db_table = 'ujie_user'
+        db_table = 'profile'
 
 
 class Vehicle(models. Model):
     vehicle_id = models.AutoField(primary_key=True)
-    driver = models.ForeignKey(UjieUser, related_name='vehicles')
+    driver = models.ForeignKey(User, related_name='vehicles')
     brand = models.CharField(max_length=100, blank=True)
     model = models.CharField(max_length=100, blank=True)
     vehicle_licence = models.FilePathField(max_length=255, blank=True)
@@ -63,8 +62,8 @@ class Vehicle(models. Model):
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(UjieUser, related_name='customer_orders'),
-    driver = models.ForeignKey(UjieUser, related_name='driver_orders'),
+    customer = models.ForeignKey(User, related_name='customer_orders'),
+    driver = models.ForeignKey(User, related_name='driver_orders'),
     status = models.IntegerField(blank=True, null=True)
     flight_no = models.CharField(max_length=45, blank=True)
     passenger_number = models.IntegerField(blank=True, null=True)
