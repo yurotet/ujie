@@ -1,24 +1,27 @@
-#coding:utf-8
+# coding:utf-8
 import hashlib
 import json
 import urllib2
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.template import loader, RequestContext
 import requests
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, UserManager
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from ujie import settings
 
 
 # {
-#    "access_token":"ACCESS_TOKEN",
+# "access_token":"ACCESS_TOKEN",
 #    "expires_in":7200,
 #    "refresh_token":"REFRESH_TOKEN",
 #    "openid":"OPENID",
 #    "scope":"SCOPE"
 # }
 # https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2c38ce50f1ccb58&redirect_uri=http%3A%2F%2Fwx.ujietrip.com%2Fh5%2Fauthorize%3Ftarget%3Dtmodel&response_type=code&scope=snsapi_base&state=123#wechat_redirect
-from ujieservice.models import Profile
+# https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2c38ce50f1ccb58&redirect_uri=redirect_uri&response_type=code&scope=snsapi_base&state=123#wechat_redirect
+from ujieservice.models import Profile, Order
 from ujieservice.wechat import token
 
 
@@ -26,21 +29,32 @@ def authorize(request):
     assert isinstance(request, HttpRequest)
     code = request.REQUEST.get('code', '')
     state = request.REQUEST.get('state', '')
-    target = request.REQUEST.get('target', '')
+    next = request.REQUEST.get('next', '')
+    user_type = request.REQUEST.get('user_type', '0')
     if code == '':
-        return HttpResponse('error')
+        return HttpResponseBadRequest('invalid request')
     else:
         open_id = request.session.get('open_id', '')
         if open_id == '':
-            open_id = _get_access_token(code)['openid']
-            request.session['open_id'] = open_id
+            token_result = _get_access_token(code)
+            if token_result.has_key('openid'):
+                open_id = token_result['openid']
+                request.session['open_id'] = open_id
+            else:
+                return HttpResponseBadRequest('code error, fail to fetch open_id')
         else:
             print 'session open_id:' + open_id
         user = authenticate(username=open_id, password=open_id)
         if user is None:
             user = User.objects.create_user(username=open_id, password=open_id)
-            profile = Profile.objects.create(user=user)
+            profile = Profile(user=user, user_type=user_type)
             profile.save()
+            user = authenticate(username=open_id, password=open_id)
+        login(request, user)
+        if next != '':
+            return HttpResponseRedirect(next)
+        else:
+            return HttpResponseRedirect(order_detail)
         # profile = user.profile
         # profile.access_token = res2_json['access_token']
         # profile.save()
@@ -55,10 +69,10 @@ def authorize(request):
 
 def _get_access_token(code):
     req = requests.get('https://api.weixin.qq.com/sns/oauth2/access_token', params={
-       'appid': settings.APPID,
-       'secret': settings.APPSECRET,
-       'code': code,
-       'grant_type': 'authorization_code'
+        'appid': settings.APPID,
+        'secret': settings.APPSECRET,
+        'code': code,
+        'grant_type': 'authorization_code'
     })
     result = json.loads(req.text)
     #retrieve userinfo
@@ -66,9 +80,39 @@ def _get_access_token(code):
 
 
 @login_required
-def order_detail(request):
+def order_detail(request, order_id):
     print request.user
     return HttpResponse("order detail")
+
+
+@login_required
+def create_order(request):
+    user = request.user
+    profile = user.profile
+    assert isinstance(profile, Profile)
+    if profile.user_type == '0':
+        order = Order(customer=user, departure_city_name="Shanghai", arrival_city_name="Sidney")
+        order.save()
+        return HttpResponse("order created successfully")
+    else:
+        return HttpResponseBadRequest('invalid request')
+    return HttpResponse("order detail")
+
+@login_required
+def order_list(request):
+    user = request.user
+    list = Order.objects.all()
+    return render(request, 'order_list.html', {
+        'order_list': list
+    })
+
+
+@login_required
+def pick_order(request):
+    list = Order.objects.all()
+    return render(request, 'order_list.html', {
+        'order_list': list
+    })
 
 
 def notify_order(request):
@@ -81,11 +125,11 @@ def notify_order(request):
                 "touser": open_id,
                 "template_id": "jLXU9N-7IJBN5NGn7m2R1MjM-24IsCiNZhyv0KXBnHo",
                 "url": "http://wx.ujietrip.com/h5/order_detail",
-                "topcolor":"#FF0000",
+                "topcolor": "#FF0000",
                 "data": {
                     "first": {
-                       "value": "恭喜你购买成功！",
-                       "color": "#173177"
+                        "value": "恭喜你购买成功！",
+                        "color": "#173177"
                     },
                     "keynote1": {
                         "value": "巧克力",

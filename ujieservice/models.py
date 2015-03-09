@@ -9,32 +9,32 @@
 # into your database.
 from __future__ import unicode_literals
 from django.contrib.auth.models import User, UserManager
-
 from django.db import models
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     USER_TYPE = (
-        ('driver', 'Driver'),
-        ('customer', 'Customer'),
+        ('0', 'Customer'),
+        ('1', 'Driver'),
     )
     DRIVER_STATUS = (
-        ('unverified', 'Unverified'),
-        ('verifying', 'Verifying'),
-        ('verified', 'Verified'),
-        ('needmore', 'Need More Information'),
+        ('0', 'Unverified'),
+        ('1', 'Verifying'),
+        ('2', 'Verified'),
+        ('3', 'Need More Information'),
     )
     access_token = models.CharField(max_length=200, blank=True)
     expiration = models.DateTimeField(blank=True, null=True)
     mobile = models.CharField(max_length=50, blank=True)
-    type = models.CharField(max_length=50, choices=USER_TYPE, default='customer')
+    user_type = models.CharField(max_length=50, choices=USER_TYPE, default='0')
     open_id = models.CharField(max_length=200, blank=True, db_index=True)
     objects = UserManager()
 
     #driver info
     driver_name = models.CharField(max_length=100, blank=True)
     driver_birth = models.DateField(blank=True, null=True)
-    driver_status = models.CharField(max_length=50, choices=DRIVER_STATUS, default='unverified')
+    driver_status = models.CharField(max_length=50, choices=DRIVER_STATUS, default='0')
     driver_contact = models.CharField(max_length=100, blank=True)
     driver_account_no = models.CharField(max_length=100, blank=True)
     driver_account_name = models.CharField(max_length=100, blank=True)
@@ -55,16 +55,23 @@ class Vehicle(models. Model):
     model = models.CharField(max_length=100, blank=True)
     vehicle_licence = models.FilePathField(max_length=255, blank=True)
     plate_no = models.CharField(max_length=100, blank=True)
+    created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
 
     class Meta:
         db_table = 'Vehicle'
 
 
 class Order(models.Model):
+    ORDER_STATUS = (
+        ('0', 'Created'),
+        ('1', 'Dispatched'),
+        ('2', 'Finished'),
+        ('3', 'Canceled'),
+    )
     order_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(User, related_name='customer_orders'),
-    driver = models.ForeignKey(User, related_name='driver_orders'),
-    status = models.IntegerField(blank=True, null=True)
+    customer = models.ForeignKey(User, related_name='customer_orders', null=True)
+    driver = models.ForeignKey(User, related_name='driver_orders', null=True)
+    status = models.CharField(max_length=50, choices=ORDER_STATUS, default='0')
     flight_no = models.CharField(max_length=45, blank=True)
     passenger_number = models.IntegerField(blank=True, null=True)
     target_district_name = models.CharField(max_length=100, blank=True)
@@ -76,7 +83,8 @@ class Order(models.Model):
     arrival_country_name = models.CharField(max_length=100, blank=True)
     arrival_city_name = models.CharField(max_length=100, blank=True)
     arrival_terminal_name = models.CharField(max_length=100, blank=True)
-    timestamp = models.DateTimeField(blank=True, null=True)
+    created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+    updated_time = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     class Meta:
         db_table = 'order'
