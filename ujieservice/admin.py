@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from ujieservice.models import Order, Driver, Profile
+from ujieservice.models import Order, Profile
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
 # Register your models here.
@@ -15,4 +15,4 @@ class UserAdmin(DjangoUserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-admin.site.register([Order, Driver])
+admin.site.register([Order])

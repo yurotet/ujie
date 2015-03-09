@@ -87,6 +87,8 @@ USE_TZ = True
 #     'django.contrib.auth.backends.ModelBackend'
 # ]
 
+# CUSTOM_USER_MODEL = 'ujieservice.UjieUser'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
