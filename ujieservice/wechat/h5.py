@@ -2,6 +2,7 @@
 import hashlib
 import json
 import urllib2
+from django.contrib.auth.decorators import login_required
 import requests
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, UserManager
@@ -64,17 +65,20 @@ def _get_access_token(code):
     return result
 
 
+@login_required
 def order_detail(request):
+    print request.user
     return HttpResponse("order detail")
 
 
 def notify_order(request):
     assert isinstance(request, HttpRequest)
     url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + token.ACCESS_TOKEN
-    for u in User.objects:
-        if u.profile.open_id != '':
+    for u in User.objects.all():
+        if u.username != '':
+            open_id = u.username
             payload = {
-                "touser": u.profile.open_id,
+                "touser": open_id,
                 "template_id": "jLXU9N-7IJBN5NGn7m2R1MjM-24IsCiNZhyv0KXBnHo",
                 "url": "http://wx.ujietrip.com/h5/order_detail",
                 "topcolor":"#FF0000",

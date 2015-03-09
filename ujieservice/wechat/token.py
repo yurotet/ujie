@@ -5,7 +5,7 @@ import time
 from django.http import HttpResponse, HttpResponseForbidden
 from ujie import settings
 
-ACCESS_TOKEN = None
+ACCESS_TOKEN = ''
 TOKEN_SECRET = 'fdasfasdflrewqrqwerqsdffsd'
 
 

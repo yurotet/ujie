@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -93,6 +94,9 @@ STATIC_URL = '/static/'
 
 #user profile
 AUTH_PROFILE_MODULE = "ujieservice.Profile"
+
+#LOGIN_URL
+LOGIN_URL = 'ujieservice.wechat.h5.authorize'
 
 #wechat settings
 APPID = 'wxe2c38ce50f1ccb58'
