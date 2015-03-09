@@ -8,11 +8,12 @@
 {% if order_list %}
     <ul>
     {% for order in order_list %}
-        <li><a href="/h5/order_detail/{{ order.order_id }}/">order.order_id{{ order.departure_city_name }}, {{ order.departure_city_name }} - {{ order.arrival_city_name }}, {{order.status}}</a></li>
+        <li><a href="/h5/order/{{ order.order_id }}/notify">{{order.order_id}}, {{ order.departure_city_name }}, {{ order.departure_city_name }} - {{ order.arrival_city_name }}, {{order.status}}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No orders are available.</p>
+    <a href="/h5/order/create">Create New</a>
 {% endif %}
 </body>
 </html>

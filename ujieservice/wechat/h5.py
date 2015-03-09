@@ -98,56 +98,48 @@ def create_order(request):
         return HttpResponseBadRequest('invalid request')
     return HttpResponse("order detail")
 
-@login_required
+# @login_required
 def order_list(request):
     user = request.user
-    list = Order.objects.all()
+    list = user.customer_orders.all()
     return render(request, 'order_list.html', {
         'order_list': list
     })
 
 
-@login_required
-def pick_order(request):
-    list = Order.objects.all()
-    return render(request, 'order_list.html', {
-        'order_list': list
-    })
-
-
-def notify_order(request):
+# @login_required
+def notify_order(request, order_id):
     assert isinstance(request, HttpRequest)
+    order = Order.objects.get(pk=order_id)
     url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + token.ACCESS_TOKEN
-    for u in User.objects.all():
-        if u.username != '':
-            open_id = u.username
-            payload = {
-                "touser": open_id,
-                "template_id": "jLXU9N-7IJBN5NGn7m2R1MjM-24IsCiNZhyv0KXBnHo",
-                "url": "http://wx.ujietrip.com/h5/order_detail",
-                "topcolor": "#FF0000",
-                "data": {
-                    "first": {
-                        "value": "恭喜你购买成功！",
-                        "color": "#173177"
-                    },
-                    "keynote1": {
-                        "value": "巧克力",
-                        "color": "#173177"
-                    },
-                    "keynote2": {
-                        "value": "39.8元",
-                        "color": "#173177"
-                    },
-                    "keynote3": {
-                        "value": "2014年9月16日",
-                        "color": "#173177"
-                    },
-                    "remark": {
-                        "value": "欢迎再次购买！",
-                        "color": "#173177"
-                    }
-                }
+    open_id = order.customer.username
+    payload = {
+        "touser": open_id,
+        "template_id": "jLXU9N-7IJBN5NGn7m2R1MjM-24IsCiNZhyv0KXBnHo",
+        "url": "http://wx.ujietrip.com/h5/order",
+        "topcolor": "#FF0000",
+        "data": {
+            "first": {
+                "value": "通知成功！",
+                "color": "#173177"
+            },
+            "keynote1": {
+                "value": order.departure_city_name,
+                "color": "#173177"
+            },
+            "keynote2": {
+                "value": order.arrival_city_name,
+                "color": "#173177"
+            },
+            "keynote3": {
+                "value": "2014年9月16日",
+                "color": "#173177"
+            },
+            "remark": {
+                "value": "欢迎再次购买！",
+                "color": "#173177"
             }
-            res = requests.post(url, json.dumps(payload))
-    return HttpResponse('all users notified!')
+        }
+    }
+    res = requests.post(url, json.dumps(payload))
+    return HttpResponse('user notified successfully!')
