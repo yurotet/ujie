@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.template import loader, RequestContext
 import requests
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User, UserManager
+from django.contrib.auth.models import User, UserManager, Permission
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from ujie import settings
 
@@ -30,7 +30,8 @@ def authorize(request):
     code = request.REQUEST.get('code', '')
     state = request.REQUEST.get('state', '')
     next = request.REQUEST.get('next', '')
-    user_type = request.REQUEST.get('user_type', '0')
+    # 这里确定用户权限，可以是customer，也可以是driver
+    user_type = request.REQUEST.get('user_type', 'customer')
     if code == '':
         return HttpResponseBadRequest('invalid request')
     else:
@@ -47,9 +48,17 @@ def authorize(request):
         user = authenticate(username=open_id, password=open_id)
         if user is None:
             user = User.objects.create_user(username=open_id, password=open_id)
-            profile = Profile(user=user, user_type=user_type)
+            profile = Profile(user=user)
             profile.save()
             user = authenticate(username=open_id, password=open_id)
+        codename = ''
+        if user_type == 'customer':
+            codename = 'user_customer'
+        elif user_type == 'driver':
+            codename = 'user_driver'
+        if codename != '' and (not user.has_perm('ujieservice.' + codename)):
+            perm = Permission.objects.get(codename=codename)
+            user.user_permissions.add(perm)
         login(request, user)
         if next != '':
             return HttpResponseRedirect(next)
@@ -123,17 +132,14 @@ def notify_order(request, order_id):
                 "value": "通知成功！",
                 "color": "#173177"
             },
-            "keynote1": {
-                "value": order.departure_city_name,
-                "color": "#173177"
+            "keyword1": {
+                "value": "接机"
             },
-            "keynote2": {
-                "value": order.arrival_city_name,
-                "color": "#173177"
+            "keyword2": {
+                "value": order.passenger_number
             },
-            "keynote3": {
-                "value": "2014年9月16日",
-                "color": "#173177"
+            "keyword3": {
+                "value": order.arrival_city_name
             },
             "remark": {
                 "value": "欢迎再次购买！",

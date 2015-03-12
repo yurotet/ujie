@@ -14,10 +14,6 @@ from django.db import models
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    USER_TYPE = (
-        ('0', 'Customer'),
-        ('1', 'Driver'),
-    )
     DRIVER_STATUS = (
         ('0', 'Unverified'),
         ('1', 'Verifying'),
@@ -27,7 +23,6 @@ class Profile(models.Model):
     access_token = models.CharField(max_length=200, blank=True)
     expiration = models.DateTimeField(blank=True, null=True)
     mobile = models.CharField(max_length=50, blank=True)
-    user_type = models.CharField(max_length=50, choices=USER_TYPE, default='0')
     open_id = models.CharField(max_length=200, blank=True, db_index=True)
     objects = UserManager()
 
@@ -46,6 +41,10 @@ class Profile(models.Model):
     #customer_info
     class Meta:
         db_table = 'profile'
+        permissions = (
+            ("user_customer", "customer perm"),
+            ("user_driver", "driver perm")
+        )
 
 
 class Vehicle(models. Model):

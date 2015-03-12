@@ -1,6 +1,12 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from rest_framework import routers
 from tastypie.api import Api
+from ujieservice.rest import api
+
+router = routers.DefaultRouter()
+router.register(r'users', api.UserViewSet)
+router.register(r'groups', api.GroupViewSet)
 
 urlpatterns = patterns('',
     # Examples:
@@ -15,4 +21,6 @@ urlpatterns = patterns('',
     (r'^h5/order/(\d+)/$', 'ujieservice.wechat.h5.order_detail'),
     (r'^h5/order/(\d+)/notify/$', 'ujieservice.wechat.h5.notify_order'),
     (r'^h5/order/$', 'ujieservice.wechat.h5.order_list'),
+    (r'^rest/api/', include(router.urls)),
+    (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework'))
 )

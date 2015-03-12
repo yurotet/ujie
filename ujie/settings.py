@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tastypie',
+    # 'tastypie',
+    'rest_framework',
     'ujieservice'
 )
 
@@ -100,6 +101,15 @@ AUTH_PROFILE_MODULE = "ujieservice.Profile"
 
 #LOGIN_URL
 LOGIN_URL = 'ujieservice.wechat.h5.authorize'
+
+#rest_framework settings
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 #wechat settings
 APPID = 'wxe2c38ce50f1ccb58'
