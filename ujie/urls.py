@@ -1,12 +1,17 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include
 from django.contrib import admin
 from rest_framework import routers
-from tastypie.api import Api
-from ujieservice.rest import api
+from ujieservice.rest.customer.api import CustomerProfile
 
-router = routers.DefaultRouter()
-router.register(r'users', api.UserViewSet)
-router.register(r'groups', api.GroupViewSet)
+from ujieservice.rest.driver import api as driver_api
+from ujieservice.rest.customer import api as customer_api
+
+
+# driver_router = routers.DefaultRouter()
+# driver_router.register(r'profile/', driver_api.DriverProfile)
+#
+# customer_router = routers.DefaultRouter()
+# customer_router.register(r'profile/', customer_api.CustomerProfile)
 
 urlpatterns = patterns('',
     # Examples:
@@ -21,6 +26,9 @@ urlpatterns = patterns('',
     (r'^h5/order/(\d+)/$', 'ujieservice.wechat.h5.order_detail'),
     (r'^h5/order/(\d+)/notify/$', 'ujieservice.wechat.h5.notify_order'),
     (r'^h5/order/$', 'ujieservice.wechat.h5.order_list'),
-    (r'^rest/api/', include(router.urls)),
-    (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework'))
+
+    (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # (r'^rest/api/driver/', include(driver_router.urls)),
+    (r'^rest/api/customer/profile/$', CustomerProfile.as_view()),
+    # (r'^rest/api/customer/', include(customer_router.urls)),
 )

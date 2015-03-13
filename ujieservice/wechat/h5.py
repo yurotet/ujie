@@ -32,48 +32,47 @@ def authorize(request):
     next = request.REQUEST.get('next', '')
     # 这里确定用户权限，可以是customer，也可以是driver
     user_type = request.REQUEST.get('user_type', 'customer')
-    if code == '':
-        return HttpResponseBadRequest('invalid request')
-    else:
-        open_id = request.session.get('open_id', '')
-        if open_id == '':
-            token_result = _get_access_token(code)
-            if token_result.has_key('openid'):
-                open_id = token_result['openid']
-                request.session['open_id'] = open_id
+    if not request.user.is_authenticated():
+        if code == '':
+            return HttpResponseBadRequest('invalid request')
+        else:
+            open_id = request.session.get('open_id', '')
+            if open_id == '':
+                token_result = _get_access_token(code)
+                if token_result.has_key('openid'):
+                    open_id = token_result['openid']
+                    request.session['open_id'] = open_id
+                else:
+                    return HttpResponseBadRequest('code error, fail to fetch open_id')
             else:
-                return HttpResponseBadRequest('code error, fail to fetch open_id')
-        else:
-            print 'session open_id:' + open_id
-        user = authenticate(username=open_id, password=open_id)
-        if user is None:
-            user = User.objects.create_user(username=open_id, password=open_id)
-            profile = Profile(user=user)
-            profile.save()
+                print 'session open_id:' + open_id
             user = authenticate(username=open_id, password=open_id)
-        codename = ''
-        if user_type == 'customer':
-            codename = 'user_customer'
-        elif user_type == 'driver':
-            codename = 'user_driver'
-        if codename != '' and (not user.has_perm('ujieservice.' + codename)):
-            perm = Permission.objects.get(codename=codename)
-            user.user_permissions.add(perm)
-        login(request, user)
-        if next != '':
-            return HttpResponseRedirect(next)
-        else:
-            return HttpResponseRedirect(order_detail)
-        # profile = user.profile
-        # profile.access_token = res2_json['access_token']
-        # profile.save()
-        #
-        # user = authenticate(username=open_id, password=open_id)
-        # req.session['access_token'] = res2_json['access_token']
-        # req.session['expires_in'] = res2_json['expires_in']
-        # req.session['refresh_token'] = res2_json['refresh_token']
-        # req.session['scope'] = res2_json['scope']
-        return HttpResponse(open_id)
+            if user is None:
+                user = User.objects.create_user(username=open_id, password=open_id)
+                profile = Profile(user=user)
+                profile.save()
+                user = authenticate(username=open_id, password=open_id)
+            codename = ''
+            if user_type == 'customer':
+                codename = 'user_customer'
+            elif user_type == 'driver':
+                codename = 'user_driver'
+            if codename != '' and (not user.has_perm('ujieservice.' + codename)):
+                perm = Permission.objects.get(codename=codename)
+                user.user_permissions.add(perm)
+            login(request, user)
+
+            # profile = user.profile
+            # profile.access_token = res2_json['access_token']
+            # profile.save()
+            #
+            # user = authenticate(username=open_id, password=open_id)
+            # req.session['access_token'] = res2_json['access_token']
+            # req.session['expires_in'] = res2_json['expires_in']
+            # req.session['refresh_token'] = res2_json['refresh_token']
+            # req.session['scope'] = res2_json['scope']
+    if next != '':
+        return HttpResponseRedirect(next)
 
 
 def _get_access_token(code):

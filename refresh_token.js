@@ -7,8 +7,8 @@ setInterval(function() {
 
 function refresh_token() {
     var req = http.request({
-        hostname: 'wx.ujietrip.com',
-        port: 80,
+        hostname: '127.0.0.1',
+        port: 8000,
         path: '/token/refresh?token_secret=fdasfasdflrewqrqwerqsdffsd',
         method: 'GET'
     });
