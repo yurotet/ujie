@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf8"/>
+    <meta content="width=device-width,user-scalable=no,initial-scale=1.0" name="viewport"/>
+    <meta name="-webkit-tap-highlight" content="no"/>
+    <meta content="IE=10" http-equiv="x-ua-compatible"/>
+	<title>qmik</title>
+	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="bower_components/zepto/zepto.min.js"></script>
+	<script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
+	<script type="text/javascript" src="res/lib/Qmik-debug.all.2.1.02.js"></script>
+	<script type="text/javascript">
+	var AppRouter = Backbone.Router.extend({
+	　　routes:{
+	　　　　"help": "help",
+	　　　　"search/:query": "search",
+	　　　　"search/:query/p:page": "search"
+	　　},
+	　　help:function() {
+			console.log('help');
+	　　},
+	　　search:function(query, page) {
+			console.log(query + ':' + page);
+	　　}
+	});
+	var appRouter = new AppRouter();
+	Backbone.history.start();
+	</script>
+</head>
+<body>
+	<!--<script async="async" src="/static/js/view/demo.js"></script>-->
+</body>
+</html>
