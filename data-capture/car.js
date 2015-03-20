@@ -1,12 +1,9 @@
 var request = require('request');
 var process = require('process');
 
-//
-// 在这边处理最终的结果
-// 抓取结果格式如下
-//  e.g {'bmw':['1 serises','3 series']}
-//
-var handleResult = function(result) {
+// 把结果处理代码放到这个回调里面
+// 数据结果的格式为{'bmw':['1 serises','3 series']...}
+var handleResult = function(result) {	
 	console.log("result handler not implemented!");
 }
 
