@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<meta name="apple-mobile-web-app-title" content="ujietrip">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<title></title>
+	<script charset="utf-8" id="seajsnode"src="http://static.alipayobjects.com/seajs/??seajs/2.2.2/sea.js,seajs-combo/1.0.1/seajs-combo.js,seajs-style/1.0.2/seajs-style.js"></script>
+	<script>
+		seajs.config({
+			base: '/res/lib',
+			alias: {
+				'$': 'jquery/1.7.2/jquery',
+				'position': 'position/1.1.0/index'
+			}
+		});
+		seajs.use(['$', 'position'], function($, Position) {
+			var stop = false;
+			var target = $('<div class="target"></div>')
+				.hover(function() {
+					stop = true;
+				}, function() {
+					stop = false;
+				})
+				.appendTo(document.body);
+			setInterval(function() {
+				if (stop) return;
+				var x = Math.floor(Math.random() * 100);
+				var y = Math.floor(Math.random() * 100);
+				Position.pin({
+					element: target,
+					x: 'center',
+					y: 'center'
+				}, {
+					element: Position.VIEWPORT,
+					x: x + '%',
+					y: y + '%'
+				});
+			}, 800);
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>
