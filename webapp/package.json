@@ -1,0 +1,10 @@
+{
+  "spm": {
+    "dependencies": {
+      "arale-class": "1.2.0",
+      "seajs": "2.3.0",
+      "seajs-wrap": "1.0.2",
+      "arale-base": "1.2.0"
+    }
+  }
+}

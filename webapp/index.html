@@ -6,42 +6,66 @@
 	<meta name="apple-mobile-web-app-title" content="ujietrip">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<title></title>
-	<script charset="utf-8" id="seajsnode"src="http://static.alipayobjects.com/seajs/??seajs/2.2.2/sea.js,seajs-combo/1.0.1/seajs-combo.js,seajs-style/1.0.2/seajs-style.js"></script>
+	<!-- <script charset="utf-8" id="seajsnode" src="http://static.alipayobjects.com/seajs/??seajs/2.2.2/sea.js,seajs-combo/1.0.1/seajs-combo.js,seajs-style/1.0.2/seajs-style.js"></script> -->
+
+	<script type="text/javascript" src="bower_components/zepto/zepto.min.js"></script>
+	<script type="text/javascript" src="bower_components/vue/dist/vue.min.js"></script>
+	<script charset="utf-8" src="spm_modules/seajs/2.3.0/dist/sea-debug.js"></script>
+	<script charset="utf-8" src="spm_modules/seajs-wrap/1.0.2/dist/seajs-wrap-debug.js"></script>
 	<script>
 		seajs.config({
-			base: '/res/lib',
+			base: '/src',
+			paths: {
+			},
 			alias: {
-				'$': 'jquery/1.7.2/jquery',
-				'position': 'position/1.1.0/index'
-			}
+				'arale-class': '/spm_modules/arale-class/1.2.0/class'
+			},
+			// 调试模式
+  			debug: true,
+  			charset: 'utf-8'
 		});
-		seajs.use(['$', 'position'], function($, Position) {
-			var stop = false;
-			var target = $('<div class="target"></div>')
-				.hover(function() {
-					stop = true;
-				}, function() {
-					stop = false;
-				})
-				.appendTo(document.body);
-			setInterval(function() {
-				if (stop) return;
-				var x = Math.floor(Math.random() * 100);
-				var y = Math.floor(Math.random() * 100);
-				Position.pin({
-					element: target,
-					x: 'center',
-					y: 'center'
-				}, {
-					element: Position.VIEWPORT,
-					x: x + '%',
-					y: y + '%'
+	</script>
+	<script>
+		var pageCache = {};
+		function getPage(route, cb) {
+			var Page = pageCache[route];
+			if(Page) {
+				cb(Page);
+			} else {
+				seajs.use([route], function(Page) {
+					Vue.component(_getPageId(route), Page);
+					cb(Page);
+				});	
+			}
+		}
+
+		function _getPageId(route) {
+			return "viewport-" + route;
+		}
+
+		$(function() {
+			viewport = new Vue({
+				el: '#viewport-cnt',
+				data: {
+					current: null
+				}
+			});
+
+			$('input').on('click', function() {
+				var route = $(this).val();
+				getPage(route, function(Page) {
+					viewport.current = _getPageId(route);
 				});
-			}, 800);
+			});
 		});
 	</script>
 </head>
 <body>
-
+	<input type="button" value="view/index" />
+	<input type="button" value="view/list" />
+	<div id="viewport-cnt">
+		<div v-component="{{current}}" keep-alive>
+		</div>
+	</div>
 </body>
 </html>
