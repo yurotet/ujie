@@ -1,7 +1,7 @@
-var BasePage = require('common/basepage');
+var BaseComponent = require('common/basecomponent');
 var Vue = require('vue');
 
-var View = BasePage.extend({
+var View = BaseComponent.extend({
 	template: "list page",
 	created: function() {
 		console.log('list created');

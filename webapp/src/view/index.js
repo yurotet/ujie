@@ -1,7 +1,7 @@
-var BasePage = require('common/basepage');
+var BaseComponent = require('common/basecomponent');
 var Vue = require('vue');
 
-var View = BasePage.extend({
+var View = BaseComponent.extend({
 	template: "index page {{count}}",
 
 	data: function() {

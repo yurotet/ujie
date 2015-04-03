@@ -1,5 +1,5 @@
 var Vue = require('vue');
-var Page = Vue.extend({
+var M = Vue.extend({
 	onCreate: function() {
 
 	},
@@ -11,4 +11,4 @@ var Page = Vue.extend({
 	}
 });
 
-module.exports = Page;
+module.exports = M;
