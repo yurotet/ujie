@@ -7,8 +7,8 @@ module.exports = {
         vendor: ["vue"]
     }, 
     output: {
-        path: "./build",
-        filename: "app.js",
+        path: __dirname + "/build/assets",
+        filename: "app.bundle.js",
         publicPath: '/assets/'
     },
     module: {
@@ -17,10 +17,14 @@ module.exports = {
         ]
     },
     resolve: {
-        modulesDirectories: ["node_modules", "src"],
+        root: [__dirname + '/src'],
         extensions: ['', '.js', '.json', '.coffee']
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")
-    ]
+    ],
+    devServer: {
+        contentBase: "./build",
+        hot: true
+    }
 };

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<meta name="apple-mobile-web-app-title" content="ujietrip">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<title></title>
+	<script type="text/javascript" src="http://cdn.bootcss.com/zepto/1.1.4/zepto.min.js"></script>
+	<script type="text/javascript" src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
+	
+	<!-- <script charset="utf-8" id="seajsnode" src="http://static.alipayobjects.com/seajs/??seajs/2.2.2/sea.js,seajs-combo/1.0.1/seajs-combo.js,seajs-style/1.0.2/seajs-style.js"></script> -->
+</head>
+<body>
+	<input type="button" value="/index" />
+	<input type="button" value="/list" />
+	<div id="viewport-cnt">
+		<div v-component="{{current}}" keep-alive>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="/assets/vendor.bundle.js"></script>
+<script type="text/javascript" src="/assets/app.bundle.js"></script>
+<script type="text/javascript" src="http://localhost:8080/webpack-dev-server.js"></script>
+</html>
