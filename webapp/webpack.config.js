@@ -21,10 +21,14 @@ module.exports = {
         extensions: ['', '.js', '.json', '.coffee']
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js")
+        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
     devServer: {
-        contentBase: "./build",
-        hot: true
+        contentBase: "./build"
     }
 };
