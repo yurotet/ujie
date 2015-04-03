@@ -7,18 +7,20 @@ module.exports = {
         vendor: ["vue"]
     }, 
     output: {
-        path: __dirname + "/build/assets",
+        path: "./build/assets",
         filename: "app.bundle.js",
         publicPath: '/assets/'
     },
     module: {
         loaders: [
-            { test: /\.css$/, loader: "style!css" }
+            { test: /\.css$/, loader: "style!css" },
+            { test: /\.vue$/, loader: "vue" }
         ]
     },
     resolve: {
-        root: [__dirname + '/src'],
-        extensions: ['', '.js', '.json', '.coffee']
+        // root: [__dirname + '/src'],
+        modulesDirectories: ['node_modules', 'src'],
+        extensions: ['', '.js', '.json', '.coffee', '.vue'],
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
@@ -29,6 +31,6 @@ module.exports = {
         // })
     ],
     devServer: {
-        contentBase: "./build"
+        contentBase: "build/"
     }
 };

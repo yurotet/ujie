@@ -15,6 +15,7 @@ var _routeCb = function(route) {
 			require.ensure([], function() {
 				cmpId = 'view/index';
 				cmp = require('view/index');
+				Vue.component(cmpId, cmp);
 				viewport.current = cmpId;
 			});
 		} else if(route == '/list') {
@@ -22,7 +23,7 @@ var _routeCb = function(route) {
 				cmpId = 'view/list'
 				cmp = require('view/list');
 				viewport.current = cmpId;
-			});
+			})
 		}
 	};
 };
