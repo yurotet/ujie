@@ -12,6 +12,9 @@
 		methods: {
 			clickHandler: function() {
 				this.startPage('/list');							
+			},
+			dbltap: function() {
+				alert('rotate');
 			}
 		},
 		created: function() {
@@ -38,9 +41,15 @@
 	.red {
 		color: #f00;
 	}
+	.dbtap {
+		width: 100px;
+		height: 100px;
+		background-color: blue;
+	}
 </style>
 
 <template>
 	<div class="red">index page {{count}}</div>
 	<input type="button" v-on="click: clickHandler()" value="goto new /list" />
+	<div class="dbtap" v-touch="rotate: dbltap()"></div>
 </template>
