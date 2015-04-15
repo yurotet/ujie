@@ -1,12 +1,18 @@
 <script>
-	var BaseComponent = require('common/basecomponent');
+	var BasePage = require('common/basepage');
 	var Vue = require('vue');
 
-	var View = BaseComponent.extend({
+	var View = BasePage.extend({
+		title: 'index',
 		data: function() {
 			return {
 				count: 0
 			};
+		},
+		methods: {
+			clickHandler: function() {
+				this.startPage('/list');							
+			}
 		},
 		created: function() {
 			console.log('index created');
@@ -36,4 +42,5 @@
 
 <template>
 	<div class="red">index page {{count}}</div>
+	<input type="button" v-on="click: clickHandler()" value="goto new /list" />
 </template>

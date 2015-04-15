@@ -2,6 +2,7 @@ var BaseComponent = require('common/basecomponent');
 var Vue = require('vue');
 
 var View = BaseComponent.extend({
+	title: 'list',
 	template: "list page",
 	created: function() {
 		console.log('list created');

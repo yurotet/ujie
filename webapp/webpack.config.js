@@ -2,8 +2,8 @@ var webpack = require("webpack");
 
 module.exports = {
     entry: {
-        app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"],
-        // app: ["./src/app.js"],
+        // app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"],
+        app: ["./src/app.js"],
         vendor: ["vue"]
     }, 
     output: {

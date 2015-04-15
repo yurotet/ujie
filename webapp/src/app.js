@@ -35,7 +35,12 @@ var nav = require('common/navigator');
 // 	}
 // });
 
+Vue.config.debug = true;
+nav.init();
+
 $('input').on('click', function() {
 	var route = $(this).val();
-	nav.forward(route);
+	nav.goTo(route);
 });
+
+var trans = require('common/transition');
