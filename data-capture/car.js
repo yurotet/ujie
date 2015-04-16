@@ -1,10 +1,52 @@
 var request = require('request');
 var process = require('process');
+var fs= require('fs');
+var path = require('path');
 
 // 把结果处理代码放到这个回调里面
 // 数据结果的格式为{'bmw':['1 serises','3 series']...}
 var handleResult = function(result) {	
-	console.log("result handler not implemented!");
+	
+	var addslashes = function(value) {	
+		value = value+"";
+		return value.replace(/(['"\\])/g,"\\$1")
+	};
+
+	var buildsql = function(table, keys, values) {
+		keys = keys.map(function(value){			
+			return addslashes(value);
+		});
+		values = values.map(function(value){			
+			return addslashes(value)
+		})
+
+		return "INSERT INTO (`"+ keys.join("`,`") +"`) VALUES ('" + values.join("','") + "');\n"
+	};
+
+	var write = function(name, sql) {
+		fs.writeFile(path.join(__dirname, name), sql, function (err) {
+	        if (err) throw err;
+	        console.log(name + " Success!");
+	    });
+	};
+
+	var manukeys = ['manufacture_id','name'];
+	var modelkeys = ['model_id','name','manufacture_id'];
+	var manusql = modelsql = '';
+	var manuid = modelid = 0
+
+	Object.keys(result).forEach(function(manuName){
+		++manuid;
+		manusql += buildsql('manufacture', manukeys, [manuid, manuName]);
+
+		result[manuName].forEach(function(modelName){
+			++modelid;
+			modelsql += buildsql('model', modelkeys, [modelid, modelName, manuid]);
+		})
+	});
+
+	write('manu.sql',manusql);
+	write('model.sql',modelsql);	
 }
 
 var requestT = function (url, fn){
