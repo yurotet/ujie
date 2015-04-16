@@ -47,6 +47,7 @@ var handleResult = function(result) {
 
 	write('manu.sql',manusql);
 	write('model.sql',modelsql);	
+
 }
 
 var requestT = function (url, fn){

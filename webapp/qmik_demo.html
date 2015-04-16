@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf8"/>
+    <meta content="width=device-width,user-scalable=no,initial-scale=1.0" name="viewport"/>
+    <meta name="-webkit-tap-highlight" content="no"/>
+    <meta content="IE=10" http-equiv="x-ua-compatible"/>
+	<title>qmik</title>
+	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="bower_components/zepto/zepto.min.js"></script>
+	<script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
+	<script type="text/javascript" src="res/libs/Qmik-debug.all.2.1.02.js"></script>
+	<script type="text/javascript">
+
+	Qmik.sun.config({  //##这个地方只能通过 $.sun.config()来配置,不能通过$.config()来配置
+        alias:{//别名系统
+            "view/testa": "/js/view/testa.js?t=${version}",
+            "view/testb": "/js/view/testb.js?t=${version}"
+        },
+        vars:{//变量系统,通过 ${version} 来使用别名
+            version:"1.0.0" //或者： version:function(){return "1.0.0"}
+        }
+    });
+
+
+	//qmik app init
+	function run() {
+		var dom = $('<div q-ctrl="user">倒计时:${time}</div>');
+		dom.appendTo('body');
+		Qmik.app().ctrl({
+			user: function(scope) { //控制器user,对应 q-ctrl="user"
+				scope.time = 5;
+				scope.watch({
+					"user": function(val) {
+						console.log("watch user:", val);
+					}
+				});
+				Qmik.cycle(function() {
+					scope.time--;
+					scope.apply("time"); //更新time所在的节点值
+				}, 1000);
+				Qmik.delay(function() {
+					scope.user = {
+						name: 'leochen',
+						age: 99
+					};
+					scope.apply(["user"]);
+				}, 3000);
+			}
+		});
+	}
+
+
+	Qmik.use(["view/testa", "view/testb"], function(TestViewA, TestViewB) {
+	});
+
+	var core = {
+		routeMap: {},
+		startApp: function() {
+			var routes = {};
+			_.each(this.routeMap, function(route, viewName) {
+
+			});
+		},
+		_routeHandler: function(route, viewName) {
+			return function(/*route params*/) {
+				$.use(["view/test1"], function(DemoView){
+					debugger;
+		        });
+			};
+		}
+	};
+
+	var AppRouter = Backbone.Router.extend({
+	　　routes:{
+	　　　　"help": "help",
+	　　　　"search/:query": "search",
+	　　　　"search/:query/p:page": "search"
+	　　},
+	　　help:function() {
+			console.log('help');
+	　　},
+	　　search:function(query, page) {
+			debugger;
+			console.log(query + ':' + page);
+	　　}
+	});
+	var appRouter = new AppRouter();
+	Backbone.history.start();
+	</script>
+</head>
+<body>
+<!-- <div q-ctrl="user">倒计时:${time}</div> -->
+	<div id="main">
+		<div id="viewport-cnt">
+			<!-- <div class="viewport" page-route="xxx"></div> -->
+		</div>
+	</div>
+	<!--<script async="async" src="/static/js/view/demo.js"></script>-->
+</body>
+</html>
