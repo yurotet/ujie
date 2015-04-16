@@ -20,7 +20,7 @@ var handleResult = function(result) {
 			return addslashes(value)
 		})
 
-		return "INSERT INTO (`"+ keys.join("`,`") +"`) VALUES ('" + values.join("','") + "');\n"
+		return "INSERT INTO " + table + " (`"+ keys.join("`,`") +"`) VALUES ('" + values.join("','") + "');\n"
 	};
 
 	var write = function(name, sql) {
@@ -30,14 +30,14 @@ var handleResult = function(result) {
 	    });
 	};
 
-	var manukeys = ['manufacture_id','name'];
-	var modelkeys = ['model_id','name','manufacture_id'];
+	var manukeys = ['manufactuer_id','name'];
+	var modelkeys = ['model_id','name','manufactuer_id'];
 	var manusql = modelsql = '';
 	var manuid = modelid = 0
 
 	Object.keys(result).forEach(function(manuName){
 		++manuid;
-		manusql += buildsql('manufacture', manukeys, [manuid, manuName]);
+		manusql += buildsql('manufactuer', manukeys, [manuid, manuName]);
 
 		result[manuName].forEach(function(modelName){
 			++modelid;
