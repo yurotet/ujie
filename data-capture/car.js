@@ -1,10 +1,15 @@
 var request = require('request');
 var process = require('process');
+var fs = require('fs');
 
 // 把结果处理代码放到这个回调里面
 // 数据结果的格式为{'bmw':['1 serises','3 series']...}
-var handleResult = function(result) {	
-	console.log("result handler not implemented!");
+var handleResult = function(result) {
+	//写入文件
+	fs.writeFile('message.txt', JSON.stringify(result, null, 2), function (err) {
+	    if (err) throw err;
+	    console.log('It\'s saved!'); //文件被保存
+	});
 }
 
 var requestT = function (url, fn){

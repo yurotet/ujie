@@ -87,3 +87,20 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
+
+
+class Manufactuer(models.Model):
+    manufactuer_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        db_table = 'manufactuer'
+
+
+class Model(models.Model):
+    model_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    manufactuer = models.ForeignKey(Manufactuer, related_name='models', null=True)
+
+    class Meta:
+        db_table = 'model'

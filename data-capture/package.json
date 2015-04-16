@@ -1,0 +1,19 @@
+{
+  "name": "data-capture",
+  "version": "1.0.0",
+  "description": "",
+  "main": "car.js",
+  "dependencies": {
+    "request": "^2.55.0"
+  },
+  "devDependencies": {
+    "fs": "0.0.2",
+    "process": "^0.10.1",
+    "request": "^2.55.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
