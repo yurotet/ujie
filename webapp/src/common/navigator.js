@@ -78,12 +78,12 @@ var gotoRoute = function(route, replace) {
 	};
 	if(route == '/index') {
 		require.ensure([], function() {
-			var Page = require('page/index');
+			var Page = require('pages/index');
 			ensureCb(Page);
 		});
 	} else if(route == '/list') {
 		require.ensure([], function() {
-			var Page = require('page/list');
+			var Page = require('pages/list');
 			ensureCb(Page);
 		})
 	}

@@ -24,11 +24,11 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ],
     devServer: {
         contentBase: "build/"
