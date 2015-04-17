@@ -5,6 +5,7 @@ from ujieservice.rest.customer.api import CustomerProfile
 
 from ujieservice.rest.driver import api as driver_api
 from ujieservice.rest.customer import api as customer_api
+from ujieservice.rest.common import api as common_api
 
 
 # driver_router = routers.DefaultRouter()
@@ -12,6 +13,9 @@ from ujieservice.rest.customer import api as customer_api
 #
 # customer_router = routers.DefaultRouter()
 # customer_router.register(r'profile/', customer_api.CustomerProfile)
+
+# router = routers.DefaultRouter()
+# router.register(r'manufactuers', common_api.ManufactuerViewSet.as_view({'get': 'list'}))
 
 urlpatterns = patterns('',
     # Examples:
@@ -27,8 +31,13 @@ urlpatterns = patterns('',
     (r'^h5/order/(\d+)/notify/$', 'ujieservice.wechat.h5.notify_order'),
     (r'^h5/order/$', 'ujieservice.wechat.h5.order_list'),
 
+    # (r'^rest/api/', include(router.urls)),
     (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework')),
     # (r'^rest/api/driver/', include(driver_router.urls)),
     (r'^rest/api/customer/profile/$', CustomerProfile.as_view()),
+    (r'^rest/api/common/manufactuers/$', common_api.ManufactuerList.as_view()),
+    (r'^rest/api/common/manufactuers/(?P<pk>[0-9]+)/$', common_api.ManufactuerDetail.as_view()),
+    (r'^rest/api/common/manufactuers/(?P<pk>[0-9]+)/models/$', common_api.ModelList.as_view()),
+    # (r'^rest/api/common/manufactuer/(\d+)$', CustomerProfile.as_view()),
     # (r'^rest/api/customer/', include(customer_router.urls)),
 )
