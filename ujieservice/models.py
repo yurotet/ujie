@@ -27,6 +27,7 @@ class Profile(models.Model):
     objects = UserManager()
 
     #driver info
+    driver_avatar = models.ImageField(upload_to="driver_avatars", null=True)
     driver_name = models.CharField(max_length=100, blank=True)
     driver_birth = models.DateField(blank=True, null=True)
     driver_status = models.CharField(max_length=50, choices=DRIVER_STATUS, default='0')

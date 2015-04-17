@@ -38,6 +38,7 @@ urlpatterns = patterns('',
     (r'^rest/api/common/manufactuers/$', common_api.ManufactuerList.as_view()),
     (r'^rest/api/common/manufactuers/(?P<pk>[0-9]+)/$', common_api.ManufactuerDetail.as_view()),
     (r'^rest/api/common/manufactuers/(?P<pk>[0-9]+)/models/$', common_api.ModelList.as_view()),
+    (r'^rest/api/common/avatar/$', common_api.Avatar.as_view()),
     # (r'^rest/api/common/manufactuer/(\d+)$', CustomerProfile.as_view()),
     # (r'^rest/api/customer/', include(customer_router.urls)),
 )
