@@ -1,4 +1,5 @@
 //require modules
+var config = require('config');
 var Vue = require('vue');
 var $Class = require('oo-class');
 
@@ -46,19 +47,19 @@ window.onpopstate = function() {
 };
 
 var gotoRoute = function(route, replace) {
-	var page = findPage(route);
-	if(page) {
-		if(!page.startMode || page.startMode == 'singleton') {
-			pageHistory.push(page);
-			var pageIdx = pageHistory.length - 1;
-			history[replace ? 'replaceState' : 'pushState']({
-				route: route,
-				pageIdx: pageIdx
-			}, '', route);
-			setCurPage(page);
-			return;
-		}
-	}
+	// var page = findPage(route);
+	// if(page) {
+	// 	if(!page.startMode || page.startMode == 'singleton') {
+	// 		pageHistory.push(page);
+	// 		var pageIdx = pageHistory.length - 1;
+	// 		history[replace ? 'replaceState' : 'pushState']({
+	// 			route: route,
+	// 			pageIdx: pageIdx
+	// 		}, '', route);
+	// 		setCurPage(page);
+	// 		return;
+	// 	}
+	// }
 	var ensureCb = function(Page) {
 		var $pageEl = $('<div class="page" style="display: none;"/>');
 		var page = new Page({
@@ -70,18 +71,18 @@ var gotoRoute = function(route, replace) {
 		pageHistory.push(page);
 		var pageIdx = pageHistory.length - 1;
 		history[replace ? 'replaceState' : 'pushState']({
-			route: route,
+			route: config.contentBase + route, // '/webapp/ ' + 'index'
 			pageIdx: pageIdx
 		}, '', route);
 		$('#viewport').append(page.$el);
 		setCurPage(page);
 	};
-	if(route == '/index') {
+	if(route == 'index') {
 		require.ensure([], function() {
 			var Page = require('pages/index');
 			ensureCb(Page);
 		});
-	} else if(route == '/list') {
+	} else if(route == 'list') {
 		require.ensure([], function() {
 			var Page = require('pages/list');
 			ensureCb(Page);
@@ -90,7 +91,7 @@ var gotoRoute = function(route, replace) {
 };
 
 module.exports = {
-	DEFAULT_ROUTE: '/index',
+	DEFAULT_ROUTE: 'index',
 	_inited: false,
 	init: function() {
 		if(!this._inited) {
