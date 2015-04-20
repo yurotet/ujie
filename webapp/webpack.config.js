@@ -24,6 +24,11 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
+        new webpack.ProvidePlugin({
+            // $: "jquery",
+            // jQuery: "jquery",
+            // "window.jQuery": "jquery"
+        }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

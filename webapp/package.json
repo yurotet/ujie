@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "browserify-zepto": "^1.1.4",
+    "exports-loader": "^0.6.2",
     "fastclick": "^1.0.6",
     "insert-css": "^0.2.0",
     "oo-class": "^1.4.4",
