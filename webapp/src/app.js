@@ -2,13 +2,6 @@ var Vue = require('vue');
 var nav = require('common/navigator');
 var FastClick = require('fastclick');
 var vueTouch = require('vue-touch');
-var underscore = require('underscore');
-var Zepto = require('browserify-zepto');
-
-//export underscore to global
-window["_"] = underscore;
-window["$"] = Zepto;
-
 
 FastClick.attach(document.body);
 

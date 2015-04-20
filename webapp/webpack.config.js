@@ -9,7 +9,7 @@ module.exports = {
     output: {
         path: "./build/assets",
         filename: "app.bundle.js",
-        publicPath: '/assets/'
+        publicPath: 'assets/'
     },
     module: {
         loaders: [
@@ -25,15 +25,14 @@ module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new webpack.ProvidePlugin({
-            // $: "jquery",
-            // jQuery: "jquery",
-            // "window.jQuery": "jquery"
+            "$": "browserify-zepto",
+            // "_": "underscore",
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
     devServer: {
         contentBase: "build/"
