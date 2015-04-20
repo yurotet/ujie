@@ -47,6 +47,8 @@ window.onpopstate = function() {
 };
 
 var gotoRoute = function(route, replace) {
+	//去除前置与后置的斜杠///
+	route = route.replace(/(^\/+)|(\/+$)/g, '');
 	// var page = findPage(route);
 	// if(page) {
 	// 	if(!page.startMode || page.startMode == 'singleton') {
@@ -95,8 +97,15 @@ module.exports = {
 	_inited: false,
 	init: function() {
 		if(!this._inited) {
-			var route = location.pathname;
-			if(!route || route == '/') route = this.DEFAULT_ROUTE;
+			var route;
+			var path = location.pathname;
+			//从类似 /webapp/list/ 中取出 list/
+			var reg = new RegExp(config.contentBase + "(.*)")
+			var result = path.match(reg);
+			if(result.length == 2) {
+				route = result[1];
+			}
+			if(!route) route = this.DEFAULT_ROUTE;
 			gotoRoute(route, true);
 			this._inited = true;
 		}
