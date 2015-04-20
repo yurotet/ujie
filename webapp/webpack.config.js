@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -7,9 +8,9 @@ module.exports = {
         vendor: ["vue"]
     }, 
     output: {
-        path: "./build/assets",
+        path: "./build/",
         filename: "app.bundle.js",
-        publicPath: 'assets/'
+        publicPath: './'
     },
     module: {
         loaders: [
@@ -23,6 +24,10 @@ module.exports = {
         extensions: ['', '.js', '.json', '.coffee', '.vue'],
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/index.html'
+        }),
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new webpack.ProvidePlugin({
             "$": "browserify-zepto",
