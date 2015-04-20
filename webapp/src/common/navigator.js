@@ -89,6 +89,11 @@ var gotoRoute = function(route, replace) {
 			var Page = require('pages/list');
 			ensureCb(Page);
 		})
+	} else {
+		require.ensure([], function() {
+			var Page = require('pages/notfound');
+			ensureCb(Page);
+		})
 	}
 };
 
