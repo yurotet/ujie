@@ -4,8 +4,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: {
         // app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"],
-        app: ["./src/app.js"],
-        vendor: ["vue"]
+        app: ["./src/app.js"]
+        // vendor: ["vue"]
     }, 
     output: {
         path: "./build/",
@@ -28,7 +28,7 @@ module.exports = {
             filename: 'index.html',
             template: 'src/index.html'
         }),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
+        // new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new webpack.ProvidePlugin({
             "$": "browserify-zepto",
             // "_": "underscore",
