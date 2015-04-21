@@ -73,9 +73,9 @@ var gotoRoute = function(route, replace) {
 		pageHistory.push(page);
 		var pageIdx = pageHistory.length - 1;
 		history[replace ? 'replaceState' : 'pushState']({
-			route: config.contentBase + route, // '/webapp/ ' + 'index'
+			route: route, // '/webapp/ ' + 'index'
 			pageIdx: pageIdx
-		}, '', route);
+		}, '', config.contentBase + route);
 		$('#viewport').append(page.$el);
 		setCurPage(page);
 	};
@@ -107,7 +107,7 @@ module.exports = {
 			//从类似 /webapp/list/ 中取出 list/
 			var reg = new RegExp(config.contentBase + "(.*)")
 			var result = path.match(reg);
-			if(result.length == 2) {
+			if(result && result.length == 2) {
 				route = result[1];
 			}
 			if(!route) route = this.DEFAULT_ROUTE;
