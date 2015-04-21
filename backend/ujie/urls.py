@@ -8,6 +8,7 @@ from ujieservice.rest.customer import api as customer_api
 from ujieservice.rest.common import api as common_api
 
 
+
 # driver_router = routers.DefaultRouter()
 # driver_router.register(r'profile/', driver_api.DriverProfile)
 #
@@ -34,11 +35,16 @@ urlpatterns = patterns('',
     # (r'^rest/api/', include(router.urls)),
     (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework')),
     # (r'^rest/api/driver/', include(driver_router.urls)),
-    (r'^rest/api/customer/profile/$', CustomerProfile.as_view()),
-    (r'^rest/api/common/manufactuers/$', common_api.ManufactuerList.as_view()),
-    (r'^rest/api/common/manufactuers/(?P<pk>[0-9]+)/$', common_api.ManufactuerDetail.as_view()),
-    (r'^rest/api/common/manufactuers/(?P<pk>[0-9]+)/models/$', common_api.ModelList.as_view()),
-    (r'^rest/api/common/avatar/$', common_api.Avatar.as_view()),
+    (r'^rest/customer/profile/$', CustomerProfile.as_view()),
+    (r'^rest/common/manufactuers/$', common_api.ManufactuerList.as_view()),
+    (r'^rest/common/manufactuers/(?P<pk>[0-9]+)/$', common_api.ManufactuerDetail.as_view()),
+    (r'^rest/common/manufactuers/(?P<pk>[0-9]+)/models/$', common_api.ModelList.as_view()),
+    (r'^rest/common/avatar/$', common_api.Avatar.as_view()),
     # (r'^rest/api/common/manufactuer/(\d+)$', CustomerProfile.as_view()),
     # (r'^rest/api/customer/', include(customer_router.urls)),
+)
+
+#set prefix url, related to deployment path
+urlpatterns = patterns('',
+    (r'^service/', include(urlpatterns))
 )
