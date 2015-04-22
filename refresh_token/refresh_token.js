@@ -12,8 +12,10 @@ function refresh_access_token() {
         if(status == '200') {
             data = JSON.parse(data);
             var expires_in = get_before_expires(data.expires_in);
+            console.log("access token refreshed");
             setTimeout(refresh_access_token, expires_in);
             if(!is_refresh_jsapi_ticket_started) {
+                console.log("start refresh jsapi ticket");
                 refresh_jsapi_ticket();
                 is_refresh_jsapi_ticket_started = true;
             }
@@ -28,6 +30,7 @@ function refresh_jsapi_ticket() {
         if(status == '200') {
             data = JSON.parse(data);
             var expires_in = get_before_expires(data.expires_in);
+            console.log("jsapi ticket refreshed");
             setTimeout(refresh_jsapi_ticket, expires_in);
         } else {
             refresh_jsapi_ticket()
