@@ -4,7 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: {
         // app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"],
-        app: ["./src/app.js"]
+        app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"]
         // vendor: ["vue"]
     }, 
     output: {
@@ -14,8 +14,9 @@ module.exports = {
     },
     module: {
         loaders: [
+            { test: /\.vue$/, loader: "vue" },
             { test: /\.css$/, loader: "style!css" },
-            { test: /\.vue$/, loader: "vue" }
+            { test: /\.less$/, loader: "style!css!less" }
         ]
     },
     resolve: {
@@ -33,11 +34,11 @@ module.exports = {
             "$": "browserify-zepto",
             // "_": "underscore",
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
     devServer: {
         contentBase: "build/"
