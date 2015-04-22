@@ -6,13 +6,14 @@ from django.http import HttpResponse, HttpResponseForbidden
 from ujie import settings
 
 ACCESS_TOKEN = ''
-TOKEN_SECRET = 'fdasfasdflrewqrqwerqsdffsd'
+JSAPI_TICKET = ''
 
+REQUEST_SECRET = 'fdasfasdflrewqrqwerqsdffsd'
 
 # 请求必须携带参数token_secret
-def refresh(request):
-    token_secret = request.REQUEST.get('token_secret', '')
-    if token_secret == TOKEN_SECRET:
+def refresh_access_token(request):
+    token_secret = request.REQUEST.get('request_secret', '')
+    if token_secret == REQUEST_SECRET:
         req = requests.get('https://api.weixin.qq.com/cgi-bin/token', params={
             'grant_type': 'client_credential',
             'appid': settings.APPID,
@@ -21,12 +22,30 @@ def refresh(request):
         result = json.loads(req.text)
         global ACCESS_TOKEN
         ACCESS_TOKEN = result['access_token']
-        expires_in = result['expires_in']
-        global _expire_time
-        _expire_time = time.time() + expires_in
 
         #retrieve userinfo
-        print 'token updated, current value:' + ACCESS_TOKEN
-        return HttpResponse('ok')
+        print 'access token updated, current value:' + ACCESS_TOKEN
+        return HttpResponse(json.dumps({
+            "expires_in": result['expires_in']
+        }), content_type="application/json")
+    else:
+        return HttpResponseForbidden()
+
+def refresh_jsapi_ticket(request):
+    token_secret = request.REQUEST.get('request_secret', '')
+    if token_secret == REQUEST_SECRET:
+        req = requests.get('https://api.weixin.qq.com/cgi-bin/ticket/getticket', params={
+            'type': 'jsapi',
+            'access_token': ACCESS_TOKEN
+        })
+        result = json.loads(req.text)
+        global JSAPI_TICKET
+        JSAPI_TICKET = result['ticket']
+
+        #retrieve userinfo
+        print 'jsapi ticket updated, current value:' + JSAPI_TICKET
+        return HttpResponse(json.dumps({
+            "expires_in": result['expires_in']
+        }), content_type="application/json")
     else:
         return HttpResponseForbidden()
