@@ -4,6 +4,7 @@ var is_refresh_jsapi_ticket_started = false;
 refresh_access_token();
 
 function get_before_expires(expires_in) {
+    //in seconds
     return expires_in - 200;
 }
 
@@ -13,7 +14,7 @@ function refresh_access_token() {
             data = JSON.parse(data);
             var expires_in = get_before_expires(data.expires_in);
             console.log("access token refreshed");
-            setTimeout(refresh_access_token, expires_in);
+            setTimeout(refresh_access_token, expires_in * 1000);
             if(!is_refresh_jsapi_ticket_started) {
                 console.log("start refresh jsapi ticket");
                 refresh_jsapi_ticket();
@@ -31,7 +32,7 @@ function refresh_jsapi_ticket() {
             data = JSON.parse(data);
             var expires_in = get_before_expires(data.expires_in);
             console.log("jsapi ticket refreshed");
-            setTimeout(refresh_jsapi_ticket, expires_in);
+            setTimeout(refresh_jsapi_ticket, expires_in * 1000);
         } else {
             refresh_jsapi_ticket()
         }
