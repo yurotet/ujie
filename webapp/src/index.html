@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head>ratchet
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
 	<meta name="apple-mobile-web-app-title" content="ujietrip">
 	<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Include the compiled Ratchet CSS -->
+    <link href="/static/ratchet/css/ratchet.min.css" rel="stylesheet">
+    <link href="/static/app/main.css" rel="stylesheet">
+    <!-- Include the compiled Ratchet JS -->
+    <script src="/static/ratchet/js/ratchet.min.js"></script>
+
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<title></title>
-	
-	<!-- <script charset="utf-8" id="seajsnode" src="http://static.alipayobjects.com/seajs/??seajs/2.2.2/sea.js,seajs-combo/1.0.1/seajs-combo.js,seajs-style/1.0.2/seajs-style.js"></script> -->
-	<style>
-	.viewport {
-	  transition: all .3s ease;
-	  height: 30px;
-	  padding: 10px;
-	  background-color: #eee;
-	  overflow: hidden;
-	}
-	.viewport.expand-enter, .viewport.expand-leave {
-	  height: 0;
-	  padding: 0 10px;
-	  opacity: 0;
-	}
-	</style>
 </head>
 <body>
-	<input type="button" value="index" />
-	<input type="button" value="list" />
-	<div id="viewport"></div>
+ 	<header class="bar bar-nav">
+		<a class="icon icon-left-nav pull-left"></a>
+	    <h1 class="title">Ratchet</h1>
+    </header>
 
+	<div id="viewport" class="content">
+	</div>
+	<nav class="bar bar-tab">
+	    <a class="tab-item active" href="#" data-route="index">
+	        <span class="icon icon-home"></span>
+	        <span class="tab-label">Index</span>
+	    </a>
+	    <a class="tab-item active" href="#" data-route="driverreg">
+	        <span class="icon icon-person"></span>
+	        <span class="tab-label">DriverReg</span>
+	    </a>
+	</nav>
 </body>
 <script src="{%=o.htmlWebpackPlugin.files.chunks.app.entry%}"></script>
-<!-- <script type="text/javascript" src="http://localhost:8080/webpack-dev-server.js"></script> -->
+<script type="text/javascript" src="http://localhost:8080/webpack-dev-server.js"></script>
 </html>

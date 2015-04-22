@@ -63,7 +63,7 @@ var gotoRoute = function(route, replace) {
 	// 	}
 	// }
 	var ensureCb = function(Page) {
-		var $pageEl = $('<div class="page" style="display: none;"/>');
+		var $pageEl = $('<div class="card" style="display: none;"/>');
 		var page = new Page({
 			el: $pageEl[0],
 			route: route
@@ -87,6 +87,11 @@ var gotoRoute = function(route, replace) {
 	} else if(route == 'list') {
 		require.ensure([], function() {
 			var Page = require('pages/list');
+			ensureCb(Page);
+		})
+	} else if(route == 'driverreg') {
+		require.ensure([], function() {
+			var Page = require('pages/driverreg');
 			ensureCb(Page);
 		})
 	} else {

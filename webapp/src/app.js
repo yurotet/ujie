@@ -15,7 +15,8 @@ Vue.use(vueTouch)
 Vue.config.debug = true;
 nav.init();
 
-$('input').on('click', function() {
-	var route = $(this).val();
+
+$('[data-route]').on('click', function() {
+	var route = $(this).data('route');
 	nav.goTo(route);
 });

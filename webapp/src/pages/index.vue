@@ -49,7 +49,26 @@
 </style>
 
 <template>
-	<div class="red">index page {{count}}</div>
-	<input type="button" v-on="click: clickHandler()" value="goto new /list" />
-	<div class="dbtap" v-touch="rotate: dbltap()"></div>
+	<ul class="table-view">
+      <li class="table-view-cell">
+        <a class="push-right" href="http://goratchet.com">
+          <strong>Ratchet documentation</strong>
+        </a>
+      </li>
+      <li class="table-view-cell">
+        <a class="push-right" href="https://github.com/twbs/ratchet/">
+          <strong>Ratchet on Github</strong>
+        </a>
+      </li>
+      <li class="table-view-cell">
+        <a class="push-right" href="https://groups.google.com/forum/#!forum/goratchet">
+          <strong>Ratchet Google group</strong>
+        </a>
+      </li>
+      <li class="table-view-cell">
+        <a class="push-right" href="https://twitter.com/goratchet">
+          <strong>Ratchet on Twitter</strong>
+        </a>
+      </li>
+    </ul>
 </template>
