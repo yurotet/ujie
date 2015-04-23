@@ -1,4 +1,9 @@
+import json
+import os
 import uuid
+import requests
+from PIL import Image
+from StringIO import StringIO
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
@@ -6,8 +11,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from ujie import settings
 from ujieservice.models import Order, Manufactuer, Model
 from ujieservice.rest.serializers import ManufactuerListSerializer, ManufactuerDetailSerializer, ModelListSerializer
+from ujieservice.wechat import token
 
 
 class ManufactuerList(APIView):
@@ -50,3 +57,55 @@ class Avatar(APIView):
             request.user.profile.driver_avatar = uploaded_file
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class WxStaticUpload(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        wx_media_id = request.REQUEST.get("wx_media_id")
+        upload_type = request.REQUEST.get("upload_type")
+        req = requests.get('http://file.api.weixin.qq.com/cgi-bin/media/get', params={
+            'access_token': token.ACCESS_TOKEN,
+            'media_id': wx_media_id
+        })
+
+        if req.headers['content-type'] == 'image/jpeg':
+            image = Image.open(StringIO(req.content))
+            filename = str(uuid.uuid1()) + '.jpg'
+            upload_dir = settings.MEDIA_ROOT + upload_type + '/'
+            image.save(upload_dir + filename)
+            static_url = settings.MEDIA_URL + upload_type + '/' + filename
+            return Response(json.dump({
+                'static_url': static_url,
+                'upload_type': upload_type,
+                'filename': filename,
+            }), status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class WxPermUpload(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        wx_media_id = request.REQUEST.get("wx_media_id")
+        upload_type = request.REQUEST.get("upload_type")
+        req = requests.get('http://file.api.weixin.qq.com/cgi-bin/media/get', params={
+            'access_token': token.ACCESS_TOKEN,
+            'media_id': wx_media_id
+        })
+
+        if req.headers['content-type'] == 'image/jpeg':
+            image = Image.open(StringIO(req.content))
+            filename = str(uuid.uuid1()) + '.jpg'
+            upload_dir = settings.MEDIA_ROOT + upload_type + '/'
+            image.save(upload_dir + filename)
+            static_url = settings.MEDIA_URL + upload_type + '/' + filename
+            return Response(json.dump({
+                'static_url': static_url,
+                'upload_type': upload_type,
+                'filename': filename,
+            }), status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

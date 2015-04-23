@@ -1,8 +1,9 @@
 #coding:utf-8
+import hashlib
 import requests
 import json
 import time
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpRequest
 from ujie import settings
 
 ACCESS_TOKEN = ''
@@ -31,6 +32,7 @@ def refresh_access_token(request):
     else:
         return HttpResponseForbidden()
 
+
 def refresh_jsapi_ticket(request):
     token_secret = request.REQUEST.get('request_secret', '')
     if token_secret == REQUEST_SECRET:
@@ -49,3 +51,21 @@ def refresh_jsapi_ticket(request):
         }), content_type="application/json")
     else:
         return HttpResponseForbidden()
+
+
+def sign_jsapi(request):
+    noncestr = request.REQUEST.get('noncestr')
+    timestamp = request.REQUEST.get('timestamp')
+    url = request.REQUEST.get('url')
+    arr = [
+        'jsapi_ticket=' + JSAPI_TICKET,
+        # 'jsapi_ticket=' + 'sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg',
+        'noncestr=' + noncestr,
+        'timestamp=' + timestamp,
+        'url=' + url
+    ]
+    tmp = '&'.join(arr)
+    tmp = hashlib.sha1(tmp).hexdigest()
+    return HttpResponse(json.dumps({
+        'signature': tmp
+    }))

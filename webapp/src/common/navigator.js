@@ -64,7 +64,21 @@ var getRouteFromHash = function() {
 	}
 };
 
-var gotoRoute = function(route, replace) {
+var buildPage = function(Page, route) {
+	var $pageEl = $('<div class="card" style="display: none;"/>');
+	var page = new Page({
+		el: $pageEl[0],
+		route: route
+	});
+	return page;
+};
+
+var addPage = function(page) {
+	pageHistory.push(page);
+	$('#viewport').append(page.$el);
+};
+
+var gotoRoute = function(route) {
 	//去除前置与后置的斜杠///
 	route = route.replace(/(^\/+)|(\/+$)/g, '');
 	// var page = findPage(route);
@@ -82,19 +96,16 @@ var gotoRoute = function(route, replace) {
 	// }
 	var ensureCb = function(Page) {
 		var pageIdx = pageHistory.length;
+		//如果是第一个页面，就replace当前的state
+		var replace = pageHistory.length == 0;
 		history[replace ? 'replaceState' : 'pushState']({
 			route: route, // '/webapp/ ' + 'index'
 			pageIdx: pageIdx
 		}, '', config.contentBase + route);
-		var $pageEl = $('<div class="card" style="display: none;"/>');
-		var page = new Page({
-			el: $pageEl[0],
-			route: route
-		});
 		//删除后续页面
 		clearRemainingPages(pageIdx);
-		pageHistory.push(page);
-		$('#viewport').append(page.$el);
+		var page = buildPage(Page, route);
+		addPage(page);
 		setCurPage(page);
 	};
 	if(route == 'index') {
@@ -106,11 +117,13 @@ var gotoRoute = function(route, replace) {
 		require.ensure([], function() {
 			var Page = require('pages/list');
 			ensureCb(Page);
-		})
+		});
 	} else if(route == 'driverreg') {
 		require.ensure([], function() {
 			var Page = require('pages/driverreg');
-			ensureCb(Page);
+			var page = buildPage(Page, route);
+			addPage(page);
+			setCurPage(page);
 		})
 	} else {
 		require.ensure([], function() {
@@ -138,7 +151,7 @@ module.exports = {
 				route = getRouteFromHash();
 			}
 			if(!route) route = this.DEFAULT_ROUTE;
-			gotoRoute(route, true);
+			gotoRoute(route);
 			this._inited = true;
 		}
 	},

@@ -27,9 +27,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-MEDIA_ROOT = "d:/workspace/src/ujie/uploads/"
+MEDIA_ROOT = "D:/workspace/src/ujie/static/uploads/"
 
-MEDIA_URL = "http://localhost:8005/"
+MEDIA_URL = "http://wx.ujietrip.com/static/"
 
 # Application definition
 

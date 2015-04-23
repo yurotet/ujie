@@ -11,7 +11,8 @@
 				manufactuerList: [],
 				modelList: [],
 				manufactuer: null,
-				model: null
+				model: null,
+				imgSrc: null
 			};
 		},
 		methods: {
@@ -19,11 +20,42 @@
 				wx.chooseImage({
 				    success: function (res) {
 				        var localIds = res.localIds;
-				        console.log(localIds);
-				    }
+				        if(localIds.length) {
+				        	this.$data.imgSrc = localIds[0]
+				        }
+				    }.bind(this)
 				});
 			},
 			onConfirm: function() {
+				var uploadHandler = function(wxMediaId) {
+					ajax
+					.post('/service/rest/common/wxstaticupload/')
+					.type('form')
+					.send({
+						wx_media_id: wxMediaId,
+						upload_type: 'avatar'
+					})
+					.end(function(err, res) {
+						if(!err) {
+							var body = res.body;
+							alert(JSON.stringify(body));
+							this.$data.imgSrc = body.saved_url;
+						}
+					}.bind(this));
+				}.bind(this);
+
+				var localId = this.$data.imgSrc;
+				if(localId) {
+					wx.uploadImage({
+						localId: localId,
+						isShowProgressTips: 0,
+						success: function(res) {
+							alert(JSON.stringify(res));
+							var wxMediaId = res.serverId; // 返回图片的服务器端ID
+							uploadHandler(wxMediaId);
+						}
+					});
+				}
 				console.log(this.$data);
 			}
 		},
@@ -78,7 +110,16 @@
 	module.exports = View;
 </script>
 
-<style>
+<style lang="less">
+	.driver-reg {
+		.avatar {
+			width: 120px;
+			height: 120px;
+		}
+		.avatar-row {
+			height: auto;
+		}
+	}
 </style>
 
 <template>
@@ -104,8 +145,9 @@
 			<label>Contact</label>
 			<input type="text" v-model="mobile">
 		</div>
-		<div class="input-row">
+		<div class="input-row avatar-row">
 			<label>Avatar</label>
+			<img class="avatar" src={{imgSrc}} />
 			<button class="btn btn-primary" v-on="click: onChoosePhoto">
 			  	Choose Photo
 			</button>
