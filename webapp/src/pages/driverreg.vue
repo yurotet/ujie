@@ -1,7 +1,8 @@
 <script>
 	var BasePage = require('common/basepage');
 	var ajax = require('common/ajax');
-	var Vue = require('vue');
+	var wxutil = require('common/wxutil');
+
 	var View = BasePage.extend({
 		title: 'index',
 		data: function() {
@@ -15,8 +16,6 @@
 		},
 		methods: {
 			onChoosePhoto: function() {
-				alert(1);
-				alert(wx);
 				wx.chooseImage({
 				    success: function (res) {
 				        var localIds = res.localIds;
@@ -29,6 +28,7 @@
 			}
 		},
 		created: function() {
+			wxutil.config();
 			ajax
 			.get('/service/rest/common/manufactuers/')
 			.end(function(err, res) {
