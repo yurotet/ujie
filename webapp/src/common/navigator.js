@@ -1,7 +1,6 @@
 //require modules
 var config = require('config');
 var Vue = require('vue');
-var $Class = require('oo-class');
 
 var pageHistory = [];
 var curPageIdx;
@@ -32,17 +31,36 @@ var clearRemainingPages = function(fromPageIdx) {
 };
 
 window.onpopstate = function() {
-	console.log(pageHistory);
-	var state = history.state;
-	var page = pageHistory[state.pageIdx];
-	setCurPage(page);
+	if(config.isPushState) {
+		console.log(pageHistory);
+		var state = history.state;
+		var page = pageHistory[state.pageIdx];
+		setCurPage(page);
 
-	//back oper
-	if(curPageIdx < lastPageIdx) {
-		console.log('back');
-	} else {
-		console.log('forward');
-	//forward oper
+		//back oper
+		if(curPageIdx < lastPageIdx) {
+			console.log('back');
+		} else {
+			console.log('forward');
+		//forward oper
+		}
+	}
+};
+
+window.onhashchange = function() {
+	if(!config.isPushState) {
+		var route = getRouteFromHash();
+		gotoRoute(route);
+	}
+};
+
+var getRouteFromHash = function() {
+	var hash = location.hash;
+	var reg = /#(.*)/;
+	var result = hash.match(reg);
+	if(result && result.length == 2) {
+		route = result[1];
+		return route;
 	}
 };
 
@@ -63,6 +81,10 @@ var gotoRoute = function(route, replace) {
 	// 	}
 	// }
 	var ensureCb = function(Page) {
+		history[replace ? 'replaceState' : 'pushState']({
+			route: route, // '/webapp/ ' + 'index'
+			pageIdx: pageHistory.length
+		}, '', config.contentBase + route);
 		var $pageEl = $('<div class="card" style="display: none;"/>');
 		var page = new Page({
 			el: $pageEl[0],
@@ -71,11 +93,6 @@ var gotoRoute = function(route, replace) {
 		//删除后续页面
 		clearRemainingPages(curPageIdx);
 		pageHistory.push(page);
-		var pageIdx = pageHistory.length - 1;
-		history[replace ? 'replaceState' : 'pushState']({
-			route: route, // '/webapp/ ' + 'index'
-			pageIdx: pageIdx
-		}, '', config.contentBase + route);
 		$('#viewport').append(page.$el);
 		setCurPage(page);
 	};
@@ -108,12 +125,16 @@ module.exports = {
 	init: function() {
 		if(!this._inited) {
 			var route;
-			var path = location.pathname;
-			//从类似 /webapp/list/ 中取出 list/
-			var reg = new RegExp(config.contentBase + "(.*)")
-			var result = path.match(reg);
-			if(result && result.length == 2) {
-				route = result[1];
+			if(config.isPushState) {
+				var path = location.pathname;
+				//从类似 /webapp/list/ 中取出 list/
+				var reg = new RegExp(config.contentBase + "(.*)");
+				var result = path.match(reg);
+				if(result && result.length == 2) {
+					route = result[1];
+				}
+			} else {
+				route = getRouteFromHash();
 			}
 			if(!route) route = this.DEFAULT_ROUTE;
 			gotoRoute(route, true);

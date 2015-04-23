@@ -1,4 +1,5 @@
 module.exports = {
     contentBase: '/webapp/',
-    serviceBase: '/service/'
+    serviceBase: '/service/',
+    isPushState: true
 };
