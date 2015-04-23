@@ -81,9 +81,10 @@ var gotoRoute = function(route, replace) {
 	// 	}
 	// }
 	var ensureCb = function(Page) {
+		var pageIdx = pageHistory.length;
 		history[replace ? 'replaceState' : 'pushState']({
 			route: route, // '/webapp/ ' + 'index'
-			pageIdx: pageHistory.length
+			pageIdx: pageIdx
 		}, '', config.contentBase + route);
 		var $pageEl = $('<div class="card" style="display: none;"/>');
 		var page = new Page({
@@ -91,7 +92,7 @@ var gotoRoute = function(route, replace) {
 			route: route
 		});
 		//删除后续页面
-		clearRemainingPages(curPageIdx);
+		clearRemainingPages(pageIdx);
 		pageHistory.push(page);
 		$('#viewport').append(page.$el);
 		setCurPage(page);
