@@ -64,7 +64,7 @@ class WxStaticUpload(APIView):
 
     def post(self, request):
         wx_media_id = request.REQUEST.get("wx_media_id")
-        upload_type = request.REQUEST.get("upload_type")
+        upload_to = request.REQUEST.get("upload_to")
         req = requests.get('http://file.api.weixin.qq.com/cgi-bin/media/get', params={
             'access_token': token.ACCESS_TOKEN,
             'media_id': wx_media_id
@@ -73,12 +73,12 @@ class WxStaticUpload(APIView):
         if req.headers['content-type'] == 'image/jpeg':
             image = Image.open(StringIO(req.content))
             filename = str(uuid.uuid1()) + '.jpg'
-            upload_dir = settings.MEDIA_ROOT + upload_type + '/'
+            upload_dir = settings.MEDIA_ROOT + upload_to + '/'
             image.save(upload_dir + filename)
-            static_url = settings.MEDIA_URL + upload_type + '/' + filename
+            static_url = settings.MEDIA_URL + upload_to + '/' + filename
             return Response(json.dump({
                 'static_url': static_url,
-                'upload_type': upload_type,
+                'upload_type': upload_to,
                 'filename': filename,
             }), status=status.HTTP_201_CREATED)
         else:

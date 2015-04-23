@@ -28,20 +28,7 @@
 			},
 			onConfirm: function() {
 				var uploadHandler = function(wxMediaId) {
-					ajax
-					.post('/service/rest/common/wxstaticupload/')
-					.type('form')
-					.send({
-						wx_media_id: wxMediaId,
-						upload_type: 'avatar'
-					})
-					.end(function(err, res) {
-						if(!err) {
-							var body = res.body;
-							alert(JSON.stringify(body));
-							this.$data.imgSrc = body.saved_url;
-						}
-					}.bind(this));
+					
 				}.bind(this);
 
 				var localId = this.$data.imgSrc;
@@ -50,14 +37,29 @@
 						localId: localId,
 						isShowProgressTips: 0,
 						success: function(res) {
-							alert(JSON.stringify(res));
 							var wxMediaId = res.serverId; // 返回图片的服务器端ID
-							uploadHandler(wxMediaId);
-						}
+							_uploadAvatar(wxMediaId, function(err, res) {
+								if(!err) {
+									this._submit(res.body);
+								}
+							}.bind(this));
+						}.bind(this)
 					});
 				}
 				console.log(this.$data);
 			}
+		},
+		_submit: function(avatarInfo) {
+
+		},
+		_uploadAvatar: function(wxMediaId, cb) {
+			ajax.post('/service/rest/common/wxstaticupload/')
+			.type('form')
+			.send({
+				wx_media_id: wxMediaId,
+				upload_to: 'avatar'
+			})
+			.end(cb);
 		},
 		created: function() {
 			wxutil.config();
