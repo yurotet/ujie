@@ -22,7 +22,7 @@ vueTouch.registerCustomEvent('doubletap', {
 Vue.use(vueTouch)
 
 
-Vue.config.debug = true;
+// Vue.config.debug = true;
 nav.init();
 
 

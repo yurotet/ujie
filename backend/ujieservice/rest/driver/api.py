@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ujieservice.models import Order, Vehicle
+from ujieservice.models import Order, Vehicle, Model
 from ujieservice.rest.serializers import DriverProfileSerializer, VehicleSerializer
 
 
@@ -47,8 +47,9 @@ class VehiclesView(APIView):
             profile = request.user.profile
             data = request.data
             serializer = VehicleSerializer(data=data)
+            vehicle_model = Model.objects.get(pk=data['model'])
             if serializer.is_valid():
-                serializer.save(driver=profile)
+                serializer.save(driver=profile, model=vehicle_model)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -71,6 +72,18 @@ class VehicleDetailView(APIView):
                     return Response(status=status.HTTP_401_UNAUTHORIZED)
             else:
                 return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    def put(self, request, pk=None):
+        if request.user.has_perm('ujieservice.user_driver'):
+            vehicle = Vehicle.objects.get(pk=pk)
+            vehicle_model = Model.objects.get(pk=request.data.get('model', vehicle.model.model_id))
+            serializer = VehicleSerializer(vehicle, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save(model=vehicle_model)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 

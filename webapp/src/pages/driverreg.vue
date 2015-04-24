@@ -7,13 +7,29 @@
 		title: 'index',
 		data: function() {
 			return {
-				sex: 'male',
+				profile: {},
+				vehicle: {
+					model: {
+						model_id: null,
+						manufactuer: {
+							manufactuer_id: null
+						}
+					}
+				},
 				manufactuerList: [],
 				modelList: [],
-				manufactuer: null,
-				model: null,
 				imgSrc: null
 			};
+		},
+		computed: {
+			computedId: {
+				// the getter should return the desired value
+				get: function () {
+				},
+				// the setter is optional
+				set: function (newValue) {
+				}
+			}
 		},
 		methods: {
 			onChoosePhoto: function() {
@@ -48,10 +64,10 @@
 			},
 			_submit: function(avatarInfo) {
 				var payload = {
-				    "driver_name": this.$data.name,
-				    "mobile": this.$data.mobile,
+				    "driver_name": this.$data.profile.driver_name,
+				    "mobile": this.$data.profile.mobile,
 				    // "driver_status": "0",
-				    "driver_contact": "test",
+				    "driver_contact": this.$data.profile.mobile,
 				    "driver_account_no": "account_no",
 				    "driver_account_name": "account_name",
 				    "driver_account_bank": "bank",
@@ -63,16 +79,23 @@
 				.end(function(err, res) {
 				});
 
-
 				var payload = {
-		    		"brand": "chevelot",
-		    		"model_id": 1602,
-		    		"plate_no": "966r9"
+		    		"brand": this.$data.vehicle.brand,
+		    		"model": parseInt(this.$data.vehicle.model.model_id, 10),
+		    		"plate_no": this.$data.vehicle.plate_no
 				};
-				ajax.post('/service/rest/driver/vehicles/')
-				.send(payload)
-				.end(function(err, res) {
-				});
+				var vehicleId = this.$data.vehicle.vehicle_id;
+				if(vehicleId) {
+					ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
+					.send(payload)
+					.end(function(err, res) {
+					});
+				} else {
+					ajax.post('/service/rest/driver/vehicles/')
+					.send(payload)
+					.end(function(err, res) {
+					});
+				}
 			},
 			_uploadAvatar: function(wxMediaId, cb) {
 				ajax.post('/service/rest/common/wxstaticupload/')
@@ -86,8 +109,7 @@
 		},
 		created: function() {
 			wxutil.config();
-			ajax
-			.get('/service/rest/common/manufactuers/')
+			ajax.get('/service/rest/common/manufactuers/')
 			.end(function(err, res) {
 				if(!err) {
 					var body = res.body;
@@ -98,15 +120,15 @@
 						};
 					});
 					this.$data.manufactuerList = list;
-					if(list.length) {
-						this.$data.manufactuer = list[0].value;
+					if(list.length && !this.$data.vehicle.vehicle_id) {
+						this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
 					}
 				}
 			}.bind(this));
-			this.$watch('manufactuer', function(newVal, oldVal) {
+
+			this.$watch('vehicle.model.manufactuer.manufactuer_id', function(newVal, oldVal) {
 				this.$data.modelList = [];
-				ajax
-				.get('/service/rest/common/manufactuers/' + newVal + '/models/')
+				ajax.get('/service/rest/common/manufactuers/' + newVal + '/models/')
 				.end(function(err, res) {
 					if(!err) {
 						var body = res.body;
@@ -118,11 +140,22 @@
 						});
 						this.$data.modelList = list;
 						if(list.length) {
-							this.$data.model = list[0].value;
+							this.$data.vehicle.model.model_id = list[0].value;
 						}
 					}
 				}.bind(this));
 			});
+
+			ajax.get('/service/rest/driver/profile/')
+			.end(function(err, res) {
+				if(!err) {
+					var body = res.body;
+					this.$data.profile = body;
+					if(body.driver_vehicles.length) {
+						this.$data.vehicle = body.driver_vehicles[0];
+					}
+				}
+			}.bind(this));
 		},
 		ready: function() {
 		},
@@ -151,7 +184,7 @@
 	<section class="driver-reg">
 		<div class="input-row">
 			<label>Name</label>
-			<input type="text" placeholder="Name" v-model="name">
+			<input type="text" placeholder="Name" v-model="profile.driver_name">
 		</div>
 		<div class="input-row">
 			<label>Email</label>
@@ -159,8 +192,8 @@
 		</div>
 		<div class="input-row">
 			<label>Sex</label>
-			<input type="radio" name="sex" value="male" v-model="sex"> male
-    		<input type="radio" name="sex" value="female" v-model="sex"> female
+			<input type="radio" name="sex" value="male" v-model="profile.sex"> male
+    		<input type="radio" name="sex" value="female" v-model="profile.sex"> female
 		</div>
 		<div class="input-row">
 			<label>Birth</label>
@@ -179,11 +212,19 @@
 		</div>
 		<div class="input-row">
 			<label>Manufactuer</label>
-			<select class="test" v-model="manufactuer" options="manufactuerList"></select>
+			<select class="test" v-model="vehicle.model.manufactuer.manufactuer_id" options="manufactuerList"></select>
 		</div>
 		<div class="input-row">
 			<label>Model</label>
-			<select v-model="model" options="modelList"></select>
+			<select v-model="vehicle.model.model_id" options="modelList"></select>
+		</div>
+		<div class="input-row">
+			<label>PlateNo</label>
+			<input type="text" v-model="vehicle.plate_no">
+		</div>
+		<div class="input-row">
+			<label>Brand</label>
+			<input type="text" v-model="vehicle.brand">
 		</div>
 		<button class="btn btn-positive btn-block" v-on="click: onConfirm">Confirm</button>
 	</section>
