@@ -27,10 +27,8 @@
 				});
 			},
 			onConfirm: function() {
-				var uploadHandler = function(wxMediaId) {
-					
-				}.bind(this);
-
+				this._submit();
+				return;
 				var localId = this.$data.imgSrc;
 				if(localId) {
 					wx.uploadImage({
@@ -47,19 +45,44 @@
 					});
 				}
 				console.log(this.$data);
-			}
-		},
-		_submit: function(avatarInfo) {
+			},
+			_submit: function(avatarInfo) {
+				var payload = {
+				    "driver_name": this.$data.name,
+				    "mobile": this.$data.mobile,
+				    // "driver_status": "0",
+				    "driver_contact": "test",
+				    "driver_account_no": "account_no",
+				    "driver_account_name": "account_name",
+				    "driver_account_bank": "bank",
+				    "driver_account_bsb_no": "bsb",
+				    "driver_driving_license": "license"
+				};
+				ajax.put('/service/rest/driver/profile/')
+				.send(payload)
+				.end(function(err, res) {
+				});
 
-		},
-		_uploadAvatar: function(wxMediaId, cb) {
-			ajax.post('/service/rest/common/wxstaticupload/')
-			.type('form')
-			.send({
-				wx_media_id: wxMediaId,
-				upload_to: 'avatar'
-			})
-			.end(cb);
+
+				var payload = {
+		    		"brand": "chevelot",
+		    		"model_id": 1602,
+		    		"plate_no": "966r9"
+				};
+				ajax.post('/service/rest/driver/vehicles/')
+				.send(payload)
+				.end(function(err, res) {
+				});
+			},
+			_uploadAvatar: function(wxMediaId, cb) {
+				ajax.post('/service/rest/common/wxstaticupload/')
+				.type('form')
+				.send({
+					wx_media_id: wxMediaId,
+					upload_to: 'avatar'
+				})
+				.end(cb);
+			},
 		},
 		created: function() {
 			wxutil.config();

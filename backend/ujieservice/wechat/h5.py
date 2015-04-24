@@ -28,8 +28,9 @@ from ujieservice.wechat import token
 def authorize(request):
     assert isinstance(request, HttpRequest)
     code = request.REQUEST.get('code', '')
+    #state字段现在表示目标跳转地址
     state = request.REQUEST.get('state', '')
-    next = request.REQUEST.get('next', '')
+    next = state
     # 这里确定用户权限，可以是customer，也可以是driver
     user_type = request.REQUEST.get('user_type', 'customer')
     if not request.user.is_authenticated():

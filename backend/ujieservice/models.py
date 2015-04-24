@@ -11,6 +11,22 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User, UserManager
 from django.db import models
 
+class Manufactuer(models.Model):
+    manufactuer_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        db_table = 'manufactuer'
+
+
+class Model(models.Model):
+    model_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    manufactuer = models.ForeignKey(Manufactuer, related_name='models', null=True)
+
+    class Meta:
+        db_table = 'model'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
@@ -27,7 +43,7 @@ class Profile(models.Model):
     objects = UserManager()
 
     #driver info
-    driver_avatar = models.ImageField(upload_to="driver_avatars", null=True)
+    driver_avatar = models.CharField(max_length=255, null=True)
     driver_name = models.CharField(max_length=100, blank=True)
     driver_birth = models.DateField(blank=True, null=True)
     driver_status = models.CharField(max_length=50, choices=DRIVER_STATUS, default='0')
@@ -37,7 +53,7 @@ class Profile(models.Model):
     driver_account_bank = models.CharField(max_length=100, blank=True)
     driver_account_bsb_no = models.CharField(max_length=100, blank=True)
     driver_account_name = models.CharField(max_length=200, blank=True)
-    driver_driving_license = models.FilePathField(max_length=255, blank=True)
+    driver_driving_license = models.CharField(max_length=255, blank=True)
 
     #customer_info
     class Meta:
@@ -48,12 +64,12 @@ class Profile(models.Model):
         )
 
 
-class Vehicle(models. Model):
+class Vehicle(models.Model):
     vehicle_id = models.AutoField(primary_key=True)
-    driver = models.ForeignKey(User, related_name='vehicles')
+    driver = models.ForeignKey(Profile, related_name='driver_vehicles')
     brand = models.CharField(max_length=100, blank=True)
-    model = models.CharField(max_length=100, blank=True)
-    vehicle_licence = models.FilePathField(max_length=255, blank=True)
+    model = models.ForeignKey(Model, related_name='vehicles', null=True)
+    vehicle_licence = models.CharField(max_length=255, blank=True)
     plate_no = models.CharField(max_length=100, blank=True)
     created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
 
@@ -88,20 +104,3 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
-
-
-class Manufactuer(models.Model):
-    manufactuer_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        db_table = 'manufactuer'
-
-
-class Model(models.Model):
-    model_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
-    manufactuer = models.ForeignKey(Manufactuer, related_name='models', null=True)
-
-    class Meta:
-        db_table = 'model'

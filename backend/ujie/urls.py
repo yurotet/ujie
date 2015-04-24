@@ -17,6 +17,7 @@ from ujieservice.rest.common import api as common_api
 
 # router = routers.DefaultRouter()
 # router.register(r'manufactuers', common_api.ManufactuerViewSet.as_view({'get': 'list'}))
+from ujieservice.rest.driver.api import DriverProfile, VehiclesView, VehicleDetailView
 
 urlpatterns = patterns('',
     # Examples:
@@ -37,7 +38,9 @@ urlpatterns = patterns('',
 
     # (r'^rest/api/', include(router.urls)),
     (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # (r'^rest/api/driver/', include(driver_router.urls)),
+    (r'^rest/driver/profile/$', DriverProfile.as_view()),
+    (r'^rest/driver/vehicles/$', VehiclesView.as_view()),
+    (r'^rest/driver/vehicles/(?P<pk>[0-9]+)/$', VehicleDetailView.as_view()),
     (r'^rest/customer/profile/$', CustomerProfile.as_view()),
     (r'^rest/common/manufactuers/$', common_api.ManufactuerList.as_view()),
     (r'^rest/common/manufactuers/(?P<pk>[0-9]+)/$', common_api.ManufactuerDetail.as_view()),
