@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 MEDIA_ROOT = "D:/workspace/src/ujie/static/uploads/"
 
-MEDIA_URL = "http://wx.ujietrip.com/static/"
+MEDIA_URL = "http://wx.ujietrip.com/static/uploads/"
 
 # Application definition
 

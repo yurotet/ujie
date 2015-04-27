@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from ujie import settings
 from ujieservice.models import Order, Vehicle, Model
 from ujieservice.rest.serializers import DriverProfileSerializer, VehicleSerializer
 

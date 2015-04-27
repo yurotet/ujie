@@ -17,8 +17,7 @@
 					}
 				},
 				manufactuerList: [],
-				modelList: [],
-				imgSrc: null
+				modelList: []
 			};
 		},
 		computed: {
@@ -37,22 +36,20 @@
 				    success: function (res) {
 				        var localIds = res.localIds;
 				        if(localIds.length) {
-				        	this.$data.imgSrc = localIds[0]
+				        	this.$data.profile.driver_avatar = localIds[0];
 				        }
 				    }.bind(this)
 				});
 			},
 			onConfirm: function() {
-				this._submit();
-				return;
-				var localId = this.$data.imgSrc;
+				var localId = this.$data.profile.driver_avatar;
 				if(localId) {
 					wx.uploadImage({
 						localId: localId,
 						isShowProgressTips: 0,
 						success: function(res) {
 							var wxMediaId = res.serverId; // 返回图片的服务器端ID
-							_uploadAvatar(wxMediaId, function(err, res) {
+							this._uploadAvatar(wxMediaId, function(err, res) {
 								if(!err) {
 									this._submit(res.body);
 								}
@@ -60,12 +57,12 @@
 						}.bind(this)
 					});
 				}
-				console.log(this.$data);
 			},
 			_submit: function(avatarInfo) {
 				var payload = {
 				    "driver_name": this.$data.profile.driver_name,
 				    "mobile": this.$data.profile.mobile,
+				    "driver_avatar": avatarInfo.stored_path,
 				    // "driver_status": "0",
 				    "driver_contact": this.$data.profile.mobile,
 				    "driver_account_no": "account_no",
@@ -106,26 +103,27 @@
 				})
 				.end(cb);
 			},
+			_loadManufactuerList: function() {
+				ajax.get('/service/rest/common/manufactuers/')
+				.end(function(err, res) {
+					if(!err) {
+						var body = res.body;
+						var list = body.map(function(item) {
+							return {
+								value: item.manufactuer_id,
+								text: item.name
+							};
+						});
+						this.$data.manufactuerList = list;
+						if(list.length && !this.$data.vehicle.vehicle_id) {
+							this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
+						}
+					}
+				}.bind(this));
+			}
 		},
 		created: function() {
 			wxutil.config();
-			ajax.get('/service/rest/common/manufactuers/')
-			.end(function(err, res) {
-				if(!err) {
-					var body = res.body;
-					var list = body.map(function(item) {
-						return {
-							value: item.manufactuer_id,
-							text: item.name
-						};
-					});
-					this.$data.manufactuerList = list;
-					if(list.length && !this.$data.vehicle.vehicle_id) {
-						this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
-					}
-				}
-			}.bind(this));
-
 			this.$watch('vehicle.model.manufactuer.manufactuer_id', function(newVal, oldVal) {
 				this.$data.modelList = [];
 				ajax.get('/service/rest/common/manufactuers/' + newVal + '/models/')
@@ -151,9 +149,20 @@
 				if(!err) {
 					var body = res.body;
 					this.$data.profile = body;
+					this.$data.profile.driver_avatar = this.$data.profile.driver_avatar || null;
 					if(body.driver_vehicles.length) {
 						this.$data.vehicle = body.driver_vehicles[0];
+					} else {
+						this.$data.vehicle = {
+							model: {
+								model_id: null,
+								manufactuer: {
+									manufactuer_id: null
+								}
+							}
+						};
 					}
+					this._loadManufactuerList();
 				}
 			}.bind(this));
 		},
@@ -205,7 +214,7 @@
 		</div>
 		<div class="input-row avatar-row">
 			<label>Avatar</label>
-			<img class="avatar" src={{imgSrc}} />
+			<img class="avatar" src={{profile.driver_avatar}} />
 			<button class="btn btn-primary" v-on="click: onChoosePhoto">
 			  	Choose Photo
 			</button>

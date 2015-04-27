@@ -1,6 +1,7 @@
 import json
 import os
 import uuid
+from django.http import JsonResponse
 import requests
 from PIL import Image
 from StringIO import StringIO
@@ -76,11 +77,12 @@ class WxStaticUpload(APIView):
             upload_dir = settings.MEDIA_ROOT + upload_to + '/'
             image.save(upload_dir + filename)
             static_url = settings.MEDIA_URL + upload_to + '/' + filename
-            return Response(json.dump({
+            return JsonResponse({
+                'stored_path': upload_to + '/' + filename,
                 'static_url': static_url,
                 'upload_type': upload_to,
                 'filename': filename,
-            }), status=status.HTTP_201_CREATED)
+            }, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
