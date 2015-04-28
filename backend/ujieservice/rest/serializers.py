@@ -19,11 +19,11 @@ class DriverProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ('driver_status',)
         fields = ('driver_name', 'driver_avatar', 'mobile', 'driver_status', 'driver_name', 'driver_contact', 'driver_account_no', 'driver_account_name', 'driver_account_bank', 'driver_account_bsb_no', 'driver_driving_license', 'driver_driver_license', 'driver_vehicles')
 
-    def to_representation(self, obj):
-        data = super(DriverProfileSerializer, self).to_representation(obj)
-        if data["driver_avatar"] != '':
-            data["driver_avatar"] = settings.MEDIA_URL + data["driver_avatar"]
-        return data
+    # def to_representation(self, obj):
+    #     data = super(DriverProfileSerializer, self).to_representation(obj)
+    #     if data["driver_avatar"] != '':
+    #         data["driver_avatar"] = settings.MEDIA_URL + data["driver_avatar"]
+    #     return data
 
 
 
