@@ -162,8 +162,10 @@
 			wxutil.config();
 			this.$watch('vehicle.model.manufactuer.manufactuer_id', function(newVal, oldVal) {
 				this.$data.modelList = [];
+				this.showLoading();
 				ajax.get('/service/rest/common/manufactuers/' + newVal + '/models/')
 				.end(function(err, res) {
+					this.hideLoading();
 					if(!err) {
 						var body = res.body;
 						var list = body.map(function(item) {
@@ -180,8 +182,10 @@
 				}.bind(this));
 			});
 
+			this.showLoading();
 			ajax.get('/service/rest/driver/profile/')
 			.end(function(err, res) {
+				this.hideLoading();
 				if(!err) {
 					var body = res.body;
 					this.$data.profile = body;

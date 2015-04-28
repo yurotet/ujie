@@ -16,6 +16,12 @@ $Class.mix(M.prototype, {
 	},
 	back: function() {
 		nav.back();
+	},
+	showLoading: function() {
+		$('.js-loading').addClass('active');
+	},
+	hideLoading: function() {
+		$('.js-loading').removeClass('active');
 	}
 });
 
