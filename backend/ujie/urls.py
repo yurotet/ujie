@@ -47,6 +47,8 @@ urlpatterns = patterns('',
     (r'^rest/common/manufactuers/(?P<pk>[0-9]+)/models/$', common_api.ModelList.as_view()),
     (r'^rest/common/avatar/$', common_api.Avatar.as_view()),
     (r'^rest/common/wxstaticupload/$', common_api.WxStaticUpload.as_view()),
+    (r'^rest/common/wxuserupload/$', common_api.WxUserUpload.as_view()),
+    (r'^rest/common/resource/(?P<pk>[0-9]+)/$', common_api.ResourceView.as_view()),
     # (r'^rest/api/common/manufactuer/(\d+)$', CustomerProfile.as_view()),
     # (r'^rest/api/customer/', include(customer_router.urls)),
 )

@@ -31,6 +31,10 @@ MEDIA_ROOT = "D:/workspace/src/ujie/static/uploads/"
 
 MEDIA_URL = "http://wx.ujietrip.com/static/uploads/"
 
+USER_MEDIA_ROOT = "D:/workspace/src/ujie/user_uploads/"
+
+USER_MEDIA_URL = "/service/rest/common/resource/"
+
 # Application definition
 
 INSTALLED_APPS = (

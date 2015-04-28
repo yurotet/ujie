@@ -17,7 +17,7 @@ class DriverProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         read_only_fields = ('driver_status',)
-        fields = ('driver_name', 'driver_avatar', 'mobile', 'driver_status', 'driver_name', 'driver_contact', 'driver_account_no', 'driver_account_name', 'driver_account_bank', 'driver_account_bsb_no', 'driver_driving_license', 'driver_vehicles')
+        fields = ('driver_name', 'driver_avatar', 'mobile', 'driver_status', 'driver_name', 'driver_contact', 'driver_account_no', 'driver_account_name', 'driver_account_bank', 'driver_account_bsb_no', 'driver_driving_license', 'driver_driver_license', 'driver_vehicles')
 
     def to_representation(self, obj):
         data = super(DriverProfileSerializer, self).to_representation(obj)

@@ -54,6 +54,7 @@ class Profile(models.Model):
     driver_account_bsb_no = models.CharField(max_length=100, blank=True)
     driver_account_name = models.CharField(max_length=200, blank=True)
     driver_driving_license = models.CharField(max_length=255, blank=True)
+    driver_driver_license = models.CharField(max_length=255, blank=True)
 
     #customer_info
     class Meta:
@@ -104,3 +105,13 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
+
+
+class Resource(models.Model):
+    resource_id = models.AutoField(primary_key=True)
+    img_path = models.CharField(max_length=255, blank=True)
+    user = models.ForeignKey(User)
+    created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+
+    class Meta:
+        db_table = 'resource'

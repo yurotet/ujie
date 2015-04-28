@@ -37,32 +37,60 @@
 				        var localIds = res.localIds;
 				        if(localIds.length) {
 				        	this.$data.profile.driver_avatar = localIds[0];
+				        	this.$data.profile.driver_avatar_updated = true;
+				        }
+				    }.bind(this)
+				});
+			},
+			onChooseDriverLicense: function() {
+				wx.chooseImage({
+				    success: function (res) {
+				        var localIds = res.localIds;
+				        if(localIds.length) {
+				        	this.$data.profile.driver_driver_license = localIds[0];
+				        	this.$data.profile.driver_driver_license_updated = true;
 				        }
 				    }.bind(this)
 				});
 			},
 			onConfirm: function() {
-				var localId = this.$data.profile.driver_avatar;
-				if(localId) {
+				if(this.$data.profile.driver_avatar_updated) {
 					wx.uploadImage({
-						localId: localId,
+						localId: this.$data.profile.driver_avatar,
 						isShowProgressTips: 0,
 						success: function(res) {
 							var wxMediaId = res.serverId; // 返回图片的服务器端ID
 							this._uploadAvatar(wxMediaId, function(err, res) {
 								if(!err) {
-									this._submit(res.body);
+									this.$data.profile.driver_avatar = res.body.stored_path;
+									this._submit();
+								}
+							}.bind(this));
+						}.bind(this)
+					});
+				}
+				if(this.$data.profile.driver_driver_license_updated) {
+					wx.uploadImage({
+						localId: this.$data.profile.driver_driver_license,
+						isShowProgressTips: 0,
+						success: function(res) {
+							var wxMediaId = res.serverId; // 返回图片的服务器端ID
+							this._uploadDriverLisence(wxMediaId, function(err, res) {
+								if(!err) {
+									this.$data.profile.driver_driver_license = res.body.static_url;
+									this._submit();
 								}
 							}.bind(this));
 						}.bind(this)
 					});
 				}
 			},
-			_submit: function(avatarInfo) {
+			_submit: function() {
 				var payload = {
 				    "driver_name": this.$data.profile.driver_name,
 				    "mobile": this.$data.profile.mobile,
-				    "driver_avatar": avatarInfo.stored_path,
+				    "driver_avatar": this.$data.profile.driver_avatar,
+				    "driver_driver_license": this.$data.profile.driver_driver_license,
 				    // "driver_status": "0",
 				    "driver_contact": this.$data.profile.mobile,
 				    "driver_account_no": "account_no",
@@ -100,6 +128,14 @@
 				.send({
 					wx_media_id: wxMediaId,
 					upload_to: 'avatar'
+				})
+				.end(cb);
+			},
+			_uploadDriverLisence: function(wxMediaId, cb) {
+				ajax.post('/service/rest/common/wxuserupload/')
+				.type('form')
+				.send({
+					wx_media_id: wxMediaId
 				})
 				.end(cb);
 			},
@@ -217,6 +253,13 @@
 			<img class="avatar" src={{profile.driver_avatar}} />
 			<button class="btn btn-primary" v-on="click: onChoosePhoto">
 			  	Choose Photo
+			</button>
+		</div>
+		<div class="input-row avatar-row">
+			<label>Driver Lisence</label>
+			<img class="avatar" src={{profile.driver_driver_license}} />
+			<button class="btn btn-primary" v-on="click: onChooseDriverLicense">
+			  	Choose Driver License
 			</button>
 		</div>
 		<div class="input-row">
