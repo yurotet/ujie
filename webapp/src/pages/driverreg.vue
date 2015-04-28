@@ -62,7 +62,7 @@
 							var wxMediaId = res.serverId; // 返回图片的服务器端ID
 							this._uploadAvatar(wxMediaId, function(err, res) {
 								if(!err) {
-									this.$data.profile.driver_avatar = res.body.stored_path;
+									this.$data.profile.driver_avatar = res.body.static_url;
 									this._submit();
 								}
 							}.bind(this));

@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 MEDIA_ROOT = "D:/workspace/src/ujie/static/uploads/"
 
-MEDIA_URL = "http://wx.ujietrip.com/static/uploads/"
+MEDIA_URL = "/static/uploads/"
 
 USER_MEDIA_ROOT = "D:/workspace/src/ujie/user_uploads/"
 

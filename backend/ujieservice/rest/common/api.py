@@ -78,10 +78,7 @@ class WxStaticUpload(APIView):
             image.save(upload_dir + filename)
             static_url = settings.MEDIA_URL + upload_to + '/' + filename
             return JsonResponse({
-                'stored_path': upload_to + '/' + filename,
-                'static_url': static_url,
-                'upload_type': upload_to,
-                'filename': filename,
+                'static_url': static_url
             }, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -106,8 +103,7 @@ class WxUserUpload(APIView):
             #resource url is like: /service/rest/common/resource/1
             static_url = settings.USER_MEDIA_URL + str(r.pk)
             return JsonResponse({
-                'static_url': static_url,
-                'filename': filename,
+                'static_url': static_url
             }, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
