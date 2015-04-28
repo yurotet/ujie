@@ -2,6 +2,7 @@
 	var BasePage = require('common/basepage');
 	var ajax = require('common/ajax');
 	var wxutil = require('common/wxutil');
+	var Promise = require('promise');
 
 	var View = BasePage.extend({
 		title: 'index',
@@ -36,8 +37,36 @@
 				    success: function (res) {
 				        var localIds = res.localIds;
 				        if(localIds.length) {
-				        	this.$data.profile.driver_avatar = localIds[0];
+				        	var wxMediaId = localIds[0];
+				        	this.$data.profile.driver_avatar = wxMediaId;
 				        	this.$data.profile.driver_avatar_updated = true;
+
+				        	this.showLoading();
+				        	wx.uploadImage({
+								localId: wxMediaId,
+								isShowProgressTips: 0,
+								success: function(res) {
+									var wxMediaId = res.serverId; // 返回图片的服务器端ID
+									this._uploadAvatar(wxMediaId, function(err, res) {
+										this.hideLoading();
+										if(!err) {
+											this.$data.profile.driver_avatar = res.body.static_url;
+											var payload = {
+											    "driver_avatar": res.body.static_url,
+											};
+											this.showLoading();
+											ajax.put('/service/rest/driver/profile/')
+											.send(payload)
+											.end(function(err, res) {
+						        				this.hideLoading();
+											}.bind(this));
+										}
+									}.bind(this));
+								}.bind(this),
+								fail: function() {
+									this.hideLoading();
+								}
+							});
 				        }
 				    }.bind(this)
 				});
@@ -47,80 +76,91 @@
 				    success: function (res) {
 				        var localIds = res.localIds;
 				        if(localIds.length) {
-				        	this.$data.profile.driver_driver_license = localIds[0];
+				        	var wxMediaId = localIds[0];
+				        	this.$data.profile.driver_driver_license = wxMediaId;
 				        	this.$data.profile.driver_driver_license_updated = true;
+
+				        	this.showLoading();
+				        	wx.uploadImage({
+								localId: wxMediaId,
+								isShowProgressTips: 0,
+								success: function(res) {
+									var wxMediaId = res.serverId; // 返回图片的服务器端ID
+									this._uploadDriverLisence(wxMediaId, function(err, res) {
+										this.hideLoading();
+						        		if(!err) {
+						        			this.$data.profile.driver_driver_license = res.body.static_url;
+						        			var payload = {
+											    "driver_driver_license": res.body.static_url,
+											};
+											this.showLoading();
+											ajax.put('/service/rest/driver/profile/')
+											.send(payload)
+											.end(function(err, res) {
+						        				this.hideLoading();
+											}.bind(this));
+						        		}
+						        	}.bind(this));
+								}.bind(this),
+								fail: function() {
+									this.hideLoading();
+								}.bind(this)
+							});
 				        }
 				    }.bind(this)
 				});
 			},
 			onConfirm: function() {
-				if(this.$data.profile.driver_avatar_updated) {
-					wx.uploadImage({
-						localId: this.$data.profile.driver_avatar,
-						isShowProgressTips: 0,
-						success: function(res) {
-							var wxMediaId = res.serverId; // 返回图片的服务器端ID
-							this._uploadAvatar(wxMediaId, function(err, res) {
-								if(!err) {
-									this.$data.profile.driver_avatar = res.body.static_url;
-									this._submit();
-								}
-							}.bind(this));
-						}.bind(this)
-					});
-				}
-				if(this.$data.profile.driver_driver_license_updated) {
-					wx.uploadImage({
-						localId: this.$data.profile.driver_driver_license,
-						isShowProgressTips: 0,
-						success: function(res) {
-							var wxMediaId = res.serverId; // 返回图片的服务器端ID
-							this._uploadDriverLisence(wxMediaId, function(err, res) {
-								if(!err) {
-									this.$data.profile.driver_driver_license = res.body.static_url;
-									this._submit();
-								}
-							}.bind(this));
-						}.bind(this)
-					});
-				}
+				this.showLoading();
+				this._submit().then(function() {
+					this.hideLoading();
+				}.bind(this));
 			},
 			_submit: function() {
-				var payload = {
-				    "driver_name": this.$data.profile.driver_name,
-				    "mobile": this.$data.profile.mobile,
-				    "driver_avatar": this.$data.profile.driver_avatar,
-				    "driver_driver_license": this.$data.profile.driver_driver_license,
-				    // "driver_status": "0",
-				    "driver_contact": this.$data.profile.mobile,
-				    "driver_account_no": "account_no",
-				    "driver_account_name": "account_name",
-				    "driver_account_bank": "bank",
-				    "driver_account_bsb_no": "bsb",
-				    "driver_driving_license": "license"
-				};
-				ajax.put('/service/rest/driver/profile/')
-				.send(payload)
-				.end(function(err, res) {
-				});
+				var promise1 = new Promise(function(resolve, reject) {
+					var payload = {
+					    "driver_name": this.$data.profile.driver_name,
+					    "mobile": this.$data.profile.mobile,
+					    "driver_avatar": this.$data.profile.driver_avatar,
+					    "driver_driver_license": this.$data.profile.driver_driver_license,
+					    // "driver_status": "0",
+					    "driver_contact": this.$data.profile.mobile,
+					    "driver_account_no": "account_no",
+					    "driver_account_name": "account_name",
+					    "driver_account_bank": "bank",
+					    "driver_account_bsb_no": "bsb",
+					    "driver_driving_license": "license"
+					};
+					ajax.put('/service/rest/driver/profile/')
+					.send(payload)
+					.end(function(err, res) {
+						resolve();
+					});
+				}.bind(this));
 
-				var payload = {
-		    		"brand": this.$data.vehicle.brand,
-		    		"model": parseInt(this.$data.vehicle.model.model_id, 10),
-		    		"plate_no": this.$data.vehicle.plate_no
-				};
-				var vehicleId = this.$data.vehicle.vehicle_id;
-				if(vehicleId) {
-					ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
-					.send(payload)
-					.end(function(err, res) {
-					});
-				} else {
-					ajax.post('/service/rest/driver/vehicles/')
-					.send(payload)
-					.end(function(err, res) {
-					});
-				}
+				var promise2 = new Promise(function(resolve, reject) {
+					var payload = {
+			    		"brand": this.$data.vehicle.brand,
+			    		"model": parseInt(this.$data.vehicle.model.model_id, 10),
+			    		"plate_no": this.$data.vehicle.plate_no
+					};
+					var vehicleId = this.$data.vehicle.vehicle_id;
+					if(vehicleId) {
+						ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
+						.send(payload)
+						.end(function(err, res) {
+							resolve();
+						});
+					} else {
+						ajax.post('/service/rest/driver/vehicles/')
+						.send(payload)
+						.end(function(err, res) {
+							resolve();
+						});
+					}
+				}.bind(this));
+
+				return Promise.all([promise1, promise2]);
 			},
 			_uploadAvatar: function(wxMediaId, cb) {
 				ajax.post('/service/rest/common/wxstaticupload/')
@@ -140,70 +180,121 @@
 				.end(cb);
 			},
 			_loadManufactuerList: function() {
-				ajax.get('/service/rest/common/manufactuers/')
-				.end(function(err, res) {
-					if(!err) {
-						var body = res.body;
-						var list = body.map(function(item) {
-							return {
-								value: item.manufactuer_id,
-								text: item.name
-							};
-						});
-						this.$data.manufactuerList = list;
-						if(list.length && !this.$data.vehicle.vehicle_id) {
-							this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
+				return new Promise(function(resolve, reject) {
+					ajax.get('/service/rest/common/manufactuers/')
+					.end(function(err, res) {
+						if(!err) {
+							var body = res.body;
+							var list = body.map(function(item) {
+								return {
+									value: item.manufactuer_id,
+									text: item.name
+								};
+							});
+							this.$data.manufactuerList = list;
+							// if(list.length && !this.$data.vehicle.vehicle_id) {
+							// 	this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
+							// }
+							resolve();
+						} else {
+							reject();
 						}
-					}
+					}.bind(this));
+				}.bind(this));
+			},
+			_loadModelList: function(manufactuerId) {
+				return new Promise(function(resolve, reject) {
+					ajax.get('/service/rest/common/manufactuers/' + manufactuerId + '/models/')
+					.end(function(err, res) {
+						if(!err) {
+							var body = res.body;
+							var list = body.map(function(item) {
+								return {
+									value: item.model_id,
+									text: item.name
+								};
+							});
+							this.$data.modelList = list;
+							// if(list.length) {
+							// 	this.$data.vehicle.model.model_id = list[0].value;
+							// }
+							resolve(body);
+						} else {
+							reject();
+						}
+					}.bind(this));
+				}.bind(this));
+			},
+			_startWatchManufactuer: function() {
+				this.$watch('vehicle.model.manufactuer.manufactuer_id', function(newVal, oldVal) {
+					this.$data.modelList = [];
+					this.showLoading();
+					ajax.get('/service/rest/common/manufactuers/' + newVal + '/models/')
+					.end(function(err, res) {
+						this.hideLoading();
+						if(!err) {
+							var body = res.body;
+							var list = body.map(function(item) {
+								return {
+									value: item.model_id,
+									text: item.name
+								};
+							});
+							this.$data.modelList = list;
+							if(list.length) {
+								this.$data.vehicle.model.model_id = list[0].value;
+							}
+						}
+					}.bind(this));
+				});
+			},
+			_loadProfile: function() {
+				return new Promise(function(resolve, reject) {
+					ajax.get('/service/rest/driver/profile/')
+					.end(function(err, res) {
+						if(!err) {
+							var body = res.body;
+							this.$data.profile = body;
+							this.$data.profile.driver_avatar = this.$data.profile.driver_avatar || null;
+							if(body.driver_vehicles.length) {
+								this.$data.vehicle = body.driver_vehicles[0];
+							} else {
+								this.$data.vehicle = {
+									model: {
+										model_id: null,
+										manufactuer: {
+											manufactuer_id: null
+										}
+									}
+								};
+							}
+							resolve(body);
+						} else {
+							reject();
+						}
+					}.bind(this));
 				}.bind(this));
 			}
 		},
 		created: function() {
-			wxutil.config();
-			this.$watch('vehicle.model.manufactuer.manufactuer_id', function(newVal, oldVal) {
-				this.$data.modelList = [];
-				this.showLoading();
-				ajax.get('/service/rest/common/manufactuers/' + newVal + '/models/')
-				.end(function(err, res) {
-					this.hideLoading();
-					if(!err) {
-						var body = res.body;
-						var list = body.map(function(item) {
-							return {
-								value: item.model_id,
-								text: item.name
-							};
-						});
-						this.$data.modelList = list;
-						if(list.length) {
-							this.$data.vehicle.model.model_id = list[0].value;
-						}
-					}
-				}.bind(this));
-			});
-
 			this.showLoading();
-			ajax.get('/service/rest/driver/profile/')
-			.end(function(err, res) {
-				this.hideLoading();
-				if(!err) {
-					var body = res.body;
-					this.$data.profile = body;
-					this.$data.profile.driver_avatar = this.$data.profile.driver_avatar || null;
-					if(body.driver_vehicles.length) {
-						this.$data.vehicle = body.driver_vehicles[0];
-					} else {
-						this.$data.vehicle = {
-							model: {
-								model_id: null,
-								manufactuer: {
-									manufactuer_id: null
-								}
-							}
-						};
-					}
-					this._loadManufactuerList();
-				}
+			wxutil.config().then(function() {
+				this._loadProfile().then(function(profile) {
+					this._loadManufactuerList().then(function(manuList) {
+						var vehicle = profile.driver_vehicles.length ? profile.driver_vehicles[0] : null;
+						if(vehicle) {
+							this._loadModelList(vehicle.model.manufactuer.manufactuer_id).then(function() {
+								this.hideLoading();
+								this._startWatchManufactuer();
+							}.bind(this));
+						} else {
+							this._loadModelList().then(function() {
+								this.hideLoading();
+								this._startWatchManufactuer();
+							}.bind(this));;
+						}
+					}.bind(this));
+				}.bind(this));
 			}.bind(this));
 		},
 		ready: function() {
