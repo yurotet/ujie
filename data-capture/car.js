@@ -37,11 +37,11 @@ var handleResult = function(result) {
 
 	Object.keys(result).forEach(function(manuName){
 		++manuid;
-		manusql += buildsql('manufactuer', manukeys, [manuid, manuName]);
+		manusql += buildsql('ujieservice_manufactuer', manukeys, [manuid, manuName]);
 
 		result[manuName].forEach(function(modelName){
 			++modelid;
-			modelsql += buildsql('model', modelkeys, [modelid, modelName, manuid]);
+			modelsql += buildsql('ujieservice_model', modelkeys, [modelid, modelName, manuid]);
 		})
 	});
 

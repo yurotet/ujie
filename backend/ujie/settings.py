@@ -92,15 +92,17 @@ USE_L10N = True
 
 USE_TZ = True
 
-# AUTHENTICATION_BACKENDS = [
-#     'ujieservice.auth.OAuthBackend',
-#     'django.contrib.auth.backends.ModelBackend'
-# ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'ujieservice.auth.WxUserModelBackend'
+]
 
 # CUSTOM_USER_MODEL = 'ujieservice.UjieUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
+
+AUTH_USER_MODEL = "ujieservice.User"
 
 STATIC_URL = '/static/'
 

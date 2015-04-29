@@ -8,15 +8,19 @@
 # Also note: You'll have to insert the output of 'django-admin.py sqlcustom [app_label]'
 # into your database.
 from __future__ import unicode_literals
-from django.contrib.auth.models import User, UserManager
+from django.contrib.auth.models import AbstractUser, UserManager, BaseUserManager
 from django.db import models
+
+
+class UjieUserManager(UserManager):
+    def create_user_by_wx_open_id(self, wx_open_id):
+        username = wx_open_id
+        password = username
+        return self._create_user(username, None, password, False, False, wx_open_id=wx_open_id)
 
 class Manufactuer(models.Model):
     manufactuer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        db_table = 'manufactuer'
 
 
 class Model(models.Model):
@@ -24,29 +28,33 @@ class Model(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     manufactuer = models.ForeignKey(Manufactuer, related_name='models', null=True)
 
-    class Meta:
-        db_table = 'model'
 
+class User(AbstractUser):
+    objects = UjieUserManager()
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, related_name='profile')
-    DRIVER_STATUS = (
-        ('0', 'Unverified'),
-        ('1', 'Verifying'),
-        ('2', 'Verified'),
-        ('3', 'Need More Information'),
-    )
+    wx_open_id = models.CharField(max_length=200, blank=True, db_index=True)
     access_token = models.CharField(max_length=200, blank=True)
     expiration = models.DateTimeField(blank=True, null=True)
     mobile = models.CharField(max_length=50, blank=True)
-    open_id = models.CharField(max_length=200, blank=True, db_index=True)
-    objects = UserManager()
+
+    REGISTED_BY = (
+        (0, 'System'),
+        (1, 'Wechat Open Id'),
+    )
+    registed_by = models.IntegerField(choices=REGISTED_BY, default=0)
 
     #driver info
     driver_avatar = models.CharField(max_length=255, null=True)
     driver_name = models.CharField(max_length=100, blank=True)
     driver_birth = models.DateField(blank=True, null=True)
-    driver_status = models.CharField(max_length=50, choices=DRIVER_STATUS, default='0')
+
+    DRIVER_STATUS = (
+        (0, 'Unverified'),
+        (1, 'Verifying'),
+        (2, 'Verified'),
+        (3, 'Need More Information'),
+    )
+    driver_status = models.IntegerField(choices=DRIVER_STATUS, default=0)
     driver_contact = models.CharField(max_length=100, blank=True)
     driver_account_no = models.CharField(max_length=100, blank=True)
     driver_account_name = models.CharField(max_length=100, blank=True)
@@ -56,9 +64,7 @@ class Profile(models.Model):
     driver_driving_license = models.CharField(max_length=255, blank=True)
     driver_driver_license = models.CharField(max_length=255, blank=True)
 
-    #customer_info
     class Meta:
-        db_table = 'profile'
         permissions = (
             ("user_customer", "customer perm"),
             ("user_driver", "driver perm")
@@ -67,15 +73,12 @@ class Profile(models.Model):
 
 class Vehicle(models.Model):
     vehicle_id = models.AutoField(primary_key=True)
-    driver = models.ForeignKey(Profile, related_name='driver_vehicles')
+    driver = models.ForeignKey(User, related_name='driver_vehicles')
     brand = models.CharField(max_length=100, blank=True)
     model = models.ForeignKey(Model, related_name='vehicles', null=True)
     vehicle_licence = models.CharField(max_length=255, blank=True)
     plate_no = models.CharField(max_length=100, blank=True)
     created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-
-    class Meta:
-        db_table = 'Vehicle'
 
 
 class Order(models.Model):
@@ -103,15 +106,9 @@ class Order(models.Model):
     created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
     updated_time = models.DateTimeField(blank=True, null=True, auto_now=True)
 
-    class Meta:
-        db_table = 'order'
-
 
 class Resource(models.Model):
     resource_id = models.AutoField(primary_key=True)
     img_path = models.CharField(max_length=255, blank=True)
     user = models.ForeignKey(User)
     created_time = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-
-    class Meta:
-        db_table = 'resource'

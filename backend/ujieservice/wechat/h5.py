@@ -47,12 +47,7 @@ def authorize(request):
                     return HttpResponseBadRequest('code error, fail to fetch open_id')
             else:
                 print 'session open_id:' + open_id
-            user = authenticate(username=open_id, password=open_id)
-            if user is None:
-                user = User.objects.create_user(username=open_id, password=open_id)
-                profile = models.Profile(user=user)
-                profile.save()
-                user = authenticate(username=open_id, password=open_id)
+            user = authenticate(wx_open_id=open_id)
             codename = ''
             if user_type == 'customer':
                 codename = 'user_customer'

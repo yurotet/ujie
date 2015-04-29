@@ -11,29 +11,6 @@ class VehicleSerializer(serializers.ModelSerializer):
         fields = ("vehicle_id", "brand", "vehicle_licence", "plate_no", "created_time", "model")
 
 
-class DriverProfileSerializer(serializers.ModelSerializer):
-    driver_vehicles = VehicleSerializer(many=True)
-
-    class Meta:
-        model = models.Profile
-        read_only_fields = ('driver_status',)
-        fields = ('driver_name', 'driver_avatar', 'mobile', 'driver_status', 'driver_name', 'driver_contact', 'driver_account_no', 'driver_account_name', 'driver_account_bank', 'driver_account_bsb_no', 'driver_driving_license', 'driver_driver_license', 'driver_vehicles')
-
-    # def to_representation(self, obj):
-    #     data = super(DriverProfileSerializer, self).to_representation(obj)
-    #     if data["driver_avatar"] != '':
-    #         data["driver_avatar"] = settings.MEDIA_URL + data["driver_avatar"]
-    #     return data
-
-
-
-class CustomerProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Profile
-        # read_only_fields = ('user.username',)
-        fields = ('mobile',)
-
-
 class ManufactuerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Manufactuer
@@ -57,3 +34,11 @@ class ModelListSerializer(serializers.ModelSerializer):
         # read_only_fields = ('user.username',)
         # read_only_fields = ('manufactuer_id', 'name')
         fields = ('model_id', 'name')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    driver_vehicles = VehicleSerializer(many=True)
+
+    class Meta:
+        model = models.User
+        exclude = ('username', 'password', 'is_superuser', 'wx_open_id')

@@ -14,7 +14,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from ujie import settings
 from ujieservice import models
-from ujieservice.rest.serializers import ManufactuerListSerializer, ManufactuerDetailSerializer, ModelListSerializer
+from ujieservice.rest.serializers import ManufactuerListSerializer, ManufactuerDetailSerializer, ModelListSerializer, \
+    UserSerializer
 from ujieservice.wechat import token
 
 
@@ -124,3 +125,12 @@ class ResourceView(APIView):
             return response
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class User(APIView):
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk=None):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)

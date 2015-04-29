@@ -8,7 +8,7 @@
 		title: 'index',
 		data: function() {
 			return {
-				profile: {},
+				user: {},
 				vehicle: {
 					model: {
 						model_id: null,
@@ -38,8 +38,8 @@
 				        var localIds = res.localIds;
 				        if(localIds.length) {
 				        	var wxMediaId = localIds[0];
-				        	this.$data.profile.driver_avatar = wxMediaId;
-				        	this.$data.profile.driver_avatar_updated = true;
+				        	this.$data.user.driver_avatar = wxMediaId;
+				        	this.$data.user.driver_avatar_updated = true;
 
 				        	this.showLoading();
 				        	wx.uploadImage({
@@ -50,12 +50,12 @@
 									this._uploadAvatar(wxMediaId, function(err, res) {
 										this.hideLoading();
 										if(!err) {
-											this.$data.profile.driver_avatar = res.body.static_url;
+											this.$data.user.driver_avatar = res.body.static_url;
 											var payload = {
 											    "driver_avatar": res.body.static_url,
 											};
 											this.showLoading();
-											ajax.put('/service/rest/driver/profile/')
+											ajax.put('/service/rest/driver/user/')
 											.send(payload)
 											.end(function(err, res) {
 						        				this.hideLoading();
@@ -77,8 +77,8 @@
 				        var localIds = res.localIds;
 				        if(localIds.length) {
 				        	var wxMediaId = localIds[0];
-				        	this.$data.profile.driver_driver_license = wxMediaId;
-				        	this.$data.profile.driver_driver_license_updated = true;
+				        	this.$data.user.driver_driver_license = wxMediaId;
+				        	this.$data.user.driver_driver_license_updated = true;
 
 				        	this.showLoading();
 				        	wx.uploadImage({
@@ -89,12 +89,12 @@
 									this._uploadDriverLisence(wxMediaId, function(err, res) {
 										this.hideLoading();
 						        		if(!err) {
-						        			this.$data.profile.driver_driver_license = res.body.static_url;
+						        			this.$data.user.driver_driver_license = res.body.static_url;
 						        			var payload = {
 											    "driver_driver_license": res.body.static_url,
 											};
 											this.showLoading();
-											ajax.put('/service/rest/driver/profile/')
+											ajax.put('/service/rest/driver/user/')
 											.send(payload)
 											.end(function(err, res) {
 						        				this.hideLoading();
@@ -113,25 +113,27 @@
 			onConfirm: function() {
 				this.showLoading();
 				this._submit().then(function() {
-					this.hideLoading();
+					this._loadUser().then(function() {
+						this.hideLoading();
+					}.bind(this));
 				}.bind(this));
 			},
 			_submit: function() {
 				var promise1 = new Promise(function(resolve, reject) {
 					var payload = {
-					    "driver_name": this.$data.profile.driver_name,
-					    "mobile": this.$data.profile.mobile,
-					    "driver_avatar": this.$data.profile.driver_avatar,
-					    "driver_driver_license": this.$data.profile.driver_driver_license,
+					    "driver_name": this.$data.user.driver_name,
+					    "mobile": this.$data.user.mobile,
+					    "driver_avatar": this.$data.user.driver_avatar,
+					    "driver_driver_license": this.$data.user.driver_driver_license,
 					    // "driver_status": "0",
-					    "driver_contact": this.$data.profile.mobile,
+					    "driver_contact": this.$data.user.mobile,
 					    "driver_account_no": "account_no",
 					    "driver_account_name": "account_name",
 					    "driver_account_bank": "bank",
 					    "driver_account_bsb_no": "bsb",
 					    "driver_driving_license": "license"
 					};
-					ajax.put('/service/rest/driver/profile/')
+					ajax.put('/service/rest/driver/user/')
 					.send(payload)
 					.end(function(err, res) {
 						resolve();
@@ -195,7 +197,7 @@
 							// if(list.length && !this.$data.vehicle.vehicle_id) {
 							// 	this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
 							// }
-							resolve();
+							resolve(body);
 						} else {
 							reject();
 						}
@@ -248,14 +250,14 @@
 					}.bind(this));
 				});
 			},
-			_loadProfile: function() {
+			_loadUser: function() {
 				return new Promise(function(resolve, reject) {
-					ajax.get('/service/rest/driver/profile/')
+					ajax.get('/service/rest/driver/user/')
 					.end(function(err, res) {
 						if(!err) {
 							var body = res.body;
-							this.$data.profile = body;
-							this.$data.profile.driver_avatar = this.$data.profile.driver_avatar || null;
+							this.$data.user = body;
+							this.$data.user.driver_avatar = this.$data.user.driver_avatar || null;
 							if(body.driver_vehicles.length) {
 								this.$data.vehicle = body.driver_vehicles[0];
 							} else {
@@ -279,17 +281,19 @@
 		created: function() {
 			this.showLoading();
 			wxutil.config().then(function() {
-				this._loadProfile().then(function(profile) {
+				this._loadUser().then(function(user) {
 					this._loadManufactuerList().then(function(manuList) {
-						var vehicle = profile.driver_vehicles.length ? profile.driver_vehicles[0] : null;
+						var vehicle = user.driver_vehicles.length ? user.driver_vehicles[0] : null;
 						if(vehicle) {
 							this._loadModelList(vehicle.model.manufactuer.manufactuer_id).then(function() {
 								this.hideLoading();
 								this._startWatchManufactuer();
 							}.bind(this));
 						} else {
-							this._loadModelList().then(function() {
+							this.$data.vehicle.model.manufactuer.manufactuer_id = manuList[0].manufactuer_id;
+							this._loadModelList(manuList[0].manufactuer_id).then(function(modelList) {
 								this.hideLoading();
+								this.$data.vehicle.model.model_id = modelList[0].model_id;
 								this._startWatchManufactuer();
 							}.bind(this));;
 						}
@@ -324,7 +328,7 @@
 	<section class="driver-reg">
 		<div class="input-row">
 			<label>Name</label>
-			<input type="text" placeholder="Name" v-model="profile.driver_name">
+			<input type="text" placeholder="Name" v-model="user.driver_name">
 		</div>
 		<div class="input-row">
 			<label>Email</label>
@@ -332,8 +336,8 @@
 		</div>
 		<div class="input-row">
 			<label>Sex</label>
-			<input type="radio" name="sex" value="male" v-model="profile.sex"> male
-    		<input type="radio" name="sex" value="female" v-model="profile.sex"> female
+			<input type="radio" name="sex" value="male" v-model="user.sex"> male
+    		<input type="radio" name="sex" value="female" v-model="user.sex"> female
 		</div>
 		<div class="input-row">
 			<label>Birth</label>
@@ -345,14 +349,14 @@
 		</div>
 		<div class="input-row avatar-row">
 			<label>Avatar</label>
-			<img class="avatar" src={{profile.driver_avatar}} />
+			<img class="avatar" src={{user.driver_avatar}} />
 			<button class="btn btn-primary" v-on="click: onChoosePhoto">
 			  	Choose Photo
 			</button>
 		</div>
 		<div class="input-row avatar-row">
 			<label>Driver Lisence</label>
-			<img class="avatar" src={{profile.driver_driver_license}} />
+			<img class="avatar" src={{user.driver_driver_license}} />
 			<button class="btn btn-primary" v-on="click: onChooseDriverLicense">
 			  	Choose Driver License
 			</button>
