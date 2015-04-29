@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from ujie import settings
-from ujieservice.models import Order, Manufactuer, Model, Resource
+from ujieservice import models
 from ujieservice.rest.serializers import ManufactuerListSerializer, ManufactuerDetailSerializer, ModelListSerializer
 from ujieservice.wechat import token
 
@@ -22,7 +22,7 @@ class ManufactuerList(APIView):
     permission_classes = ()
 
     def get(self, request):
-        queryset = Manufactuer.objects.all()
+        queryset = models.Manufactuer.objects.all()
         serializer = ManufactuerListSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -31,7 +31,7 @@ class ManufactuerDetail(APIView):
     permission_classes = ()
 
     def get(self, request, pk=None):
-        result = Manufactuer.objects.get(pk=pk)
+        result = models.Manufactuer.objects.get(pk=pk)
         serializer = ManufactuerDetailSerializer(result)
         return Response(serializer.data)
 
@@ -40,7 +40,7 @@ class ModelList(APIView):
     permission_classes = ()
 
     def get(self, request, pk=None):
-        queryset = Model.objects.filter(manufactuer_id=pk)
+        queryset = models.Model.objects.filter(manufactuer_id=pk)
         serializer = ModelListSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -99,7 +99,7 @@ class WxUserUpload(APIView):
             filename = str(uuid.uuid1()) + '.jpg'
             upload_dir = settings.USER_MEDIA_ROOT
             image.save(upload_dir + filename)
-            r = Resource.objects.create(user=request.user, img_path=filename)
+            r = models.Resource.objects.create(user=request.user, img_path=filename)
             #resource url is like: /service/rest/common/resource/1
             static_url = settings.USER_MEDIA_URL + str(r.pk)
             return JsonResponse({
@@ -114,7 +114,7 @@ class ResourceView(APIView):
     permission_classes = ()
 
     def get(self, request, pk=None):
-        result = Resource.objects.filter(pk=pk, user=request.user)
+        result = models.Resource.objects.filter(pk=pk, user=request.user)
         if len(result):
             r = result[0]
             file_path = settings.USER_MEDIA_ROOT + r.img_path

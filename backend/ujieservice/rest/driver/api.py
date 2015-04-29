@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from ujie import settings
-from ujieservice.models import Order, Vehicle, Model
+from ujieservice import models
 from ujieservice.rest.serializers import DriverProfileSerializer, VehicleSerializer
 
 
@@ -37,7 +37,7 @@ class VehiclesView(APIView):
     def get(self, request, format=None):
         if request.user.has_perm('ujieservice.user_driver'):
             profile = request.user.profile
-            result = Vehicle.objects.filter(driver=profile)
+            result = models.Vehicle.objects.filter(driver=profile)
             serializer = VehicleSerializer(result, many=True)
             return Response(serializer.data)
         else:
@@ -48,7 +48,7 @@ class VehiclesView(APIView):
             profile = request.user.profile
             data = request.data
             serializer = VehicleSerializer(data=data)
-            vehicle_model = Model.objects.get(pk=data['model'])
+            vehicle_model = models.Model.objects.get(pk=data['model'])
             if serializer.is_valid():
                 serializer.save(driver=profile, model=vehicle_model)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -63,7 +63,7 @@ class VehicleDetailView(APIView):
     def get(self, request, pk=None):
         if request.user.has_perm('ujieservice.user_driver'):
             profile = request.user.profile
-            result = Vehicle.objects.filter(pk=pk)
+            result = models.Vehicle.objects.filter(pk=pk)
             if len(result):
                 v = result[0]
                 if v.driver == profile:
@@ -78,8 +78,8 @@ class VehicleDetailView(APIView):
 
     def put(self, request, pk=None):
         if request.user.has_perm('ujieservice.user_driver'):
-            vehicle = Vehicle.objects.get(pk=pk)
-            vehicle_model = Model.objects.get(pk=request.data.get('model', vehicle.model.model_id))
+            vehicle = models.Vehicle.objects.get(pk=pk)
+            vehicle_model = models.Model.objects.get(pk=request.data.get('model', vehicle.model.model_id))
             serializer = VehicleSerializer(vehicle, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save(model=vehicle_model)
@@ -91,7 +91,7 @@ class VehicleDetailView(APIView):
     def delete(self, request, pk=None):
         if request.user.has_perm('ujieservice.user_driver'):
             profile = request.user.profile
-            result = Vehicle.objects.filter(pk=pk)
+            result = models.Vehicle.objects.filter(pk=pk)
             if len(result):
                 v = result[0]
                 if v.driver == profile:

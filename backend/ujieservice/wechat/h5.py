@@ -21,7 +21,7 @@ from ujie import settings
 # }
 # https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2c38ce50f1ccb58&redirect_uri=http%3A%2F%2Fwx.ujietrip.com%2Fh5%2Fauthorize%3Ftarget%3Dtmodel&response_type=code&scope=snsapi_base&state=123#wechat_redirect
 # https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2c38ce50f1ccb58&redirect_uri=redirect_uri&response_type=code&scope=snsapi_base&state=123#wechat_redirect
-from ujieservice.models import Profile, Order
+from ujieservice import models
 from ujieservice.wechat import token
 
 
@@ -50,7 +50,7 @@ def authorize(request):
             user = authenticate(username=open_id, password=open_id)
             if user is None:
                 user = User.objects.create_user(username=open_id, password=open_id)
-                profile = Profile(user=user)
+                profile = models.Profile(user=user)
                 profile.save()
                 user = authenticate(username=open_id, password=open_id)
             codename = ''
@@ -98,9 +98,9 @@ def order_detail(request, order_id):
 def create_order(request):
     user = request.user
     profile = user.profile
-    assert isinstance(profile, Profile)
+    assert isinstance(profile, models.Profile)
     if profile.user_type == '0':
-        order = Order(customer=user, departure_city_name="Shanghai", arrival_city_name="Sidney")
+        order = models.Order(customer=user, departure_city_name="Shanghai", arrival_city_name="Sidney")
         order.save()
         return HttpResponse("order created successfully")
     else:
@@ -119,7 +119,7 @@ def order_list(request):
 # @login_required
 def notify_order(request, order_id):
     assert isinstance(request, HttpRequest)
-    order = Order.objects.get(pk=order_id)
+    order = models.Order.objects.get(pk=order_id)
     url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + token.ACCESS_TOKEN
     open_id = order.customer.username
     payload = {
