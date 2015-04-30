@@ -42,3 +42,13 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         exclude = ('username', 'password', 'is_superuser', 'wx_open_id')
+
+
+class StringSerializer(serializers.Serializer):
+    def to_representation(self, instance):
+        return instance
+
+
+class FlightNo(serializers.Serializer):
+    keyword = serializers.CharField(max_length=100)
+    data = StringSerializer(many=True)

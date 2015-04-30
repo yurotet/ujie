@@ -12,10 +12,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+import time
 from ujie import settings
 from ujieservice import models
-from ujieservice.rest.serializers import ManufactuerListSerializer, ManufactuerDetailSerializer, ModelListSerializer, \
-    UserSerializer
+from ujieservice.rest import serializers
 from ujieservice.wechat import token
 
 
@@ -24,7 +24,7 @@ class ManufactuerList(APIView):
 
     def get(self, request):
         queryset = models.Manufactuer.objects.all()
-        serializer = ManufactuerListSerializer(queryset, many=True)
+        serializer = serializers.ManufactuerListSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -33,7 +33,7 @@ class ManufactuerDetail(APIView):
 
     def get(self, request, pk=None):
         result = models.Manufactuer.objects.get(pk=pk)
-        serializer = ManufactuerDetailSerializer(result)
+        serializer = serializers.ManufactuerDetailSerializer(result)
         return Response(serializer.data)
 
 
@@ -42,7 +42,7 @@ class ModelList(APIView):
 
     def get(self, request, pk=None):
         queryset = models.Model.objects.filter(manufactuer_id=pk)
-        serializer = ModelListSerializer(queryset, many=True)
+        serializer = serializers.ModelListSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -110,7 +110,7 @@ class WxUserUpload(APIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ResourceView(APIView):
+class Resource(APIView):
     # permission_classes = (IsAuthenticated,)
     permission_classes = ()
 
@@ -132,5 +132,18 @@ class User(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk=None):
-        serializer = UserSerializer(request.user)
+        serializer = serializers.UserSerializer(request.user)
         return Response(serializer.data)
+
+
+class FlightNo(APIView):
+    permission_classes = ()
+
+    def get(self, request, keyword=None):
+        req = requests.get('http://car.ctrip.com/carhome/json/flightno?', params={
+            'keyword': keyword,
+            '_': str(int(time.time()))
+        })
+        result = json.loads(req.text)
+        s = serializers.FlightNo(result)
+        return Response(s.data)
