@@ -1,5 +1,6 @@
+# coding:utf-8
 import json
-import os
+from xml.etree import ElementTree
 import uuid
 from django.http import JsonResponse, HttpResponse
 import requests
@@ -136,14 +137,55 @@ class User(APIView):
         return Response(serializer.data)
 
 
-class FlightNo(APIView):
+class FlightNoSug(APIView):
     permission_classes = ()
 
     def get(self, request, keyword=None):
-        req = requests.get('http://car.ctrip.com/carhome/json/flightno?', params={
+        req = requests.get('http://car.ctrip.com/carhome/json/flightno', params={
             'keyword': keyword,
             '_': str(int(time.time()))
         })
         result = json.loads(req.text)
-        s = serializers.FlightNo(result)
+        s = serializers.FlightNoSug(result)
         return Response(s.data)
+
+
+# districtname: "甲米"
+# price: "1159"
+# star: "高档型"
+# type: "hotel"
+# url: "http://m.ctrip.com/webapp/hotel/oversea/hoteldetail/709793.html?atime=20150430"
+# word: "Baan Kan Tiang See Villa Resort(芭坎天希别墅度假村酒店)"
+# zonename: " "
+class RestaurantSug(APIView):
+    permission_classes = ()
+
+    def get(self, request, keyword=None):
+        # keyword = "酒店 " + keyword
+        req = requests.get('http://m.ctrip.com/restapi/h5api/searchapp/search', params={
+            'source': 'mobileweb',
+            'action': 'autocomplete',
+            'contentType': 'json',
+            'keyword': keyword
+        })
+        result = json.loads(req.text)
+        s = serializers.RestaurantSug(result["data"], many=True)
+        return Response(s.data)
+
+
+class RestaurantDetail(APIView):
+    permission_classes = ()
+
+    def get(self, request):
+        detail_url = request.REQUEST.get('url')
+        #request SEO page
+        detail_url = detail_url.replace('/webapp', '/html5')
+        req = requests.get(detail_url)
+        html = req.text
+
+        #extract data
+        root = ElementTree.fromstring(html)
+        for i in root.itertext("酒店地址"):
+            pass
+
+        return Response("")

@@ -38,6 +38,7 @@ USER_MEDIA_URL = "/service/rest/common/resource/"
 # Application definition
 
 INSTALLED_APPS = (
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'ujieservice.middleware.DisableCSRFCheck',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     # 'ujieservice.middleware.UjieMiddleware',
@@ -125,3 +127,16 @@ REST_FRAMEWORK = {
 APPID = 'wxe2c38ce50f1ccb58'
 APPSECRET = '7f6607f8256daeb23bd0bfe98eba9603'
 TOKEN = '75CD9F8F7A3D452392CEEC2A9573C3B7'
+
+#getui settings
+IGT_APPID = 'xU59AjyIp78pmBkmyaa6u3'
+IGT_APPKEY = 'NlR9fMNhFN7G4LFh0BI4l9'
+IGT_APPSECRET = 'CMZTYXqLHm67NHhVSD7iv1'
+IGT_MASTERSECRET = '84wGJ753It6yUBCFzRB1r3'
+
+#jpush settings
+JP_APPKEY = '4bba9a1f3b5e90519ef6f6ec'
+JP_MASTERSECRET = '568187604ee0bed33b948e98'
+
+#CORS settings
+CORS_ORIGIN_ALLOW_ALL = True

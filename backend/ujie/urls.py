@@ -6,6 +6,7 @@ from ujieservice.rest.customer.api import CustomerProfile
 from ujieservice.rest.driver import api as driver_api
 from ujieservice.rest.customer import api as customer_api
 from ujieservice.rest.common import api as common_api
+from ujieservice.rest import user_api, chat_api
 
 
 
@@ -37,6 +38,9 @@ urlpatterns = patterns('',
     (r'^h5/order/$', 'ujieservice.wechat.h5.order_list'),
 
     # (r'^rest/api/', include(router.urls)),
+    (r'^rest/user/$', user_api.UserLogin.as_view()),
+    (r'^rest/chat/send/$', chat_api.Send.as_view()),
+
     (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework')),
     (r'^rest/driver/user/$', User.as_view()),
     (r'^rest/driver/vehicles/$', VehiclesView.as_view()),
@@ -50,7 +54,9 @@ urlpatterns = patterns('',
     (r'^rest/common/wxstaticupload/$', common_api.WxStaticUpload.as_view()),
     (r'^rest/common/wxuserupload/$', common_api.WxUserUpload.as_view()),
     (r'^rest/common/resource/(?P<pk>[0-9]+)/$', common_api.Resource.as_view()),
-    (r'^rest/common/flightno/(?P<keyword>.*)/$', common_api.FlightNo.as_view()),
+    (r'^rest/common/flightsug/(?P<keyword>.*)/$', common_api.FlightNoSug.as_view()),
+    (r'^rest/common/restaurantsug/(?P<keyword>.*)/$', common_api.RestaurantSug.as_view()),
+    (r'^rest/common/restaurantdetail/$', common_api.RestaurantDetail.as_view()),
     # (r'^rest/api/common/manufactuer/(\d+)$', CustomerProfile.as_view()),
     # (r'^rest/api/customer/', include(customer_router.urls)),
 )

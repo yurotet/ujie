@@ -33,9 +33,12 @@ class User(AbstractUser):
     objects = UjieUserManager()
 
     wx_open_id = models.CharField(max_length=200, blank=True, db_index=True)
-    access_token = models.CharField(max_length=200, blank=True)
+    access_token = models.CharField(max_length=200, blank=True, null=True)
     expiration = models.DateTimeField(blank=True, null=True)
-    mobile = models.CharField(max_length=50, blank=True)
+    mobile = models.CharField(max_length=50, blank=True, null=True)
+
+    gt_clientid = models.CharField(max_length=200, blank=True, null=True)
+    jp_registration_id = models.CharField(max_length=200, blank=True, null=True)
 
     REGISTED_BY = (
         (0, 'System'),

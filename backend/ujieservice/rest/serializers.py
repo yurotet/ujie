@@ -49,6 +49,16 @@ class StringSerializer(serializers.Serializer):
         return instance
 
 
-class FlightNo(serializers.Serializer):
+class FlightNoSug(serializers.Serializer):
     keyword = serializers.CharField(max_length=100)
     data = StringSerializer(many=True)
+
+
+class RestaurantSug(serializers.Serializer):
+    districtname = serializers.CharField(max_length=100, required=False)
+    price = serializers.CharField(max_length=100, required=False)
+    star = serializers.CharField(max_length=100, required=False)
+    type = serializers.CharField(max_length=100, required=False)
+    url = serializers.CharField(max_length=255, required=False)
+    word = serializers.CharField(max_length=100, required=False)
+    zonename = serializers.CharField(max_length=100, required=False)
