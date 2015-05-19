@@ -15,10 +15,12 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "org.apache.cordova.console"
+    "org.apache.cordova.console",
+    "d:\\workspace\\src\\jpush-phonegap-plugin",
+    "org.apache.cordova.device"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    "ios",
+    "android"
   ]
 }

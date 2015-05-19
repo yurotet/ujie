@@ -1,50 +1,129 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+// document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+// document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+// var onGetRegistradionID = function(data) {
+//     try{
+//         alert("JPushPlugin:registrationID is "+data)
+//     }
+//     catch(exception){
+//         alert(exception);
+//     }
+// };
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  },{
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-  }];
+// var onReceiveNotification = function(event){
+//     try{
+//         var eventContent="{";
+//         for(var key in event){
+//             if(key=="type"){
+//                 break
+//             }
+//            eventContent+=key+":"+JSON.stringify(event[key])+"\n"
+//         }
+//         eventContent+="}";
+//         alert(eventContent);
+        
+//     }
+//     catch(exeption){
+//         console.log(exception)
+//     }
+// }
+// var onReceiveMessage = function(event){
+//     try{
+//          var message = window.plugins.jPushPlugin.receiveMessage.message;
+//          //var extras = window.plugins.jPushPlugin.extras
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+//          alert(message);
+         
+//     }
+//     catch(exception){
+//         console.log("JPushPlugin:onReceiveMessage-->"+exception);
+//     }
+// }
+
+.factory('Chats', function($q, Account) {
+    var isInited = false;
+    return {
+        init: function(success, error) {
+            
+        },
+        sendMsg: function(username, msg) {
+            var deferred = $q.defer();
+            $http.post('http://wx.ujietrip.com/service/rest/chat/send/', {
+                target_username: username,
+                msg: msg
+            }).success(function() {
+                deferred.resolve();
+            }).error(function() {
+                deferred.reject();
+            });
         }
-      }
-      return null;
+    };
+})
+
+.factory('Account', function($q, $http) {
+    var isInited;
+    var jp_registration_id;
+    var userInfo;
+    return {
+        _init: function() {
+            var deferred = $q.defer();
+            if(isInited) deferred.resolve();
+            if (!isInited && window.plugins && window.plugins.jPushPlugin) {
+                var jpush = window.plugins.jPushPlugin;
+                jpush.init();
+                jpush.getRegistrationID(function(data) {
+                    if(data) {
+                        jp_registration_id = data;
+                        isInited = true;
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                    }
+                });
+            } else {
+                deferred.reject();
+            }
+            return deferred.promise;
+        },
+
+        login: function(username, password) {
+            $.ajax({
+                url: 'http://wx.ujietrip.com/service/rest/common/manufactuers/',
+                type: 'GET',
+                success: function() {
+                    alert("s");
+                },
+                error: function() {
+                    alert("er");
+                },
+                complete: function() {
+                    alert("comp");
+                }
+            })
+
+            var deferred = $q.defer();
+            this._init().then(function() {
+                $http.post('http://wx.ujietrip.com/service/rest/user/', {
+                    username: username,
+                    password: password,
+                    jp_registration_id: jp_registration_id
+                })
+                .success(function(result) {
+                    userInfo = result;
+                    deferred.resolve(result);
+                })
+                .error(function() {
+                    alert(JSON.stringify(arguments));
+                    deferred.reject();
+                });
+            }.bind(this));
+            return deferred.promise;
+        },
+
+        getUserInfo: function() {
+            return userInfo;
+        }
     }
-  };
 });
+
