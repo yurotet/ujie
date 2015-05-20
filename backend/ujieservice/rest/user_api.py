@@ -13,7 +13,12 @@ class UserLogin(APIView):
     permission_classes = ()
 
     def post(self, request):
+        jp_registration_id = request.data.get("jp_registration_id")
         if request.user.is_authenticated():
+            user = request.user
+            if user.jp_registration_id != jp_registration_id:
+                user.jp_registration_id = jp_registration_id
+                user.save()
             serializer = UserSerializer(request.user)
             return Response(serializer.data)
         else:
@@ -21,7 +26,6 @@ class UserLogin(APIView):
             username = request.data.get("username")
             password = request.data.get("password")
             # gt_clientid = request.data.get("gt_clientid")
-            jp_registration_id = request.data.get("jp_registration_id")
             if username is None or password is None:
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
             try:

@@ -41,7 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        exclude = ('username', 'password', 'is_superuser', 'wx_open_id')
+        exclude = ('password', 'is_superuser', 'wx_open_id')
 
 
 class StringSerializer(serializers.Serializer):

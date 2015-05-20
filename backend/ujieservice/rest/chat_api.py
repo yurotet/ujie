@@ -36,7 +36,10 @@ class Send(APIView):
                         'registration_id': [user.jp_registration_id]
                     },
                     'message': {
-                        'alert': msg
+                        'msg_content': msg,
+                        'extras': json.dumps({
+                          'sender': user.username
+                        })
                     }
                 }
                 req = requests.post('https://api.jpush.cn/v3/push', json.dumps(payload), headers={
