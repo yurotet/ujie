@@ -52,7 +52,7 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, $ionicPopup, $ionicLoading, Account) {
+.controller('AccountCtrl', function($scope, $ionicPopup, $ionicLoading, $state, Account) {
  	$scope.username = "sy890622";
  	$scope.password = "123456";
 
@@ -65,9 +65,12 @@ angular.module('starter.controllers', [])
  			$ionicLoading.hide();
  		})
  		.then(function() {
-			var alertPopup = $ionicPopup.alert({
+			$ionicPopup.alert({
 				title: 'Notificaiton',
 				template: 'Login Success!'
+			})
+			.then(function() {
+				$state.go('tab.chats');
 			});
  		}.bind(this))
  		.catch(function() {
