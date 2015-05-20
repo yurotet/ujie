@@ -6,9 +6,15 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+var del = require('del');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  scripts: ['./www/js/**/*.js'],
+  build: 'www/build'
 };
 
 gulp.task('default', ['sass']);
@@ -29,6 +35,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.scripts, ['package']);
 });
 
 gulp.task('install', ['git-check'], function() {
@@ -49,4 +56,17 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+gulp.task('clean', function(cb) {
+  del([paths.build], cb);
+});
+
+gulp.task('package', ['clean'], function(done) {
+  return gulp.src(paths.scripts)
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(concat('all.min.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(paths.build));
 });
