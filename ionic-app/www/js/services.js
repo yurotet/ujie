@@ -41,8 +41,8 @@ angular.module('starter.services', [])
 //     }
 // }
 
-.factory('Chats', function($q, $http, Account) {
-    var isInited = false;
+.factory('Chats', ['$q', '$http', 'Account', function($q, $http, Account) {
+    var isInited = false;;
     return {
         init: function(success, error) {
             
@@ -60,9 +60,9 @@ angular.module('starter.services', [])
             return deferred.promise;
         }
     };
-})
+}])
 
-.factory('Account', function($q, $http) {
+.factory('Account', ['$q', '$http', function($q, $http) {
     var isInited;
     var jp_registration_id;
     var userInfo;
@@ -115,5 +115,4 @@ angular.module('starter.services', [])
             return userInfo || {};
         }
     }
-});
-
+}]);

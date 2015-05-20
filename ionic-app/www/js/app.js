@@ -6,14 +6,15 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-document.addEventListener('deviceready', function () {
-  window.plugins.jPushPlugin.init();
-}, false);
-
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(['$ionicPlatform', function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+    // init JPush
+    if(window.plugins && window.plugins.jPushPlugin) {
+        window.plugins.jPushPlugin.init();
+    }
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -24,9 +25,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleLightContent();
     }
   });
-})
+}])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
 
   $ionicConfigProvider.tabs.position("bottom");
 
@@ -87,4 +88,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/account');
 
-});
+}]);

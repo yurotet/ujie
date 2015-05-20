@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', ['$scope', function($scope) {}])
 
-.controller('ChatsCtrl', function($scope, Chats, Account) {
+.controller('ChatsCtrl', ['$scope', 'Chats', 'Account', function($scope, Chats, Account) {
 	var onReceiveMessage = function(event) {
 	    try {
 	    	var jpush = window.plugins.jPushPlugin;
@@ -46,13 +46,13 @@ angular.module('starter.controllers', [])
  		Chats.sendMsg(userInfo.username, this.msg).then(function() {
  		}.bind(this));
  	};
-})
+}])
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+.controller('ChatDetailCtrl', ['$scope', '$stateParams', 'Chats', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
-})
+}])
 
-.controller('AccountCtrl', function($scope, $ionicPopup, $ionicLoading, $state, Account) {
+.controller('AccountCtrl', ['$scope', '$ionicPopup', '$ionicLoading', '$state', 'Account', function($scope, $ionicPopup, $ionicLoading, $state, Account) {
  	$scope.username = "sy890622";
  	$scope.password = "123456";
 
@@ -80,4 +80,4 @@ angular.module('starter.controllers', [])
 			});
  		});
  	};
-});
+}]);
