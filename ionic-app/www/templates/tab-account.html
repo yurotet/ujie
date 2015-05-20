@@ -1,9 +1,13 @@
 <ion-view view-title="Account">
   <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
+    <label class="item item-input">
+        <input type="text" placeholder="Username" ng-model="username">
+    </label>
+    <label class="item item-input">
+        <input type="password" placeholder="Password" ng-model="password">
+    </label>
+    <button class="button button-block button-positive" ng-click="login()">
+        Login
+    </button>
   </ion-content>
 </ion-view>

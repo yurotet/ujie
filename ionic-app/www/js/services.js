@@ -70,18 +70,22 @@ angular.module('starter.services', [])
         _init: function() {
             var deferred = $q.defer();
             if(isInited) deferred.resolve();
-            if (!isInited && window.plugins && window.plugins.jPushPlugin) {
-                var jpush = window.plugins.jPushPlugin;
-                jpush.init();
-                jpush.getRegistrationID(function(data) {
-                    if(data) {
-                        jp_registration_id = data;
-                        isInited = true;
-                        deferred.resolve();
-                    } else {
-                        deferred.reject();
-                    }
-                });
+            if (!isInited) {
+                if(window.plugins && window.plugins.jPushPlugin) {
+                    var jpush = window.plugins.jPushPlugin;
+                    jpush.init();
+                    jpush.getRegistrationID(function(data) {
+                        if(data) {
+                            jp_registration_id = data;
+                            isInited = true;
+                            deferred.resolve();
+                        } else {
+                            deferred.reject();
+                        }
+                    });
+                } else {
+                    deferred.resolve();
+                }
             } else {
                 deferred.reject();
             }
@@ -101,7 +105,6 @@ angular.module('starter.services', [])
                     deferred.resolve(result);
                 })
                 .error(function() {
-                    alert(JSON.stringify(arguments));
                     deferred.reject();
                 });
             }.bind(this));
@@ -109,7 +112,7 @@ angular.module('starter.services', [])
         },
 
         getUserInfo: function() {
-            return userInfo;
+            return userInfo || {};
         }
     }
 });
