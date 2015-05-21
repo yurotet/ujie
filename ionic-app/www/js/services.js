@@ -42,17 +42,26 @@ angular.module('starter.services', [])
 // }
 
 .factory('Chats', ['$q', '$http', 'Account', function($q, $http, Account) {
-    var isInited = false;;
+    var isInited = false;
     return {
         init: function(success, error) {
             
         },
         sendMsg: function(username, msg) {
             var deferred = $q.defer();
-            $http.post('http://wx.ujietrip.com/service/rest/chat/send/', {
-                target_username: username,
-                msg: msg
-            }).success(function() {
+            var req = {
+                method: 'POST',
+                url: 'http://wx.ujietrip.com/service/rest/chat/send/',
+                headers: {
+                    // "Authorization": "Token " + Account.getUserInfo().token
+                    "Authorization": "Token 6d54bf74d9f30d1579446d3e1d56b40013d65672"
+                },
+                data: {
+                    target_username: username,
+                    msg: msg
+                }
+            };
+            $http(req).success(function() {
                 deferred.resolve();
             }).error(function() {
                 deferred.reject();
@@ -65,7 +74,7 @@ angular.module('starter.services', [])
 .factory('Account', ['$q', '$http', function($q, $http) {
     var isInited;
     var jp_registration_id;
-    var userInfo;
+    var userInfo = {};
     return {
         _init: function() {
             var deferred = $q.defer();
@@ -95,13 +104,14 @@ angular.module('starter.services', [])
         login: function(username, password) {
             var deferred = $q.defer();
             this._init().then(function() {
-                $http.post('http://wx.ujietrip.com/service/rest/user/', {
+                $http.post('http://wx.ujietrip.com/service/rest/user/login/', {
                     username: username,
                     password: password,
                     jp_registration_id: jp_registration_id
                 })
                 .success(function(result) {
-                    userInfo = result;
+                    userInfo.username = username;
+                    userInfo.token = result.token;
                     deferred.resolve(result);
                 })
                 .error(function() {
@@ -112,7 +122,7 @@ angular.module('starter.services', [])
         },
 
         getUserInfo: function() {
-            return userInfo || {};
+            return userInfo;
         }
     }
 }]);

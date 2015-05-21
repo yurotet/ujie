@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework import authtoken
+from rest_framework.authtoken import views as auth_views
 from ujieservice.rest.customer.api import CustomerProfile
 
 from ujieservice.rest.driver import api as driver_api
@@ -38,7 +40,9 @@ urlpatterns = patterns('',
     (r'^h5/order/$', 'ujieservice.wechat.h5.order_list'),
 
     # (r'^rest/api/', include(router.urls)),
-    (r'^rest/user/$', user_api.UserLogin.as_view()),
+    # return token-auth
+    # (r'^rest/user/login/', auth_views.obtain_auth_token),
+    (r'^rest/user/login/$', user_api.UserLogin.as_view()),
     (r'^rest/chat/send/$', chat_api.Send.as_view()),
 
     (r'^rest/auth/', include('rest_framework.urls', namespace='rest_framework')),

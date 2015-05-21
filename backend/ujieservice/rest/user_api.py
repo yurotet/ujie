@@ -37,15 +37,15 @@ class UserLogin(APIView):
                     if user.jp_registration_id != jp_registration_id:
                         user.jp_registration_id = jp_registration_id
                         user.save()
-                    login(request, user)
-                    serializer = UserSerializer(request.user)
-                    return Response(serializer.data)
+                    return Response({
+                       "token": user.auth_token.key
+                    })
             except UserModel.DoesNotExist:
-                UserModel.objects.create_user(username, password=password, jp_registrationid=jp_registration_id)
+                user = UserModel.objects.create_user(username, password=password, jp_registration_id=jp_registration_id)
                 user = authenticate(username=username, password=password)
-                login(request, user)
-                serializer = UserSerializer(request.user)
-                return Response(serializer.data)
+                return Response({
+                   "token": user.auth_token.key
+                })
 
     def get(self, request):
         if request.user.is_authenticated():
