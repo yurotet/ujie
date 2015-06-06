@@ -3,6 +3,7 @@ var config = require('config');
 var Vue = require('vue');
 
 var pageHistory = [];
+var pageCache = {};
 var curPageIdx;
 var lastPageIdx;
 
@@ -14,12 +15,13 @@ var setCurPage = function(page, idx) {
 };
 
 var findPage = function(route) {
-	for(var i = 0; i < pageHistory.length; ++i) {
-		var page = pageHistory[i];
-		if(page.route == route) {
-			return page;
-		}
-	}
+	return pageCache[route];
+	// for(var i = 0; i < pageHistory.length; ++i) {
+	// 	var page = pageHistory[i];
+	// 	if(page.route == route) {
+	// 		return page;
+	// 	}
+	// }
 };
 
 var clearRemainingPages = function(fromPageIdx) {
@@ -48,10 +50,8 @@ window.onpopstate = function() {
 };
 
 window.onhashchange = function() {
-	if(!config.isPushState) {
-		var route = getRouteFromHash();
-		gotoRoute(route);
-	}
+	var route = getRouteFromHash();
+	gotoRoute(route);
 };
 
 var getRouteFromHash = function() {
@@ -79,32 +79,26 @@ var addPage = function(page) {
 };
 
 var gotoRoute = function(route) {
-	//去除前置与后置的斜杠///
-	route = route.replace(/(^\/+)|(\/+$)/g, '');
-	// var page = findPage(route);
-	// if(page) {
-	// 	if(!page.startMode || page.startMode == 'singleton') {
-	// 		pageHistory.push(page);
-	// 		var pageIdx = pageHistory.length - 1;
-	// 		history[replace ? 'replaceState' : 'pushState']({
-	// 			route: route,
-	// 			pageIdx: pageIdx
-	// 		}, '', route);
-	// 		setCurPage(page);
-	// 		return;
-	// 	}
-	// }
+	var page = findPage(route);
+	if(page) {
+		setCurPage(page);
+		return;
+	}
 	var ensureCb = function(Page) {
-		var pageIdx = pageHistory.length;
-		//如果是第一个页面，就replace当前的state
-		var replace = pageHistory.length == 0;
-		history[replace ? 'replaceState' : 'pushState']({
-			route: route, // '/webapp/ ' + 'index'
-			pageIdx: pageIdx
-		}, '', config.contentBase + route);
-		//删除后续页面
-		clearRemainingPages(pageIdx);
+		// if(config.isPushState) {
+		// 	var pageIdx = pageHistory.length;
+		// 	//如果是第一个页面，就replace当前的state
+		// 	var replace = pageHistory.length == 0;
+		// 	history[replace ? 'replaceState' : 'pushState']({
+		// 		route: route, // '/webapp/ ' + 'index'
+		// 		pageIdx: pageIdx
+		// 	}, '', config.contentBase + route);
+		// 	//删除后续页面
+		// 	clearRemainingPages(pageIdx);
+		// }
+			
 		var page = buildPage(Page, route);
+		pageCache[route] = page;
 		addPage(page);
 		setCurPage(page);
 	};
@@ -121,9 +115,12 @@ var gotoRoute = function(route) {
 	} else if(route == 'driverreg') {
 		require.ensure([], function() {
 			var Page = require('pages/driverreg');
-			var page = buildPage(Page, route);
-			addPage(page);
-			setCurPage(page);
+			ensureCb(Page);
+		})
+	} else if(route == 'register') {
+		require.ensure([], function() {
+			var Page = require('pages/register');
+			ensureCb(Page);
 		})
 	} else {
 		require.ensure([], function() {
@@ -139,24 +136,16 @@ module.exports = {
 	init: function() {
 		if(!this._inited) {
 			var route;
-			if(config.isPushState) {
-				var path = location.pathname;
-				//从类似 /webapp/list/ 中取出 list/
-				var reg = new RegExp(config.contentBase + "(.*)");
-				var result = path.match(reg);
-				if(result && result.length == 2) {
-					route = result[1];
-				}
-			} else {
-				route = getRouteFromHash();
-			}
+			route = getRouteFromHash();
 			if(!route) route = this.DEFAULT_ROUTE;
 			gotoRoute(route);
 			this._inited = true;
 		}
 	},
 	goTo: function(route) {
-		gotoRoute(route);
+		//去除前置与后置的斜杠///
+		route = route.replace(/(^\/+)|(\/+$)/g, '');
+		location.hash = route;
 	},
 	back: function() {
 		history.back();
