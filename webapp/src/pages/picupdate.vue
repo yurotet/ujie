@@ -343,6 +343,7 @@
 							}
 
 					  		wx.config(wxConfig);
+					  		alert(JSON.stringify(wxConfig));
 					  	} else {
 
 					  	}					  						   
@@ -361,7 +362,7 @@
 			
 		},
 		resume:function() {alert('resumed');
-			// this.refreshWX();		
+			this.refreshWX();		
 			this.setHeader();
 
 			var savedUser = lockr.get('user');

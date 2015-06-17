@@ -472,6 +472,7 @@ webpackJsonp([8],{
 								}
 
 						  		wx.config(wxConfig);
+						  		alert(JSON.stringify(wxConfig));
 						  	} else {
 
 						  	}					  						   
@@ -490,7 +491,7 @@ webpackJsonp([8],{
 				
 			},
 			resume:function() {alert('resumed');
-				// this.refreshWX();		
+				this.refreshWX();		
 				this.setHeader();
 
 				var savedUser = lockr.get('user');
