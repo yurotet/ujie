@@ -312,12 +312,55 @@
 			},
 			onPre:function () {
 				nav.goTo('register');
+			},
+
+			refreshWX:function() {
+				var nonceStr = util.uuid();
+				var timestamp = +new Date();
+				var url = location.href.split('#')[0];
+				$.ajax({	 
+					  type:'POST',				  
+					  url: '/api/weixin_signature', 
+					  // data to be added to query string:
+					 data: {
+						timestamp: timestamp,
+						noncestr: nonceStr,
+						url: url
+					},
+					  // type of data we are expecting in return:
+					  dataType: 'json',
+					  timeout: 10000,
+					  context: this,
+					  success: function(body){	
+					  	if (body.err_code == 0 ) {
+					  		data = body.data;alert(data);
+					  		wx.config({
+								// debug: true,
+								appId: data.appId,
+								timestamp: data.timestamp,
+								nonceStr: data.nonceStr,
+								signature: data.signature,
+								jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+							});
+					  	} else {
+
+					  	}					  						   
+					  },
+					  complete:function() {
+					  					  	
+					  },
+					
+					  error: function(xhr, type){
+					   	
+					  }
+				})	
 			}
 		},
 		created: function() {
 			
 		},
 		resume:function() {
+			this.refreshWX();
 			this.setHeader();
 			this.$data.hasGuideCer = lockr.get('user').hasGuideCer == 'yes';			
 		},
