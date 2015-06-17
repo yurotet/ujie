@@ -179,7 +179,7 @@ webpackJsonp([8],{
 					}
 				},
 
-				onChoosePassportPic: function() {alert('dsfds');
+				onChoosePassportPic: function() {alert(wx);
 					wx.chooseImage({
 					    success: function (res) {alert(res);
 					        var localIds = res.localIds;
