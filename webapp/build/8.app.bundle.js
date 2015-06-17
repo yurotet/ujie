@@ -179,15 +179,7 @@ webpackJsonp([8],{
 					}
 				},
 
-				onChoosePassportPic: function() {
-					wx.checkJsApi({
-	    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-	    success: function(res) {alert(JSON.stringify(res));
-	        // 以键值对的形式返回，可用的api值true，不可用为false
-	        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-	    }
-	});
-					alert(wx.chooseImage);
+				onChoosePassportPic: function() {								
 					wx.chooseImage({
 					    success: function (res) {alert(res);
 					        var localIds = res.localIds;
@@ -523,7 +515,7 @@ webpackJsonp([8],{
 /***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:14px;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:14px;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{position:absolute;top:0;text-align:center}");
 	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">上传照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t       <span class=\"text\">填写资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
 	var BaseComponent = __webpack_require__(71);
 		var Vue = __webpack_require__(3);

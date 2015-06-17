@@ -82,6 +82,8 @@
 	}
 	
 	.stepsContainer {
+		position: absolute;
+		top:0px;
 		text-align: center;
 	}
 </style>
