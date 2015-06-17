@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>ratchet
+<head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
 	<meta name="apple-mobile-web-app-title" content="ujietrip">
@@ -8,19 +8,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <!-- Include the compiled Ratchet CSS -->
-    <link href="/static/ratchet/css/ratchet.min.css" rel="stylesheet">
-    <link href="/static/app/css/main.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/ratchet/2.0.2/css/ratchet.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
     <!-- Include the compiled Ratchet JS -->
-    <script src="/static/ratchet/js/ratchet.min.js"></script>
+    <script src="http://cdn.bootcss.com/ratchet/2.0.2/js/ratchet.min.js"></script>
 
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<title></title>
 </head>
-<body>
- 	<!-- <header class="bar bar-nav">
-		<a class="icon icon-left-nav pull-left"></a>
-	    <h1 class="title">Ratchet</h1>
-    </header> -->
+<body> 	
 	<div class="modal loading-model js-loading">
 	    <div class="content">
 	        <div class="loading-center-wrapper">
@@ -28,19 +24,9 @@
 	        </div>
 	    </div>
 	</div>
-
+	
 	<div id="viewport" class="content">
-	</div>
-	<nav class="bar bar-tab">
-	    <a class="tab-item active" data-route="index">
-	        <span class="icon icon-home"></span>
-	        <span class="tab-label">Index</span>
-	    </a>
-	    <a class="tab-item active" data-route="driverreg">
-	        <span class="icon icon-person"></span>
-	        <span class="tab-label">DriverReg</span>
-	    </a>
-	</nav>
+	</div>	
 </body>
 <script src="{%=o.htmlWebpackPlugin.files.chunks.app.entry%}"></script>
 <script type="text/javascript" src="http://localhost:8080/webpack-dev-server.js"></script>

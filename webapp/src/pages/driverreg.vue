@@ -279,33 +279,12 @@
 			}
 		},
 		created: function() {
-			this.showLoading();
-			wxutil.config().then(function() {
-				this._loadUser().then(function(user) {
-					this._loadManufactuerList().then(function(manuList) {
-						var vehicle = user.driver_vehicles.length ? user.driver_vehicles[0] : null;
-						if(vehicle) {
-							this._loadModelList(vehicle.model.manufactuer.manufactuer_id).then(function() {
-								this.hideLoading();
-								this._startWatchManufactuer();
-							}.bind(this));
-						} else {
-							this.$data.vehicle.model.manufactuer.manufactuer_id = manuList[0].manufactuer_id;
-							this._loadModelList(manuList[0].manufactuer_id).then(function(modelList) {
-								this.hideLoading();
-								this.$data.vehicle.model.model_id = modelList[0].model_id;
-								this._startWatchManufactuer();
-							}.bind(this));;
-						}
-					}.bind(this));
-				}.bind(this));
-			}.bind(this));
 		},
-		ready: function() {
+		resume: function() {
+			$('.reg-anchor-tab').show();
 		},
-		attached: function() {
-		},
-		detached: function() {
+		pause: function() {
+			$('.reg-anchor-tab').hide();
 		}
 	});
 
@@ -369,7 +348,7 @@
 			<label>Model</label>
 			<select v-model="vehicle.model.model_id" options="modelList"></select>
 		</div>
-		<div class="input-row">
+		<div id="scroll-to" class="input-row">
 			<label>PlateNo</label>
 			<input type="text" v-model="vehicle.plate_no">
 		</div>

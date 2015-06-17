@@ -4,12 +4,11 @@ var Vue = require('vue');
 
 var pageHistory = [];
 var pageCache = {};
-var curPageIdx;
-var lastPageIdx;
+var curPage, lastPage;
 
 var setCurPage = function(page, idx) {
-	lastPageIdx = curPageIdx;
-	curPageIdx = idx != undefined ? idx : pageHistory.indexOf(page);
+	if(curPage) lastPage = curPage;
+	curPage = page;
 	document.title = page.$options.title;
 	$(page.$el).show().siblings().hide();
 };
@@ -29,23 +28,6 @@ var clearRemainingPages = function(fromPageIdx) {
 	for(var i = 0; i < removed.length; ++i) {
 		var p = removed[i];
 		$(p.$el).remove();
-	}
-};
-
-window.onpopstate = function() {
-	if(config.isPushState) {
-		console.log(pageHistory);
-		var state = history.state;
-		var page = pageHistory[state.pageIdx];
-		setCurPage(page);
-
-		//back oper
-		if(curPageIdx < lastPageIdx) {
-			console.log('back');
-		} else {
-			console.log('forward');
-		//forward oper
-		}
 	}
 };
 
@@ -74,7 +56,7 @@ var buildPage = function(Page, route) {
 };
 
 var addPage = function(page) {
-	pageHistory.push(page);
+	pageHistory.push(page);	
 	$('#viewport').append(page.$el);
 };
 
@@ -82,6 +64,8 @@ var gotoRoute = function(route) {
 	var page = findPage(route);
 	if(page) {
 		setCurPage(page);
+		lastPage && lastPage.$options.pause && lastPage.$options.pause.call(page);
+		page.$options.resume && page.$options.resume.call(page);
 		return;
 	}
 	var ensureCb = function(Page) {
@@ -101,6 +85,8 @@ var gotoRoute = function(route) {
 		pageCache[route] = page;
 		addPage(page);
 		setCurPage(page);
+		lastPage && lastPage.$options.pause && lastPage.$options.pause.call(lastPage);
+		page.$options.resume && page.$options.resume.call(page);
 	};
 	if(route == 'index') {
 		require.ensure([], function() {
@@ -122,16 +108,36 @@ var gotoRoute = function(route) {
 			var Page = require('pages/register');
 			ensureCb(Page);
 		})
-	} else {
+	} else if(route == 'signin') {
+		require.ensure([], function() {
+			var Page = require('pages/signin');
+			ensureCb(Page);
+		})
+	} else if(route == 'paper') {
+		require.ensure([], function() {
+			var Page = require('pages/paper');
+			ensureCb(Page);
+		})
+	} else if (route== 'newUser' ){
+		require.ensure([], function() {
+			var Page = require('pages/newUser');
+			ensureCb(Page);
+		})
+	} else if (route=='picupdate') {
+		require.ensure([], function() {
+			var Page = require('pages/picupdate');
+			ensureCb(Page);
+		})
+	}else {
 		require.ensure([], function() {
 			var Page = require('pages/notfound');
 			ensureCb(Page);
 		})
-	}
+	} 
 };
 
 module.exports = {
-	DEFAULT_ROUTE: 'index',
+	DEFAULT_ROUTE: 'signin',
 	_inited: false,
 	init: function() {
 		if(!this._inited) {

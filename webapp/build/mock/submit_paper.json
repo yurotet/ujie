@@ -1,0 +1,17 @@
+{
+	"paper_id": 1,
+	"answers": [
+		{
+			"question_id": 1,
+			"choices": [1]
+		},
+		{
+			"question_id": 2,
+			"choices": [2]
+		},
+		{
+			"question_id": 3,
+			"choices": [1,2]
+		}
+	]
+}

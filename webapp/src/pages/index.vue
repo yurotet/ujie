@@ -3,7 +3,7 @@
 	var Vue = require('vue');
 
 	var View = BasePage.extend({
-		title: 'index',
+		title: '注册',
 		data: function() {
 			return {
 				count: 0
@@ -11,14 +11,14 @@
 		},
 		methods: {
 			clickHandler: function() {
-				this.startPage('/list');							
+				this.startPage('/list');
 			},
 			dbltap: function() {
 				alert('rotate');
 			}
 		},
 		created: function() {
-			console.log('index created');
+			console.log('indexdfdf created');
 			setInterval(function() {
 				this.count++;
 			}.bind(this), 500);

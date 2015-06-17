@@ -1,0 +1,139 @@
+<script>
+	var BasePage = require('common/basepage');
+	var Vue = require('vue');
+	var nav = require('common/navigator');
+	var config = require('config');	
+	var steps = require('pages/regSteps');
+
+	var View = BasePage.extend({
+		title: '注册',
+		data: function() {
+			return {				
+				username:'',
+				pwd:'',	
+				confirmPwd:'',
+				recCode:''
+			};
+		},
+
+		methods: {
+			checkSubmitBtn: function() {
+				var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
+				
+				var regBtn = $('#regBtn');
+				console.log(disabled);
+				if (disabled) {
+					regBtn.attr('disabled','disabled');
+				}else {
+					regBtn.removeAttr('disabled');					
+				}
+				
+			},
+			onUserInput:function(){
+				this.checkSubmitBtn();
+			},
+			onPwdInput:function() {				
+				this.$data.confirmPwd='';
+				$('#confirmPwdInput').css('background-color','#FFFFFF');
+				this.checkSubmitBtn();
+			},
+
+			onConfirmPwdInput :function(){
+				var input = $('#confirmPwdInput');
+				if  (this.$data.pwd != this.$data.confirmPwd){					
+					input.css('background-color','#FFF2F2');
+				}else {					
+					input.css('background-color','#FFFFFF');
+				}
+
+				this.checkSubmitBtn();
+			},
+			onSubmit: function() {
+				this.showLoading();						
+				
+				$.ajax({	 
+					  type:'POST',				  
+					  url: '/api/register', 
+					  // data to be added to query string:
+					  data: { username: this.$data.username,
+					  	passwd:this.$data.pwd,
+					  	recode:this.$data.recCode},
+					  // type of data we are expecting in return:
+					  dataType: 'json',
+					  timeout: 10000,
+					  context: this,
+					  success: function(res){					  	
+					  	if(! res.err_code || res.err_code==0){
+					  		nav.goTo('register');
+					  	} else {					  		
+					  		this.showToast(res.err_msg,true);
+					  	}
+					    
+					  },
+					  complete:function() {
+					  	this.hideLoading();					  	
+					  },
+					
+					  error: function(xhr, type){
+					   	
+					  }
+				})									
+			},
+
+			onAgreeClick:function() {				
+			}			
+		},
+		created: function() {									
+				
+		},
+		resume: function() {			
+		},
+		pause:function(){
+
+		}		
+	});
+
+	module.exports = View;
+</script>
+
+<style>
+	.red {
+		color: #f00;
+	}
+	.dbtap {
+		width: 100px;
+		height: 100px;
+		background-color: blue;
+	}
+
+	#linkSec a{
+		text-decoration:underline;
+	}
+
+	#linkSec{
+		text-align: center;
+		margin-top: 20px;
+	}
+</style>
+
+<template>	
+	  <div class="driver-reg">
+		  <form class="input-group">
+			    <div class="input-row">
+				      <input type="text"  v-on="input:onUserInput" placeholder="请填入用户名" v-model="username">
+			    </div>			   
+			    <div class="input-row">
+				      <input type="password" v-on="input:onPwdInput" placeholder="设置密码" v-model="pwd">
+			    </div>
+			    <div id="confirmPwdInput" class="input-row">				      
+				      <input type="password" v-on="input:onConfirmPwdInput" placeholder="确认密码" v-model="confirmPwd">
+			    </div>
+			    <div class="input-row">				      
+				      <input type="text" placeholder="推荐码 (可选)" v-model="recCode">
+			    </div>			   
+		    </form>
+	  
+		    <button  id="regBtn" class="miu-subBtn btn btn-positive btn-block"  disabled="disabled" v-model="realName" v-on="click: onSubmit">注册</button>	
+		    <div  id="linkSec"><p>注册即表示同意<a v-on="click:onAgreeClick">蜜柚私导协议</a></p></div>    	
+	  </div>	 
+</template>
