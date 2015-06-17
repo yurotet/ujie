@@ -1,12 +1,11 @@
 <script>
-	var BasePage = require('common/basepage');
-	var ajax = require('common/ajax');
-	var wxutil = require('common/wxutil');
-	var Promise = require('promise');
+	var BasePage = require('common/basepage');	
+	var wxutil = require('common/wxutil');	
 	var picUpload= require('pages/picUploadCmp');
 	var steps = require('pages/regSteps');
 	var nav = require('common/navigator');
 	var lockr = require('common/localstorageutil');
+	var util = require('common/util');
 
 	var View = BasePage.extend({
 		title: '上传认证图片',
@@ -51,9 +50,9 @@
 				}
 			},
 
-			onChoosePhoto: function() {
+			onChoosePassportPic: function() {alert('dsfds');
 				wx.chooseImage({
-				    success: function (res) {
+				    success: function (res) {alert(res);
 				        var localIds = res.localIds;
 				        if(localIds.length) {
 				        	var wxMediaId = localIds[0];
@@ -333,15 +332,17 @@
 					  context: this,
 					  success: function(body){	
 					  	if (body.err_code == 0 ) {
-					  		data = body.data;alert(data);
-					  		wx.config({
+					  		var data = body.data;					  		
+					  		var wxConfig = {
 								// debug: true,
 								appId: data.appId,
 								timestamp: data.timestamp,
 								nonceStr: data.nonceStr,
 								signature: data.signature,
 								jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
-							});
+							}
+
+					  		wx.config(wxConfig);
 					  	} else {
 
 					  	}					  						   
@@ -360,9 +361,14 @@
 			
 		},
 		resume:function() {
-			this.refreshWX();
+			this.refreshWX();		
 			this.setHeader();
-			this.$data.hasGuideCer = lockr.get('user').hasGuideCer == 'yes';			
+
+			var savedUser = lockr.get('user');
+			if (savedUser) {
+				this.$data.hasGuideCer = savedUser.hasGuideCer == 'yes';
+			}
+						
 		},
 		pause:function(){
 
