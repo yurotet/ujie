@@ -360,7 +360,7 @@
 		created: function() {
 			
 		},
-		resume:function() {
+		resume:function() {alert('resumed');
 			// this.refreshWX();		
 			this.setHeader();
 
