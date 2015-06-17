@@ -1,11 +1,40 @@
 webpackJsonp([6],{
 
-/***/ 70:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(66);
-	var Vue = __webpack_require__(4);
-	var $Class = __webpack_require__(78);
+	var inserted = {};
+
+	module.exports = function (css, options) {
+	    if (inserted[css]) return;
+	    inserted[css] = true;
+	    
+	    var elem = document.createElement('style');
+	    elem.setAttribute('type', 'text/css');
+
+	    if ('textContent' in elem) {
+	      elem.textContent = css;
+	    } else {
+	      elem.styleSheet.cssText = css;
+	    }
+	    
+	    var head = document.getElementsByTagName('head')[0];
+	    if (options && options.prepend) {
+	        head.insertBefore(elem, head.childNodes[0]);
+	    } else {
+	        head.appendChild(elem);
+	    }
+	};
+
+
+/***/ },
+
+/***/ 69:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
+	var Vue = __webpack_require__(3);
+	var $Class = __webpack_require__(79);
 
 	var M = Vue.extend({
 	});
@@ -14,6 +43,9 @@ webpackJsonp([6],{
 		name: 'BagePage',
 		// startMode: "singleton",
 		startMode: "newinstance",
+
+		intervalCounter : 0,
+
 		startPage: function(route) {
 			nav.goTo(route);
 		},
@@ -21,50 +53,120 @@ webpackJsonp([6],{
 		},
 		back: function() {
 			nav.back();
+		},	
+
+		hideToast:function(){
+
+			var alert = document.getElementById("toast");
+
+			if (alert)  {
+				alert.style.opacity = 0;
+				alert.style.display='none';	
+				clearInterval(this.intervalCounter);
+			}
 		},
-		showLoading: function() {
+
+		 showToast:function(message,isError){
+			this.hideToast();
+
+			var alert = document.getElementById("toast");		
+
+			if (alert == null){
+				var toastHTML = '<div id="toast">' + message + '</div>';
+				document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+
+			}
+			else{
+				$(alert).text(message);
+				alert.style.display='block';
+				alert.style.opacity = .9;
+			}		
+
+			intervalCounter = setInterval(this.hideToast,  isError? 2200:1300);
+
+		},
+
+		showLoading: function() {		
+			$('.m-load2').css('display','block');
 			$('.js-loading').addClass('active');
+			setTimeout(this.hideLoading, 10000); // 10 seconds timeout
 		},
+
 		hideLoading: function() {
+			$('.m-load2').css('display','none');
 			$('.js-loading').removeClass('active');
 		}
 	});
 
 	module.exports = M;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 76:
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var __vue_template__ = "<section class=\"paper\">\n    <ul>\n      <li v-repeat=\"q : paper.questions\">\n      \t<div v-if=\"q.type==1 || q.type==2\">\n          <div>\n            {{q.desc}}\n          </div>\n          <div>\n          \t<span v-repeat=\"o : q.options\">\n          \t\t<input type=\"radio\" name=\"{{q.question_id}}\" value=\"{{$index + 1}}\" v-model=\"q._choices\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n        <div v-if=\"q.type==3\">\n          <div>\n            {{q.desc}}\n          </div>\n          <div>\n          \t<span v-repeat=\"o : q.options\">\n          \t\t<input type=\"checkbox\" name=\"{{q.question_id}}\" value=\"{{$index}}\" v-model=\"q._choices[$index]\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n      </li>\n    </ul>\n    <button class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">Submit</button>\n  </section>";
-	var BasePage = __webpack_require__(70);
-		var Vue = __webpack_require__(4);
-		var nav = __webpack_require__(66);
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".paper ul{list-style-type:decimal}.paper li{margin-bottom:20px}.ques-des{font-size:18px;margin-bottom:8px}.ques-option{font-size:16px;width:45%;display:inline-block;height:40px;margin-right:4%}.ques-option input{margin-right:10px}");
+	var __vue_template__ = "<section class=\"paper\">\n    <ul>\n      <li v-repeat=\"q : paper.questions\">\n      \t<div v-if=\"q.type==1 || q.type==2\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"radio\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n        <div v-if=\"q.type==3\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"checkbox\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices[$index]\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n      </li>\n    </ul>\n    <button id=\"paperSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交考卷</button>\n  </section>";
+	var BasePage = __webpack_require__(69);
+		var Vue = __webpack_require__(3);
+		var nav = __webpack_require__(65);
+		var config = __webpack_require__(66);	
+		var lockr = __webpack_require__(97);
 
 		var View = BasePage.extend({
-			title: 'signin',
+			title: '私导初级考试',
 			data: function() {
 				return {
 					paper: {
+						
 					}
 				};
 			},
-			methods: {
-				onSubmit: function() {
+			
+			methods: {	
+				checkSubmitBtn:function () {
+					var answers = this._extractChoices().answers, i;				
+
+					for (i =0 ; i< answers.length; i++) {
+						if (!answers[i].choices.length)
+							break;
+					}
+
+					var disabled = (i != answers.length);
+
+					var btn = $('#paperSubmit');
+					if (!disabled) {
+						btn.attr('disabled','disabled');
+					}else {
+						btn.removeAttr('disabled');
+					}			
+				},
+
+				onInputChange :function() {
 					var answers = this._extractChoices();
 					console.log(answers);
+					var paper = {};
+					paper[answers.paper_id] = answers.answers;
+
+					lockr.set('user.papers', paper)	
+					
+					this.checkSubmitBtn();
 				},
+
+				onSubmit: function() {				
+					var answers = this._extractChoices();
+					console.log(answers);
+				}, 
 				//extract answers from vm
 				_extractChoices: function() {
 					var paper = {
-						paper_id: this.$data.paper.paper_id,
+						paper_id: this.$data.paper.id,
 						answers: []
 					};
 					this.$data.paper.questions.forEach(function(q) {
 						var answer = {
-							question_id: q.question_id,
+							question_id: q.qid,
 							choices: []
 						};
 						if(q.type == 1 || q.type == 2) {
@@ -87,45 +189,97 @@ webpackJsonp([6],{
 				_getABCFromIndex: function(idx) {
 					// 'A' = 65
 					return String.fromCharCode(65 + idx);
+				},
+
+				initData: function() {
+					// var answers = lockr.get('user.paper' + this.$data.paper.paper_id + '.answers');
+					var papers = lockr.get('user.papers');
+					console.log(papers);
+									
+					var answers = papers && papers[this.$data.paper.id];
+					console.log(answers);
+					var questions = this.$data.paper.questions;
+					
+					if (answers) {				
+						for (var i =0 ; i < questions.length; i ++) {
+							switch (questions[i].type) {
+								case '1':
+								case '2':
+									if (answers[i].choices.length) {
+										questions[i]._choices = answers[i].choices[0];
+									}								
+								break;
+								case '3':
+									if (answers[i].choices.length) {
+										$.each(answers[i].choices,function(key,index){	
+											questions[i]._choices[index-1] = 'true';
+										})									
+									}
+								break;
+							}						
+						}
+					}												
 				}
 			},
 			created: function() {
-				$.get('/mock/paper.json', function(res) {
-					console.log(res);
-					for(var i = 0; i < res.questions.length; ++i) {
-						var q = res.questions[i];
-						if(q.type == 3) {
-							q._choices = [];
-						}
-						for(var j = 0; j < q.options.length; ++j) {
-							var o = q.options[j];
-							var idx = j;
-							o.value = idx + 1;
-							o._text = this._getABCFromIndex(idx) + ". " + o.desc;
-						}
-					}
-					this.$data.paper = res;
-				}.bind(this));
+				this.showLoading();
+				$.ajax({
+					  type:'POST',				  
+					  url: '/api/paper', 				 
+					  dataType: 'json',
+					  timeout: 10000,
+					  context: this,
+					  success: function(res){					  						  
+					  	if(res.err_code==0){				  		
+							var res = res.data;
+							
+							for(var i = 0; i < res.questions.length; ++i) {
+								var q = res.questions[i];
+								if(q.type == 3) {
+									q._choices = [];
+								} else {
+									q._choices=null;
+								}
+								for(var j = 0; j < q.options.length; ++j) {
+									var o = q.options[j];
+									var idx = j;
+									o.value = idx + 1;
+									o._text = this._getABCFromIndex(idx) + ". " + o.key;
+								}
+							}
+							this.$data.paper = res;	
+
+							this.initData();
+							// this.$data.paper.questions[0]._choices=1;
+
+					  	} else {					  		
+					  		this.showToast(res.err_msg,true);	  		
+					  	}
+					    
+					  },
+					  complete:function() {
+					  	this.hideLoading();					  	
+					  },
+					
+					  error: function(xhr, type){
+					   	
+					  }
+				})		
 			},
-			ready: function() {},
 			resume: function() {
-				$('.reg-anchor-tab').show();
 			},
 			pause: function() {
-				$('.reg-anchor-tab').hide();
-			},
-			attached: function() {},
-			detached: function() {}
+			}
 		});
 
 		module.exports = View;
 	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 78:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -449,6 +603,170 @@ webpackJsonp([6],{
 
 	}));
 
+
+/***/ },
+
+/***/ 97:
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root, factory) {
+
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = factory(root, exports);
+	    }
+	  } else if (typeof define === 'function' && define.amd) {
+	    define(['exports'], function(exports) {
+	      root.Lockr = factory(root, exports);
+	    });
+	  } else {
+	    root.Lockr = factory(root, {});
+	  }
+
+	}(this, function(root, Lockr) {
+	  'use strict';
+
+	  if (!Array.prototype.indexOf) {
+	    Array.prototype.indexOf = function(elt /*, from*/)
+	    {
+	      var len = this.length >>> 0;
+
+	      var from = Number(arguments[1]) || 0;
+	      from = (from < 0)
+	      ? Math.ceil(from)
+	      : Math.floor(from);
+	      if (from < 0)
+	        from += len;
+
+	      for (; from < len; from++)
+	      {
+	        if (from in this &&
+	            this[from] === elt)
+	          return from;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  Lockr.prefix = "";
+
+	  Lockr._getPrefixedKey = function(key, options) {
+	    options = options || {};
+
+	    if (options.noPrefix) {
+	      return key;
+	    } else {
+	      return this.prefix + key;
+	    }
+
+	  };
+
+	  Lockr.set = function (key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    try {
+	      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+	    } catch (e) {
+	      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.get = function (key, missing, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+	    if(value === null)
+	      return missing;
+	    else
+	      return (value.data || missing);
+	  };
+
+	  Lockr.sadd = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json;
+
+	    var values = Lockr.smembers(key);
+
+	    if (values.indexOf(value) > -1) {
+	      return null;
+	    }
+
+	    try {
+	      values.push(value);
+	      json = JSON.stringify({"data": values});
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      console.log(e);
+	      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.smembers = function(key, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+
+	    if (value === null)
+	      return [];
+	    else
+	      return (value.data || []);
+	  };
+
+	  Lockr.sismember = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    return Lockr.smembers(key).indexOf(value) > -1;
+	  };
+
+	  Lockr.getAll = function () {
+	    var keys = Object.keys(localStorage);
+
+	    return keys.map(function (key) {
+	      return Lockr.get(key);
+	    });
+	  };
+
+	  Lockr.srem = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json,
+	        index;
+
+	    var values = Lockr.smembers(key, value);
+
+	    index = values.indexOf(value);
+
+	    if (index > -1)
+	      values.splice(index, 1);
+
+	    json = JSON.stringify({"data": values});
+
+	    try {
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+	    }
+	  };
+
+	  Lockr.rm =  function (key) {
+	    localStorage.removeItem(key);
+	  };
+
+	  Lockr.flush = function () {
+	    localStorage.clear();
+	  };
+	  return Lockr;
+
+	}));
 
 /***/ }
 

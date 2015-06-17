@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 69:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 70:
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(66);
-	var Vue = __webpack_require__(4);
-	var $Class = __webpack_require__(78);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
+	var Vue = __webpack_require__(3);
+	var $Class = __webpack_require__(79);
 
 	var M = Vue.extend({
 	});
@@ -43,6 +43,9 @@ webpackJsonp([3],{
 		name: 'BagePage',
 		// startMode: "singleton",
 		startMode: "newinstance",
+
+		intervalCounter : 0,
+
 		startPage: function(route) {
 			nav.goTo(route);
 		},
@@ -50,29 +53,65 @@ webpackJsonp([3],{
 		},
 		back: function() {
 			nav.back();
+		},	
+
+		hideToast:function(){
+
+			var alert = document.getElementById("toast");
+
+			if (alert)  {
+				alert.style.opacity = 0;
+				alert.style.display='none';	
+				clearInterval(this.intervalCounter);
+			}
 		},
-		showLoading: function() {
+
+		 showToast:function(message,isError){
+			this.hideToast();
+
+			var alert = document.getElementById("toast");		
+
+			if (alert == null){
+				var toastHTML = '<div id="toast">' + message + '</div>';
+				document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+
+			}
+			else{
+				$(alert).text(message);
+				alert.style.display='block';
+				alert.style.opacity = .9;
+			}		
+
+			intervalCounter = setInterval(this.hideToast,  isError? 2200:1300);
+
+		},
+
+		showLoading: function() {		
+			$('.m-load2').css('display','block');
 			$('.js-loading').addClass('active');
+			setTimeout(this.hideLoading, 10000); // 10 seconds timeout
 		},
+
 		hideLoading: function() {
+			$('.m-load2').css('display','none');
 			$('.js-loading').removeClass('active');
 		}
 	});
 
 	module.exports = M;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 73:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(69)(".driver-reg .avatar{width:120px;height:120px}.driver-reg .avatar-row{height:auto}");
-	var __vue_template__ = "<section class=\"driver-reg\">\n\t\t<div class=\"input-row\">\n\t\t\t<label>Name</label>\n\t\t\t<input type=\"text\" placeholder=\"Name\" v-model=\"user.driver_name\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Email</label>\n\t\t\t<input type=\"email\" placeholder=\"abc@abc.com\" v-model=\"email\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Sex</label>\n\t\t\t<input type=\"radio\" name=\"sex\" value=\"male\" v-model=\"user.sex\"> male\n    \t\t<input type=\"radio\" name=\"sex\" value=\"female\" v-model=\"user.sex\"> female\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Birth</label>\n\t\t\t<input type=\"date\" v-model=\"birth\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Contact</label>\n\t\t\t<input type=\"text\" v-model=\"mobile\">\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Avatar</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_avatar}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChoosePhoto\">\n\t\t\t  \tChoose Photo\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Driver Lisence</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_driver_license}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChooseDriverLicense\">\n\t\t\t  \tChoose Driver License\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Manufactuer</label>\n\t\t\t<select class=\"test\" v-model=\"vehicle.model.manufactuer.manufactuer_id\" options=\"manufactuerList\"></select>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Model</label>\n\t\t\t<select v-model=\"vehicle.model.model_id\" options=\"modelList\"></select>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>PlateNo</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.plate_no\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Brand</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.brand\">\n\t\t</div>\n\t\t<button class=\"btn btn-positive btn-block\" v-on=\"click: onConfirm\">Confirm</button>\n\t</section>";
-	var BasePage = __webpack_require__(70);
-		var ajax = __webpack_require__(79);
-		var wxutil = __webpack_require__(83);
-		var Promise = __webpack_require__(85);
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".driver-reg .avatar{width:120px;height:120px}.driver-reg .avatar-row{height:auto}");
+	var __vue_template__ = "<section class=\"driver-reg\">\n\t\t<div class=\"input-row\">\n\t\t\t<label>Name</label>\n\t\t\t<input type=\"text\" placeholder=\"Name\" v-model=\"user.driver_name\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Email</label>\n\t\t\t<input type=\"email\" placeholder=\"abc@abc.com\" v-model=\"email\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Sex</label>\n\t\t\t<input type=\"radio\" name=\"sex\" value=\"male\" v-model=\"user.sex\"> male\n    \t\t<input type=\"radio\" name=\"sex\" value=\"female\" v-model=\"user.sex\"> female\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Birth</label>\n\t\t\t<input type=\"date\" v-model=\"birth\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Contact</label>\n\t\t\t<input type=\"text\" v-model=\"mobile\">\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Avatar</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_avatar}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChoosePhoto\">\n\t\t\t  \tChoose Photo\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Driver Lisence</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_driver_license}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChooseDriverLicense\">\n\t\t\t  \tChoose Driver License\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Manufactuer</label>\n\t\t\t<select class=\"test\" v-model=\"vehicle.model.manufactuer.manufactuer_id\" options=\"manufactuerList\"></select>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Model</label>\n\t\t\t<select v-model=\"vehicle.model.model_id\" options=\"modelList\"></select>\n\t\t</div>\n\t\t<div id=\"scroll-to\" class=\"input-row\">\n\t\t\t<label>PlateNo</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.plate_no\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Brand</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.brand\">\n\t\t</div>\n\t\t<button class=\"btn btn-positive btn-block\" v-on=\"click: onConfirm\">Confirm</button>\n\t</section>";
+	var BasePage = __webpack_require__(69);
+		var ajax = __webpack_require__(80);
+		var wxutil = __webpack_require__(84);
+		var Promise = __webpack_require__(86);
 
 		var View = BasePage.extend({
 			title: 'index',
@@ -350,21 +389,22 @@ webpackJsonp([3],{
 			},
 			created: function() {
 			},
-			ready: function() {
+			resume: function() {
+				$('.reg-anchor-tab').show();
 			},
-			attached: function() {
-			},
-			detached: function() {
+			pause: function() {
+				$('.reg-anchor-tab').hide();
 			}
 		});
 
 		module.exports = View;
 	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
 
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 78:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -691,23 +731,23 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 79:
+/***/ 80:
 /***/ function(module, exports, __webpack_require__) {
 
-	var superagent = __webpack_require__(80);
+	var superagent = __webpack_require__(81);
 	module.exports = superagent;
 
 /***/ },
 
-/***/ 80:
+/***/ 81:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(81);
-	var reduce = __webpack_require__(82);
+	var Emitter = __webpack_require__(82);
+	var reduce = __webpack_require__(83);
 
 	/**
 	 * Root reference for iframes.
@@ -1829,7 +1869,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 81:
+/***/ 82:
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2000,7 +2040,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 82:
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2030,12 +2070,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 83:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var config = __webpack_require__(67);
-	var util = __webpack_require__(84);
-	var Promise = __webpack_require__(85);
+	/* WEBPACK VAR INJECTION */(function($) {var config = __webpack_require__(66);
+	var util = __webpack_require__(85);
+	var Promise = __webpack_require__(86);
 
 	module.exports = {
 		config: function() {
@@ -2074,29 +2114,20 @@ webpackJsonp([3],{
 				
 		}
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-
-/***/ 84:
-/***/ function(module, exports, __webpack_require__) {
-
-	var uuid = 1;
-	module.exports = {
-		uuid:function(prefix){
-			return (prefix||"") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
-		}
-	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
 /***/ 85:
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var uuid = 1;
 
-	module.exports = __webpack_require__(86)
-
+	module.exports = {
+		uuid:function(prefix){
+			return (prefix||"") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
+		}	
+	}
 
 /***/ },
 
@@ -2105,11 +2136,7 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	module.exports = __webpack_require__(87);
-	__webpack_require__(89);
-	__webpack_require__(90);
-	__webpack_require__(91);
-	__webpack_require__(92);
+	module.exports = __webpack_require__(87)
 
 
 /***/ },
@@ -2119,7 +2146,21 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	var asap = __webpack_require__(88);
+	module.exports = __webpack_require__(88);
+	__webpack_require__(90);
+	__webpack_require__(91);
+	__webpack_require__(92);
+	__webpack_require__(93);
+
+
+/***/ },
+
+/***/ 88:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var asap = __webpack_require__(89);
 
 	function noop() {}
 
@@ -2305,7 +2346,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 88:
+/***/ 89:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -2533,12 +2574,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 89:
+/***/ 90:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(87);
+	var Promise = __webpack_require__(88);
 
 	module.exports = Promise;
 	Promise.prototype.done = function (onFulfilled, onRejected) {
@@ -2553,12 +2594,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 90:
+/***/ 91:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(87);
+	var Promise = __webpack_require__(88);
 
 	module.exports = Promise;
 	Promise.prototype['finally'] = function (f) {
@@ -2576,15 +2617,15 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 91:
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	//This file contains the ES6 extensions to the core Promises/A+ API
 
-	var Promise = __webpack_require__(87);
-	var asap = __webpack_require__(88);
+	var Promise = __webpack_require__(88);
+	var asap = __webpack_require__(89);
 
 	module.exports = Promise;
 
@@ -2691,7 +2732,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 92:
+/***/ 93:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2699,8 +2740,8 @@ webpackJsonp([3],{
 	// This file contains then/promise specific extensions that are only useful
 	// for node.js interop
 
-	var Promise = __webpack_require__(87);
-	var asap = __webpack_require__(93);
+	var Promise = __webpack_require__(88);
+	var asap = __webpack_require__(94);
 
 	module.exports = Promise;
 
@@ -2771,13 +2812,13 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 93:
+/***/ 94:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(88);
+	var rawAsap = __webpack_require__(89);
 	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
 	// We queue errors to ensure they are thrown in right order (FIFO).

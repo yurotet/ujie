@@ -1,10 +1,10 @@
 webpackJsonp([2],{
 
-/***/ 71:
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
-	var BaseComponent = __webpack_require__(72);
-	var Vue = __webpack_require__(4);
+	var BaseComponent = __webpack_require__(71);
+	var Vue = __webpack_require__(3);
 
 	var View = BaseComponent.extend({
 		title: 'list',
@@ -26,10 +26,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 72:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(4);
+	var Vue = __webpack_require__(3);
 	var M = Vue.extend({
 		onCreate: function() {
 

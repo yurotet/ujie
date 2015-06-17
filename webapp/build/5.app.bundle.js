@@ -1,11 +1,40 @@
 webpackJsonp([5],{
 
-/***/ 70:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(66);
-	var Vue = __webpack_require__(4);
-	var $Class = __webpack_require__(78);
+	var inserted = {};
+
+	module.exports = function (css, options) {
+	    if (inserted[css]) return;
+	    inserted[css] = true;
+	    
+	    var elem = document.createElement('style');
+	    elem.setAttribute('type', 'text/css');
+
+	    if ('textContent' in elem) {
+	      elem.textContent = css;
+	    } else {
+	      elem.styleSheet.cssText = css;
+	    }
+	    
+	    var head = document.getElementsByTagName('head')[0];
+	    if (options && options.prepend) {
+	        head.insertBefore(elem, head.childNodes[0]);
+	    } else {
+	        head.appendChild(elem);
+	    }
+	};
+
+
+/***/ },
+
+/***/ 69:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
+	var Vue = __webpack_require__(3);
+	var $Class = __webpack_require__(79);
 
 	var M = Vue.extend({
 	});
@@ -14,6 +43,9 @@ webpackJsonp([5],{
 		name: 'BagePage',
 		// startMode: "singleton",
 		startMode: "newinstance",
+
+		intervalCounter : 0,
+
 		startPage: function(route) {
 			nav.goTo(route);
 		},
@@ -21,30 +53,67 @@ webpackJsonp([5],{
 		},
 		back: function() {
 			nav.back();
+		},	
+
+		hideToast:function(){
+
+			var alert = document.getElementById("toast");
+
+			if (alert)  {
+				alert.style.opacity = 0;
+				alert.style.display='none';	
+				clearInterval(this.intervalCounter);
+			}
 		},
-		showLoading: function() {
+
+		 showToast:function(message,isError){
+			this.hideToast();
+
+			var alert = document.getElementById("toast");		
+
+			if (alert == null){
+				var toastHTML = '<div id="toast">' + message + '</div>';
+				document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+
+			}
+			else{
+				$(alert).text(message);
+				alert.style.display='block';
+				alert.style.opacity = .9;
+			}		
+
+			intervalCounter = setInterval(this.hideToast,  isError? 2200:1300);
+
+		},
+
+		showLoading: function() {		
+			$('.m-load2').css('display','block');
 			$('.js-loading').addClass('active');
+			setTimeout(this.hideLoading, 10000); // 10 seconds timeout
 		},
+
 		hideLoading: function() {
+			$('.m-load2').css('display','none');
 			$('.js-loading').removeClass('active');
 		}
 	});
 
 	module.exports = M;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 75:
+/***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
-	var __vue_template__ = "<section class=\"driver-reg\">\n    <div class=\"input-row\">\n      <label>Username</label>\n      <input type=\"text\" placeholder=\"Name\" v-model=\"username\">\n    </div>\n    <div class=\"input-row\">\n      <label>Password</label>\n      <input type=\"password\" placeholder=\"********\" v-model=\"password\">\n    </div>\n    <div class=\"input-row\">\n      <label>Confirm Password</label>\n      <input type=\"password\" placeholder=\"********\" v-model=\"password_confirm\">\n    </div>\n    <button class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">Submit</button>\n  </section>";
-	var BasePage = __webpack_require__(70);
-	  var Vue = __webpack_require__(4);
-	  var nav = __webpack_require__(66);
+	__webpack_require__(68)("#regSec,h3{text-align:center}#forgetPwd{margin-right:15px}");
+	var __vue_template__ = "<header class=\"miu-header\">\n\t\t<img src=\"http://static.miyouu.com/m/images/logo.png\" width=\"105\" height=\"44\">\n\t</header>\n\t  <section class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"text\" placeholder=\"请输入用户名/邮箱/手机号\" v-model=\"username\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" placeholder=\"请输入密码\" v-model=\"password\">\n\t\t\t    </div>\n\t\t    </form>\n\t  \n\t\t    <button class=\"miu-subBtn btn btn-positive btn-block\" v-on=\"click: onSubmit\">登录</button>\n\t\t    \n\t\t     <div id=\"regSec\">     \n\t\t    \t<a id=\"forgetPwd\" v-on=\"click: onForgetPwdClick\">忘记密码?</a>\n\t\t   \t<a id=\"regLink\" v-on=\"click:onRegClick\">注册新用户</a>\n\t\t   </div>   \n\t  </section>";
+	var BasePage = __webpack_require__(69);
+	  var Vue = __webpack_require__(3);
+	  var nav = __webpack_require__(65);
 
 	  var View = BasePage.extend({
-	    title: 'signin',
+	    title: '登录',
 	    data: function() {
 	      return {
 	        count: 0
@@ -53,23 +122,22 @@ webpackJsonp([5],{
 	    methods: {
 	      onSubmit: function() {
 	      		nav.goTo('paper');
+	      },
+	      onRegClick:function(){
+	      		nav.goTo('newUser');
+	      },
+	      onForgetPwdClick:function(){
+			nav.goTo('')
 	      }
+
 	    },
 	    created: function() {
-	      console.log('index created');
-	      setInterval(function() {
-	        this.count++;
-	      }.bind(this), 500);
+	    	this.showLoading();
+	      console.log('indfddex created');
 	    },
 	    ready: function() {
-	      console.log('index ready');
-	    },
-	    attached: function() {
-	      console.log('index attached');
-	    },
-	    detached: function() {
-	      console.log('index detached');
-	    }
+	      console.log('indexdfd ready');
+	    },  
 	  });
 
 	  module.exports = View;
@@ -78,7 +146,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 78:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4

@@ -4,13 +4,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: {
         // app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"],
-        app: ["./node_modules/webpack/hot/dev-server", "./src/app.js"]
+        app: [ "./src/app.js"]
         // vendor: ["vue"]
     }, 
     output: {
         path: "./build/",
         filename: "app.bundle.js",
-        publicPath: '/res/'
+        publicPath: '/'
     },
     module: {
         loaders: [

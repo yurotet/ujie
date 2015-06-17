@@ -1,15 +1,15 @@
 webpackJsonp([1],{
 
-/***/ 68:
+/***/ 67:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(69)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
+	__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
 	var __vue_template__ = "<ul class=\"table-view\">\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"http://goratchet.com\">\n          <strong>Ratchet documentation</strong>\n        </a>\n      </li>\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"https://github.com/twbs/ratchet/\">\n          <strong>Ratchet on Github</strong>\n        </a>\n      </li>\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"https://groups.google.com/forum/#!forum/goratchet\">\n          <strong>Ratchet Google group</strong>\n        </a>\n      </li>\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"https://twitter.com/goratchet\">\n          <strong>Ratchet on Twitter</strong>\n        </a>\n      </li>\n    </ul>";
-	var BasePage = __webpack_require__(70);
-		var Vue = __webpack_require__(4);
+	var BasePage = __webpack_require__(69);
+		var Vue = __webpack_require__(3);
 
 		var View = BasePage.extend({
-			title: 'index',
+			title: '注册',
 			data: function() {
 				return {
 					count: 0
@@ -17,14 +17,14 @@ webpackJsonp([1],{
 			},
 			methods: {
 				clickHandler: function() {
-					this.startPage('/list');							
+					this.startPage('/list');
 				},
 				dbltap: function() {
 					alert('rotate');
 				}
 			},
 			created: function() {
-				console.log('index created');
+				console.log('indexdfdf created');
 				setInterval(function() {
 					this.count++;
 				}.bind(this), 500);
@@ -46,7 +46,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 69:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -75,12 +75,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 70:
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(66);
-	var Vue = __webpack_require__(4);
-	var $Class = __webpack_require__(78);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
+	var Vue = __webpack_require__(3);
+	var $Class = __webpack_require__(79);
 
 	var M = Vue.extend({
 	});
@@ -89,6 +89,9 @@ webpackJsonp([1],{
 		name: 'BagePage',
 		// startMode: "singleton",
 		startMode: "newinstance",
+
+		intervalCounter : 0,
+
 		startPage: function(route) {
 			nav.goTo(route);
 		},
@@ -96,21 +99,57 @@ webpackJsonp([1],{
 		},
 		back: function() {
 			nav.back();
+		},	
+
+		hideToast:function(){
+
+			var alert = document.getElementById("toast");
+
+			if (alert)  {
+				alert.style.opacity = 0;
+				alert.style.display='none';	
+				clearInterval(this.intervalCounter);
+			}
 		},
-		showLoading: function() {
+
+		 showToast:function(message,isError){
+			this.hideToast();
+
+			var alert = document.getElementById("toast");		
+
+			if (alert == null){
+				var toastHTML = '<div id="toast">' + message + '</div>';
+				document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+
+			}
+			else{
+				$(alert).text(message);
+				alert.style.display='block';
+				alert.style.opacity = .9;
+			}		
+
+			intervalCounter = setInterval(this.hideToast,  isError? 2200:1300);
+
+		},
+
+		showLoading: function() {		
+			$('.m-load2').css('display','block');
 			$('.js-loading').addClass('active');
+			setTimeout(this.hideLoading, 10000); // 10 seconds timeout
 		},
+
 		hideLoading: function() {
+			$('.m-load2').css('display','none');
 			$('.js-loading').removeClass('active');
 		}
 	});
 
 	module.exports = M;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 78:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4

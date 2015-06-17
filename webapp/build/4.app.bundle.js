@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 69:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 70:
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(66);
-	var Vue = __webpack_require__(4);
-	var $Class = __webpack_require__(78);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
+	var Vue = __webpack_require__(3);
+	var $Class = __webpack_require__(79);
 
 	var M = Vue.extend({
 	});
@@ -43,6 +43,9 @@ webpackJsonp([4],{
 		name: 'BagePage',
 		// startMode: "singleton",
 		startMode: "newinstance",
+
+		intervalCounter : 0,
+
 		startPage: function(route) {
 			nav.goTo(route);
 		},
@@ -50,310 +53,305 @@ webpackJsonp([4],{
 		},
 		back: function() {
 			nav.back();
+		},	
+
+		hideToast:function(){
+
+			var alert = document.getElementById("toast");
+
+			if (alert)  {
+				alert.style.opacity = 0;
+				alert.style.display='none';	
+				clearInterval(this.intervalCounter);
+			}
 		},
-		showLoading: function() {
+
+		 showToast:function(message,isError){
+			this.hideToast();
+
+			var alert = document.getElementById("toast");		
+
+			if (alert == null){
+				var toastHTML = '<div id="toast">' + message + '</div>';
+				document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+
+			}
+			else{
+				$(alert).text(message);
+				alert.style.display='block';
+				alert.style.opacity = .9;
+			}		
+
+			intervalCounter = setInterval(this.hideToast,  isError? 2200:1300);
+
+		},
+
+		showLoading: function() {		
+			$('.m-load2').css('display','block');
 			$('.js-loading').addClass('active');
+			setTimeout(this.hideLoading, 10000); // 10 seconds timeout
 		},
+
 		hideLoading: function() {
+			$('.m-load2').css('display','none');
 			$('.js-loading').removeClass('active');
 		}
 	});
 
 	module.exports = M;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 74:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(69)(".driver-reg .avatar{width:120px;height:120px}.driver-reg .avatar-row{height:auto}");
-	var __vue_template__ = "<section class=\"driver-reg\">\n\t\t<div class=\"input-row\">\n\t\t\t<label>Name</label>\n\t\t\t<input type=\"text\" placeholder=\"Name\" v-model=\"user.driver_name\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Email</label>\n\t\t\t<input type=\"email\" placeholder=\"abc@abc.com\" v-model=\"email\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Sex</label>\n\t\t\t<input type=\"radio\" name=\"sex\" value=\"male\" v-model=\"user.sex\"> male\n    \t\t<input type=\"radio\" name=\"sex\" value=\"female\" v-model=\"user.sex\"> female\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Birth</label>\n\t\t\t<input type=\"date\" v-model=\"birth\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Contact</label>\n\t\t\t<input type=\"text\" v-model=\"mobile\">\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Avatar</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_avatar}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChoosePhoto\">\n\t\t\t  \tChoose Photo\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Driver Lisence</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_driver_license}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChooseDriverLicense\">\n\t\t\t  \tChoose Driver License\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Manufactuer</label>\n\t\t\t<select class=\"test\" v-model=\"vehicle.model.manufactuer.manufactuer_id\" options=\"manufactuerList\"></select>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Model</label>\n\t\t\t<select v-model=\"vehicle.model.model_id\" options=\"modelList\"></select>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>PlateNo</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.plate_no\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Brand</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.brand\">\n\t\t</div>\n\t\t<button class=\"btn btn-positive btn-block\" v-on=\"click: onConfirm\">Confirm</button>\n\t</section>";
-	var BasePage = __webpack_require__(70);
-		var ajax = __webpack_require__(79);
-		var wxutil = __webpack_require__(83);
-		var Promise = __webpack_require__(85);
+	var Vue = __webpack_require__(3);
+	var M = Vue.extend({
+		onCreate: function() {
+
+		},
+		onResume: function() {
+
+		},
+		onPause: function() {
+
+		}
+	});
+
+	module.exports = M;
+
+/***/ },
+
+/***/ 73:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".userInfo .input-row input{width:65%}.userInfo select{margin-top:5px;width:65%}.userInfo .input-row label.more{font-size:14px}");
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n  <div class=\"userInfo\">\n  \t <form class=\"input-group\">\n  \t\t <div class=\"input-row\">\t\t\t\n\t\t\t<label>姓名</label>\t\n\t\t\t<input type=\"text\" v-on=\"input:onInputChange\" placeholder=\"真实姓名 (必填)\" v-model=\"user.realname\">\t\t\t\n\t\t</div>\n  \t \t<div class=\"input-row\">\t\n\t\t\t<label>性别</label>\n\t\t\t<select v-on=\"change:onInputChange\" options=\"sexList\" v-model=\"user.sex\"></select>\t\t\t\n\t\t</div>\n  \t\t<div class=\"input-row\">\t\n  \t\t\t<label>年龄</label>\n\t\t\t<input v-on=\"input:onInputChange\" type=\"number\" min=\"18\" max=\"60\" placeholder=\"年龄 (必填)\" v-model=\"user.age\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>国家</label>\n\t\t\t<select v-on=\"change:onInputChange\" options=\"countryList\" v-model=\"user.country\"></select>\t\n\t\t</div>\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>城市</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"cityList\" v-model=\"user.city\"></select>\t\n\t\t</div>\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>地址</label>\t\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"地址 (必填)\" v-model=\"user.address\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>手机</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"手机 (必填)\" v-model=\"user.mobile\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>邮箱</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"邮箱 (必填)\" v-model=\"user.mailBox\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>微信</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"微信 (必填)\" v-model=\"user.wechat\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>导游证</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yesnoList\" v-model=\"user.hasGuideCer\"></select>\t\n\t\t</div>\t\t\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>驾龄</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yearRangeList\" v-model=\"user.drivingExp\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label class=\"more\">从业时间</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yearRangeList\" v-model=\"user.workingExp\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label class=\"more\">结算方式</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"payTypeList\" v-model=\"user.payType\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'alipay'? 'block':'none'}}\">\t\n\t\t\t<label class=\"more\">支付宝</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"支付宝账号 (必填)\" v-model=\"user.alipayAcc\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'bank'? 'block': 'none'}}\">\t\n\t\t\t<label class=\"more\">开户银行</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"开户银行名称 (必填)\" v-model=\"user.bankName\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'bank'? 'block': 'none'}}\">\t\n\t\t\t<label class=\"more\">账户名称</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"账户名称 (必填)\" v-model=\"user.accName\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'bank'? 'block': 'none'}}\">\t\n\t\t\t<label class=\"more\">银行卡号</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"银行卡号 (必填)\" v-model=\"user.cardNo\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'paypal'? 'block': 'none'}}\">\t\n\t\t\t<label>Paypal</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"Paypal账号 (必填)\" v-model=\"user.paypalAcc\">\t\n\t\t</div>\t\t\t\n\t</form>\n</div>\n\n<button id=\"userInfoBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步</button>";
+	var BasePage = __webpack_require__(69);	
+		var Promise = __webpack_require__(86);
+		var nav = __webpack_require__(65);
+		var steps = __webpack_require__(96);
+		var lockr = __webpack_require__(97);
 
 		var View = BasePage.extend({
-			title: 'register',
-			data: function() {
+			title: '我的认证',
+			watch: {
+				    'user.country': function (val) {			   
+				      	this.$data.cityList  = this.$data.allCityList[val];			      	
+				      	this.$data.user.city= this.$data.cityList[0].value;
+				    }
+			  },
+			data: function() {			
 				return {
+					curStep:4,	
+
+					allCityList:{},
+					countryList:[],
+					cityList:[],
+					
+					sexList:[{
+						value:'male',
+						text: '男'
+					},{
+						value:'female',
+						text:'女'}],
+
+					yesnoList:[{
+						value:'no',
+						text: '无'
+					},{
+						value:'yes',
+						text: '有'
+					}],
+
+					yearRangeList:[{
+						value:'1-3',
+						text: '1-3年'
+					},{
+						value:'3-5',
+						text: '3-5年'
+					},{
+						value:'5+',
+						text:'5年以上'
+					}],
+
+					payTypeList:[{
+						value:'alipay',
+						text: '支付宝 '
+					},{
+						value:'bank',
+						text: '银行'
+					},{
+						value:'paypal',
+						text: 'paypal'
+					}],
+					user:{									
+						payType:'alipay',
+						sex:'male',
+						hasGuideCer:'no',
+						drivingExp:'1-3',
+						workingExp:'1-3',
+						city:'',
+						age:'',
+						realname:'',
+						country:'',
+						address:'',
+						mobile:'',
+						wechat:'',
+						alipayAcc:'',
+						bankName:'',
+						paypalAcc:'',
+						cardNo:'',
+						mailBox:'',
+						accName:''
+
+					}		
 				};
 			},
-			computed: {
-				computedId: {
-					// the getter should return the desired value
-					get: function () {
-					},
-					// the setter is optional
-					set: function (newValue) {
+			
+			methods: { 			
+				checkSubmitBtn:function(){					
+					var disabled  = !this.$data.user.realname || !this.$data.user.age || !this.$data.user.mobile || !this.$data.user.mailBox || ! this.$data.user.wechat;
+
+					switch (this.$data.user.payType) {
+						case 'alipay':
+							disabled = disabled || (this.$data.user.payType == 'alipay' && !this.$data.user.alipayAcc);		
+						break;
+						case 'bank':
+							disabled = disabled || (this.$data.user.payType == 'bank' && (!this.$data.user.bankName || !this.$data.user.cardNo || !this.$data.user.accName));						
+						break;
+						case 'paypal':
+							disabled  = disabled || (this.$data.user.payType =='paypal' && (!this.$data.user.paypalAcc));
+						break;
+					}			
+				
+					var btn  = $('#userInfoBtn');
+
+					if (disabled) {
+						btn.attr('disabled','disabled');
+					} else {
+						btn.removeAttr('disabled');
 					}
-				}
-			},
-			methods: {
-				onChoosePhoto: function() {
-					wx.chooseImage({
-					    success: function (res) {
-					        var localIds = res.localIds;
-					        if(localIds.length) {
-					        	var wxMediaId = localIds[0];
-					        	this.$data.user.driver_avatar = wxMediaId;
-					        	this.$data.user.driver_avatar_updated = true;
+				},
 
-					        	this.showLoading();
-					        	wx.uploadImage({
-									localId: wxMediaId,
-									isShowProgressTips: 0,
-									success: function(res) {
-										var wxMediaId = res.serverId; // 返回图片的服务器端ID
-										this._uploadAvatar(wxMediaId, function(err, res) {
-											this.hideLoading();
-											if(!err) {
-												this.$data.user.driver_avatar = res.body.static_url;
-												var payload = {
-												    "driver_avatar": res.body.static_url,
-												};
-												this.showLoading();
-												ajax.put('/service/rest/driver/user/')
-												.send(payload)
-												.end(function(err, res) {
-							        				this.hideLoading();
-												}.bind(this));
-											}
-										}.bind(this));
-									}.bind(this),
-									fail: function() {
-										this.hideLoading();
-									}
-								});
-					        }
-					    }.bind(this)
-					});
+				onInputChange:function() {
+					lockr.set('user', this.$data.user);				
+					this.checkSubmitBtn();
 				},
-				onChooseDriverLicense: function() {
-					wx.chooseImage({
-					    success: function (res) {
-					        var localIds = res.localIds;
-					        if(localIds.length) {
-					        	var wxMediaId = localIds[0];
-					        	this.$data.user.driver_driver_license = wxMediaId;
-					        	this.$data.user.driver_driver_license_updated = true;
-
-					        	this.showLoading();
-					        	wx.uploadImage({
-									localId: wxMediaId,
-									isShowProgressTips: 0,
-									success: function(res) {
-										var wxMediaId = res.serverId; // 返回图片的服务器端ID
-										this._uploadDriverLisence(wxMediaId, function(err, res) {
-											this.hideLoading();
-							        		if(!err) {
-							        			this.$data.user.driver_driver_license = res.body.static_url;
-							        			var payload = {
-												    "driver_driver_license": res.body.static_url,
-												};
-												this.showLoading();
-												ajax.put('/service/rest/driver/user/')
-												.send(payload)
-												.end(function(err, res) {
-							        				this.hideLoading();
-												}.bind(this));
-							        		}
-							        	}.bind(this));
-									}.bind(this),
-									fail: function() {
-										this.hideLoading();
-									}.bind(this)
-								});
-					        }
-					    }.bind(this)
-					});
-				},
-				onConfirm: function() {
-					this.showLoading();
-					this._submit().then(function() {
-						this._loadUser().then(function() {
-							this.hideLoading();
-						}.bind(this));
-					}.bind(this));
-				},
-				_submit: function() {
-					var promise1 = new Promise(function(resolve, reject) {
-						var payload = {
-						    "driver_name": this.$data.user.driver_name,
-						    "mobile": this.$data.user.mobile,
-						    "driver_avatar": this.$data.user.driver_avatar,
-						    "driver_driver_license": this.$data.user.driver_driver_license,
-						    // "driver_status": "0",
-						    "driver_contact": this.$data.user.mobile,
-						    "driver_account_no": "account_no",
-						    "driver_account_name": "account_name",
-						    "driver_account_bank": "bank",
-						    "driver_account_bsb_no": "bsb",
-						    "driver_driving_license": "license"
-						};
-						ajax.put('/service/rest/driver/user/')
-						.send(payload)
-						.end(function(err, res) {
-							resolve();
-						});
-					}.bind(this));
-
-					var promise2 = new Promise(function(resolve, reject) {
-						var payload = {
-				    		"brand": this.$data.vehicle.brand,
-				    		"model": parseInt(this.$data.vehicle.model.model_id, 10),
-				    		"plate_no": this.$data.vehicle.plate_no
-						};
-						var vehicleId = this.$data.vehicle.vehicle_id;
-						if(vehicleId) {
-							ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
-							.send(payload)
-							.end(function(err, res) {
-								resolve();
-							});
-						} else {
-							ajax.post('/service/rest/driver/vehicles/')
-							.send(payload)
-							.end(function(err, res) {
-								resolve();
-							});
-						}
-					}.bind(this));
-
-					return Promise.all([promise1, promise2]);
-				},
-				_uploadAvatar: function(wxMediaId, cb) {
-					ajax.post('/service/rest/common/wxstaticupload/')
-					.type('form')
-					.send({
-						wx_media_id: wxMediaId,
-						upload_to: 'avatar'
-					})
-					.end(cb);
-				},
-				_uploadDriverLisence: function(wxMediaId, cb) {
-					ajax.post('/service/rest/common/wxuserupload/')
-					.type('form')
-					.send({
-						wx_media_id: wxMediaId
-					})
-					.end(cb);
-				},
-				_loadManufactuerList: function() {
+				
+				_loadCountryInfo:function() {
 					return new Promise(function(resolve, reject) {
-						ajax.get('/service/rest/common/manufactuers/')
-						.end(function(err, res) {
-							if(!err) {
-								var body = res.body;
-								var list = body.map(function(item) {
-									return {
-										value: item.manufactuer_id,
-										text: item.name
-									};
-								});
-								this.$data.manufactuerList = list;
-								// if(list.length && !this.$data.vehicle.vehicle_id) {
-								// 	this.$data.vehicle.model.manufactuer.manufactuer_id = list[0].value;
-								// }
-								resolve(body);
-							} else {
-								reject();
-							}
-						}.bind(this));
-					}.bind(this));
-				},
-				_loadModelList: function(manufactuerId) {
-					return new Promise(function(resolve, reject) {
-						ajax.get('/service/rest/common/manufactuers/' + manufactuerId + '/models/')
-						.end(function(err, res) {
-							if(!err) {
-								var body = res.body;
-								var list = body.map(function(item) {
-									return {
-										value: item.model_id,
-										text: item.name
-									};
-								});
-								this.$data.modelList = list;
-								// if(list.length) {
-								// 	this.$data.vehicle.model.model_id = list[0].value;
-								// }
-								resolve(body);
-							} else {
-								reject();
-							}
-						}.bind(this));
-					}.bind(this));
-				},
-				_startWatchManufactuer: function() {
-					this.$watch('vehicle.model.manufactuer.manufactuer_id', function(newVal, oldVal) {
-						this.$data.modelList = [];
 						this.showLoading();
-						ajax.get('/service/rest/common/manufactuers/' + newVal + '/models/')
-						.end(function(err, res) {
-							this.hideLoading();
-							if(!err) {
-								var body = res.body;
-								var list = body.map(function(item) {
-									return {
-										value: item.model_id,
-										text: item.name
-									};
-								});
-								this.$data.modelList = list;
-								if(list.length) {
-									this.$data.vehicle.model.model_id = list[0].value;
-								}
-							}
-						}.bind(this));
-					});
-				},
-				_loadUser: function() {
-					return new Promise(function(resolve, reject) {
-						ajax.get('/service/rest/driver/user/')
-						.end(function(err, res) {
-							if(!err) {
-								var body = res.body;
-								this.$data.user = body;
-								this.$data.user.driver_avatar = this.$data.user.driver_avatar || null;
-								if(body.driver_vehicles.length) {
-									this.$data.vehicle = body.driver_vehicles[0];
-								} else {
-									this.$data.vehicle = {
-										model: {
-											model_id: null,
-											manufactuer: {
-												manufactuer_id: null
-											}
-										}
-									};
-								}
-								resolve(body);
-							} else {
-								reject();
-							}
-						}.bind(this));
+			  			$.ajax({
+							  type:'GET',				  
+							  url: '/api/tags', 				 
+							  dataType: 'json',
+							  timeout: 10000,
+							  context: this,
+							  success: function(res){					  						  
+							  	if(res.err_code==0){
+							  		var ctyList = [];
+							  		$.each(res.data, function(key,val) {					  			
+							  			ctyList.push({
+							  				value:key,
+							  				text:val.name
+							  			});					  			
+
+							  			var cList = [];
+							  			$.each(val.children,function(cKey,cVal) {
+							  				cList.push({
+							  					value:cKey,
+							  					text:cVal
+							  				});					  				
+							  			});
+							  			
+							  			this.$data.allCityList[key] =cList;
+							  		}.bind(this));
+
+							  		this.$data.countryList = ctyList;	
+							  		this.$data.user.country = this.$data.countryList [0].value;
+							  		resolve();			  		
+							  	} else {					  		
+							  		this.showToast(res.err_msg,true);
+							  		reject();
+							  	}
+							    
+							  },
+							  complete:function() {
+							  	this.hideLoading();					  	
+							  },
+							
+							  error: function(xhr, type){
+							   	reject();
+							  }
+						})	
+
 					}.bind(this));
+					
+				},
+						
+				onSubmit: function() {				
+					nav.goTo('picupdate');				
+				},
+
+
+				setHeader:function() {
+					var selText = '.stepsContainer.index4 .step4' ;			
+
+					var el = $(selText),
+						ela=$(selText+' a'),
+						eltext=$(selText+' .text');
+					
+					el.css('padding','3px');
+			 		el.css('margin-top','0');
+			 		
+			 		ela.css('width','100px');
+			  		ela.css('height','60px');
+			 		ela.css('line-height','60px');
+			  		ela.css('background-color','#77c2a5');
+
+			  		eltext.css('display','inline-block');
+			  		eltext.css('opacity','1');
+				},
+
+				initData:function() {	
+					// read local on yet submitted case
+
+					$.each(lockr.get('user'), function(key,val) {
+						console.log(val);
+						if (val != '') {
+							this.$data.user[key]=val;
+						}							
+					}.bind(this));
+					
+					this.checkSubmitBtn();
+				},
+				syncRemote:function() {
+
 				}
 			},
-			created: function() {
+
+			created: function() {			
+				this._loadCountryInfo().then(this.initData);
 			},
-			ready: function() {
+
+			resume: function() {
+				this.setHeader();			
 			},
-			attached: function() {
-			},
-			detached: function() {
-			}
+			pause:function(){
+
+			}			
 		});
 
 		module.exports = View;
 	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
 
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 78:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -680,1425 +678,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 79:
-/***/ function(module, exports, __webpack_require__) {
-
-	var superagent = __webpack_require__(80);
-	module.exports = superagent;
-
-/***/ },
-
-/***/ 80:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Module dependencies.
-	 */
-
-	var Emitter = __webpack_require__(81);
-	var reduce = __webpack_require__(82);
-
-	/**
-	 * Root reference for iframes.
-	 */
-
-	var root = 'undefined' == typeof window
-	  ? (this || self)
-	  : window;
-
-	/**
-	 * Noop.
-	 */
-
-	function noop(){};
-
-	/**
-	 * Check if `obj` is a host object,
-	 * we don't want to serialize these :)
-	 *
-	 * TODO: future proof, move to compoent land
-	 *
-	 * @param {Object} obj
-	 * @return {Boolean}
-	 * @api private
-	 */
-
-	function isHost(obj) {
-	  var str = {}.toString.call(obj);
-
-	  switch (str) {
-	    case '[object File]':
-	    case '[object Blob]':
-	    case '[object FormData]':
-	      return true;
-	    default:
-	      return false;
-	  }
-	}
-
-	/**
-	 * Determine XHR.
-	 */
-
-	request.getXHR = function () {
-	  if (root.XMLHttpRequest
-	      && (!root.location || 'file:' != root.location.protocol
-	          || !root.ActiveXObject)) {
-	    return new XMLHttpRequest;
-	  } else {
-	    try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {}
-	    try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch(e) {}
-	    try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch(e) {}
-	    try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch(e) {}
-	  }
-	  return false;
-	};
-
-	/**
-	 * Removes leading and trailing whitespace, added to support IE.
-	 *
-	 * @param {String} s
-	 * @return {String}
-	 * @api private
-	 */
-
-	var trim = ''.trim
-	  ? function(s) { return s.trim(); }
-	  : function(s) { return s.replace(/(^\s*|\s*$)/g, ''); };
-
-	/**
-	 * Check if `obj` is an object.
-	 *
-	 * @param {Object} obj
-	 * @return {Boolean}
-	 * @api private
-	 */
-
-	function isObject(obj) {
-	  return obj === Object(obj);
-	}
-
-	/**
-	 * Serialize the given `obj`.
-	 *
-	 * @param {Object} obj
-	 * @return {String}
-	 * @api private
-	 */
-
-	function serialize(obj) {
-	  if (!isObject(obj)) return obj;
-	  var pairs = [];
-	  for (var key in obj) {
-	    if (null != obj[key]) {
-	      pairs.push(encodeURIComponent(key)
-	        + '=' + encodeURIComponent(obj[key]));
-	    }
-	  }
-	  return pairs.join('&');
-	}
-
-	/**
-	 * Expose serialization method.
-	 */
-
-	 request.serializeObject = serialize;
-
-	 /**
-	  * Parse the given x-www-form-urlencoded `str`.
-	  *
-	  * @param {String} str
-	  * @return {Object}
-	  * @api private
-	  */
-
-	function parseString(str) {
-	  var obj = {};
-	  var pairs = str.split('&');
-	  var parts;
-	  var pair;
-
-	  for (var i = 0, len = pairs.length; i < len; ++i) {
-	    pair = pairs[i];
-	    parts = pair.split('=');
-	    obj[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
-	  }
-
-	  return obj;
-	}
-
-	/**
-	 * Expose parser.
-	 */
-
-	request.parseString = parseString;
-
-	/**
-	 * Default MIME type map.
-	 *
-	 *     superagent.types.xml = 'application/xml';
-	 *
-	 */
-
-	request.types = {
-	  html: 'text/html',
-	  json: 'application/json',
-	  xml: 'application/xml',
-	  urlencoded: 'application/x-www-form-urlencoded',
-	  'form': 'application/x-www-form-urlencoded',
-	  'form-data': 'application/x-www-form-urlencoded'
-	};
-
-	/**
-	 * Default serialization map.
-	 *
-	 *     superagent.serialize['application/xml'] = function(obj){
-	 *       return 'generated xml here';
-	 *     };
-	 *
-	 */
-
-	 request.serialize = {
-	   'application/x-www-form-urlencoded': serialize,
-	   'application/json': JSON.stringify
-	 };
-
-	 /**
-	  * Default parsers.
-	  *
-	  *     superagent.parse['application/xml'] = function(str){
-	  *       return { object parsed from str };
-	  *     };
-	  *
-	  */
-
-	request.parse = {
-	  'application/x-www-form-urlencoded': parseString,
-	  'application/json': JSON.parse
-	};
-
-	/**
-	 * Parse the given header `str` into
-	 * an object containing the mapped fields.
-	 *
-	 * @param {String} str
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function parseHeader(str) {
-	  var lines = str.split(/\r?\n/);
-	  var fields = {};
-	  var index;
-	  var line;
-	  var field;
-	  var val;
-
-	  lines.pop(); // trailing CRLF
-
-	  for (var i = 0, len = lines.length; i < len; ++i) {
-	    line = lines[i];
-	    index = line.indexOf(':');
-	    field = line.slice(0, index).toLowerCase();
-	    val = trim(line.slice(index + 1));
-	    fields[field] = val;
-	  }
-
-	  return fields;
-	}
-
-	/**
-	 * Return the mime type for the given `str`.
-	 *
-	 * @param {String} str
-	 * @return {String}
-	 * @api private
-	 */
-
-	function type(str){
-	  return str.split(/ *; */).shift();
-	};
-
-	/**
-	 * Return header field parameters.
-	 *
-	 * @param {String} str
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function params(str){
-	  return reduce(str.split(/ *; */), function(obj, str){
-	    var parts = str.split(/ *= */)
-	      , key = parts.shift()
-	      , val = parts.shift();
-
-	    if (key && val) obj[key] = val;
-	    return obj;
-	  }, {});
-	};
-
-	/**
-	 * Initialize a new `Response` with the given `xhr`.
-	 *
-	 *  - set flags (.ok, .error, etc)
-	 *  - parse header
-	 *
-	 * Examples:
-	 *
-	 *  Aliasing `superagent` as `request` is nice:
-	 *
-	 *      request = superagent;
-	 *
-	 *  We can use the promise-like API, or pass callbacks:
-	 *
-	 *      request.get('/').end(function(res){});
-	 *      request.get('/', function(res){});
-	 *
-	 *  Sending data can be chained:
-	 *
-	 *      request
-	 *        .post('/user')
-	 *        .send({ name: 'tj' })
-	 *        .end(function(res){});
-	 *
-	 *  Or passed to `.send()`:
-	 *
-	 *      request
-	 *        .post('/user')
-	 *        .send({ name: 'tj' }, function(res){});
-	 *
-	 *  Or passed to `.post()`:
-	 *
-	 *      request
-	 *        .post('/user', { name: 'tj' })
-	 *        .end(function(res){});
-	 *
-	 * Or further reduced to a single call for simple cases:
-	 *
-	 *      request
-	 *        .post('/user', { name: 'tj' }, function(res){});
-	 *
-	 * @param {XMLHTTPRequest} xhr
-	 * @param {Object} options
-	 * @api private
-	 */
-
-	function Response(req, options) {
-	  options = options || {};
-	  this.req = req;
-	  this.xhr = this.req.xhr;
-	  // responseText is accessible only if responseType is '' or 'text' and on older browsers
-	  this.text = ((this.req.method !='HEAD' && (this.xhr.responseType === '' || this.xhr.responseType === 'text')) || typeof this.xhr.responseType === 'undefined')
-	     ? this.xhr.responseText
-	     : null;
-	  this.statusText = this.req.xhr.statusText;
-	  this.setStatusProperties(this.xhr.status);
-	  this.header = this.headers = parseHeader(this.xhr.getAllResponseHeaders());
-	  // getAllResponseHeaders sometimes falsely returns "" for CORS requests, but
-	  // getResponseHeader still works. so we get content-type even if getting
-	  // other headers fails.
-	  this.header['content-type'] = this.xhr.getResponseHeader('content-type');
-	  this.setHeaderProperties(this.header);
-	  this.body = this.req.method != 'HEAD'
-	    ? this.parseBody(this.text ? this.text : this.xhr.response)
-	    : null;
-	}
-
-	/**
-	 * Get case-insensitive `field` value.
-	 *
-	 * @param {String} field
-	 * @return {String}
-	 * @api public
-	 */
-
-	Response.prototype.get = function(field){
-	  return this.header[field.toLowerCase()];
-	};
-
-	/**
-	 * Set header related properties:
-	 *
-	 *   - `.type` the content type without params
-	 *
-	 * A response of "Content-Type: text/plain; charset=utf-8"
-	 * will provide you with a `.type` of "text/plain".
-	 *
-	 * @param {Object} header
-	 * @api private
-	 */
-
-	Response.prototype.setHeaderProperties = function(header){
-	  // content-type
-	  var ct = this.header['content-type'] || '';
-	  this.type = type(ct);
-
-	  // params
-	  var obj = params(ct);
-	  for (var key in obj) this[key] = obj[key];
-	};
-
-	/**
-	 * Parse the given body `str`.
-	 *
-	 * Used for auto-parsing of bodies. Parsers
-	 * are defined on the `superagent.parse` object.
-	 *
-	 * @param {String} str
-	 * @return {Mixed}
-	 * @api private
-	 */
-
-	Response.prototype.parseBody = function(str){
-	  var parse = request.parse[this.type];
-	  return parse && str && (str.length || str instanceof Object)
-	    ? parse(str)
-	    : null;
-	};
-
-	/**
-	 * Set flags such as `.ok` based on `status`.
-	 *
-	 * For example a 2xx response will give you a `.ok` of __true__
-	 * whereas 5xx will be __false__ and `.error` will be __true__. The
-	 * `.clientError` and `.serverError` are also available to be more
-	 * specific, and `.statusType` is the class of error ranging from 1..5
-	 * sometimes useful for mapping respond colors etc.
-	 *
-	 * "sugar" properties are also defined for common cases. Currently providing:
-	 *
-	 *   - .noContent
-	 *   - .badRequest
-	 *   - .unauthorized
-	 *   - .notAcceptable
-	 *   - .notFound
-	 *
-	 * @param {Number} status
-	 * @api private
-	 */
-
-	Response.prototype.setStatusProperties = function(status){
-	  // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
-	  if (status === 1223) {
-	    status = 204;
-	  }
-
-	  var type = status / 100 | 0;
-
-	  // status / class
-	  this.status = status;
-	  this.statusType = type;
-
-	  // basics
-	  this.info = 1 == type;
-	  this.ok = 2 == type;
-	  this.clientError = 4 == type;
-	  this.serverError = 5 == type;
-	  this.error = (4 == type || 5 == type)
-	    ? this.toError()
-	    : false;
-
-	  // sugar
-	  this.accepted = 202 == status;
-	  this.noContent = 204 == status;
-	  this.badRequest = 400 == status;
-	  this.unauthorized = 401 == status;
-	  this.notAcceptable = 406 == status;
-	  this.notFound = 404 == status;
-	  this.forbidden = 403 == status;
-	};
-
-	/**
-	 * Return an `Error` representative of this response.
-	 *
-	 * @return {Error}
-	 * @api public
-	 */
-
-	Response.prototype.toError = function(){
-	  var req = this.req;
-	  var method = req.method;
-	  var url = req.url;
-
-	  var msg = 'cannot ' + method + ' ' + url + ' (' + this.status + ')';
-	  var err = new Error(msg);
-	  err.status = this.status;
-	  err.method = method;
-	  err.url = url;
-
-	  return err;
-	};
-
-	/**
-	 * Expose `Response`.
-	 */
-
-	request.Response = Response;
-
-	/**
-	 * Initialize a new `Request` with the given `method` and `url`.
-	 *
-	 * @param {String} method
-	 * @param {String} url
-	 * @api public
-	 */
-
-	function Request(method, url) {
-	  var self = this;
-	  Emitter.call(this);
-	  this._query = this._query || [];
-	  this.method = method;
-	  this.url = url;
-	  this.header = {};
-	  this._header = {};
-	  this.on('end', function(){
-	    var err = null;
-	    var res = null;
-
-	    try {
-	      res = new Response(self);
-	    } catch(e) {
-	      err = new Error('Parser is unable to parse the response');
-	      err.parse = true;
-	      err.original = e;
-	      return self.callback(err);
-	    }
-
-	    self.emit('response', res);
-
-	    if (err) {
-	      return self.callback(err, res);
-	    }
-
-	    if (res.status >= 200 && res.status < 300) {
-	      return self.callback(err, res);
-	    }
-
-	    var new_err = new Error(res.statusText || 'Unsuccessful HTTP response');
-	    new_err.original = err;
-	    new_err.response = res;
-	    new_err.status = res.status;
-
-	    self.callback(err || new_err, res);
-	  });
-	}
-
-	/**
-	 * Mixin `Emitter`.
-	 */
-
-	Emitter(Request.prototype);
-
-	/**
-	 * Allow for extension
-	 */
-
-	Request.prototype.use = function(fn) {
-	  fn(this);
-	  return this;
-	}
-
-	/**
-	 * Set timeout to `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.timeout = function(ms){
-	  this._timeout = ms;
-	  return this;
-	};
-
-	/**
-	 * Clear previous timeout.
-	 *
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.clearTimeout = function(){
-	  this._timeout = 0;
-	  clearTimeout(this._timer);
-	  return this;
-	};
-
-	/**
-	 * Abort the request, and clear potential timeout.
-	 *
-	 * @return {Request}
-	 * @api public
-	 */
-
-	Request.prototype.abort = function(){
-	  if (this.aborted) return;
-	  this.aborted = true;
-	  this.xhr.abort();
-	  this.clearTimeout();
-	  this.emit('abort');
-	  return this;
-	};
-
-	/**
-	 * Set header `field` to `val`, or multiple fields with one object.
-	 *
-	 * Examples:
-	 *
-	 *      req.get('/')
-	 *        .set('Accept', 'application/json')
-	 *        .set('X-API-Key', 'foobar')
-	 *        .end(callback);
-	 *
-	 *      req.get('/')
-	 *        .set({ Accept: 'application/json', 'X-API-Key': 'foobar' })
-	 *        .end(callback);
-	 *
-	 * @param {String|Object} field
-	 * @param {String} val
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.set = function(field, val){
-	  if (isObject(field)) {
-	    for (var key in field) {
-	      this.set(key, field[key]);
-	    }
-	    return this;
-	  }
-	  this._header[field.toLowerCase()] = val;
-	  this.header[field] = val;
-	  return this;
-	};
-
-	/**
-	 * Remove header `field`.
-	 *
-	 * Example:
-	 *
-	 *      req.get('/')
-	 *        .unset('User-Agent')
-	 *        .end(callback);
-	 *
-	 * @param {String} field
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.unset = function(field){
-	  delete this._header[field.toLowerCase()];
-	  delete this.header[field];
-	  return this;
-	};
-
-	/**
-	 * Get case-insensitive header `field` value.
-	 *
-	 * @param {String} field
-	 * @return {String}
-	 * @api private
-	 */
-
-	Request.prototype.getHeader = function(field){
-	  return this._header[field.toLowerCase()];
-	};
-
-	/**
-	 * Set Content-Type to `type`, mapping values from `request.types`.
-	 *
-	 * Examples:
-	 *
-	 *      superagent.types.xml = 'application/xml';
-	 *
-	 *      request.post('/')
-	 *        .type('xml')
-	 *        .send(xmlstring)
-	 *        .end(callback);
-	 *
-	 *      request.post('/')
-	 *        .type('application/xml')
-	 *        .send(xmlstring)
-	 *        .end(callback);
-	 *
-	 * @param {String} type
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.type = function(type){
-	  this.set('Content-Type', request.types[type] || type);
-	  return this;
-	};
-
-	/**
-	 * Set Accept to `type`, mapping values from `request.types`.
-	 *
-	 * Examples:
-	 *
-	 *      superagent.types.json = 'application/json';
-	 *
-	 *      request.get('/agent')
-	 *        .accept('json')
-	 *        .end(callback);
-	 *
-	 *      request.get('/agent')
-	 *        .accept('application/json')
-	 *        .end(callback);
-	 *
-	 * @param {String} accept
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.accept = function(type){
-	  this.set('Accept', request.types[type] || type);
-	  return this;
-	};
-
-	/**
-	 * Set Authorization field value with `user` and `pass`.
-	 *
-	 * @param {String} user
-	 * @param {String} pass
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.auth = function(user, pass){
-	  var str = btoa(user + ':' + pass);
-	  this.set('Authorization', 'Basic ' + str);
-	  return this;
-	};
-
-	/**
-	* Add query-string `val`.
-	*
-	* Examples:
-	*
-	*   request.get('/shoes')
-	*     .query('size=10')
-	*     .query({ color: 'blue' })
-	*
-	* @param {Object|String} val
-	* @return {Request} for chaining
-	* @api public
-	*/
-
-	Request.prototype.query = function(val){
-	  if ('string' != typeof val) val = serialize(val);
-	  if (val) this._query.push(val);
-	  return this;
-	};
-
-	/**
-	 * Write the field `name` and `val` for "multipart/form-data"
-	 * request bodies.
-	 *
-	 * ``` js
-	 * request.post('/upload')
-	 *   .field('foo', 'bar')
-	 *   .end(callback);
-	 * ```
-	 *
-	 * @param {String} name
-	 * @param {String|Blob|File} val
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.field = function(name, val){
-	  if (!this._formData) this._formData = new root.FormData();
-	  this._formData.append(name, val);
-	  return this;
-	};
-
-	/**
-	 * Queue the given `file` as an attachment to the specified `field`,
-	 * with optional `filename`.
-	 *
-	 * ``` js
-	 * request.post('/upload')
-	 *   .attach(new Blob(['<a id="a"><b id="b">hey!</b></a>'], { type: "text/html"}))
-	 *   .end(callback);
-	 * ```
-	 *
-	 * @param {String} field
-	 * @param {Blob|File} file
-	 * @param {String} filename
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.attach = function(field, file, filename){
-	  if (!this._formData) this._formData = new root.FormData();
-	  this._formData.append(field, file, filename);
-	  return this;
-	};
-
-	/**
-	 * Send `data`, defaulting the `.type()` to "json" when
-	 * an object is given.
-	 *
-	 * Examples:
-	 *
-	 *       // querystring
-	 *       request.get('/search')
-	 *         .end(callback)
-	 *
-	 *       // multiple data "writes"
-	 *       request.get('/search')
-	 *         .send({ search: 'query' })
-	 *         .send({ range: '1..5' })
-	 *         .send({ order: 'desc' })
-	 *         .end(callback)
-	 *
-	 *       // manual json
-	 *       request.post('/user')
-	 *         .type('json')
-	 *         .send('{"name":"tj"})
-	 *         .end(callback)
-	 *
-	 *       // auto json
-	 *       request.post('/user')
-	 *         .send({ name: 'tj' })
-	 *         .end(callback)
-	 *
-	 *       // manual x-www-form-urlencoded
-	 *       request.post('/user')
-	 *         .type('form')
-	 *         .send('name=tj')
-	 *         .end(callback)
-	 *
-	 *       // auto x-www-form-urlencoded
-	 *       request.post('/user')
-	 *         .type('form')
-	 *         .send({ name: 'tj' })
-	 *         .end(callback)
-	 *
-	 *       // defaults to x-www-form-urlencoded
-	  *      request.post('/user')
-	  *        .send('name=tobi')
-	  *        .send('species=ferret')
-	  *        .end(callback)
-	 *
-	 * @param {String|Object} data
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.send = function(data){
-	  var obj = isObject(data);
-	  var type = this.getHeader('Content-Type');
-
-	  // merge
-	  if (obj && isObject(this._data)) {
-	    for (var key in data) {
-	      this._data[key] = data[key];
-	    }
-	  } else if ('string' == typeof data) {
-	    if (!type) this.type('form');
-	    type = this.getHeader('Content-Type');
-	    if ('application/x-www-form-urlencoded' == type) {
-	      this._data = this._data
-	        ? this._data + '&' + data
-	        : data;
-	    } else {
-	      this._data = (this._data || '') + data;
-	    }
-	  } else {
-	    this._data = data;
-	  }
-
-	  if (!obj || isHost(data)) return this;
-	  if (!type) this.type('json');
-	  return this;
-	};
-
-	/**
-	 * Invoke the callback with `err` and `res`
-	 * and handle arity check.
-	 *
-	 * @param {Error} err
-	 * @param {Response} res
-	 * @api private
-	 */
-
-	Request.prototype.callback = function(err, res){
-	  var fn = this._callback;
-	  this.clearTimeout();
-	  fn(err, res);
-	};
-
-	/**
-	 * Invoke callback with x-domain error.
-	 *
-	 * @api private
-	 */
-
-	Request.prototype.crossDomainError = function(){
-	  var err = new Error('Origin is not allowed by Access-Control-Allow-Origin');
-	  err.crossDomain = true;
-	  this.callback(err);
-	};
-
-	/**
-	 * Invoke callback with timeout error.
-	 *
-	 * @api private
-	 */
-
-	Request.prototype.timeoutError = function(){
-	  var timeout = this._timeout;
-	  var err = new Error('timeout of ' + timeout + 'ms exceeded');
-	  err.timeout = timeout;
-	  this.callback(err);
-	};
-
-	/**
-	 * Enable transmission of cookies with x-domain requests.
-	 *
-	 * Note that for this to work the origin must not be
-	 * using "Access-Control-Allow-Origin" with a wildcard,
-	 * and also must set "Access-Control-Allow-Credentials"
-	 * to "true".
-	 *
-	 * @api public
-	 */
-
-	Request.prototype.withCredentials = function(){
-	  this._withCredentials = true;
-	  return this;
-	};
-
-	/**
-	 * Initiate request, invoking callback `fn(res)`
-	 * with an instanceof `Response`.
-	 *
-	 * @param {Function} fn
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.end = function(fn){
-	  var self = this;
-	  var xhr = this.xhr = request.getXHR();
-	  var query = this._query.join('&');
-	  var timeout = this._timeout;
-	  var data = this._formData || this._data;
-
-	  // store callback
-	  this._callback = fn || noop;
-
-	  // state change
-	  xhr.onreadystatechange = function(){
-	    if (4 != xhr.readyState) return;
-
-	    // In IE9, reads to any property (e.g. status) off of an aborted XHR will
-	    // result in the error "Could not complete the operation due to error c00c023f"
-	    var status;
-	    try { status = xhr.status } catch(e) { status = 0; }
-
-	    if (0 == status) {
-	      if (self.timedout) return self.timeoutError();
-	      if (self.aborted) return;
-	      return self.crossDomainError();
-	    }
-	    self.emit('end');
-	  };
-
-	  // progress
-	  var handleProgress = function(e){
-	    if (e.total > 0) {
-	      e.percent = e.loaded / e.total * 100;
-	    }
-	    self.emit('progress', e);
-	  };
-	  if (this.hasListeners('progress')) {
-	    xhr.onprogress = handleProgress;
-	  }
-	  try {
-	    if (xhr.upload && this.hasListeners('progress')) {
-	      xhr.upload.onprogress = handleProgress;
-	    }
-	  } catch(e) {
-	    // Accessing xhr.upload fails in IE from a web worker, so just pretend it doesn't exist.
-	    // Reported here:
-	    // https://connect.microsoft.com/IE/feedback/details/837245/xmlhttprequest-upload-throws-invalid-argument-when-used-from-web-worker-context
-	  }
-
-	  // timeout
-	  if (timeout && !this._timer) {
-	    this._timer = setTimeout(function(){
-	      self.timedout = true;
-	      self.abort();
-	    }, timeout);
-	  }
-
-	  // querystring
-	  if (query) {
-	    query = request.serializeObject(query);
-	    this.url += ~this.url.indexOf('?')
-	      ? '&' + query
-	      : '?' + query;
-	  }
-
-	  // initiate request
-	  xhr.open(this.method, this.url, true);
-
-	  // CORS
-	  if (this._withCredentials) xhr.withCredentials = true;
-
-	  // body
-	  if ('GET' != this.method && 'HEAD' != this.method && 'string' != typeof data && !isHost(data)) {
-	    // serialize stuff
-	    var serialize = request.serialize[this.getHeader('Content-Type')];
-	    if (serialize) data = serialize(data);
-	  }
-
-	  // set header fields
-	  for (var field in this.header) {
-	    if (null == this.header[field]) continue;
-	    xhr.setRequestHeader(field, this.header[field]);
-	  }
-
-	  // send stuff
-	  this.emit('request', this);
-	  xhr.send(data);
-	  return this;
-	};
-
-	/**
-	 * Expose `Request`.
-	 */
-
-	request.Request = Request;
-
-	/**
-	 * Issue a request:
-	 *
-	 * Examples:
-	 *
-	 *    request('GET', '/users').end(callback)
-	 *    request('/users').end(callback)
-	 *    request('/users', callback)
-	 *
-	 * @param {String} method
-	 * @param {String|Function} url or callback
-	 * @return {Request}
-	 * @api public
-	 */
-
-	function request(method, url) {
-	  // callback
-	  if ('function' == typeof url) {
-	    return new Request('GET', method).end(url);
-	  }
-
-	  // url first
-	  if (1 == arguments.length) {
-	    return new Request('GET', method);
-	  }
-
-	  return new Request(method, url);
-	}
-
-	/**
-	 * GET `url` with optional callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed|Function} data or fn
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.get = function(url, data, fn){
-	  var req = request('GET', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.query(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * HEAD `url` with optional callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed|Function} data or fn
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.head = function(url, data, fn){
-	  var req = request('HEAD', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * DELETE `url` with optional callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.del = function(url, fn){
-	  var req = request('DELETE', url);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * PATCH `url` with optional `data` and callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed} data
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.patch = function(url, data, fn){
-	  var req = request('PATCH', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * POST `url` with optional `data` and callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed} data
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.post = function(url, data, fn){
-	  var req = request('POST', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * PUT `url` with optional `data` and callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed|Function} data or fn
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.put = function(url, data, fn){
-	  var req = request('PUT', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * Expose `request`.
-	 */
-
-	module.exports = request;
-
-
-/***/ },
-
-/***/ 81:
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * Expose `Emitter`.
-	 */
-
-	module.exports = Emitter;
-
-	/**
-	 * Initialize a new `Emitter`.
-	 *
-	 * @api public
-	 */
-
-	function Emitter(obj) {
-	  if (obj) return mixin(obj);
-	};
-
-	/**
-	 * Mixin the emitter properties.
-	 *
-	 * @param {Object} obj
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function mixin(obj) {
-	  for (var key in Emitter.prototype) {
-	    obj[key] = Emitter.prototype[key];
-	  }
-	  return obj;
-	}
-
-	/**
-	 * Listen on the given `event` with `fn`.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.on =
-	Emitter.prototype.addEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	  (this._callbacks[event] = this._callbacks[event] || [])
-	    .push(fn);
-	  return this;
-	};
-
-	/**
-	 * Adds an `event` listener that will be invoked a single
-	 * time then automatically removed.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.once = function(event, fn){
-	  var self = this;
-	  this._callbacks = this._callbacks || {};
-
-	  function on() {
-	    self.off(event, on);
-	    fn.apply(this, arguments);
-	  }
-
-	  on.fn = fn;
-	  this.on(event, on);
-	  return this;
-	};
-
-	/**
-	 * Remove the given callback for `event` or all
-	 * registered callbacks.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.off =
-	Emitter.prototype.removeListener =
-	Emitter.prototype.removeAllListeners =
-	Emitter.prototype.removeEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-
-	  // all
-	  if (0 == arguments.length) {
-	    this._callbacks = {};
-	    return this;
-	  }
-
-	  // specific event
-	  var callbacks = this._callbacks[event];
-	  if (!callbacks) return this;
-
-	  // remove all handlers
-	  if (1 == arguments.length) {
-	    delete this._callbacks[event];
-	    return this;
-	  }
-
-	  // remove specific handler
-	  var cb;
-	  for (var i = 0; i < callbacks.length; i++) {
-	    cb = callbacks[i];
-	    if (cb === fn || cb.fn === fn) {
-	      callbacks.splice(i, 1);
-	      break;
-	    }
-	  }
-	  return this;
-	};
-
-	/**
-	 * Emit `event` with the given args.
-	 *
-	 * @param {String} event
-	 * @param {Mixed} ...
-	 * @return {Emitter}
-	 */
-
-	Emitter.prototype.emit = function(event){
-	  this._callbacks = this._callbacks || {};
-	  var args = [].slice.call(arguments, 1)
-	    , callbacks = this._callbacks[event];
-
-	  if (callbacks) {
-	    callbacks = callbacks.slice(0);
-	    for (var i = 0, len = callbacks.length; i < len; ++i) {
-	      callbacks[i].apply(this, args);
-	    }
-	  }
-
-	  return this;
-	};
-
-	/**
-	 * Return array of callbacks for `event`.
-	 *
-	 * @param {String} event
-	 * @return {Array}
-	 * @api public
-	 */
-
-	Emitter.prototype.listeners = function(event){
-	  this._callbacks = this._callbacks || {};
-	  return this._callbacks[event] || [];
-	};
-
-	/**
-	 * Check if this emitter has `event` handlers.
-	 *
-	 * @param {String} event
-	 * @return {Boolean}
-	 * @api public
-	 */
-
-	Emitter.prototype.hasListeners = function(event){
-	  return !! this.listeners(event).length;
-	};
-
-
-/***/ },
-
-/***/ 82:
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * Reduce `arr` with `fn`.
-	 *
-	 * @param {Array} arr
-	 * @param {Function} fn
-	 * @param {Mixed} initial
-	 *
-	 * TODO: combatible error handling?
-	 */
-
-	module.exports = function(arr, fn, initial){  
-	  var idx = 0;
-	  var len = arr.length;
-	  var curr = arguments.length == 3
-	    ? initial
-	    : arr[idx++];
-
-	  while (idx < len) {
-	    curr = fn.call(null, curr, arr[idx], ++idx, arr);
-	  }
-	  
-	  return curr;
-	};
-
-/***/ },
-
-/***/ 83:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var config = __webpack_require__(67);
-	var util = __webpack_require__(84);
-	var Promise = __webpack_require__(85);
-
-	module.exports = {
-		config: function() {
-			return new Promise(function(resolve, reject) {
-				var nonceStr = util.uuid();
-				var timestamp = +new Date();
-				var url = location.href.split('#')[0];
-
-				$.ajax({
-					type: 'GET',
-					url: '/service/token/sign_jsapi/',
-					data: {
-						timestamp: timestamp,
-						noncestr: nonceStr,
-						url: url
-					},
-					dataType: 'json',
-					success: function(data) {
-						wx.config({
-							// debug: true,
-							appId: config.wxAppId,
-							timestamp: timestamp,
-							nonceStr: nonceStr,
-							signature: data.signature,
-							jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
-						});
-						resolve();
-						// wx.ready(function() {
-						// });
-					},
-					error: function() {
-						reject();
-					}
-				});
-			});
-				
-		}
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-
-/***/ 84:
-/***/ function(module, exports, __webpack_require__) {
-
-	var uuid = 1;
-	module.exports = {
-		uuid:function(prefix){
-			return (prefix||"") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
-		}
-	}
-
-/***/ },
-
-/***/ 85:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(86)
-
-
-/***/ },
-
 /***/ 86:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(87);
-	__webpack_require__(89);
-	__webpack_require__(90);
-	__webpack_require__(91);
-	__webpack_require__(92);
+	module.exports = __webpack_require__(87)
 
 
 /***/ },
@@ -2108,7 +693,21 @@ webpackJsonp([4],{
 
 	'use strict';
 
-	var asap = __webpack_require__(88);
+	module.exports = __webpack_require__(88);
+	__webpack_require__(90);
+	__webpack_require__(91);
+	__webpack_require__(92);
+	__webpack_require__(93);
+
+
+/***/ },
+
+/***/ 88:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var asap = __webpack_require__(89);
 
 	function noop() {}
 
@@ -2294,7 +893,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 88:
+/***/ 89:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -2522,12 +1121,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 89:
+/***/ 90:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(87);
+	var Promise = __webpack_require__(88);
 
 	module.exports = Promise;
 	Promise.prototype.done = function (onFulfilled, onRejected) {
@@ -2542,12 +1141,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 90:
+/***/ 91:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(87);
+	var Promise = __webpack_require__(88);
 
 	module.exports = Promise;
 	Promise.prototype['finally'] = function (f) {
@@ -2565,15 +1164,15 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 91:
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	//This file contains the ES6 extensions to the core Promises/A+ API
 
-	var Promise = __webpack_require__(87);
-	var asap = __webpack_require__(88);
+	var Promise = __webpack_require__(88);
+	var asap = __webpack_require__(89);
 
 	module.exports = Promise;
 
@@ -2680,7 +1279,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 92:
+/***/ 93:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2688,8 +1287,8 @@ webpackJsonp([4],{
 	// This file contains then/promise specific extensions that are only useful
 	// for node.js interop
 
-	var Promise = __webpack_require__(87);
-	var asap = __webpack_require__(93);
+	var Promise = __webpack_require__(88);
+	var asap = __webpack_require__(94);
 
 	module.exports = Promise;
 
@@ -2760,13 +1359,13 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 93:
+/***/ 94:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(88);
+	var rawAsap = __webpack_require__(89);
 	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
 	// We queue errors to ensure they are thrown in right order (FIFO).
@@ -2830,6 +1429,200 @@ webpackJsonp([4],{
 	    }
 	};
 
+
+/***/ },
+
+/***/ 96:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:14px;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">上传照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t       <span class=\"text\">填写资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
+	var BaseComponent = __webpack_require__(71);
+		var Vue = __webpack_require__(3);
+
+
+		var View = BaseComponent.extend({
+			title: 'regSteps',	
+			data:  function(){
+				return {
+					step:1
+				};
+			},
+
+			created:function(){
+				
+			}				
+		});
+
+		module.exports = View;
+
+		Vue.component('view/regSteps', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+
+/***/ },
+
+/***/ 97:
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root, factory) {
+
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = factory(root, exports);
+	    }
+	  } else if (typeof define === 'function' && define.amd) {
+	    define(['exports'], function(exports) {
+	      root.Lockr = factory(root, exports);
+	    });
+	  } else {
+	    root.Lockr = factory(root, {});
+	  }
+
+	}(this, function(root, Lockr) {
+	  'use strict';
+
+	  if (!Array.prototype.indexOf) {
+	    Array.prototype.indexOf = function(elt /*, from*/)
+	    {
+	      var len = this.length >>> 0;
+
+	      var from = Number(arguments[1]) || 0;
+	      from = (from < 0)
+	      ? Math.ceil(from)
+	      : Math.floor(from);
+	      if (from < 0)
+	        from += len;
+
+	      for (; from < len; from++)
+	      {
+	        if (from in this &&
+	            this[from] === elt)
+	          return from;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  Lockr.prefix = "";
+
+	  Lockr._getPrefixedKey = function(key, options) {
+	    options = options || {};
+
+	    if (options.noPrefix) {
+	      return key;
+	    } else {
+	      return this.prefix + key;
+	    }
+
+	  };
+
+	  Lockr.set = function (key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    try {
+	      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+	    } catch (e) {
+	      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.get = function (key, missing, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+	    if(value === null)
+	      return missing;
+	    else
+	      return (value.data || missing);
+	  };
+
+	  Lockr.sadd = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json;
+
+	    var values = Lockr.smembers(key);
+
+	    if (values.indexOf(value) > -1) {
+	      return null;
+	    }
+
+	    try {
+	      values.push(value);
+	      json = JSON.stringify({"data": values});
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      console.log(e);
+	      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.smembers = function(key, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+
+	    if (value === null)
+	      return [];
+	    else
+	      return (value.data || []);
+	  };
+
+	  Lockr.sismember = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    return Lockr.smembers(key).indexOf(value) > -1;
+	  };
+
+	  Lockr.getAll = function () {
+	    var keys = Object.keys(localStorage);
+
+	    return keys.map(function (key) {
+	      return Lockr.get(key);
+	    });
+	  };
+
+	  Lockr.srem = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json,
+	        index;
+
+	    var values = Lockr.smembers(key, value);
+
+	    index = values.indexOf(value);
+
+	    if (index > -1)
+	      values.splice(index, 1);
+
+	    json = JSON.stringify({"data": values});
+
+	    try {
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+	    }
+	  };
+
+	  Lockr.rm =  function (key) {
+	    localStorage.removeItem(key);
+	  };
+
+	  Lockr.flush = function () {
+	    localStorage.clear();
+	  };
+	  return Lockr;
+
+	}));
 
 /***/ }
 
