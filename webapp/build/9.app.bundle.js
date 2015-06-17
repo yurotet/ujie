@@ -34,7 +34,7 @@ webpackJsonp([9],{
 
 	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
 	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(79);
+	var $Class = __webpack_require__(80);
 
 	var M = Vue.extend({
 	});
@@ -103,7 +103,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 78:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
@@ -145,7 +145,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 79:
+/***/ 80:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4

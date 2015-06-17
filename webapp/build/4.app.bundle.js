@@ -34,7 +34,7 @@ webpackJsonp([4],{
 
 	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
 	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(79);
+	var $Class = __webpack_require__(80);
 
 	var M = Vue.extend({
 	});
@@ -129,10 +129,10 @@ webpackJsonp([4],{
 	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".userInfo .input-row input{width:65%}.userInfo select{margin-top:5px;width:65%}.userInfo .input-row label.more{font-size:14px}");
 	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n  <div class=\"userInfo\">\n  \t <form class=\"input-group\">\n  \t\t <div class=\"input-row\">\t\t\t\n\t\t\t<label>姓名</label>\t\n\t\t\t<input type=\"text\" v-on=\"input:onInputChange\" placeholder=\"真实姓名 (必填)\" v-model=\"user.realname\">\t\t\t\n\t\t</div>\n  \t \t<div class=\"input-row\">\t\n\t\t\t<label>性别</label>\n\t\t\t<select v-on=\"change:onInputChange\" options=\"sexList\" v-model=\"user.sex\"></select>\t\t\t\n\t\t</div>\n  \t\t<div class=\"input-row\">\t\n  \t\t\t<label>年龄</label>\n\t\t\t<input v-on=\"input:onInputChange\" type=\"number\" min=\"18\" max=\"60\" placeholder=\"年龄 (必填)\" v-model=\"user.age\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>国家</label>\n\t\t\t<select v-on=\"change:onInputChange\" options=\"countryList\" v-model=\"user.country\"></select>\t\n\t\t</div>\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>城市</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"cityList\" v-model=\"user.city\"></select>\t\n\t\t</div>\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>地址</label>\t\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"地址 (必填)\" v-model=\"user.address\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>手机</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"手机 (必填)\" v-model=\"user.mobile\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>邮箱</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"邮箱 (必填)\" v-model=\"user.mailBox\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>微信</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"微信 (必填)\" v-model=\"user.wechat\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>导游证</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yesnoList\" v-model=\"user.hasGuideCer\"></select>\t\n\t\t</div>\t\t\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>驾龄</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yearRangeList\" v-model=\"user.drivingExp\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label class=\"more\">从业时间</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yearRangeList\" v-model=\"user.workingExp\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label class=\"more\">结算方式</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"payTypeList\" v-model=\"user.payType\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'alipay'? 'block':'none'}}\">\t\n\t\t\t<label class=\"more\">支付宝</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"支付宝账号 (必填)\" v-model=\"user.alipayAcc\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'bank'? 'block': 'none'}}\">\t\n\t\t\t<label class=\"more\">开户银行</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"开户银行名称 (必填)\" v-model=\"user.bankName\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'bank'? 'block': 'none'}}\">\t\n\t\t\t<label class=\"more\">账户名称</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"账户名称 (必填)\" v-model=\"user.accName\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'bank'? 'block': 'none'}}\">\t\n\t\t\t<label class=\"more\">银行卡号</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"银行卡号 (必填)\" v-model=\"user.cardNo\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\" style=\"display:{{user.payType == 'paypal'? 'block': 'none'}}\">\t\n\t\t\t<label>Paypal</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"Paypal账号 (必填)\" v-model=\"user.paypalAcc\">\t\n\t\t</div>\t\t\t\n\t</form>\n</div>\n\n<button id=\"userInfoBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步</button>";
 	var BasePage = __webpack_require__(69);	
-		var Promise = __webpack_require__(86);
+		var Promise = __webpack_require__(83);
 		var nav = __webpack_require__(65);
-		var steps = __webpack_require__(96);
-		var lockr = __webpack_require__(97);
+		var steps = __webpack_require__(78);
+		var lockr = __webpack_require__(93);
 
 		var View = BasePage.extend({
 			title: '我的认证',
@@ -351,7 +351,37 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 79:
+/***/ 78:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:14px;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">上传照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t       <span class=\"text\">填写资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
+	var BaseComponent = __webpack_require__(71);
+		var Vue = __webpack_require__(3);
+
+
+		var View = BaseComponent.extend({
+			title: 'regSteps',	
+			data:  function(){
+				return {
+					step:1
+				};
+			},
+
+			created:function(){
+				
+			}				
+		});
+
+		module.exports = View;
+
+		Vue.component('view/regSteps', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+
+/***/ },
+
+/***/ 80:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -678,36 +708,36 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 86:
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(87)
+	module.exports = __webpack_require__(84)
 
 
 /***/ },
 
-/***/ 87:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(88);
+	module.exports = __webpack_require__(85);
+	__webpack_require__(87);
+	__webpack_require__(88);
+	__webpack_require__(89);
 	__webpack_require__(90);
-	__webpack_require__(91);
-	__webpack_require__(92);
-	__webpack_require__(93);
 
 
 /***/ },
 
-/***/ 88:
+/***/ 85:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var asap = __webpack_require__(89);
+	var asap = __webpack_require__(86);
 
 	function noop() {}
 
@@ -893,7 +923,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 89:
+/***/ 86:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -1121,12 +1151,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 90:
+/***/ 87:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(88);
+	var Promise = __webpack_require__(85);
 
 	module.exports = Promise;
 	Promise.prototype.done = function (onFulfilled, onRejected) {
@@ -1141,12 +1171,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 91:
+/***/ 88:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(88);
+	var Promise = __webpack_require__(85);
 
 	module.exports = Promise;
 	Promise.prototype['finally'] = function (f) {
@@ -1164,15 +1194,15 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 92:
+/***/ 89:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	//This file contains the ES6 extensions to the core Promises/A+ API
 
-	var Promise = __webpack_require__(88);
-	var asap = __webpack_require__(89);
+	var Promise = __webpack_require__(85);
+	var asap = __webpack_require__(86);
 
 	module.exports = Promise;
 
@@ -1279,7 +1309,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 93:
+/***/ 90:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1287,8 +1317,8 @@ webpackJsonp([4],{
 	// This file contains then/promise specific extensions that are only useful
 	// for node.js interop
 
-	var Promise = __webpack_require__(88);
-	var asap = __webpack_require__(94);
+	var Promise = __webpack_require__(85);
+	var asap = __webpack_require__(91);
 
 	module.exports = Promise;
 
@@ -1359,13 +1389,13 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 94:
+/***/ 91:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(89);
+	var rawAsap = __webpack_require__(86);
 	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
 	// We queue errors to ensure they are thrown in right order (FIFO).
@@ -1432,37 +1462,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 96:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:14px;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
-	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">上传照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t       <span class=\"text\">填写资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
-	var BaseComponent = __webpack_require__(71);
-		var Vue = __webpack_require__(3);
-
-
-		var View = BaseComponent.extend({
-			title: 'regSteps',	
-			data:  function(){
-				return {
-					step:1
-				};
-			},
-
-			created:function(){
-				
-			}				
-		});
-
-		module.exports = View;
-
-		Vue.component('view/regSteps', View);
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
-
-
-/***/ },
-
-/***/ 97:
+/***/ 93:
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(root, factory) {

@@ -361,7 +361,7 @@
 			
 		},
 		resume:function() {
-			this.refreshWX();		
+			// this.refreshWX();		
 			this.setHeader();
 
 			var savedUser = lockr.get('user');

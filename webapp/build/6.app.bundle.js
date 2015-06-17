@@ -34,7 +34,7 @@ webpackJsonp([6],{
 
 	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
 	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(79);
+	var $Class = __webpack_require__(80);
 
 	var M = Vue.extend({
 	});
@@ -112,7 +112,7 @@ webpackJsonp([6],{
 		var Vue = __webpack_require__(3);
 		var nav = __webpack_require__(65);
 		var config = __webpack_require__(66);	
-		var lockr = __webpack_require__(97);
+		var lockr = __webpack_require__(93);
 
 		var View = BasePage.extend({
 			title: '私导初级考试',
@@ -279,7 +279,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 79:
+/***/ 80:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -606,7 +606,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 97:
+/***/ 93:
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(root, factory) {
