@@ -186,7 +186,7 @@
 <style>
 	.userInfo .input-row input{
 		width: 65%;
-		font-size: 18px;
+		font-size: 16px;
 	}
 	.userInfo .input-row label{
 		font-size: 14px;
@@ -208,7 +208,18 @@
 <div v-component="view/regSteps" v-with="step:curStep"></div>
   <div class='userInfo'>
   	 <form class="input-group">
-  		
+  		 <div class="input-row" >			
+			<label>姓名</label>	
+			<input type="text" v-on="input:onInputChange" placeholder="真实姓名 (必填)" v-model="user.realname"></input>			
+		</div>
+  	 	<div class="input-row">	
+			<label>性别</label>
+			<select   v-on="change:onInputChange" options="sexList" v-model="user.sex"></select>			
+		</div>
+  		<div class="input-row">	
+  			<label>年龄</label>
+			<input   v-on="input:onInputChange" type="number"  min="18"  max="60" placeholder="年龄 (必填)" v-model="user.age"></input>
+		</div>
 		
 		<div class="input-row">	
 			<label>地址</label>		
