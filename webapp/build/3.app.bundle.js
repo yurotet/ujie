@@ -34,7 +34,7 @@ webpackJsonp([3],{
 
 	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
 	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(80);
+	var $Class = __webpack_require__(81);
 
 	var M = Vue.extend({
 	});
@@ -109,9 +109,9 @@ webpackJsonp([3],{
 	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".driver-reg .avatar{width:120px;height:120px}.driver-reg .avatar-row{height:auto}");
 	var __vue_template__ = "<section class=\"driver-reg\">\n\t\t<div class=\"input-row\">\n\t\t\t<label>Name</label>\n\t\t\t<input type=\"text\" placeholder=\"Name\" v-model=\"user.driver_name\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Email</label>\n\t\t\t<input type=\"email\" placeholder=\"abc@abc.com\" v-model=\"email\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Sex</label>\n\t\t\t<input type=\"radio\" name=\"sex\" value=\"male\" v-model=\"user.sex\"> male\n    \t\t<input type=\"radio\" name=\"sex\" value=\"female\" v-model=\"user.sex\"> female\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Birth</label>\n\t\t\t<input type=\"date\" v-model=\"birth\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Contact</label>\n\t\t\t<input type=\"text\" v-model=\"mobile\">\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Avatar</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_avatar}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChoosePhoto\">\n\t\t\t  \tChoose Photo\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row avatar-row\">\n\t\t\t<label>Driver Lisence</label>\n\t\t\t<img class=\"avatar\" src=\"{{user.driver_driver_license}}\">\n\t\t\t<button class=\"btn btn-primary\" v-on=\"click: onChooseDriverLicense\">\n\t\t\t  \tChoose Driver License\n\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Manufactuer</label>\n\t\t\t<select class=\"test\" v-model=\"vehicle.model.manufactuer.manufactuer_id\" options=\"manufactuerList\"></select>\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Model</label>\n\t\t\t<select v-model=\"vehicle.model.model_id\" options=\"modelList\"></select>\n\t\t</div>\n\t\t<div id=\"scroll-to\" class=\"input-row\">\n\t\t\t<label>PlateNo</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.plate_no\">\n\t\t</div>\n\t\t<div class=\"input-row\">\n\t\t\t<label>Brand</label>\n\t\t\t<input type=\"text\" v-model=\"vehicle.brand\">\n\t\t</div>\n\t\t<button class=\"btn btn-positive btn-block\" v-on=\"click: onConfirm\">Confirm</button>\n\t</section>";
 	var BasePage = __webpack_require__(69);
-		var ajax = __webpack_require__(94);
-		var wxutil = __webpack_require__(81);
-		var Promise = __webpack_require__(83);
+		var ajax = __webpack_require__(95);
+		var wxutil = __webpack_require__(92);
+		var Promise = __webpack_require__(82);
 
 		var View = BasePage.extend({
 			title: 'index',
@@ -404,7 +404,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 80:
+/***/ 81:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -731,64 +731,13 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 81:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var config = __webpack_require__(66);
-	var util = __webpack_require__(82);
-	var Promise = __webpack_require__(83);
-
-	module.exports = {
-		config: function() {
-			return new Promise(function(resolve, reject) {
-				var nonceStr = util.uuid();
-				var timestamp = +new Date();
-				var url = location.href.split('#')[0];
-
-				$.ajax({
-					type: 'GET',
-					url: '/service/token/sign_jsapi/',
-					data: {
-						timestamp: timestamp,
-						noncestr: nonceStr,
-						url: url
-					},
-					dataType: 'json',
-					success: function(data) {
-						wx.config({
-							// debug: true,
-							appId: config.wxAppId,
-							timestamp: timestamp,
-							nonceStr: nonceStr,
-							signature: data.signature,
-							jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
-						});
-						resolve();
-						// wx.ready(function() {
-						// });
-					},
-					error: function() {
-						reject();
-					}
-				});
-			});
-				
-		}
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ },
-
 /***/ 82:
 /***/ function(module, exports, __webpack_require__) {
 
-	var uuid = 1;
+	'use strict';
 
-	module.exports = {
-		uuid:function(prefix){
-			return (prefix||"") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
-		}	
-	}
+	module.exports = __webpack_require__(83)
+
 
 /***/ },
 
@@ -797,7 +746,11 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	module.exports = __webpack_require__(84)
+	module.exports = __webpack_require__(84);
+	__webpack_require__(86);
+	__webpack_require__(87);
+	__webpack_require__(88);
+	__webpack_require__(89);
 
 
 /***/ },
@@ -807,21 +760,7 @@ webpackJsonp([3],{
 
 	'use strict';
 
-	module.exports = __webpack_require__(85);
-	__webpack_require__(87);
-	__webpack_require__(88);
-	__webpack_require__(89);
-	__webpack_require__(90);
-
-
-/***/ },
-
-/***/ 85:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var asap = __webpack_require__(86);
+	var asap = __webpack_require__(85);
 
 	function noop() {}
 
@@ -1007,7 +946,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 86:
+/***/ 85:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -1235,12 +1174,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 87:
+/***/ 86:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(85);
+	var Promise = __webpack_require__(84);
 
 	module.exports = Promise;
 	Promise.prototype.done = function (onFulfilled, onRejected) {
@@ -1255,12 +1194,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 88:
+/***/ 87:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Promise = __webpack_require__(85);
+	var Promise = __webpack_require__(84);
 
 	module.exports = Promise;
 	Promise.prototype['finally'] = function (f) {
@@ -1278,15 +1217,15 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 89:
+/***/ 88:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	//This file contains the ES6 extensions to the core Promises/A+ API
 
-	var Promise = __webpack_require__(85);
-	var asap = __webpack_require__(86);
+	var Promise = __webpack_require__(84);
+	var asap = __webpack_require__(85);
 
 	module.exports = Promise;
 
@@ -1393,7 +1332,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 90:
+/***/ 89:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1401,8 +1340,8 @@ webpackJsonp([3],{
 	// This file contains then/promise specific extensions that are only useful
 	// for node.js interop
 
-	var Promise = __webpack_require__(85);
-	var asap = __webpack_require__(91);
+	var Promise = __webpack_require__(84);
+	var asap = __webpack_require__(90);
 
 	module.exports = Promise;
 
@@ -1473,13 +1412,13 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 91:
+/***/ 90:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(86);
+	var rawAsap = __webpack_require__(85);
 	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
 	// We queue errors to ensure they are thrown in right order (FIFO).
@@ -1546,23 +1485,84 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 94:
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
-	var superagent = __webpack_require__(95);
-	module.exports = superagent;
+	/* WEBPACK VAR INJECTION */(function($) {var config = __webpack_require__(66);
+	var util = __webpack_require__(93);
+	var Promise = __webpack_require__(82);
+
+	module.exports = {
+		config: function() {
+			return new Promise(function(resolve, reject) {
+				var nonceStr = util.uuid();
+				var timestamp = +new Date();
+				var url = location.href.split('#')[0];
+
+				$.ajax({
+					type: 'GET',
+					url: '/service/token/sign_jsapi/',
+					data: {
+						timestamp: timestamp,
+						noncestr: nonceStr,
+						url: url
+					},
+					dataType: 'json',
+					success: function(data) {
+						wx.config({
+							// debug: true,
+							appId: config.wxAppId,
+							timestamp: timestamp,
+							nonceStr: nonceStr,
+							signature: data.signature,
+							jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+						});
+						resolve();
+						// wx.ready(function() {
+						// });
+					},
+					error: function() {
+						reject();
+					}
+				});
+			});
+				
+		}
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+
+/***/ 93:
+/***/ function(module, exports, __webpack_require__) {
+
+	var uuid = 1;
+
+	module.exports = {
+		uuid:function(prefix){
+			return (prefix||"") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
+		}	
+	}
 
 /***/ },
 
 /***/ 95:
 /***/ function(module, exports, __webpack_require__) {
 
+	var superagent = __webpack_require__(96);
+	module.exports = superagent;
+
+/***/ },
+
+/***/ 96:
+/***/ function(module, exports, __webpack_require__) {
+
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(96);
-	var reduce = __webpack_require__(97);
+	var Emitter = __webpack_require__(97);
+	var reduce = __webpack_require__(98);
 
 	/**
 	 * Root reference for iframes.
@@ -2684,7 +2684,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 96:
+/***/ 97:
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2855,7 +2855,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 97:
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
 	

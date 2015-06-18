@@ -83,19 +83,7 @@
 		
 		methods: { 			
 			checkSubmitBtn:function(){					
-				var disabled  = !this.$data.user.realname || !this.$data.user.age || !this.$data.user.mobile || !this.$data.user.mailBox || ! this.$data.user.wechat;
-
-				switch (this.$data.user.payType) {
-					case 'alipay':
-						disabled = disabled || (this.$data.user.payType == 'alipay' && !this.$data.user.alipayAcc);		
-					break;
-					case 'bank':
-						disabled = disabled || (this.$data.user.payType == 'bank' && (!this.$data.user.bankName || !this.$data.user.cardNo || !this.$data.user.accName));						
-					break;
-					case 'paypal':
-						disabled  = disabled || (this.$data.user.payType =='paypal' && (!this.$data.user.paypalAcc));
-					break;
-				}			
+				var disabled  = !this.$data.user.realname || !this.$data.user.age || !this.$data.user.mobile || !this.$data.user.mailBox || ! this.$data.user.wechat;						
 			
 				var btn  = $('#userInfoBtn');
 
@@ -186,21 +174,15 @@
 		  		eltext.css('opacity','1');
 			},
 
-			initData:function() {	
-				// read local on yet submitted case
-
-				$.each(lockr.get('user'), function(key,val) {
-					console.log(val);
+			initData:function() {
+				$.each(lockr.get('user'), function(key,val) {					
 					if (val != '') {
 						this.$data.user[key]=val;
 					}							
 				}.bind(this));
 				
 				this.checkSubmitBtn();
-			},
-			syncRemote:function() {
-
-			}
+			}			
 		},
 
 		created: function() {			
@@ -221,13 +203,16 @@
 <style>
 	.userInfo .input-row input{
 		width: 65%;
+		font-size: 18px;
 	}
 	.userInfo .input-row label{
 		font-size: 14px;
+		color:#666666;
 	}
 	.userInfo select {
 		margin-top: 5px;
 		width:65%;
+		font-size:16px;
 	}
 
 	.userInfo .input-row label.more{
@@ -252,14 +237,7 @@
   			<label>年龄</label>
 			<input   v-on="input:onInputChange" type="number"  min="18"  max="60" placeholder="年龄 (必填)" v-model="user.age"></input>
 		</div>
-		<div class="input-row">
-			<label>国家</label>
-			<select   v-on="change:onInputChange" options="countryList"   v-model="user.country"></select>	
-		</div>
-		<div class="input-row">	
-			<label>城市</label>		
-			<select  v-on="change:onInputChange" options="cityList"  v-model="user.city"></select>	
-		</div>
+		
 		<div class="input-row">	
 			<label>地址</label>		
 			<input  v-on="input:onInputChange" type="text"  placeholder="地址 (必填)" v-model="user.address"></input>	
@@ -280,6 +258,15 @@
 			<input v-on="input:onInputChange" type="text"  placeholder="微信 (必填)" v-model="user.wechat"></input>	
 		</div>
 
+		<div class="input-row">
+			<label>国家</label>
+			<select   v-on="change:onInputChange" options="countryList"   v-model="user.country"></select>	
+		</div>
+		<div class="input-row">	
+			<label>城市</label>		
+			<select  v-on="change:onInputChange" options="cityList"  v-model="user.city"></select>	
+		</div>
+
 		<div class="input-row">	
 			<label >导游证</label>		
 			<select  v-on="change:onInputChange" options="yesnoList"   v-model="user.hasGuideCer"></select>	
@@ -293,40 +280,10 @@
 		<div class="input-row">	
 			<label class="more">从业时间</label>		
 			<select  v-on="change:onInputChange" options="yearRangeList"   v-model="user.workingExp"></select>	
-		</div>
-
-		<div class="input-row">	
-			<label class="more">结算方式</label>		
-			<select  v-on="change:onInputChange" options="payTypeList"   v-model="user.payType"></select>	
-		</div>
-
-		<div class="input-row" style="display:{{user.payType == 'alipay'? 'block':'none'}}">	
-			<label class="more">支付宝</label>	
-			<input v-on="input:onInputChange" type="text"  placeholder="支付宝账号 (必填)" v-model="user.alipayAcc"></input>	
-		</div>
-
-		<div class="input-row" style="display:{{user.payType == 'bank'? 'block': 'none'}}">	
-			<label class="more">开户银行</label>	
-			<input v-on="input:onInputChange" type="text"  placeholder="开户银行名称 (必填)" v-model="user.bankName"></input>	
-		</div>
-
-		<div class="input-row" style="display:{{user.payType == 'bank'? 'block': 'none'}}">	
-			<label class="more">账户名称</label>	
-			<input v-on="input:onInputChange" type="text"  placeholder="账户名称 (必填)" v-model="user.accName"></input>	
-		</div>
-
-		<div class="input-row" style="display:{{user.payType == 'bank'? 'block': 'none'}}">	
-			<label class="more">银行卡号</label>	
-			<input v-on="input:onInputChange" type="text"  placeholder="银行卡号 (必填)" v-model="user.cardNo"></input>	
-		</div>
-
-		<div class="input-row" style="display:{{user.payType == 'paypal'? 'block': 'none'}}">	
-			<label>Paypal</label>	
-			<input v-on="input:onInputChange"  type="text"  placeholder="Paypal账号 (必填)" v-model="user.paypalAcc"></input>	
 		</div>			
 	</form>
 </div>
 
-<button id="userInfoBtn" class="btn btn-positive btn-block" disabled="disabled" v-on="click: onSubmit">下一步</button>
+<button id="userInfoBtn" class="btn btn-positive btn-block" disabled="disabled" v-on="click: onSubmit">下一步, 上传认证照片</button>
 
 </template>

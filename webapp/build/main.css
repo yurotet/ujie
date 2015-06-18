@@ -30,6 +30,10 @@
  
 }
 
+.btn {
+	font-size: 14px;
+}
+
 .m-load,.m-load2{width:36px;height:36px;margin:100px auto;z-index:9999;display: none}
 
 /** 加载动画的静态样式 **/

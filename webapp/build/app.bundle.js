@@ -114,8 +114,8 @@
 
 	var Vue = __webpack_require__(3);
 	var nav = __webpack_require__(65);
-	var FastClick = __webpack_require__(98);
-	var vueTouch = __webpack_require__(99);
+	var FastClick = __webpack_require__(99);
+	var vueTouch = __webpack_require__(100);
 
 	FastClick.attach(document.body);
 
@@ -10359,9 +10359,14 @@
 				var Page = __webpack_require__(77);
 				ensureCb(Page);
 			})
-		}else {
+		}else if (route=='accRegister') {
 			__webpack_require__.e/* nsure */(9, function() {
 				var Page = __webpack_require__(79);
+				ensureCb(Page);
+			})
+		}else {
+			__webpack_require__.e/* nsure */(10, function() {
+				var Page = __webpack_require__(80);
 				ensureCb(Page);
 			})
 		} 
@@ -10433,7 +10438,8 @@
 /* 95 */,
 /* 96 */,
 /* 97 */,
-/* 98 */
+/* 98 */,
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;;(function () {
@@ -11280,14 +11286,14 @@
 
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function () {
 
 	  var vueTouch = {}
 	  var Hammer = true
-	    ? __webpack_require__(100)
+	    ? __webpack_require__(101)
 	    : window.Hammer
 	  var gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
 	  var customeEvents = {}
@@ -11397,7 +11403,7 @@
 	})()
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.4 - 2014-09-28
@@ -13852,7 +13858,7 @@
 	    prefixed: prefixed
 	});
 
-	if ("function" == TYPE_FUNCTION && __webpack_require__(101)) {
+	if ("function" == TYPE_FUNCTION && __webpack_require__(102)) {
 	    !(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	        return Hammer;
 	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -13866,7 +13872,7 @@
 
 
 /***/ },
-/* 101 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;

@@ -32,14 +32,13 @@
 	}
 
 	.avatar-row .uploadItem {
-		margin-top:10px;
+		margin-top:35px;
 		opacity: .7
 	}
 </style>
 
 <template>
-	<div class="input-row avatar-row">			
-		<img class="avatar"/>
+	<div class="input-row avatar-row {{cls}}">					
 		<div class="uploadItem">
 			<span class="icon icon-plus"></span>
 			<p >{{title}}</p>

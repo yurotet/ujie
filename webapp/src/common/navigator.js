@@ -128,6 +128,11 @@ var gotoRoute = function(route) {
 			var Page = require('pages/picupdate');
 			ensureCb(Page);
 		})
+	}else if (route=='accRegister') {
+		require.ensure([], function() {
+			var Page = require('pages/accRegister');
+			ensureCb(Page);
+		})
 	}else {
 		require.ensure([], function() {
 			var Page = require('pages/notfound');
