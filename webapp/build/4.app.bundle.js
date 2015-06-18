@@ -137,7 +137,7 @@ webpackJsonp([4],{
 		var View = BasePage.extend({
 			title: '我的认证',
 			watch: {
-				    'user.country': function (val) {			   
+				    'user.country': function (val) {
 				      	this.$data.cityList  = this.$data.allCityList[val];			      	
 				      	this.$data.user.city= this.$data.cityList[0].value;
 				    }
