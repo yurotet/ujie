@@ -72,9 +72,10 @@
 	  	display: inline-block;
 	}
 	ul.breadcrumb li a .text {
-		font-size: 14px;
-		  display: none;
-		  opacity: 0;
+		font-size: 16px;
+		font-weight: bold;
+		 display: none;
+		 opacity: 0;
 	}
 	
 	ul.breadcrumb li:last-child a {
@@ -95,16 +96,22 @@
 	      <span class="text">提交审核</span>
 	    </a>
 	  </li>
+	  <li class="step2"> 
+	    <a>
+	      <span class="icon icon-list"></span>
+	      <span class="text">结算账户</span>
+	    </a>
+	  </li>
 	  <li class="step3">
 	    <a>
 	      <span class="icon icon-pages"></span>
-	      <span class="text">上传照片</span>
+	      <span class="text">认证照片</span>
 	    </a>
 	  </li>	  
 	  <li class="step4">
 	    <a>
-	      <span class="icon icon-list"></span>
-	       <span class="text">填写资料</span>
+	      <span class="icon icon-info"></span>
+	       <span class="text">我的资料</span>
 	    </a>
 	  </li>
 	</ul>	

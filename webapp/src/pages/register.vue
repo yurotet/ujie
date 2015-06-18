@@ -222,6 +222,9 @@
 	.userInfo .input-row input{
 		width: 65%;
 	}
+	.userInfo .input-row label{
+		font-size: 14px;
+	}
 	.userInfo select {
 		margin-top: 5px;
 		width:65%;

@@ -361,7 +361,7 @@
 		created: function() {
 			
 		},
-		resume:function() {alert('resumed');
+		resume:function() {
 			// this.refreshWX();		
 			this.setHeader();
 
