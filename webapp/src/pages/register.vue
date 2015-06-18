@@ -220,11 +220,11 @@
   			<label>年龄</label>
 			<input   v-on="input:onInputChange" type="number"  min="18"  max="60" placeholder="年龄 (必填)" v-model="user.age"></input>
 		</div>
-		
+		<!-- 
 		<div class="input-row">	
 			<label>地址</label>		
 			<input  v-on="input:onInputChange" type="text"  placeholder="地址 (必填)" v-model="user.address"></input>	
-		</div>
+		</div> -->
 
 		<div class="input-row">	
 			<label>手机</label>	
