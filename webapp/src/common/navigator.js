@@ -47,7 +47,7 @@ var getRouteFromHash = function() {
 };
 
 var buildPage = function(Page, route) {
-	var $pageEl = $('<div class="card" style="display: none;"/>');
+	var $pageEl = $('<div class="container" style="display: none;"/>');
 	var page = new Page({
 		el: $pageEl[0],
 		route: route

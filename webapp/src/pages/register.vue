@@ -186,7 +186,7 @@
 <style>
 	.userInfo .input-row input{
 		width: 65%;
-		font-size: 16px;
+		font-size: 18px;
 	}
 	.userInfo .input-row label{
 		font-size: 14px;
