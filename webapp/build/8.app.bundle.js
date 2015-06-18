@@ -226,9 +226,9 @@ webpackJsonp([8],{
 							success: function(res) {
 								var wxMediaId = res.serverId; // 返回图片的服务器端ID
 								alert('wx media id:'+wxMediaId);
-								this._uploadPic(wxMediaId, function(err, url) {							
+								this._uploadPic(wxMediaId, function(url) {							
 									this.hideLoading();
-									if(!err) {
+									if(url) {
 										alert('remtoe urlr :'+url);
 										entity = url;
 										// console.log(JSON.stringify(res));
@@ -369,11 +369,12 @@ webpackJsonp([8],{
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						 success: function(res){					  					
-						  	if(res.err_code==0){
-						  		cb(true, res.data.img_url);	
-						  	} else {					  		
-						  		cb(false);
+						 success: function(res){	
+						 alert(JSON.stringify(res));				  					
+						  	if(res.err_code==0){					  		
+						  		cb(res.data.img_url);	
+						  	} else {			  		
+						  		cb(); 
 						  	}
 						    
 						  },
@@ -384,7 +385,7 @@ webpackJsonp([8],{
 						
 						  error: function(xhr, type){
 						   	alert('pic upload failed');
-						   	cb(false);
+						   	cb();
 						  }
 					});					
 				},
