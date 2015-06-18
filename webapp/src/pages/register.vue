@@ -78,8 +78,8 @@
 			},
 
 			onInputChange:function() {
-				// lockr.set('user', this.$data.user);				
-				// this.checkSubmitBtn();
+				lockr.set('user', this.$data.user);				
+				this.checkSubmitBtn();
 			},
 			
 			_loadCountryInfo:function() {
@@ -208,38 +208,7 @@
 <div v-component="view/regSteps" v-with="step:curStep"></div>
   <div class='userInfo'>
   	 <form class="input-group">
-  		 <div class="input-row" >			
-			<label>姓名</label>	
-			<input type="text" v-on="input:onInputChange" placeholder="真实姓名 (必填)" v-model="user.realname"></input>			
-		</div>
-  	 	<div class="input-row">	
-			<label>性别</label>
-			<select   v-on="change:onInputChange" options="sexList" v-model="user.sex"></select>			
-		</div>
-  		<div class="input-row">	
-  			<label>年龄</label>
-			<input   v-on="input:onInputChange" type="number"  min="18"  max="60" placeholder="年龄 (必填)" v-model="user.age"></input>
-		</div>
-		
-		<div class="input-row">	
-			<label>地址</label>		
-			<input  v-on="input:onInputChange" type="text"  placeholder="地址 (必填)" v-model="user.address"></input>	
-		</div>
-
-		<div class="input-row">	
-			<label>手机</label>	
-			<input  v-on="input:onInputChange" type="text"  placeholder="手机 (必填)" v-model="user.mobile"></input>	
-		</div>
-
-		<div class="input-row">	
-			<label>邮箱</label>	
-			<input v-on="input:onInputChange" type="text"  placeholder="邮箱 (必填)" v-model="user.mailBox"></input>	
-		</div>
-
-		<div class="input-row">	
-			<label>微信</label>	
-			<input v-on="input:onInputChange" type="text"  placeholder="微信 (必填)" v-model="user.wechat"></input>	
-		</div>
+  		
 
 		<div class="input-row">
 			<label>国家</label>
