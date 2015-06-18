@@ -81,9 +81,7 @@
 	  padding: 0;
 	}
 	
-	.stepsContainer {
-		position: absolute;
-		top:0px;
+	.stepsContainer {	
 		text-align: center;
 	}
 </style>
