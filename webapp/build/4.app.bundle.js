@@ -207,8 +207,8 @@ webpackJsonp([4],{
 				},
 
 				onInputChange:function() {
-					lockr.set('user', this.$data.user);				
-					this.checkSubmitBtn();
+					// lockr.set('user', this.$data.user);				
+					// this.checkSubmitBtn();
 				},
 				
 				_loadCountryInfo:function() {
