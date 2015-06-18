@@ -224,6 +224,11 @@
 		
 
 		<div class="input-row">	
+			<label>邮箱</label>	
+			<input v-on="input:onInputChange" type="text"  placeholder="邮箱 (必填)" v-model="user.mailBox"></input>	
+		</div>
+
+		<div class="input-row">	
 			<label>微信</label>	
 			<input v-on="input:onInputChange" type="text"  placeholder="微信 (必填)" v-model="user.wechat"></input>	
 		</div>
