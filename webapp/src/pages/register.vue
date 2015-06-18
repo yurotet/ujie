@@ -46,19 +46,8 @@
 					value:'5+',
 					text:'5年以上'
 				}],
-
-				payTypeList:[{
-					value:'alipay',
-					text: '支付宝 '
-				},{
-					value:'bank',
-					text: '银行'
-				},{
-					value:'paypal',
-					text: 'paypal'
-				}],
-				user:{									
-					payType:'alipay',
+				
+				user:{					
 					sex:'male',
 					hasGuideCer:'no',
 					drivingExp:'1-3',
@@ -69,14 +58,8 @@
 					country:'',
 					address:'',
 					mobile:'',
-					wechat:'',
-					alipayAcc:'',
-					bankName:'',
-					paypalAcc:'',
-					cardNo:'',
+					wechat:'',					
 					mailBox:'',
-					accName:''
-
 				}		
 			};
 		},
