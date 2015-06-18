@@ -242,6 +242,7 @@ alert(wxMediaId);
 					  context: this,
 					 success: function(res){					  					
 					  	if(res.err_code==0){
+					  		alert(JSON.stringify(res));
 					  		cb(true, res.data.img_url);	
 					  	} else {					  		
 					  		cb(false);
