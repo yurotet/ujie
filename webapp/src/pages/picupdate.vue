@@ -36,14 +36,22 @@
 			'passportPic.url':function(imageUrl){				 		
 				$('.avatar-row.passport').css('background-image', 'url(' + imageUrl + ')');
 				$('.avatar-row.passport').css('background-size', '100% 100%');	
-				this.savePic();						
+				
+				 this.savePic('passportPic', imageUrl);
+
+				 // var user = lockr.get('user');
+				 // user.passportPic = imageUrl;
+				 // lockr.set('user',user);
+
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(imageUrl) {
 				this.$data.guidePic.url  = imageUrl;
 				$('.avatar-row.license').css('background-image', 'url(' + imageUrl + ')');	
 				$('.avatar-row.passport').css('background-size', '100% 100%');	
-				this.savePic();	
+				
+				this.savePic('guidePic',imageUrl);
+
 				this.checkSubmitBtn();
 			},
 						
@@ -51,24 +59,31 @@
 				this.$data.licensePic.url  = imageUrl;
 				$('.avatar-row.guide').css('background-image', 'url(' + imageUrl + ')');	
 				$('.avatar-row.passport').css('background-size', '100% 100%');	
-				this.savePic();	
+				
+				this.savePic('licensePic', imageUrl);
+
 				this.checkSubmitBtn();
 			}
 
 		},
 
 		methods: {
-			savePic:function(){
-				var savedUser = lockr.get('user');
-				if (savedUser) {					
-					lockr.set('user.passportPic',this.$data.passportPic.url );
-					lockr.set('user.guidePic',this.$data.guidePic.url );
-					lockr.set('user.licensePic',this.$data.licensePic.url);
-					alert('img is:'+this.$data.passportPic.url );
-					alert(JSON.stringify(lockr.get('user')));
-					// alert('all img set!');
-					// alert(lockr.get('user.passportPic'));
-				}				
+			savePic:function(enitity, imageUrl){
+				var user = lockr.get('user');
+				 user[entity] = imageUrl;
+				 lockr.set('user',user);
+				 alert(JSON.stringify(user));
+				// var savedUser = lockr.get('user');
+				// if (savedUser) {	
+				// 	savedUser.passportPic	
+				// 	lockr.set('user.passportPic',this.$data.passportPic.url );
+				// 	lockr.set('user.guidePic',this.$data.guidePic.url );
+				// 	lockr.set('user.licensePic',this.$data.licensePic.url);
+				// 	alert('img is:'+this.$data.passportPic.url );
+				// 	alert(JSON.stringify(lockr.get('user')));
+				// 	// alert('all img set!');
+				// 	// alert(lockr.get('user.passportPic'));
+				// }				
 			},
 			checkSubmitBtn:function(){				
 
