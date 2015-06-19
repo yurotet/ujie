@@ -205,7 +205,9 @@ webpackJsonp([8],{
 					 if (user) {
 					 	user[entity] = imageUrl;
 					 	user.passportPic = imageUrl;
+					 	alert('1');
 						 lockr.set('user',user);
+						 alert('2');
 						 alert(JSON.stringify(user));
 					 }
 					// var savedUser = lockr.get('user');
