@@ -33,35 +33,35 @@
 		},
 
 		watch: {
-			'passportPic.url':function(imageUrl){	alert('============');
-				// var el =$('.avatar-row.passport');	alert(el);	 		
-				// el.css('background-image', 'url(' + imageUrl + ')');
-				// el.css('background-size', '100% 100%');	
-				// alert(el.css('background-size'));
-				//  this.savePic('passportPic', imageUrl);
+			'passportPic.url':function(imageUrl){
+				var el =$('.avatar-row.passport');	 		
+				el.css('background-image', 'url(' + imageUrl + ')');
+				el.css('background-size', '100% 100%');	
+				alert(el.css('background-image'));
+				 this.savePic('passportPic', imageUrl);
 
-				 // var user = lockr.get('user');
-				 // user.passportPic = imageUrl;
-				 // lockr.set('user',user);
+				 var user = lockr.get('user');
+				 user.passportPic = imageUrl;
+				 lockr.set('user',user);
 
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(imageUrl) {
-				// var el = $('.avatar-row.license');
-				// el.css('background-image', 'url(' + imageUrl + ')');	
-				// el.css('background-size', '100% 100%');	
+				var el = $('.avatar-row.license');
+				el.css('background-image', 'url(' + imageUrl + ')');	
+				el.css('background-size', '100% 100%');	
 				
-				// this.savePic('guidePic',imageUrl);
+				this.savePic('guidePic',imageUrl);
 
 				this.checkSubmitBtn();
 			},
 						
 			'guidePic.url': function(imageUrl) {
-				// var el = $('.avatar-row.guide');
-				// el.css('background-image', 'url(' + imageUrl + ')');	
-				// el.css('background-size', '100% 100%');	
+				var el = $('.avatar-row.guide');
+				el.css('background-image', 'url(' + imageUrl + ')');	
+				el.css('background-size', '100% 100%');	
 				
-				// this.savePic('licensePic', imageUrl);
+				this.savePic('licensePic', imageUrl);
 
 				this.checkSubmitBtn();
 			}
@@ -329,14 +329,11 @@ alert(wxMediaId);
 			var savedUser = lockr.get('user');
 				
 			if (savedUser) {
-				var that = this;
-				setTimeout(function(){
-					alert('setting');
-					that.$data.passportPic.url = savedUser.passportPic || '';
-					that.$data.guidePic.url = savedUser.guidePic || '';
-					that.$data.licensePic.url = savedUser.licensePic || '';
-					that.checkSubmitBtn();
-				},0)
+				this.$data.passportPic.url = savedUser.passportPic || '';
+				this.$data.guidePic.url = savedUser.guidePic || '';
+				this.$data.licensePic.url = savedUser.licensePic || '';
+				
+				setTimeout(this.checkSubmitBtn,0)
 			}			
 		},
 		resume:function() {
