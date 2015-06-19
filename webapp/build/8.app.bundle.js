@@ -162,17 +162,15 @@ webpackJsonp([8],{
 			},
 
 			watch: {
-				'passportPic.url':function(imageUrl){alert('======');
+				'passportPic.url':function(imageUrl){
 					var el =$('.avatar-row.passport');	 		
 					el.css('background-image', 'url(' + imageUrl + ')');
-					el.css('background-size', '100% 100%');	
-					alert(el.css('background-image'));
+					el.css('background-size', '100% 100%');					
 					 this.savePic('passportPic', imageUrl);
 
 					 var user = lockr.get('user');
 					 user.passportPic = imageUrl;
-					 lockr.set('user',user);
-					 alert('getitng img' + lockr.get('user.passportPic'));
+					 lockr.set('user',user);				 
 
 					this.checkSubmitBtn();
 				},
@@ -200,27 +198,11 @@ webpackJsonp([8],{
 
 			methods: {
 				savePic:function(entity, imageUrl){
-					var user = lockr.get('user');
-					alert(JSON.stringify(user));
+					var user = lockr.get('user');				
 					 if (user) {
-					 	user[entity] = imageUrl;
-					 	user.passportPic = imageUrl;
-					 	alert('1');
-						 lockr.set('user',user);
-						 alert('2');
-						 alert(JSON.stringify(user));
-					 }
-					// var savedUser = lockr.get('user');
-					// if (savedUser) {	
-					// 	savedUser.passportPic	
-					// 	lockr.set('user.passportPic',this.$data.passportPic.url );
-					// 	lockr.set('user.guidePic',this.$data.guidePic.url );
-					// 	lockr.set('user.licensePic',this.$data.licensePic.url);
-					// 	alert('img is:'+this.$data.passportPic.url );
-					// 	alert(JSON.stringify(lockr.get('user')));
-					// 	// alert('all img set!');
-					// 	// alert(lockr.get('user.passportPic'));
-					// }				
+					 	user[entity] = imageUrl;				 	
+						 lockr.set('user',user);						 
+					 }						
 				},
 				checkSubmitBtn:function(){				
 
@@ -252,21 +234,17 @@ webpackJsonp([8],{
 					        var localIds = res.localIds;
 					        if(localIds.length) {
 					        	var wxMediaId = localIds[0];				        				        
-	alert(wxMediaId);
 					        	this.showLoading();
 					        	wx.uploadImage({
 							localId: wxMediaId,
 							isShowProgressTips: 0,
 							success: function(res) {
-								var wxMediaId = res.serverId; // 返回图片的服务器端ID
-								alert('wx media id:'+wxMediaId);
+								var wxMediaId = res.serverId; // 返回图片的服务器端ID							
 								this._uploadPic(wxMediaId, function(url) {							
 									this.hideLoading();
-									if(url) {
-										alert('remtoe urlr :'+url);
+									if(url) {									
 										switch (entity) {
-											case 'passport':
-											alert('settignj passprot');
+											case 'passport':							
 												this.$data.passportPic.url = url;
 											break ;
 											case 'license':
@@ -295,8 +273,7 @@ webpackJsonp([8],{
 									}
 								}.bind(this));
 							}.bind(this),
-							fail: function() {
-								alert(' wx pic update fail');
+							fail: function() {							
 								this.hideLoading();
 							}
 						});
@@ -378,7 +355,6 @@ webpackJsonp([8],{
 						  timeout: 10000,
 						  context: this,
 						 success: function(res){	
-						 alert(JSON.stringify(res));				  					
 						  	if(res.err_code==0){					  		
 						  		cb(res.data.img_url);	
 						  	} else {			  		
@@ -387,12 +363,12 @@ webpackJsonp([8],{
 						    
 						  },
 						  complete:function() {
-						  	alert('pic upload complete')
+						  	
 						  	// this.hideLoading();					  	
 						  },
 						
 						  error: function(xhr, type){
-						   	alert('pic upload failed');
+						   	
 						   	cb();
 						  }
 					});					
@@ -460,8 +436,7 @@ webpackJsonp([8],{
 				}
 			},
 			created: function() {
-				var savedUser = lockr.get('user');
-					alert('djlfsd:' + savedUser.passportPic);
+				var savedUser = lockr.get('user');				
 				if (savedUser) {				
 					this.$data.passportPic.url = savedUser.passportPic || '' ;
 					this.$data.guidePic.url = savedUser.guidePic || '';
