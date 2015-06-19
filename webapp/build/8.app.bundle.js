@@ -460,6 +460,7 @@ webpackJsonp([8],{
 				if (savedUser) {
 					var that = this;
 					setTimeout(function(){
+						alert('setting');
 						that.$data.passportPic.url = savedUser.passportPic || '';
 						that.$data.guidePic.url = savedUser.guidePic || '';
 						that.$data.licensePic.url = savedUser.licensePic || '';
