@@ -162,18 +162,21 @@ webpackJsonp([8],{
 			},
 
 			watch: {
-				'passportPic.url':function(val){												
-					$('.avatar-row .passport').css('background-image', val);				
+				'passportPic.url':function(imageUrl){
+					 this.$data.passportPic.url = imageUrl;
+					$('.avatar-row .passport').css('background-image', 'url(' + imageUrl + ')');				
 					alert($('.avatar-row .passport').css('background-image'));		
 					this.checkSubmitBtn();
 				},
-				'licensePic.url': function(val) {
-					$('.avatar-row .license').css('background-image','url('+val+')');
+				'licensePic.url': function(imageUrl) {
+					this.$data.guidePic.url  = imageUrl;
+					$('.avatar-row .license').css('background-image', 'url(' + imageUrl + ')');	
 					this.checkSubmitBtn();
 				},
 							
-				'guidePic.url': function(val) {
-					$('.avatar-row .guide').css('background-image','url('+val+')');
+				'guidePic.url': function(imageUrl) {
+					this.$data.licensePic.url  = imageUrl;
+					$('.avatar-row .guide').css('background-image', 'url(' + imageUrl + ')');	
 					this.checkSubmitBtn();
 				}
 
