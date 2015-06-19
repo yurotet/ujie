@@ -72,8 +72,10 @@
 		methods: {
 			savePic:function(enitity, imageUrl){
 				var user = lockr.get('user');
+				alert(JSON.stringify(user));
 				 if (user) {
 				 	user[entity] = imageUrl;
+				 	user.passportPic = imageUrl;
 					 lockr.set('user',user);
 					 alert(JSON.stringify(user));
 				 }
