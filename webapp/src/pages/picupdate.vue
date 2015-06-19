@@ -70,7 +70,7 @@
 		},
 
 		methods: {
-			savePic:function(enitity, imageUrl){
+			savePic:function(entity, imageUrl){
 				var user = lockr.get('user');
 				alert(JSON.stringify(user));
 				 if (user) {
