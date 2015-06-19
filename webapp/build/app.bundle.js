@@ -10373,7 +10373,7 @@
 	};
 
 	module.exports = {
-		DEFAULT_ROUTE: 'signin',
+		DEFAULT_ROUTE: 'newUser',
 		_inited: false,
 		init: function() {
 			if(!this._inited) {
