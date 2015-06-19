@@ -164,7 +164,9 @@ webpackJsonp([8],{
 			watch: {
 				'passportPic.url':function(imageUrl){
 					 this.$data.passportPic.url = imageUrl;
-					$('.avatar-row .passport').css('background-image', 'url(' + imageUrl + ')');				
+					 alert('img:'+imageUrl);
+					$('.avatar-row .passport').css('background-image', 'url(' + imageUrl + ')');	
+					$('.avatar-row .passport').css('height','50px');			
 					alert($('.avatar-row .passport').css('background-image'));		
 					this.checkSubmitBtn();
 				},
@@ -186,6 +188,7 @@ webpackJsonp([8],{
 				saveData:function(){
 					var savedUser = lockr.get('user');
 					if (savedUser) {
+						alert('dkggg:'+this.$data.passportPic.url);
 						lockr.set('user.passportPic',this.$data.passportPic.url );
 						lockr.set('user.guidePic',this.$data.guidePic.url );
 						lockr.set('user.licensePic',this.$data.licensePic.url);
