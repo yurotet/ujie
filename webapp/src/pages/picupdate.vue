@@ -34,10 +34,10 @@
 
 		watch: {
 			'passportPic.url':function(imageUrl){	
-				var el =$('.avatar-row.passport');			 		
+				var el =$('.avatar-row.passport');	alert(el);	 		
 				el.css('background-image', 'url(' + imageUrl + ')');
 				el.css('background-size', '100% 100%');	
-				
+				alert(el.css('background-size'));
 				 this.savePic('passportPic', imageUrl);
 
 				 // var user = lockr.get('user');
@@ -71,9 +71,11 @@
 		methods: {
 			savePic:function(enitity, imageUrl){
 				var user = lockr.get('user');
-				 user[entity] = imageUrl;
-				 lockr.set('user',user);
-				 alert(JSON.stringify(user));
+				 if (user) {
+				 	user[entity] = imageUrl;
+					 lockr.set('user',user);
+					 alert(JSON.stringify(user));
+				 }
 				// var savedUser = lockr.get('user');
 				// if (savedUser) {	
 				// 	savedUser.passportPic	
