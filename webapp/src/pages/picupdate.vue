@@ -34,7 +34,8 @@
 
 		watch: {
 			'passportPic.url':function(val){
-				$('.avatar-row .passport').attr('background-image','url('+val+')');				
+				$('.avatar-row .passport').attr('background-image','url('+val+')');	
+				alert($('.avatar-row .passport').attr('background-image'));		
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(val) {
@@ -129,45 +130,7 @@ alert(wxMediaId);
 				    }.bind(this)
 				});
 			},
-			onChooseDriverLicense: function() {
-				wx.chooseImage({
-				    success: function (res) {
-				        var localIds = res.localIds;
-				        if(localIds.length) {
-				        	var wxMediaId = localIds[0];
-				        	this.$data.user.driver_driver_license = wxMediaId;
-				        	this.$data.user.driver_driver_license_updated = true;
-
-				        	this.showLoading();
-				        	wx.uploadImage({
-								localId: wxMediaId,
-								isShowProgressTips: 0,
-								success: function(res) {
-									var wxMediaId = res.serverId; // 返回图片的服务器端ID
-									this._uploadDriverLisence(wxMediaId, function(err, res) {
-										this.hideLoading();
-						        		if(!err) {
-						        			this.$data.user.driver_driver_license = res.body.static_url;
-						        			var payload = {
-											    "driver_driver_license": res.body.static_url,
-											};
-											this.showLoading();
-											ajax.put('/service/rest/driver/user/')
-											.send(payload)
-											.end(function(err, res) {
-						        				this.hideLoading();
-											}.bind(this));
-						        		}
-						        	}.bind(this));
-								}.bind(this),
-								fail: function() {
-									this.hideLoading();
-								}.bind(this)
-							});
-				        }
-				    }.bind(this)
-				});
-			},
+			
 			onSubmit: function() {
 				nav.goTo('accRegister');
 				// this.showLoading();
