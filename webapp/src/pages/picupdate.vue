@@ -33,7 +33,7 @@
 		},
 
 		watch: {
-			'passportPic.url':function(imageUrl){	
+			'passportPic.url':function(imageUrl){	alert('============');
 				var el =$('.avatar-row.passport');	alert(el);	 		
 				el.css('background-image', 'url(' + imageUrl + ')');
 				el.css('background-size', '100% 100%');	
