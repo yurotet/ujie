@@ -163,10 +163,12 @@ webpackJsonp([8],{
 
 			watch: {
 				'passportPic.url':function(val){
+					var urlStr = 'url("'+val+'")';
+					alert(urlStr);
 					alert('steting img');
 					alert('setting img:'+val);				
-					$('.avatar-row .passport').css('background-image','url('+val+')');	
-					alert($('.avatar-row .passport').css('background-image'));		
+					$('.avatar-row .passport').css('background-image', urlStr);	
+					$('.avatar-row .passport').css('background-image');		
 					this.checkSubmitBtn();
 				},
 				'licensePic.url': function(val) {
