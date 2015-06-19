@@ -34,11 +34,11 @@
 
 		watch: {
 			'passportPic.url':function(imageUrl){	alert('============');
-				var el =$('.avatar-row.passport');	alert(el);	 		
-				el.css('background-image', 'url(' + imageUrl + ')');
-				el.css('background-size', '100% 100%');	
-				alert(el.css('background-size'));
-				 this.savePic('passportPic', imageUrl);
+				// var el =$('.avatar-row.passport');	alert(el);	 		
+				// el.css('background-image', 'url(' + imageUrl + ')');
+				// el.css('background-size', '100% 100%');	
+				// alert(el.css('background-size'));
+				//  this.savePic('passportPic', imageUrl);
 
 				 // var user = lockr.get('user');
 				 // user.passportPic = imageUrl;
@@ -47,21 +47,21 @@
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(imageUrl) {
-				var el = $('.avatar-row.license');
-				el.css('background-image', 'url(' + imageUrl + ')');	
-				el.css('background-size', '100% 100%');	
+				// var el = $('.avatar-row.license');
+				// el.css('background-image', 'url(' + imageUrl + ')');	
+				// el.css('background-size', '100% 100%');	
 				
-				this.savePic('guidePic',imageUrl);
+				// this.savePic('guidePic',imageUrl);
 
 				this.checkSubmitBtn();
 			},
 						
 			'guidePic.url': function(imageUrl) {
-				var el = $('.avatar-row.guide');
-				el.css('background-image', 'url(' + imageUrl + ')');	
-				el.css('background-size', '100% 100%');	
+				// var el = $('.avatar-row.guide');
+				// el.css('background-image', 'url(' + imageUrl + ')');	
+				// el.css('background-size', '100% 100%');	
 				
-				this.savePic('licensePic', imageUrl);
+				// this.savePic('licensePic', imageUrl);
 
 				this.checkSubmitBtn();
 			}
@@ -330,11 +330,11 @@ alert(wxMediaId);
 			alert(JSON.stringify(savedUser));
 			if (savedUser) {
 				setTimeout(function(){
-					this.$data.passportPic.url = savedUser.passportPic;
-					this.$data.guidePic.url = savedUser.guidePic;
-					this.$data.licensePic.url = savedUser.licensePic;
+					this.$data.passportPic.url = savedUser.passportPic || '';
+					this.$data.guidePic.url = savedUser.guidePic || '';
+					this.$data.licensePic.url = savedUser.licensePic || '';
 					this.checkSubmitBtn();
-				}.bind(this))
+				}.bind(this),0)
 			}			
 		},
 		resume:function() {
