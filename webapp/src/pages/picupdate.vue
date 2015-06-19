@@ -34,6 +34,7 @@
 
 		watch: {
 			'passportPic.url':function(val){
+				alert(val);
 				$('.avatar-row .passport').attr('background-image','url('+val+')');	
 				alert($('.avatar-row .passport').attr('background-image'));		
 				this.checkSubmitBtn();
@@ -104,6 +105,7 @@ alert(wxMediaId);
 									alert('remtoe urlr :'+url);
 									switch (entity) {
 										case 'passport':
+										alert('settignj passprot');
 											this.$data.passportPic.url = url;
 										break ;
 										case 'license':
