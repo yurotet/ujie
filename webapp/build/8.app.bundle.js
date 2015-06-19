@@ -167,7 +167,9 @@ webpackJsonp([8],{
 					alert(urlStr);
 					alert('steting img');
 					alert('setting img:'+val);				
-					$('.avatar-row .passport').css('background-image', urlStr);	
+					$('.avatar-row .passport').css('background-image', urlStr);
+					alert('reading img');
+					alert($('.avatar-row .passport'))	;
 					$('.avatar-row .passport').css('background-image');		
 					this.checkSubmitBtn();
 				},
