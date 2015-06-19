@@ -456,14 +456,15 @@ webpackJsonp([8],{
 			},
 			created: function() {
 				var savedUser = lockr.get('user');
-				alert(JSON.stringify(savedUser));
+					
 				if (savedUser) {
+					var that = this;
 					setTimeout(function(){
-						this.$data.passportPic.url = savedUser.passportPic || '';
-						this.$data.guidePic.url = savedUser.guidePic || '';
-						this.$data.licensePic.url = savedUser.licensePic || '';
-						this.checkSubmitBtn();
-					}.bind(this),0)
+						that.$data.passportPic.url = savedUser.passportPic || '';
+						that.$data.guidePic.url = savedUser.guidePic || '';
+						that.$data.licensePic.url = savedUser.licensePic || '';
+						that.checkSubmitBtn();
+					},0)
 				}			
 			},
 			resume:function() {
