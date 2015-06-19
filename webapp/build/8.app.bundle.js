@@ -127,7 +127,7 @@ webpackJsonp([8],{
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)("#userInfo .input-row input{width:65%}#userInfo select{margin-top:5px;width:65%}.input-row label.more{font-size:14px}.input-row button{margin-top:5px;float:right;margin-right:20px}#picUploadPreBtn{display:'inline-block';width:35%}#picUploadBtn{display:'inline-block';width:60%;float:right}");
-	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t  <div>\n\t  \t <form class=\"input-group\">\n\t  \t \t<div v-on=\"click:onChoosePassportPic\" v-component=\"view/picUpload\" v-with=\"title: passportPic.title,cls:'passport'\"></div>\t\t\n\t\t\t<div v-on=\"click:onChooselicencePic\" v-component=\"view/picUpload\" v-with=\"title:licensePic.title, cls:'license'\"></div>\t\n\t\t\t<div style=\"display:{{hasGuideCer? 'block':'none'}}\" v-on=\"click:onChooseGuideLicencePic\" v-component=\"view/picUpload\" v-with=\"title:guidePic.title, cls:'guide'\"></div>\t\n\t\t</form>\n\t</div>\n\n\t\n\t<button id=\"picUploadBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步, 填写结算账户信息</button>\n\t<button id=\"picUploadPreBtn\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">上一步</button>";
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t  <div>\n\t  \t <form class=\"input-group\">\n\t  \t \t<div v-on=\"click:onChoosePassportPic\" v-component=\"view/picUpload\" v-with=\"title: passportPic.title,cls:'passport'\"></div>\n\t\t\t<div v-on=\"click:onChooselicencePic\" v-component=\"view/picUpload\" v-with=\"title:licensePic.title, cls:'license'\"></div>\t\n\t\t\t<div style=\"display:{{hasGuideCer? 'block':'none'}}\" v-on=\"click:onChooseGuideLicencePic\" v-component=\"view/picUpload\" v-with=\"title:guidePic.title, cls:'guide'\"></div>\t\n\t\t</form>\n\t</div>\n\n\t\n\t<button id=\"picUploadBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步, 填写结算账户信息</button>\n\t<button id=\"picUploadPreBtn\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">上一步</button>";
 	var BasePage = __webpack_require__(69);	
 		var wxutil = __webpack_require__(92);	
 		var picUpload= __webpack_require__(94);
@@ -247,7 +247,7 @@ webpackJsonp([8],{
 											case 'license':
 												this.$data.licensePic.url = url;
 											break;
-											case 'guidePic':
+											case 'guide':
 												this.$data.guidePic.url = url;
 											break;
 										}

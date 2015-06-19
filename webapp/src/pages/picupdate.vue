@@ -118,7 +118,7 @@
 										case 'license':
 											this.$data.licensePic.url = url;
 										break;
-										case 'guidePic':
+										case 'guide':
 											this.$data.guidePic.url = url;
 										break;
 									}
@@ -364,7 +364,7 @@
 	<div v-component="view/regSteps" v-with="step:curStep"></div>
 	  <div>
 	  	 <form class="input-group">
-	  	 	<div  v-on="click:onChoosePassportPic" v-component="view/picUpload"  v-with="title: passportPic.title,cls:'passport'"></div>		
+	  	 	<div  v-on="click:onChoosePassportPic" v-component="view/picUpload"  v-with="title: passportPic.title,cls:'passport'"></div>
 			<div  v-on="click:onChooselicencePic" v-component="view/picUpload"  v-with="title:licensePic.title, cls:'license'"></div>	
 			<div  style="display:{{hasGuideCer? 'block':'none'}}" v-on="click:onChooseGuideLicencePic" v-component="view/picUpload"  v-with="title:guidePic.title, cls:'guide'"></div>	
 		</form>
