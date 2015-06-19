@@ -106,8 +106,8 @@ webpackJsonp([4],{
 /***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}#linkSec a{text-decoration:underline}#linkSec{text-align:center;margin-top:20px}");
-	var __vue_template__ = "<div class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" v-on=\"input:onUserInput\" placeholder=\"请填入用户名\" v-model=\"username\">\n\t\t\t    </div>\t\t\t   \n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"password\" v-on=\"input:onPwdInput\" placeholder=\"设置密码\" v-model=\"pwd\">\n\t\t\t    </div>\n\t\t\t    <div id=\"confirmPwdInput\" class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" v-on=\"input:onConfirmPwdInput\" placeholder=\"确认密码\" v-model=\"confirmPwd\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"text\" placeholder=\"推荐码 (可选)\" v-model=\"recCode\">\n\t\t\t    </div>\t\t\t   \n\t\t    </form>\n\t  \n\t\t    <button id=\"regBtn\" class=\"miu-subBtn btn btn-positive btn-block\" disabled=\"disabled\" v-model=\"realName\" v-on=\"click: onSubmit\">注册</button>\t\n\t\t    <div id=\"linkSec\"><p>注册即表示同意<a v-on=\"click:onAgreeClick\">蜜柚私导协议</a></p></div>    \t\n\t  </div>";
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}#linkSec a{text-decoration:underline}#linkSec{text-align:center;margin-top:20px}.regHeader{text-align:center}");
+	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\t  <div class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" v-on=\"input:onUserInput\" placeholder=\"输入用户名 (3-16位字母, 数字或汉字)\" v-model=\"username\">\n\t\t\t    </div>\t\t\t   \n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"password\" v-on=\"input:onPwdInput\" placeholder=\"输入密码 (大于6位)\" v-model=\"pwd\">\n\t\t\t    </div>\n\t\t\t    <div id=\"confirmPwdInput\" class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" v-on=\"input:onConfirmPwdInput\" placeholder=\"确认密码\" v-model=\"confirmPwd\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" placeholder=\"推荐码 (可选)\" v-model=\"recCode\">\n\t\t\t    </div>\n\t\t    </form>\n\t  \n\t\t    <button id=\"regBtn\" class=\"miu-subBtn btn btn-positive btn-block\" disabled=\"disabled\" v-model=\"realName\" v-on=\"click: onSubmit\">注册</button>\t\n\t\t    <div id=\"linkSec\"><p>注册即表示同意<a href=\"http://g.miutour.com/help/gagreement.html\" target=\"_blank\">蜜柚私导协议</a></p></div>    \t\n\t  </div>";
 	var BasePage = __webpack_require__(69);
 		var Vue = __webpack_require__(3);
 		var nav = __webpack_require__(65);
@@ -189,7 +189,8 @@ webpackJsonp([4],{
 					})									
 				},
 
-				onAgreeClick:function() {				
+				onAgreeClick:function() {
+
 				}			
 			},
 			created: function() {									

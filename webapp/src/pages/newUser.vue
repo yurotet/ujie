@@ -80,7 +80,8 @@
 				})									
 			},
 
-			onAgreeClick:function() {				
+			onAgreeClick:function() {
+
 			}			
 		},
 		created: function() {									
@@ -114,26 +115,32 @@
 		text-align: center;
 		margin-top: 20px;
 	}
+	.regHeader {
+		text-align: center;
+	}
 </style>
 
 <template>	
+	<div class="regHeader">
+		<img src="logo.png"></img>
+	</div>
 	  <div class="driver-reg">
 		  <form class="input-group">
 			    <div class="input-row">
-				      <input type="text"  v-on="input:onUserInput" placeholder="请填入用户名" v-model="username">
+				      <input type="text"  v-on="input:onUserInput" placeholder="输入用户名 (3-16位字母, 数字或汉字)" v-model="username">
 			    </div>			   
 			    <div class="input-row">
-				      <input type="password" v-on="input:onPwdInput" placeholder="设置密码" v-model="pwd">
+				      <input type="password" v-on="input:onPwdInput" placeholder="输入密码 (大于6位)" v-model="pwd">
 			    </div>
 			    <div id="confirmPwdInput" class="input-row">				      
 				      <input type="password" v-on="input:onConfirmPwdInput" placeholder="确认密码" v-model="confirmPwd">
 			    </div>
-			    <div class="input-row">				      
+			    <div class="input-row">
 				      <input type="text" placeholder="推荐码 (可选)" v-model="recCode">
-			    </div>			   
+			    </div>
 		    </form>
 	  
 		    <button  id="regBtn" class="miu-subBtn btn btn-positive btn-block"  disabled="disabled" v-model="realName" v-on="click: onSubmit">注册</button>	
-		    <div  id="linkSec"><p>注册即表示同意<a v-on="click:onAgreeClick">蜜柚私导协议</a></p></div>    	
+		    <div  id="linkSec"><p>注册即表示同意<a href="http://g.miutour.com/help/gagreement.html" target="_blank">蜜柚私导协议</a></p></div>    	
 	  </div>	 
 </template>
