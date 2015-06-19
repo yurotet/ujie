@@ -34,7 +34,8 @@
 
 		watch: {
 			'passportPic.url':function(val){
-				alert('setting img:'+val);
+				alert('steting img');
+				alert('setting img:'+val);				
 				$('.avatar-row .passport').css('background-image','url('+val+')');	
 				alert($('.avatar-row .passport').css('background-image'));		
 				this.checkSubmitBtn();
