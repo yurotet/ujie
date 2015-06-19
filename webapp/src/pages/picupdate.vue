@@ -33,9 +33,10 @@
 		},
 
 		watch: {
-			'passportPic.url':function(imageUrl){				 		
-				$('.avatar-row.passport').css('background-image', 'url(' + imageUrl + ')');
-				$('.avatar-row.passport').css('background-size', '100% 100%');	
+			'passportPic.url':function(imageUrl){	
+				var el =$('.avatar-row.passport');			 		
+				el.css('background-image', 'url(' + imageUrl + ')');
+				el.css('background-size', '100% 100%');	
 				
 				 this.savePic('passportPic', imageUrl);
 
@@ -46,9 +47,9 @@
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(imageUrl) {
-				this.$data.guidePic.url  = imageUrl;
-				$('.avatar-row.license').css('background-image', 'url(' + imageUrl + ')');	
-				$('.avatar-row.passport').css('background-size', '100% 100%');	
+				var el = $('.avatar-row.license');
+				el.css('background-image', 'url(' + imageUrl + ')');	
+				el.css('background-size', '100% 100%');	
 				
 				this.savePic('guidePic',imageUrl);
 
@@ -56,9 +57,9 @@
 			},
 						
 			'guidePic.url': function(imageUrl) {
-				this.$data.licensePic.url  = imageUrl;
-				$('.avatar-row.guide').css('background-image', 'url(' + imageUrl + ')');	
-				$('.avatar-row.passport').css('background-size', '100% 100%');	
+				var el = $('.avatar-row.guide');
+				el.css('background-image', 'url(' + imageUrl + ')');	
+				el.css('background-size', '100% 100%');	
 				
 				this.savePic('licensePic', imageUrl);
 
