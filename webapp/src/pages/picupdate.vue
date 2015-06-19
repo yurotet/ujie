@@ -41,7 +41,7 @@
 				$('.avatar-row .passport').css('background-image', urlStr);
 				alert('reading img');
 				alert($('.avatar-row .passport'))	;
-				$('.avatar-row .passport').css('background-image');		
+				alert($('.avatar-row .passport').css('background-image'));		
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(val) {
