@@ -36,7 +36,8 @@
 			'passportPic.url':function(imageUrl){
 				 this.$data.passportPic.url = imageUrl;
 				 alert('img:'+imageUrl);
-				$('.avatar-row .passport').css('background-image', 'url(' + imageUrl + ')');	
+				// $('.avatar-row .passport').css('background-image', 'url(' + imageUrl + ')');	
+				$('.avatar-row .passport').css('background-image', 'url(https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=17feef807df0f736d8ab1f416c68872b/6d81800a19d8bc3e0dafdf35878ba61ea9d345ae.jpg)');
 				$('.avatar-row .passport').css('height','50px');			
 				alert($('.avatar-row .passport').css('background-image'));		
 				this.checkSubmitBtn();
