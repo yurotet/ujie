@@ -35,7 +35,8 @@
 		watch: {
 			'passportPic.url':function(imageUrl){
 				 this.$data.passportPic.url = imageUrl;				 
-				$('.avatar-row.passport').css('background-image', 'url(' + imageUrl + ')');						
+				$('.avatar-row.passport').css('background-image', 'url(' + imageUrl + ')');
+				$('.avatar-row.passport').css('background-size', '100% 100%');							
 				this.checkSubmitBtn();
 			},
 			'licensePic.url': function(imageUrl) {
