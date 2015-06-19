@@ -93,27 +93,12 @@ var gotoRoute = function(route) {
 			var Page = require('pages/index');
 			ensureCb(Page);
 		});
-	} else if(route == 'list') {
-		require.ensure([], function() {
-			var Page = require('pages/list');
-			ensureCb(Page);
-		});
-	} else if(route == 'driverreg') {
-		require.ensure([], function() {
-			var Page = require('pages/driverreg');
-			ensureCb(Page);
-		})
 	} else if(route == 'register') {
 		require.ensure([], function() {
 			var Page = require('pages/register');
 			ensureCb(Page);
 		})
-	} else if(route == 'signin') {
-		require.ensure([], function() {
-			var Page = require('pages/signin');
-			ensureCb(Page);
-		})
-	} else if(route == 'paper') {
+	}  else if(route == 'paper') {
 		require.ensure([], function() {
 			var Page = require('pages/paper');
 			ensureCb(Page);

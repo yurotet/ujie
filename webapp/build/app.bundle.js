@@ -103,19 +103,67 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {//wx config
-	wx.config({
-	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-	    appId: 'wx918016703cee002f', // 必填，公众号的唯一标识
-	    timestamp: 1434608016, // 必填，生成签名的时间戳
-	    nonceStr: 'FGePnARKDmyn0ZHa', // 必填，生成签名的随机串
-	    signature: '00a9b9787b653256c89fa5595db9f11c6e1be2c0',// 必填，签名，见附录1
-	    jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-	});
+	// wx.config({
+	//     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	//     appId: 'wx918016703cee002f', // 必填，公众号的唯一标识
+	//     timestamp: 1434608016, // 必填，生成签名的时间戳
+	//     nonceStr: 'FGePnARKDmyn0ZHa', // 必填，生成签名的随机串
+	//     signature: '00a9b9787b653256c89fa5595db9f11c6e1be2c0',// 必填，签名，见附录1
+	//     jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	// });
 
 	var Vue = __webpack_require__(3);
 	var nav = __webpack_require__(65);
-	var FastClick = __webpack_require__(99);
-	var vueTouch = __webpack_require__(100);
+	var FastClick = __webpack_require__(91);
+	var vueTouch = __webpack_require__(92);
+	var util = __webpack_require__(90);
+
+	function refreshWX() {
+	        var nonceStr = util.uuid();
+	        var timestamp = +new Date();
+	        var url = location.href.split('#')[0];
+	        $.ajax({   
+	            type:'POST',          
+	            url: '/api/weixin_signature', 
+	            // data to be added to query string:
+	           data: {
+	            timestamp: timestamp,
+	            noncestr: nonceStr,
+	            url: url
+	          },
+	            // type of data we are expecting in return:
+	            dataType: 'json',
+	            timeout: 10000,
+	            context: this,
+	            success: function(body){  
+	              if (body.err_code == 0 ) {
+	                var data = body.data;               
+	                var wxConfig = {
+	                // debug: true,
+	                appId: data.appId,
+	                timestamp: data.timestamp,
+	                nonceStr: data.nonceStr,
+	                signature: data.signature,
+	                jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+	              }
+
+	                wx.config(wxConfig);
+	                
+	              } else {
+
+	              }                          
+	            },
+	            complete:function() {
+	                          
+	            },
+	          
+	            error: function(xhr, type){
+	              
+	            }
+	        })  
+	      }
+
+	refreshWX();
 
 	FastClick.attach(document.body);
 
@@ -10324,49 +10372,34 @@
 				var Page = __webpack_require__(67);
 				ensureCb(Page);
 			});
-		} else if(route == 'list') {
+		} else if(route == 'register') {
 			__webpack_require__.e/* nsure */(2, function() {
 				var Page = __webpack_require__(70);
 				ensureCb(Page);
-			});
-		} else if(route == 'driverreg') {
+			})
+		}  else if(route == 'paper') {
 			__webpack_require__.e/* nsure */(3, function() {
-				var Page = __webpack_require__(72);
-				ensureCb(Page);
-			})
-		} else if(route == 'register') {
-			__webpack_require__.e/* nsure */(4, function() {
-				var Page = __webpack_require__(73);
-				ensureCb(Page);
-			})
-		} else if(route == 'signin') {
-			__webpack_require__.e/* nsure */(5, function() {
-				var Page = __webpack_require__(74);
-				ensureCb(Page);
-			})
-		} else if(route == 'paper') {
-			__webpack_require__.e/* nsure */(6, function() {
-				var Page = __webpack_require__(75);
+				var Page = __webpack_require__(71);
 				ensureCb(Page);
 			})
 		} else if (route== 'newUser' ){
-			__webpack_require__.e/* nsure */(7, function() {
-				var Page = __webpack_require__(76);
+			__webpack_require__.e/* nsure */(4, function() {
+				var Page = __webpack_require__(72);
 				ensureCb(Page);
 			})
 		} else if (route=='picupdate') {
-			__webpack_require__.e/* nsure */(8, function() {
-				var Page = __webpack_require__(77);
+			__webpack_require__.e/* nsure */(5, function() {
+				var Page = __webpack_require__(73);
 				ensureCb(Page);
 			})
 		}else if (route=='accRegister') {
-			__webpack_require__.e/* nsure */(9, function() {
-				var Page = __webpack_require__(79);
+			__webpack_require__.e/* nsure */(6, function() {
+				var Page = __webpack_require__(74);
 				ensureCb(Page);
 			})
 		}else {
-			__webpack_require__.e/* nsure */(10, function() {
-				var Page = __webpack_require__(80);
+			__webpack_require__.e/* nsure */(7, function() {
+				var Page = __webpack_require__(75);
 				ensureCb(Page);
 			})
 		} 
@@ -10430,16 +10463,19 @@
 /* 87 */,
 /* 88 */,
 /* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var uuid = 1;
+
+	module.exports = {
+		uuid:function(prefix){
+			return (prefix||"") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
+		}	
+	}
+
+/***/ },
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;;(function () {
@@ -11286,14 +11322,14 @@
 
 
 /***/ },
-/* 100 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function () {
 
 	  var vueTouch = {}
 	  var Hammer = true
-	    ? __webpack_require__(101)
+	    ? __webpack_require__(93)
 	    : window.Hammer
 	  var gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
 	  var customeEvents = {}
@@ -11403,7 +11439,7 @@
 	})()
 
 /***/ },
-/* 101 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.4 - 2014-09-28
@@ -13858,7 +13894,7 @@
 	    prefixed: prefixed
 	});
 
-	if ("function" == TYPE_FUNCTION && __webpack_require__(102)) {
+	if ("function" == TYPE_FUNCTION && __webpack_require__(94)) {
 	    !(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	        return Hammer;
 	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -13872,7 +13908,7 @@
 
 
 /***/ },
-/* 102 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;

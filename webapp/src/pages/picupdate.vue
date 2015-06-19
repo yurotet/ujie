@@ -1,6 +1,5 @@
 <script>
-	var BasePage = require('common/basepage');	
-	var wxutil = require('common/wxutil');	
+	var BasePage = require('common/basepage');		
 	var picUpload= require('pages/picUploadCmp');
 	var steps = require('pages/regSteps');
 	var nav = require('common/navigator');

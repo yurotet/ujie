@@ -34,7 +34,7 @@ webpackJsonp([5],{
 
 	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
 	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(81);
+	var $Class = __webpack_require__(76);
 
 	var M = Vue.extend({
 	});
@@ -103,50 +103,346 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 74:
+/***/ 73:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(68)("#regSec,h3{text-align:center}#forgetPwd{margin-right:15px}");
-	var __vue_template__ = "<header class=\"miu-header\">\n\t\t<img src=\"http://static.miyouu.com/m/images/logo.png\" width=\"105\" height=\"44\">\n\t</header>\n\t  <section class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"text\" placeholder=\"请输入用户名/邮箱/手机号\" v-model=\"username\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" placeholder=\"请输入密码\" v-model=\"password\">\n\t\t\t    </div>\n\t\t    </form>\n\t  \n\t\t    <button class=\"miu-subBtn btn btn-positive btn-block\" v-on=\"click: onSubmit\">登录</button>\n\t\t    \n\t\t     <div id=\"regSec\">     \n\t\t    \t<a id=\"forgetPwd\" v-on=\"click: onForgetPwdClick\">忘记密码?</a>\n\t\t   \t<a id=\"regLink\" v-on=\"click:onRegClick\">注册新用户</a>\n\t\t   </div>   \n\t  </section>";
-	var BasePage = __webpack_require__(69);
-	  var Vue = __webpack_require__(3);
-	  var nav = __webpack_require__(65);
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)("#userInfo .input-row input{width:65%}#userInfo select{margin-top:5px;width:65%}.input-row label.more{font-size:14px}.input-row button{margin-top:5px;float:right;margin-right:20px}#picUploadPreBtn{display:'inline-block';width:35%}#picUploadBtn{display:'inline-block';width:60%;float:right}");
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t  <div>\n\t  \t <form class=\"input-group\">\n\t  \t \t<div v-on=\"click:onChoosePassportPic\" v-component=\"view/picUpload\" v-with=\"title: passportPic.title,cls:'passport'\"></div>\n\t\t\t<div v-on=\"click:onChooselicencePic\" v-component=\"view/picUpload\" v-with=\"title:licensePic.title, cls:'license'\"></div>\t\n\t\t\t<div style=\"display:{{hasGuideCer? 'block':'none'}}\" v-on=\"click:onChooseGuideLicencePic\" v-component=\"view/picUpload\" v-with=\"title:guidePic.title, cls:'guide'\"></div>\t\n\t\t</form>\n\t</div>\n\n\t\n\t<button id=\"picUploadBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步, 填写结算账户信息</button>\n\t<button id=\"picUploadPreBtn\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">上一步</button>";
+	var BasePage = __webpack_require__(69);		
+		var picUpload= __webpack_require__(89);
+		var steps = __webpack_require__(86);
+		var nav = __webpack_require__(65);
+		var lockr = __webpack_require__(88);
+		var util = __webpack_require__(90);
 
-	  var View = BasePage.extend({
-	    title: '登录',
-	    data: function() {
-	      return {
-	        count: 0
-	      };
-	    },
-	    methods: {
-	      onSubmit: function() {
-	      		nav.goTo('paper');
-	      },
-	      onRegClick:function(){
-	      		nav.goTo('newUser');
-	      },
-	      onForgetPwdClick:function(){
-			nav.goTo('')
-	      }
+		var View = BasePage.extend({
+			title: '上传认证图片',
+			data:function(){			
+				return {	
+					curStep:3,
 
-	    },
-	    created: function() {
-	    	this.showLoading();
-	      console.log('indfddex created');
-	    },
-	    ready: function() {
-	      console.log('indexdfd ready');
-	    },  
-	  });
+					hasGuideCer: false,
 
-	  module.exports = View;
+					passportPic:{
+						title:'上传护照 (必传)',
+						url:''
+					},
+
+					licensePic: {
+						title:'上传驾照 (必传)',
+						url:''
+					},						
+									
+					guidePic: {
+						title:'导游证照片 (必传)',
+						url:''
+					}			
+				}
+			},
+
+			watch: {
+				'passportPic.url':function(imageUrl){
+					var el =$('.avatar-row.passport');	 		
+					el.css('background-image', 'url(' + imageUrl + ')');
+					el.css('background-size', '100% 100%');					
+					 
+					 this.savePic('passportPic', imageUrl);						
+
+					this.checkSubmitBtn();
+				},
+				'licensePic.url': function(imageUrl) {
+					var el = $('.avatar-row.license');
+					el.css('background-image', 'url(' + imageUrl + ')');	
+					el.css('background-size', '100% 100%');	
+					
+					this.savePic('licensePic',imageUrl);
+
+					this.checkSubmitBtn();
+				},
+							
+				'guidePic.url': function(imageUrl) {
+					var el = $('.avatar-row.guide');
+					el.css('background-image', 'url(' + imageUrl + ')');	
+					el.css('background-size', '100% 100%');	
+					
+					this.savePic('guidePic', imageUrl);
+
+					this.checkSubmitBtn();
+				}
+
+			},
+
+			methods: {
+				savePic:function(entity, imageUrl){
+					var user = lockr.get('user');				
+					 if (user) {
+					 	user[entity] = imageUrl;				 	
+						 lockr.set('user',user);						 
+					 }						
+				},
+				checkSubmitBtn:function(){				
+
+					var disabled = !this.$data.passportPic.url || !this.$data.licensePic.url || (this.$data.hasGuideCer && !this.guidePic.url);
+
+					var btn = $('#picUploadBtn');
+					if (disabled) {
+						btn.attr('disabled','disabled');
+					} else {
+						btn.removeAttr('disabled');
+					}
+				},
+
+				onChoosePassportPic:function () {
+					this.onChoosePhoto('passport');
+				},
+
+				onChooselicencePic:function(){
+					this.onChoosePhoto('license');
+				},
+
+				onChooseGuideLicencePic:function(){
+					this.onChoosePhoto('guide');
+				},
+				
+				onChoosePhoto: function(entity) {								
+					wx.chooseImage({
+					    success: function (res) {
+					        var localIds = res.localIds;
+					        if(localIds.length) {
+					        	var wxMediaId = localIds[0];				        				        
+					        	this.showLoading();
+					        	wx.uploadImage({
+							localId: wxMediaId,
+							isShowProgressTips: 0,
+							success: function(res) {
+								var wxMediaId = res.serverId; // 返回图片的服务器端ID							
+								this._uploadPic(wxMediaId, function(url) {							
+									this.hideLoading();
+									if(url) {									
+										switch (entity) {
+											case 'passport':							
+												this.$data.passportPic.url = url;
+											break ;
+											case 'license':
+												this.$data.licensePic.url = url;
+											break;
+											case 'guide':
+												this.$data.guidePic.url = url;
+											break;
+										}
+										// entity = url;
+										// console.log(JSON.stringify(res));
+										// picEntity.url = res.kld
+
+
+
+										// this.$data.user.driver_avatar = res.body.static_url;
+										// var payload = {
+										//     "driver_avatar": res.body.static_url,
+										// };
+										// this.showLoading();
+										// ajax.put('/service/rest/driver/user/')
+										// .send(payload)
+										// .end(function(err, res) {
+					     //    						this.hideLoading();
+										// }.bind(this));
+									}
+								}.bind(this));
+							}.bind(this),
+							fail: function() {							
+								this.hideLoading();
+							}
+						});
+					        }
+					    }.bind(this)
+					});
+				},
+				
+				onSubmit: function() {
+					nav.goTo('accRegister');
+					// this.showLoading();
+					// this._submit().then(function() {
+					// 	this._loadUser().then(function() {
+					// 		this.hideLoading();
+					// 	}.bind(this));
+					// }.bind(this));
+				},
+				// _submit: function() {
+				// 	var promise1 = new Promise(function(resolve, reject) {
+				// 		var payload = {
+				// 		    "driver_name": this.$data.user.driver_name,
+				// 		    "mobile": this.$data.user.mobile,
+				// 		    "driver_avatar": this.$data.user.driver_avatar,
+				// 		    "driver_driver_license": this.$data.user.driver_driver_license,
+				// 		    // "driver_status": "0",
+				// 		    "driver_contact": this.$data.user.mobile,
+				// 		    "driver_account_no": "account_no",
+				// 		    "driver_account_name": "account_name",
+				// 		    "driver_account_bank": "bank",
+				// 		    "driver_account_bsb_no": "bsb",
+				// 		    "driver_driving_license": "license"
+				// 		};
+				// 		ajax.put('/service/rest/driver/user/')
+				// 		.send(payload)
+				// 		.end(function(err, res) {
+				// 			resolve();
+				// 		});
+				// 	}.bind(this));
+
+				// 	var promise2 = new Promise(function(resolve, reject) {
+				// 		var payload = {
+				//     		"brand": this.$data.vehicle.brand,
+				//     		"model": parseInt(this.$data.vehicle.model.model_id, 10),
+				//     		"plate_no": this.$data.vehicle.plate_no
+				// 		};
+				// 		var vehicleId = this.$data.vehicle.vehicle_id;
+				// 		if(vehicleId) {
+				// 			ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
+				// 			.send(payload)
+				// 			.end(function(err, res) {
+				// 				resolve();
+				// 			});
+				// 		} else {
+				// 			ajax.post('/service/rest/driver/vehicles/')
+				// 			.send(payload)
+				// 			.end(function(err, res) {
+				// 				resolve();
+				// 			});
+				// 		}
+				// 	}.bind(this));
+
+				// 	return Promise.all([promise1, promise2]);
+				// },
+				// _uploadAvatar: function(wxMediaId, cb) {
+				// 	ajax.post('/service/rest/common/wxstaticupload/')
+				// 	.type('form')
+				// 	.send({
+				// 		wx_media_id: wxMediaId,
+				// 		upload_to: 'avatar'
+				// 	})
+				// 	.end(cb);
+				// },
+				_uploadPic: function(wxMediaId, cb) {
+					$.ajax({
+						  type:'POST',				  
+						  url: '/api/upload_img', 
+						  data: {media_id: wxMediaId},				 
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						 success: function(res){	
+						  	if(res.err_code==0){					  		
+						  		cb(res.data.img_url);	
+						  	} else {			  		
+						  		cb(); 
+						  	}
+						    
+						  },
+						  complete:function() {
+						  	
+						  	// this.hideLoading();					  	
+						  },
+						
+						  error: function(xhr, type){
+						   	
+						   	cb();
+						  }
+					});					
+				},
+							
+				setHeader:function(){
+					var selText = '.stepsContainer.index3 .step3' ;
+									
+					var ela=$(selText+' a'),
+						eltext=$(selText+ ' .text');		
+			 		
+			 		ela.css('width','170px');	  		
+			  		ela.css('background-color','#77c2a5');
+
+			  		eltext.css('display','inline-block');
+			  		eltext.css('opacity','1');		
+				},
+				onPre:function () {
+					nav.goTo('register');
+				},
+
+				refreshWX:function() {
+					var nonceStr = util.uuid();
+					var timestamp = +new Date();
+					var url = location.href.split('#')[0];
+					$.ajax({	 
+						  type:'POST',				  
+						  url: '/api/weixin_signature', 
+						  // data to be added to query string:
+						 data: {
+							timestamp: timestamp,
+							noncestr: nonceStr,
+							url: url
+						},
+						  // type of data we are expecting in return:
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						  success: function(body){	
+						  	if (body.err_code == 0 ) {
+						  		var data = body.data;					  		
+						  		var wxConfig = {
+									// debug: true,
+									appId: data.appId,
+									timestamp: data.timestamp,
+									nonceStr: data.nonceStr,
+									signature: data.signature,
+									jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+								}
+
+						  		wx.config(wxConfig);
+						  		
+						  	} else {
+
+						  	}					  						   
+						  },
+						  complete:function() {
+						  					  	
+						  },
+						
+						  error: function(xhr, type){
+						   	
+						  }
+					})	
+				}
+			},
+			created: function() {
+				var savedUser = lockr.get('user');				
+				if (savedUser) {				
+					this.$data.passportPic.url = savedUser.passportPic || '' ;
+					this.$data.guidePic.url = savedUser.guidePic || '';
+					this.$data.licensePic.url = savedUser.licensePic || '';
+					
+					setTimeout(this.checkSubmitBtn,0)
+				}			
+			},
+			resume:function() {
+				this.refreshWX();		
+				this.setHeader();
+
+				var savedUser = lockr.get('user');
+				if (savedUser) {
+					this.$data.hasGuideCer = savedUser.hasGuideCer == 'yes';
+				}
+			},
+			pause:function(){
+
+			}			
+		});
+
+		module.exports = View;
 	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
 
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 81:
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -469,6 +765,242 @@ webpackJsonp([5],{
 		
 
 	}));
+
+
+/***/ },
+
+/***/ 86:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:16px;font-weight:700;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step2\"> \n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t      <span class=\"text\">结算账户</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">认证照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-info\"></span>\n\t       <span class=\"text\">我的资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
+	var BaseComponent = __webpack_require__(87);
+		var Vue = __webpack_require__(3);
+
+
+		var View = BaseComponent.extend({
+			title: 'regSteps',	
+			data:  function(){
+				return {
+					step:1
+				};
+			},
+
+			created:function(){
+				
+			}				
+		});
+
+		module.exports = View;
+
+		Vue.component('view/regSteps', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+
+/***/ },
+
+/***/ 87:
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(3);
+	var M = Vue.extend({
+		onCreate: function() {
+
+		},
+		onResume: function() {
+
+		},
+		onPause: function() {
+
+		}
+	});
+
+	module.exports = M;
+
+/***/ },
+
+/***/ 88:
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root, factory) {
+
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = factory(root, exports);
+	    }
+	  } else if (typeof define === 'function' && define.amd) {
+	    define(['exports'], function(exports) {
+	      root.Lockr = factory(root, exports);
+	    });
+	  } else {
+	    root.Lockr = factory(root, {});
+	  }
+
+	}(this, function(root, Lockr) {
+	  'use strict';
+
+	  if (!Array.prototype.indexOf) {
+	    Array.prototype.indexOf = function(elt /*, from*/)
+	    {
+	      var len = this.length >>> 0;
+
+	      var from = Number(arguments[1]) || 0;
+	      from = (from < 0)
+	      ? Math.ceil(from)
+	      : Math.floor(from);
+	      if (from < 0)
+	        from += len;
+
+	      for (; from < len; from++)
+	      {
+	        if (from in this &&
+	            this[from] === elt)
+	          return from;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  Lockr.prefix = "";
+
+	  Lockr._getPrefixedKey = function(key, options) {
+	    options = options || {};
+
+	    if (options.noPrefix) {
+	      return key;
+	    } else {
+	      return this.prefix + key;
+	    }
+
+	  };
+
+	  Lockr.set = function (key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    try {
+	      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+	    } catch (e) {
+	      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.get = function (key, missing, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+	    if(value === null)
+	      return missing;
+	    else
+	      return (value.data || missing);
+	  };
+
+	  Lockr.sadd = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json;
+
+	    var values = Lockr.smembers(key);
+
+	    if (values.indexOf(value) > -1) {
+	      return null;
+	    }
+
+	    try {
+	      values.push(value);
+	      json = JSON.stringify({"data": values});
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      console.log(e);
+	      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.smembers = function(key, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+
+	    if (value === null)
+	      return [];
+	    else
+	      return (value.data || []);
+	  };
+
+	  Lockr.sismember = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    return Lockr.smembers(key).indexOf(value) > -1;
+	  };
+
+	  Lockr.getAll = function () {
+	    var keys = Object.keys(localStorage);
+
+	    return keys.map(function (key) {
+	      return Lockr.get(key);
+	    });
+	  };
+
+	  Lockr.srem = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json,
+	        index;
+
+	    var values = Lockr.smembers(key, value);
+
+	    index = values.indexOf(value);
+
+	    if (index > -1)
+	      values.splice(index, 1);
+
+	    json = JSON.stringify({"data": values});
+
+	    try {
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+	    }
+	  };
+
+	  Lockr.rm =  function (key) {
+	    localStorage.removeItem(key);
+	  };
+
+	  Lockr.flush = function () {
+	    localStorage.clear();
+	  };
+	  return Lockr;
+
+	}));
+
+/***/ },
+
+/***/ 89:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(68)(".input-row .icon{width:50px;height:50px;margin:3px;font-size:24px;line-height:50px;text-align:center;background-color:#fff;border:1px solid #ddd;border-radius:25px}.input-row.avatar-row{height:150px;text-align:center}.avatar-row .uploadItem{margin-top:35px;opacity:.7}");
+	var __vue_template__ = "<div class=\"input-row avatar-row {{cls}}\">\t\t\t\t\t\n\t\t<div class=\"uploadItem\">\n\t\t\t<span class=\"icon icon-plus\"></span>\n\t\t\t<p>{{title}}</p>\n\t\t</div>\n\t</div>";
+	var BaseComponent = __webpack_require__(87);
+		var Vue = __webpack_require__(3);
+
+		var View = BaseComponent.extend({
+			title: 'picupload',			
+			created: function() {			
+			},		
+		});
+
+		module.exports = View;
+
+		Vue.component('view/picUpload', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
 
 
 /***/ }

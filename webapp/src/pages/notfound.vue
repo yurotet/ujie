@@ -11,7 +11,7 @@
 		},
 		methods: {
 			clickHandler: function() {
-				this.startPage('index');
+				this.startPage('newUser');
 			},
 			dbltap: function() {
 				alert('rotate');
