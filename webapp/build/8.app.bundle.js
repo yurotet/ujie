@@ -202,15 +202,15 @@ webpackJsonp([8],{
 				},
 
 				onChoosePassportPic:function () {
-					this.onChoosePhoto(this.$data.passportPic.url);
+					this.onChoosePhoto('passport');
 				},
 
 				onChooselicencePic:function(){
-					this.onChoosePhoto(this.$data.licensePic.url);
+					this.onChoosePhoto('license');
 				},
 
 				onChooseGuideLicencePic:function(){
-					this.onChoosePhoto(this.$data.guidePic.url);
+					this.onChoosePhoto('guide');
 				},
 				
 				onChoosePhoto: function(entity) {								
@@ -231,7 +231,18 @@ webpackJsonp([8],{
 									this.hideLoading();
 									if(url) {
 										alert('remtoe urlr :'+url);
-										entity = url;
+										switch (entity) {
+											case 'passport':
+												this.$data.passportPic.url = url;
+											break ;
+											case 'license':
+												this.$data.licensePic.url = url;
+											break;
+											case 'guidePic':
+												this.$data.guidePic.url = url;
+											break;
+										}
+										// entity = url;
 										// console.log(JSON.stringify(res));
 										// picEntity.url = res.kld
 
