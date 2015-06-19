@@ -64,8 +64,10 @@
 					lockr.set('user.passportPic',this.$data.passportPic.url );
 					lockr.set('user.guidePic',this.$data.guidePic.url );
 					lockr.set('user.licensePic',this.$data.licensePic.url);
-					alert('all img set!');
-					alert(lockr.get('user.passportPic'));
+					alert('img is:'+this.$data.passportPic.url );
+					alert(JSON.stringify(lockr.get('user')));
+					// alert('all img set!');
+					// alert(lockr.get('user.passportPic'));
 				}				
 			},
 			checkSubmitBtn:function(){				
@@ -307,14 +309,15 @@ alert(wxMediaId);
 		},
 		created: function() {
 			var savedUser = lockr.get('user');
+			alert(JSON.stringify(savedUser));
 			if (savedUser) {
-				this.$data.passportPic.url = savedUser.passportPic;
-				this.$data.guidePic.url = savedUser.guidePic;
-				this.$data.licensePic.url = savedUser.licensePic;
-			}
-			alert('redding');
-alert('user' + savedUser.passportPic);
-			setTimeout(this.checkSubmitBtn,0);
+				setTimeout(function(){
+					this.$data.passportPic.url = savedUser.passportPic;
+					this.$data.guidePic.url = savedUser.guidePic;
+					this.$data.licensePic.url = savedUser.licensePic;
+					this.checkSubmitBtn();
+				}.bind(this))
+			}			
 		},
 		resume:function() {
 			this.refreshWX();		
