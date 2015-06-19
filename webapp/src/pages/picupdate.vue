@@ -33,14 +33,8 @@
 		},
 
 		watch: {
-			'passportPic.url':function(val){
-				var urlStr = 'url("'+val+'")';
-				alert(urlStr);
-				alert('steting img');
-				alert('setting img:'+val);				
-				$('.avatar-row .passport').css('background-image', urlStr);
-				alert('reading img');
-				alert($('.avatar-row .passport'))	;
+			'passportPic.url':function(val){												
+				$('.avatar-row .passport').css('background-image', val);				
 				alert($('.avatar-row .passport').css('background-image'));		
 				this.checkSubmitBtn();
 			},
