@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/margin_5"
+    android:paddingBottom="@dimen/margin_5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_shadow"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/group_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="客人1组" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/linecolor_gray" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/people_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_15"
+                android:text="客人人数"
+                android:textColor="@color/textcolor_gray2"
+                android:textSize="@dimen/textsize13" />
+
+            <ImageView
+                android:id="@+id/adult_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_2"
+                android:src="@drawable/tag_adult" />
+
+            <TextView
+                android:id="@+id/adult_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_3"
+                android:layout_marginRight="@dimen/margin_15"
+                android:text="3"
+                android:textColor="@color/textcolor_light_black"
+                android:textSize="@dimen/textsize13" />
+
+            <ImageView
+                android:id="@+id/child_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_2"
+                android:src="@drawable/tag_child" />
+
+            <TextView
+                android:id="@+id/child_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_3"
+                android:layout_marginRight="@dimen/margin_15"
+                android:text="3"
+                android:textColor="@color/textcolor_light_black"
+                android:textSize="@dimen/textsize13" />
+
+            <ImageView
+                android:id="@+id/baby_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_2"
+                android:src="@drawable/tag_baby" />
+
+            <TextView
+                android:id="@+id/baby_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_3"
+                android:text="3"
+                android:textColor="@color/textcolor_light_black"
+                android:textSize="@dimen/textsize13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_3">
+
+            <TextView
+                android:id="@+id/location_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_15"
+                android:text="接送地点"
+                android:textColor="@color/textcolor_gray2"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                android:id="@+id/location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="东京机场"
+                android:textColor="@color/textcolor_light_black"
+                android:textSize="@dimen/textsize13" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

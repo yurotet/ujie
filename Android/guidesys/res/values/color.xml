@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="textcolor_orange">#ed5a33</color>
+    <color name="textcolor_black">#1a180c</color>
+    <color name="textcolor_light_gray">#c0c0c0</color>
+    <color name="textcolor_gray">#999</color>
+    <color name="textcolor_gray2">#aeaeae</color>
+    <color name="textcolor_light_black">#454545</color>
+    <color name="textcolor_light_black2">#424242</color>
+    <color name="textcolor_login_text">#888888</color>
+    <color name="linecolor_gray">#d4d4d4</color>
+    <color name="linecolor_light_orange">#f37d5f</color>
+    <color name="linecolor_shadow">#bbbbbb</color>
+    <color name="backgroundcolor_topbanner">#fffffa</color>
+    <color name="backgroundcolor_gray">#f6f6f6</color>
+    <color name="backgroundcolor_transparent">#00000000</color>
+    <color name="textcolor_black_3e">#3e3e3e</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="textcolor_red">#ed5a33</color>
+    
+    <color name="transparent">#00000000</color>
+
+</resources>

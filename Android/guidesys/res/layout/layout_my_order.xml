@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_order_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_10"
+    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginBottom="@dimen/margin_10"
+    android:background="@drawable/background_shadow">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="我的出价"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/linecolor_gray" />
+
+        <air.com.miutour.guidesys.widget.FixedListView
+            android:id="@+id/my_order_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@color/backgroundcolor_transparent"
+            android:divider="@null" />
+    </LinearLayout>
+</RelativeLayout>

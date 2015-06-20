@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@color/backgroundcolor_topbanner"
+    android:orientation="vertical">
+
+    <air.com.miutour.guidesys.widget.CircularImage
+        android:id="@+id/user_detail_avatar"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="33dp" />
+
+    <TextView
+        android:id="@+id/user_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Name"
+        android:textColor="@color/textcolor_light_black2"
+        android:textSize="19sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="等级："
+            android:textColor="@color/textcolor_gray2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/user_detail_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="初級"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="评价："
+            android:textColor="@color/textcolor_gray2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/user_detail_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.3/5"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/linecolor_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/icon_my_cash" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="我的结算账户"
+            android:textColor="@color/textcolor_gray2"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_right_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginRight="38dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/user_detail_money_to_deal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="￥142223"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="22sp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/linecolor_gray" />
+
+        <TextView
+            android:id="@+id/user_detail_money_dealing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="￥242225"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="22sp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/linecolor_gray" />
+
+        <TextView
+            android:id="@+id/user_detail_money_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="￥722234"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginRight="38dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待结算"
+            android:textColor="@color/textcolor_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="结算中"
+            android:textColor="@color/textcolor_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="总收入"
+            android:textColor="@color/textcolor_gray"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/linecolor_gray" />
+
+    <RelativeLayout
+        android:id="@+id/user_detail_news_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon_new_message"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/icon_new_message" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/icon_new_message"
+            android:text="最新消息"
+            android:textColor="@color/textcolor_gray2"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/icon_right_arrow" />
+        <View
+            android:id="@+id/line_1"
+            android:layout_width="1dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="7dp"
+            android:layout_below="@id/icon_new_message"
+            android:layout_alignBottom="@+id/message_time1"
+            android:layout_marginBottom="8dp"
+            android:background="@color/linecolor_gray" />
+        <View
+            android:id="@+id/line_2"
+            android:layout_width="1dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="7dp"
+            android:layout_below="@id/icon_new_message"
+            android:layout_alignBottom="@+id/message_time2"
+            android:layout_marginBottom="8dp"
+            android:background="@color/linecolor_gray" />
+        <TextView
+            android:id="@+id/message_time1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="15sp"
+            android:drawableLeft="@drawable/message_tag"
+            android:layout_marginLeft="5.5dp"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="13dp"
+            android:text="结算信息  07-25 20:50"
+            android:layout_below="@id/icon_new_message"/>
+
+        <TextView
+            android:id="@+id/message_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/textcolor_gray2"
+            android:text="已经支付200元，结算完成，已打入您的招商银行储蓄卡。"
+            android:layout_below="@id/message_time1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/message_time2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor_light_black2"
+            android:textSize="15sp"
+            android:drawableLeft="@drawable/message_tag"
+            android:layout_marginLeft="5.3dp"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="13dp"
+            android:text="结算信息  07-25 20:50"
+            android:layout_below="@id/message_content1"/>
+
+        <TextView
+            android:id="@+id/message_content2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/textcolor_gray2"
+            android:text="已经支付200元，结算完成，已打入您的招商银行储蓄卡。"
+            android:layout_below="@id/message_time2"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="3dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

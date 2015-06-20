@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_10"
+    android:layout_marginLeft="@dimen/margin_10"
+    android:layout_marginRight="@dimen/margin_10"
+    android:paddingBottom="@dimen/margin_10" >
+
+    <TextView
+        android:id="@+id/gap_price_title_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:background="@color/backgroundcolor_transparent"
+        android:text="补差价"
+        android:textColor="@color/textcolor_light_black"
+        android:textSize="@dimen/textsize13" />
+
+    <TextView
+        android:id="@+id/gap_price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_toRightOf="@id/gap_price_title_tag"
+        android:background="@color/backgroundcolor_transparent"
+        android:text="畅游包车-超时补差价"
+        android:textColor="@color/textcolor_light_black"
+        android:textSize="@dimen/textsize13" />
+
+    <View
+        android:id="@+id/bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_below="@id/gap_price_title_tag"
+        android:layout_marginLeft="@dimen/margin_8"
+        android:layout_marginRight="@dimen/margin_8"
+        android:background="@color/linecolor_gray" />
+
+    <TextView
+        android:id="@+id/gap_price_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bottom_line"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="补差价金额"
+        android:textColor="@color/textcolor_gray2"
+        android:textSize="@dimen/textsize13" />
+
+    <TextView
+        android:id="@+id/gap_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/gap_price_tag"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_toRightOf="@id/gap_price_tag"
+        android:background="@color/backgroundcolor_transparent"
+        android:text="¥300"
+        android:textColor="@color/textcolor_light_black"
+        android:textSize="@dimen/textsize13" />
+
+</RelativeLayout>
