@@ -36,24 +36,26 @@
 				}			
 			},
 
-			onQuestionOptClick:function(e) {
-				var inputEl = $(e.$el).find('input'),
-					type = inputEl.prop('type');
-				if (inputEl) {
-					if (type == 'checkbox') {
-						inputEl.prop('checked' , !inputEl.prop('checked'));
-					} else if (type == 'radio') {
-						inputEl.prop('checked', true);
-					}
-				}				
-			},
+			// onQuestionOptClick:function(e) {
+			// 	var inputEl = $(e.$el).find('input'),
+			// 		type = inputEl.prop('type');
+			// 	if (inputEl) {
+			// 		if (type == 'checkbox') {
+			// 			inputEl.prop('checked' , !inputEl.prop('checked'));
+			// 		} else if (type == 'radio') {
+			// 			inputEl.prop('checked', true);
+			// 		}
+			// 	}
+
+			// 	this.onInputChange();			
+			// },
 
 			onInputChange :function() {
 				var answers = this._extractChoices();				
-				var paper = {};
-				paper[answers.paper_id] = answers.answers;
+				var papers= {};
+				papers[answers.paper_id] = answers.answers;
 
-				lockr.set('user.papers', paper)	
+				lockr.set('user.papers', papers)	
 				
 				this.checkSubmitBtn();
 			},
@@ -220,7 +222,7 @@
 						this.checkSubmitBtn();
 						// this.$data.paper.questions[0]._choices=1;
 
-				  	} else {					  		
+				  	} else {		  		
 				  		this.showToast(res.err_msg,true);	  		
 				  	}
 				    
@@ -271,6 +273,7 @@
 	}
 	.regHeader  h3 {
 		margin: 25px;
+		margin-bottom:40px;
 	}
 </style>
 
@@ -287,7 +290,7 @@
             {{q.question}}
           </div>
           <div >
-          	<span  class="ques-option"  v-on="click:onQuestionOptClick(this)" v-repeat="o : q.options">
+          	<span  class="ques-option"  v-repeat="o : q.options">
           		<input type="radio" v-on="change:onInputChange" name="{{q.qid}}" value="{{$index}}" v-model="q._choices"><label>{{o._text}}</label>
           	</span>
           </div>
@@ -297,7 +300,7 @@
             {{q.question}}
           </div>
           <div>
-          	<span  class="ques-option"    v-on="click:onQuestionOptClick(this)" v-repeat="o : q.options">
+          	<span  class="ques-option"   v-repeat="o : q.options">
           		<input type="checkbox"   v-on="change:onInputChange" name="{{q.qid}}" value="{{$index}}" v-model="q._choices[$index]"><label>{{o._text}}</label>
           	</span>
           </div>

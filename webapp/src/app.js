@@ -27,7 +27,7 @@ var _refreshWx = function() {
                 if (body.err_code == 0 ) {
                   var data = body.data;               
                   var wxConfig = {
-                    debug: true,
+                    // debug: true,
                     appId: data.appId,
                     timestamp: data.timestamp,
                     nonceStr: data.nonceStr,

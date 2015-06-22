@@ -123,8 +123,8 @@ webpackJsonp([3],{
 /***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".paper ul{list-style-type:decimal}.paper li{margin-bottom:20px}.ques-des{font-size:18px;margin-bottom:8px}.ques-option{font-size:16px;width:45%;display:inline-block;height:40px;margin-right:4%}.ques-option input{margin-right:10px}.regHeader{text-align:center}.regHeader h3{margin:25px}");
-	var __vue_template__ = "<div class=\"regHeader\">\n\t<img src=\"logo.png\">\n\t<h3>{{paperName}}</h3>\n</div>\n  <section class=\"paper\">\n    <ul>\n      <li v-repeat=\"q : paper.questions\">\n      \t<div v-if=\"q.type==1 || q.type==2\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-on=\"click:onQuestionOptClick(this)\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"radio\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n        <div v-if=\"q.type==3\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-on=\"click:onQuestionOptClick(this)\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"checkbox\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices[$index]\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n      </li>\n    </ul>\n    <button id=\"paperSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交考卷</button>\n  </section>";
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".paper ul{list-style-type:decimal}.paper li{margin-bottom:20px}.ques-des{font-size:18px;margin-bottom:8px}.ques-option{font-size:16px;width:45%;display:inline-block;height:40px;margin-right:4%}.ques-option input{margin-right:10px}.regHeader{text-align:center}.regHeader h3{margin:25px 25px 40px}");
+	var __vue_template__ = "<div class=\"regHeader\">\n\t<img src=\"logo.png\">\n\t<h3>{{paperName}}</h3>\n</div>\n  <section class=\"paper\">\n    <ul>\n      <li v-repeat=\"q : paper.questions\">\n      \t<div v-if=\"q.type==1 || q.type==2\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"radio\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n        <div v-if=\"q.type==3\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"checkbox\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices[$index]\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n      </li>\n    </ul>\n    <button id=\"paperSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交考卷</button>\n  </section>";
 	var BasePage = __webpack_require__(72);
 		var Vue = __webpack_require__(6);
 		var nav = __webpack_require__(68);
@@ -162,24 +162,26 @@ webpackJsonp([3],{
 					}			
 				},
 
-				onQuestionOptClick:function(e) {
-					var inputEl = $(e.$el).find('input'),
-						type = inputEl.prop('type');
-					if (inputEl) {
-						if (type == 'checkbox') {
-							inputEl.prop('checked' , !inputEl.prop('checked'));
-						} else if (type == 'radio') {
-							inputEl.prop('checked', true);
-						}
-					}				
-				},
+				// onQuestionOptClick:function(e) {
+				// 	var inputEl = $(e.$el).find('input'),
+				// 		type = inputEl.prop('type');
+				// 	if (inputEl) {
+				// 		if (type == 'checkbox') {
+				// 			inputEl.prop('checked' , !inputEl.prop('checked'));
+				// 		} else if (type == 'radio') {
+				// 			inputEl.prop('checked', true);
+				// 		}
+				// 	}
+
+				// 	this.onInputChange();			
+				// },
 
 				onInputChange :function() {
 					var answers = this._extractChoices();				
-					var paper = {};
-					paper[answers.paper_id] = answers.answers;
+					var papers= {};
+					papers[answers.paper_id] = answers.answers;
 
-					lockr.set('user.papers', paper)	
+					lockr.set('user.papers', papers)	
 					
 					this.checkSubmitBtn();
 				},
@@ -346,7 +348,7 @@ webpackJsonp([3],{
 							this.checkSubmitBtn();
 							// this.$data.paper.questions[0]._choices=1;
 
-					  	} else {					  		
+					  	} else {		  		
 					  		this.showToast(res.err_msg,true);	  		
 					  	}
 					    
