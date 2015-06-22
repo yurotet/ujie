@@ -38,7 +38,7 @@ window.onhashchange = function() {
 
 var getRouteFromHash = function() {
 	var hash = location.hash;
-	var reg = /#(.*)/;
+	var reg = /#([^?]*)/;
 	var result = hash.match(reg);
 	if(result && result.length == 2) {
 		route = result[1];
@@ -118,7 +118,23 @@ var gotoRoute = function(route) {
 			var Page = require('pages/accRegister');
 			ensureCb(Page);
 		})
-	}else {
+	}else if (route=='downloadAPP') {
+		require.ensure([], function() {
+			var Page = require('pages/downloadAPP');
+			ensureCb(Page);
+		})
+	}else if (route=='confirmSubmit') {
+		require.ensure([], function() {
+			var Page = require('pages/confirmSubmit');
+			ensureCb(Page);
+		})
+	}else if (route=='examResult') {
+		require.ensure([], function() {
+			var Page = require('pages/examResult');
+			ensureCb(Page);
+		})
+	}
+	else {
 		require.ensure([], function() {
 			var Page = require('pages/notfound');
 			ensureCb(Page);

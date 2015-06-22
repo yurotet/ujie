@@ -3,12 +3,13 @@
 	var Vue = require('vue');
 	var nav = require('common/navigator');
 	var config = require('config');	
-	var lockr = require('common/localstorageutil');
+	var lockr = require('common/localstorageutil');	
 
 	var View = BasePage.extend({
 		title: '私导初级考试',
 		data: function() {
 			return {
+				paperName:'',
 				paper: {
 					
 				}
@@ -19,24 +20,36 @@
 			checkSubmitBtn:function () {
 				var answers = this._extractChoices().answers, i;				
 
-				for (i =0 ; i< answers.length; i++) {
-					if (!answers[i].choices.length)
+				for (i =0 ; i< answers.length; i++) {					
+					if (!answers[i].choices.length){						
 						break;
+					}
 				}
 
 				var disabled = (i != answers.length);
 
 				var btn = $('#paperSubmit');
-				if (!disabled) {
+				if (disabled) {
 					btn.attr('disabled','disabled');
 				}else {
 					btn.removeAttr('disabled');
 				}			
 			},
 
+			onQuestionOptClick:function(e) {
+				var inputEl = $(e.$el).find('input'),
+					type = inputEl.prop('type');
+				if (inputEl) {
+					if (type == 'checkbox') {
+						inputEl.prop('checked' , !inputEl.prop('checked'));
+					} else if (type == 'radio') {
+						inputEl.prop('checked', true);
+					}
+				}				
+			},
+
 			onInputChange :function() {
-				var answers = this._extractChoices();
-				console.log(answers);
+				var answers = this._extractChoices();				
 				var paper = {};
 				paper[answers.paper_id] = answers.answers;
 
@@ -45,9 +58,66 @@
 				this.checkSubmitBtn();
 			},
 
-			onSubmit: function() {				
-				var answers = this._extractChoices();
-				console.log(answers);
+			getPostAnswers:function() {
+				var qs = this.$data.paper.questions, retObj = {};
+
+				retObj.id = this.$data.paper.id;
+
+				$.each (qs, function(key, q) {
+					var cs = $.isArray(q._choices)?  q._choices : [q._choices] ;
+					var textArr = $.map(cs,function(index, i) {
+						if (q.type == '3' && index == 'true') {
+							return q.options[i]._text
+						} else if (q.type=='1' || q.type=='2') {
+							return q.options[index]._text;
+						}						
+					});
+					retObj[q.qid] = textArr.join('|');					
+				});
+
+				return retObj;
+
+			},
+
+			_submit : function( ){
+				return new Promise(function(resolve, reject) {
+					$.ajax({
+					 	  type:'POST',				  
+						  url: '/api/answer', 
+						  data:this.getPostAnswers(),				 
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						  success: function(body){
+						  	if (body.err_code == 0) {
+						  		if (body.is_pass) {
+						  			resolve('pass');
+						  		} else if (!body.is_pass) {
+						  			resolve('fail');
+						  		}
+						  	} else {					  		
+						  		reject(body.err_msg);	
+						  	}						    
+						  },						
+						  error: function(){
+						   	reject();
+						  }
+					})
+				}.bind(this))
+			},
+			onSubmit: function() {	
+				this.showLoading();
+				this._submit().then(function(result) {
+					this.hideLoading();					
+					if (result == 'pass') {
+						nav.goTo('examResult?r=1')
+					} else if (result == 'fail') {
+						nav.goTo('examResult?r=0')
+					}
+				}.bind(this)).catch(function(err) {
+					this.hideLoading();
+					this.showToast(err,true);
+				}.bind(this));										
 			}, 
 			//extract answers from vm
 			_extractChoices: function() {
@@ -55,7 +125,7 @@
 					paper_id: this.$data.paper.id,
 					answers: []
 				};
-				this.$data.paper.questions.forEach(function(q) {
+				$.each(this.$data.paper.questions,function(key,q) {
 					var answer = {
 						question_id: q.qid,
 						choices: []
@@ -74,21 +144,20 @@
 						}
 					}
 					paper.answers.push(answer);
-				});
+				});				
+				
 				return paper;
 			},
-			_getABCFromIndex: function(idx) {
-				// 'A' = 65
-				return String.fromCharCode(65 + idx);
-			},
+			// _getABCFromIndex: function(idx) {
+			// 	// 'A' = 65
+			// 	return String.fromCharCode(65 + idx);
+			// },
 
 			initData: function() {
 				// var answers = lockr.get('user.paper' + this.$data.paper.paper_id + '.answers');
-				var papers = lockr.get('user.papers');
-				console.log(papers);
+				var papers = lockr.get('user.papers');				
 								
-				var answers = papers && papers[this.$data.paper.id];
-				console.log(answers);
+				var answers = papers && papers[this.$data.paper.id];				
 				var questions = this.$data.paper.questions;
 				
 				if (answers) {				
@@ -113,6 +182,9 @@
 			}
 		},
 		created: function() {
+					
+		},
+		resume: function() {
 			this.showLoading();
 			$.ajax({
 				  type:'POST',				  
@@ -120,11 +192,15 @@
 				  dataType: 'json',
 				  timeout: 10000,
 				  context: this,
-				  success: function(res){					  						  
-				  	if(res.err_code==0){				  		
-						var res = res.data;
-						
+				  success: function(body){
+				  	if (!body.enable)	 {
+				  		nav.goTo('examResult?r=3');
+				  	}else if(body.err_code==0){				  		
+						var res = body.data;						
+						this.$data.paperName = res.name;
+
 						for(var i = 0; i < res.questions.length; ++i) {
+
 							var q = res.questions[i];
 							if(q.type == 3) {
 								q._choices = [];
@@ -135,12 +211,13 @@
 								var o = q.options[j];
 								var idx = j;
 								o.value = idx + 1;
-								o._text = this._getABCFromIndex(idx) + ". " + o.key;
+								o._text = o.key;
 							}
 						}
 						this.$data.paper = res;	
 
 						this.initData();
+						this.checkSubmitBtn();
 						// this.$data.paper.questions[0]._choices=1;
 
 				  	} else {					  		
@@ -155,9 +232,7 @@
 				  error: function(xhr, type){
 				   	
 				  }
-			})		
-		},
-		resume: function() {
+			})
 		},
 		pause: function() {
 		}
@@ -191,9 +266,19 @@
 	.ques-option input{
 		margin-right:10px;		
 	}
+	.regHeader {
+		text-align: center;
+	}
+	.regHeader  h3 {
+		margin: 25px;
+	}
 </style>
 
 <template>
+  <div class="regHeader">
+	<img src="logo.png"></img>
+	<h3>{{paperName}}</h3>
+</div>
   <section class="paper">
     <ul>
       <li v-repeat="q : paper.questions">
@@ -202,7 +287,7 @@
             {{q.question}}
           </div>
           <div >
-          	<span  class="ques-option"   v-repeat="o : q.options">
+          	<span  class="ques-option"  v-on="click:onQuestionOptClick(this)" v-repeat="o : q.options">
           		<input type="radio" v-on="change:onInputChange" name="{{q.qid}}" value="{{$index}}" v-model="q._choices"><label>{{o._text}}</label>
           	</span>
           </div>
@@ -212,7 +297,7 @@
             {{q.question}}
           </div>
           <div>
-          	<span  class="ques-option"  v-repeat="o : q.options">
+          	<span  class="ques-option"    v-on="click:onQuestionOptClick(this)" v-repeat="o : q.options">
           		<input type="checkbox"   v-on="change:onInputChange" name="{{q.qid}}" value="{{$index}}" v-model="q._choices[$index]"><label>{{o._text}}</label>
           	</span>
           </div>

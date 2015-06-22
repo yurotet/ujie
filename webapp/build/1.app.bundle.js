@@ -1,12 +1,12 @@
 webpackJsonp([1],{
 
-/***/ 67:
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
+	__webpack_require__(71)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
 	var __vue_template__ = "<ul class=\"table-view\">\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"http://goratchet.com\">\n          <strong>Ratchet documentation</strong>\n        </a>\n      </li>\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"https://github.com/twbs/ratchet/\">\n          <strong>Ratchet on Github</strong>\n        </a>\n      </li>\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"https://groups.google.com/forum/#!forum/goratchet\">\n          <strong>Ratchet Google group</strong>\n        </a>\n      </li>\n      <li class=\"table-view-cell\">\n        <a class=\"push-right\" href=\"https://twitter.com/goratchet\">\n          <strong>Ratchet on Twitter</strong>\n        </a>\n      </li>\n    </ul>";
-	var BasePage = __webpack_require__(69);
-		var Vue = __webpack_require__(3);
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
 
 		var View = BasePage.extend({
 			title: '注册',
@@ -46,7 +46,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 68:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -75,12 +75,12 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 69:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
-	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(76);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(84);
 
 	var M = Vue.extend({
 	});
@@ -112,7 +112,24 @@ webpackJsonp([1],{
 			}
 		},
 
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
 		 showToast:function(message,isError){
+		 	if (!message) return;
+
 			this.hideToast();
 
 			var alert = document.getElementById("toast");		
@@ -149,7 +166,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 76:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4

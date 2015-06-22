@@ -1,28 +1,33 @@
 <script>
-	var BasePage = require('common/basepage');	
-	var Promise = require('promise');
+	var BasePage = require('common/basepage');		
 	var nav = require('common/navigator');
 	var steps = require('pages/regSteps');
 	var lockr = require('common/localstorageutil');	
+	var util = require('common/util');
 
 	var View = BasePage.extend({
 		title: '结算账户',
 
-		data: function() {			
+		data: function() {
+
+			var payTypeList=[{
+				value:'alipay',
+				text: '支付宝 '
+			},{
+				value:'bank',
+				text: '银行'
+			},{
+				value:'paypal',
+				text: 'paypal'
+			}];
+						
+			lockr.set('accTransList',payTypeList );	
+
 			return {
 				curStep:2,	
-
 				
-				payTypeList:[{
-					value:'alipay',
-					text: '支付宝 '
-				},{
-					value:'bank',
-					text: '银行'
-				},{
-					value:'paypal',
-					text: 'paypal'
-				}],
+				payTypeList:payTypeList,
+
 				user:{									
 					payType:'alipay',					
 					alipayAcc:'',
@@ -66,7 +71,7 @@
 						
 					
 			onSubmit: function() {				
-				// nav.goTo('picupdate');				
+				nav.goTo('confirmSubmit');		
 			},
 
 			onPre:function() {
@@ -105,7 +110,10 @@
 		},
 
 		resume: function() {
-			this.setHeader();			
+			this.setHeader();
+			if (!lockr.get('isRegLegal')) {
+				nav.goTo('notfound');
+			}		
 		},
 		pause:function(){
 

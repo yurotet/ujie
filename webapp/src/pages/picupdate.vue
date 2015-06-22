@@ -120,23 +120,7 @@
 										case 'guide':
 											this.$data.guidePic.url = url;
 										break;
-									}
-									// entity = url;
-									// console.log(JSON.stringify(res));
-									// picEntity.url = res.kld
-
-
-
-									// this.$data.user.driver_avatar = res.body.static_url;
-									// var payload = {
-									//     "driver_avatar": res.body.static_url,
-									// };
-									// this.showLoading();
-									// ajax.put('/service/rest/driver/user/')
-									// .send(payload)
-									// .end(function(err, res) {
-				     //    						this.hideLoading();
-									// }.bind(this));
+									}									
 								}
 							}.bind(this));
 						}.bind(this),
@@ -150,69 +134,9 @@
 			},
 			
 			onSubmit: function() {
-				nav.goTo('accRegister');
-				// this.showLoading();
-				// this._submit().then(function() {
-				// 	this._loadUser().then(function() {
-				// 		this.hideLoading();
-				// 	}.bind(this));
-				// }.bind(this));
+				nav.goTo('accRegister');				
 			},
-			// _submit: function() {
-			// 	var promise1 = new Promise(function(resolve, reject) {
-			// 		var payload = {
-			// 		    "driver_name": this.$data.user.driver_name,
-			// 		    "mobile": this.$data.user.mobile,
-			// 		    "driver_avatar": this.$data.user.driver_avatar,
-			// 		    "driver_driver_license": this.$data.user.driver_driver_license,
-			// 		    // "driver_status": "0",
-			// 		    "driver_contact": this.$data.user.mobile,
-			// 		    "driver_account_no": "account_no",
-			// 		    "driver_account_name": "account_name",
-			// 		    "driver_account_bank": "bank",
-			// 		    "driver_account_bsb_no": "bsb",
-			// 		    "driver_driving_license": "license"
-			// 		};
-			// 		ajax.put('/service/rest/driver/user/')
-			// 		.send(payload)
-			// 		.end(function(err, res) {
-			// 			resolve();
-			// 		});
-			// 	}.bind(this));
-
-			// 	var promise2 = new Promise(function(resolve, reject) {
-			// 		var payload = {
-			//     		"brand": this.$data.vehicle.brand,
-			//     		"model": parseInt(this.$data.vehicle.model.model_id, 10),
-			//     		"plate_no": this.$data.vehicle.plate_no
-			// 		};
-			// 		var vehicleId = this.$data.vehicle.vehicle_id;
-			// 		if(vehicleId) {
-			// 			ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
-			// 			.send(payload)
-			// 			.end(function(err, res) {
-			// 				resolve();
-			// 			});
-			// 		} else {
-			// 			ajax.post('/service/rest/driver/vehicles/')
-			// 			.send(payload)
-			// 			.end(function(err, res) {
-			// 				resolve();
-			// 			});
-			// 		}
-			// 	}.bind(this));
-
-			// 	return Promise.all([promise1, promise2]);
-			// },
-			// _uploadAvatar: function(wxMediaId, cb) {
-			// 	ajax.post('/service/rest/common/wxstaticupload/')
-			// 	.type('form')
-			// 	.send({
-			// 		wx_media_id: wxMediaId,
-			// 		upload_to: 'avatar'
-			// 	})
-			// 	.end(cb);
-			// },
+			
 			_uploadPic: function(wxMediaId, cb) {
 				$.ajax({
 					  type:'POST',				  
@@ -313,8 +237,14 @@
 			}			
 		},
 		resume:function() {
-			// this.refreshWX();		
 			this.setHeader();
+			
+			if (!lockr.get('isRegLegal')) {
+				nav.goTo('notfound');
+				return;
+			}
+			// this.refreshWX();		
+			
 
 			var savedUser = lockr.get('user');
 			if (savedUser) {

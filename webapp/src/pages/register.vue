@@ -4,6 +4,13 @@
 	var nav = require('common/navigator');
 	var steps = require('pages/regSteps');
 	var lockr = require('common/localstorageutil');
+	var util = require('common/util');
+
+	var REG_STATUS= {		
+		NOT_REGED:1,
+		GOTO_APP:2,
+		READY_FOR_REG:3
+	};
 
 	var View = BasePage.extend({
 		title: '我的认证',
@@ -13,7 +20,37 @@
 			      	this.$data.user.city= this.$data.cityList[0].value;
 			    }
 		  },
-		data: function() {			
+		data: function() {
+			
+			var sexList = [{
+				value:'male',
+				text: '男'
+			},{
+				value:'female',
+				text:'女'}],
+
+			yesnoList =[{
+				value:'no',
+				text: '无'
+			},{
+				value:'yes',
+				text: '有'
+			}],
+
+			yearRangeList =[{
+				value:'1-3',
+				text: '1-3年'
+			},{
+				value:'3-5',
+				text: '3-5年'
+			},{
+				value:'5+',
+				text:'5年以上'
+			}];
+		
+			var listToSave = util.flatten([sexList, yesnoList, yearRangeList]);
+			lockr.set('infoTransList',listToSave );		
+
 			return {
 				curStep:4,	
 
@@ -21,31 +58,9 @@
 				countryList:[],
 				cityList:[],
 				
-				sexList:[{
-					value:'male',
-					text: '男'
-				},{
-					value:'female',
-					text:'女'}],
-
-				yesnoList:[{
-					value:'no',
-					text: '无'
-				},{
-					value:'yes',
-					text: '有'
-				}],
-
-				yearRangeList:[{
-					value:'1-3',
-					text: '1-3年'
-				},{
-					value:'3-5',
-					text: '3-5年'
-				},{
-					value:'5+',
-					text:'5年以上'
-				}],
+				sexList:sexList,
+				yesnoList:yesnoList,
+				yearRangeList:yearRangeList,
 				
 				user:{					
 					sex:'male',
@@ -91,11 +106,11 @@
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						  success: function(res){					  						  
+						  success: function(res){  
 						  	if(res.err_code==0){
-						  		var ctyList = [];
+						  		var countryList = [];
 						  		$.each(res.data, function(key,val) {					  			
-						  			ctyList.push({
+						  			countryList.push({
 						  				value:key,
 						  				text:val.name
 						  			});					  			
@@ -107,11 +122,22 @@
 						  					text:cVal
 						  				});					  				
 						  			});
-						  			
+						  									  			
 						  			this.$data.allCityList[key] =cList;
 						  		}.bind(this));
 
-						  		this.$data.countryList = ctyList;	
+						  		// save value/text mappings for cities
+						  		var cityTrans = [];
+						  		$.each(this.$data.allCityList,function (key, value) {
+						  			cityTrans = util.flatten([cityTrans, value]);
+						  		})
+						  		lockr.set('cityTransList', cityTrans);
+
+						  		// save value/text mappings for countries
+						  		lockr.set('countryTransList', countryList);
+
+
+						  		this.$data.countryList = countryList;	
 						  		this.$data.user.country = this.$data.countryList [0].value;
 						  		resolve();			  		
 						  	} else {					  		
@@ -133,7 +159,8 @@
 				
 			},
 					
-			onSubmit: function() {				
+			onSubmit: function() {
+				lockr.set('isRegLegal',true);
 				nav.goTo('picupdate');				
 			},
 
@@ -165,15 +192,79 @@
 				}.bind(this));
 				
 				this.checkSubmitBtn();
-			}			
-		},
+			},
 
-		created: function() {			
+			_loadAuthStauts:function() {
+				return new Promise(function(resolve, reject) {					
+					this.showLoading(); 
+					 $.ajax({   
+					            type:'GET', 
+					            url: '/api/info', 					          
+					            dataType: 'json',
+					            timeout: 10000,
+					            context: this,
+					            success: function(body){  
+					              if (body.err_code == 0 ) {				               	
+					               	switch (body.data.guide_auth) {
+					               		case '1': 	//审核通过
+					               		case '3': 	//审核失败
+					               			resolve(REG_STATUS.GOTO_APP);
+					               		break;
+
+					               		case '2'	:	//待审核
+					               			resolve(REG_STATUS.READY_FOR_REG);
+					               		break;
+					               		default:
+					               			resolve(REG_STATUS.NOT_REGED);
+					               		break;					               		
+					               	}					               	
+
+					              } else {	
+					              	resolve(REG_STATUS.NOT_REGED);					                  
+					              }                          
+					            }.bind(this),
+					            complete:function() {
+					                          this.hideLoading();
+					            },
+					          
+					            error: function(xhr, type){
+					              reject();
+					            }
+					        }) 
+					}.bind(this));
+			},
+			
+
+			 checkRegStatus : function() {
+			 	this._loadAuthStauts().then(function(statusCode){ 		
+			 		switch (statusCode) {
+			 			case  REG_STATUS.NOT_REGED: 	//  还没有通过微信账号注册过
+			 				nav.goTo('newUser');
+			 			break;
+			 			case REG_STATUS.GOTO_APP: 		//账号已经通过认证了, 引导下载APP补全或者修改认证信息
+			 				nav.goTo('downloadAPP');
+			 			break;	
+			 			case REG_STATUS.READY_FOR_REG:
+			 				nav.goTo("register");
+			 			break;
+			 			default:
+			 				nav.goTo('notfound');
+			 			break;
+			 		}
+			 	}).catch(function(err) {
+			 		nav.goTo('notfound');
+			 	});
+			 }	
+		},
+		
+		created: function() {
+			lockr.set('isRegLegal', false);
 			this._loadCountryInfo().then(this.initData);
 		},
 
 		resume: function() {
-			this.setHeader();			
+			this.setHeader();
+			this.checkRegStatus();					
 		},
 		pause:function(){
 

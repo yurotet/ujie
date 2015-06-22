@@ -32,7 +32,24 @@ $Class.mix(M.prototype, {
 		}
 	},
 
+	getParam :function (name) {
+		var hash = window.location.hash;
+		var cutIndex = hash.indexOf('?');
+		
+		if (cutIndex!= -1) {
+			 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+			    var r = hash.substr(cutIndex +1).match(reg);
+			    if (r != null) {
+			        return unescape(r[2]);
+			    }
+		}
+		
+		 return null;
+	},
+
 	 showToast:function(message,isError){
+	 	if (!message) return;
+
 		this.hideToast();
 
 		var alert = document.getElementById("toast");		

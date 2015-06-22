@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 68:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 69:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
-	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(76);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(84);
 
 	var M = Vue.extend({
 	});
@@ -66,7 +66,24 @@ webpackJsonp([4],{
 			}
 		},
 
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
 		 showToast:function(message,isError){
+		 	if (!message) return;
+
 			this.hideToast();
 
 			var alert = document.getElementById("toast");		
@@ -103,16 +120,16 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 72:
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}#linkSec a{text-decoration:underline}#linkSec{text-align:center;margin-top:20px}.regHeader{text-align:center}");
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}#linkSec a{text-decoration:underline}#linkSec{text-align:center;margin-top:20px}.regHeader{text-align:center}");
 	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\t  <div class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" v-on=\"input:onUserInput\" placeholder=\"输入用户名 (3-16位字母, 数字或汉字)\" v-model=\"username\">\n\t\t\t    </div>\t\t\t   \n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"password\" v-on=\"input:onPwdInput\" placeholder=\"输入密码 (大于6位)\" v-model=\"pwd\">\n\t\t\t    </div>\n\t\t\t    <div id=\"confirmPwdInput\" class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" v-on=\"input:onConfirmPwdInput\" placeholder=\"确认密码\" v-model=\"confirmPwd\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" placeholder=\"推荐码 (可选)\" v-model=\"recCode\">\n\t\t\t    </div>\n\t\t    </form>\n\t  \n\t\t    <button id=\"regBtn\" class=\"miu-subBtn btn btn-positive btn-block\" disabled=\"disabled\" v-model=\"realName\" v-on=\"click: onSubmit\">注册</button>\t\n\t\t    <div id=\"linkSec\"><p>注册即表示同意<a href=\"http://g.miutour.com/help/gagreement.html\" target=\"_blank\">蜜柚私导协议</a></p></div>    \t\n\t  </div>";
-	var BasePage = __webpack_require__(69);
-		var Vue = __webpack_require__(3);
-		var nav = __webpack_require__(65);
-		var config = __webpack_require__(66);	
-		var steps = __webpack_require__(86);
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
+		var nav = __webpack_require__(68);
+		var config = __webpack_require__(69);	
+		var steps = __webpack_require__(78);
 
 		var View = BasePage.extend({
 			title: '注册',
@@ -210,7 +227,57 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 76:
+/***/ 78:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(71)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:16px;font-weight:700;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon\">4</span>\n\t      <span class=\"text\">确认提交</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step2\"> \n\t    <a>\n\t      <span class=\"icon\">3</span>\n\t      <span class=\"text\">结算账户</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon\">2</span>\n\t      <span class=\"text\">认证照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon\">1</span>\n\t       <span class=\"text\">我的资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
+	var BaseComponent = __webpack_require__(79);
+		var Vue = __webpack_require__(6);
+
+
+		var View = BaseComponent.extend({
+			title: 'regSteps',	
+			data:  function(){
+				return {
+					step:1
+				};
+			},
+
+			created:function(){
+				
+			}				
+		});
+
+		module.exports = View;
+
+		Vue.component('view/regSteps', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+
+/***/ },
+
+/***/ 79:
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(6);
+	var M = Vue.extend({
+		onCreate: function() {
+
+		},
+		onResume: function() {
+
+		},
+		onPause: function() {
+
+		}
+	});
+
+	module.exports = M;
+
+/***/ },
+
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -534,56 +601,6 @@ webpackJsonp([4],{
 
 	}));
 
-
-/***/ },
-
-/***/ 86:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:16px;font-weight:700;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
-	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step2\"> \n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t      <span class=\"text\">结算账户</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">认证照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-info\"></span>\n\t       <span class=\"text\">我的资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
-	var BaseComponent = __webpack_require__(87);
-		var Vue = __webpack_require__(3);
-
-
-		var View = BaseComponent.extend({
-			title: 'regSteps',	
-			data:  function(){
-				return {
-					step:1
-				};
-			},
-
-			created:function(){
-				
-			}				
-		});
-
-		module.exports = View;
-
-		Vue.component('view/regSteps', View);
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
-
-
-/***/ },
-
-/***/ 87:
-/***/ function(module, exports, __webpack_require__) {
-
-	var Vue = __webpack_require__(3);
-	var M = Vue.extend({
-		onCreate: function() {
-
-		},
-		onResume: function() {
-
-		},
-		onPause: function() {
-
-		}
-	});
-
-	module.exports = M;
 
 /***/ }
 

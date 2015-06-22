@@ -3,14 +3,17 @@
 	var Vue = require('vue');
 
 	var View = BasePage.extend({
-		title: '出错了',
+		title: '下载APP',
 		
 		methods: {
 			
 		},
 		created: function() {
+
 		},
-		
+		resume:function() {
+
+		}
 	});
 
 	module.exports = View;
@@ -35,8 +38,8 @@
 	</div>
 
 	<div class='cntContainer'>
-		<h3>哎呀，出错了！</h3>
-		<p>请确保您的网络连接通畅，或者等会儿再试一下吧！</p>	
-		<button  class="btn btn-positive btn-block">知道了</button>	
+		<h3>审核已提交！</h3>
+		<p>您的注册认证信息已提交到蜜柚旅行，快下载蜜柚接单APP查看认证状态吧。</p>
+		<button  class="btn btn-positive btn-block">下载蜜柚接单APP</button>
 	</div>	
 </template>

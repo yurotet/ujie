@@ -92,25 +92,25 @@
 	<ul class="breadcrumb">
 	  <li class="step1"> 
 	    <a>
-	      <span class="icon icon-check"></span>
-	      <span class="text">提交审核</span>
+	      <span class="icon">4</span>
+	      <span class="text">确认提交</span>
 	    </a>
 	  </li>
 	  <li class="step2"> 
 	    <a>
-	      <span class="icon icon-list"></span>
+	      <span class="icon">3</span>
 	      <span class="text">结算账户</span>
 	    </a>
 	  </li>
 	  <li class="step3">
 	    <a>
-	      <span class="icon icon-pages"></span>
+	      <span class="icon ">2</span>
 	      <span class="text">认证照片</span>
 	    </a>
 	  </li>	  
 	  <li class="step4">
 	    <a>
-	      <span class="icon icon-info"></span>
+	      <span class="icon">1</span>
 	       <span class="text">我的资料</span>
 	    </a>
 	  </li>

@@ -1,6 +1,6 @@
 webpackJsonp([10],{
 
-/***/ 68:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 69:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
-	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(81);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(84);
 
 	var M = Vue.extend({
 	});
@@ -66,7 +66,24 @@ webpackJsonp([10],{
 			}
 		},
 
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
 		 showToast:function(message,isError){
+		 	if (!message) return;
+
 			this.hideToast();
 
 			var alert = document.getElementById("toast");		
@@ -103,40 +120,23 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 80:
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
-	var __vue_template__ = "<h1>404 not found</h1>\n\t<input type=\"button\" v-on=\"click: clickHandler()\" value=\"goto /index\">";
-	var BasePage = __webpack_require__(69);
-		var Vue = __webpack_require__(3);
+	__webpack_require__(71)(".cntContainer,.regHeader{text-align:center}.cntContainer h3{margin:25px}.cntContainer p{font-size:16px;margin:40px}");
+	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\n\t<div class=\"cntContainer\">\n\t\t<h3>哎呀，出错了！</h3>\n\t\t<p>请确保您的网络连接通畅，或者等会儿再试一下吧！</p>\t\n\t\t<button class=\"btn btn-positive btn-block\">知道了</button>\t\n\t</div>";
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
 
 		var View = BasePage.extend({
-			title: 'index',
-			data: function() {
-				return {
-					count: 0
-				};
-			},
+			title: '出错了',
+			
 			methods: {
-				clickHandler: function() {
-					this.startPage('index');
-				},
-				dbltap: function() {
-					alert('rotate');
-				}
+				
 			},
 			created: function() {
 			},
-			ready: function() {
-				console.log('index ready');
-			},
-			attached: function() {
-				console.log('index attached');
-			},
-			detached: function() {
-				console.log('index detached');
-			}
+			
 		});
 
 		module.exports = View;
@@ -145,7 +145,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 81:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4

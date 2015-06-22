@@ -1,6 +1,6 @@
 webpackJsonp([8],{
 
-/***/ 68:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 69:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
-	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(78);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(84);
 
 	var M = Vue.extend({
 	});
@@ -66,7 +66,24 @@ webpackJsonp([8],{
 			}
 		},
 
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
 		 showToast:function(message,isError){
+		 	if (!message) return;
+
 			this.hideToast();
 
 			var alert = document.getElementById("toast");		
@@ -103,49 +120,238 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 77:
+/***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(68)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}");
-	var __vue_template__ = "<h1>404 not found</h1>\n\t<input type=\"button\" v-on=\"click: clickHandler()\" value=\"goto /index\">";
-	var BasePage = __webpack_require__(69);
-		var Vue = __webpack_require__(3);
+	__webpack_require__(71)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:16px;font-weight:700;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon\">4</span>\n\t      <span class=\"text\">确认提交</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step2\"> \n\t    <a>\n\t      <span class=\"icon\">3</span>\n\t      <span class=\"text\">结算账户</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon\">2</span>\n\t      <span class=\"text\">认证照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon\">1</span>\n\t       <span class=\"text\">我的资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
+	var BaseComponent = __webpack_require__(79);
+		var Vue = __webpack_require__(6);
 
-		var View = BasePage.extend({
-			title: 'index',
-			data: function() {
+
+		var View = BaseComponent.extend({
+			title: 'regSteps',	
+			data:  function(){
 				return {
-					count: 0
+					step:1
 				};
 			},
-			methods: {
-				clickHandler: function() {
-					this.startPage('index');
-				},
-				dbltap: function() {
-					alert('rotate');
+
+			created:function(){
+				
+			}				
+		});
+
+		module.exports = View;
+
+		Vue.component('view/regSteps', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+
+/***/ },
+
+/***/ 79:
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(6);
+	var M = Vue.extend({
+		onCreate: function() {
+
+		},
+		onResume: function() {
+
+		},
+		onPause: function() {
+
+		}
+	});
+
+	module.exports = M;
+
+/***/ },
+
+/***/ 81:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".regHeader{text-align:center}.reg-name{font-weight:700;font-size:18px}.confirmMsgContainer{padding:20px}.confirmMsgContainer p{font-size:16px}#modifyInfo{display:'inline-block';width:35%}#regSubmit{display:'inline-block';width:60%;float:right}");
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t<div class=\"confirmMsgContainer\">\n\t\t<p>\n\t\t\tHi <span class=\"reg-name\">{{name}}</span>，感谢您完成认证信息的填写。</p>\n\t\t\t<p>请确认您填写的资料真实有效，提交审核后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！\n\t\t</p>\n\t\t\n\t</div>\t\n\n\t<button id=\"regSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交审核</button>\n\t<button id=\"modifyInfo\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">修改资料</button>";
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
+		var nav = __webpack_require__(68);
+		var lockr = __webpack_require__(85);	
+		var steps = __webpack_require__(78);
+		var util = __webpack_require__(86);
+
+		var View = BasePage.extend({
+			title: '提交审核',
+			data:function(){ 
+				return {
+					curStep:1,
+					name: lockr.get('user').realname
 				}
+			},	
+			methods: {
+				getPostUserInfo : function() {
+					var infoTransList = lockr.get('infoTransList'),
+						accTransList=  lockr.get('accTransList'),
+						countryTransList=  lockr.get('countryTransList'),
+						cityTransList = lockr.get('cityTransList');
+
+					var transList = util.flatten([infoTransList, accTransList,countryTransList,cityTransList]);
+
+					var getText = function(value) {
+						for ( var i =0;i < transList.length; i++) {
+							if (transList[i].value == value)
+								return transList[i].text;
+						}				
+					}
+
+					var user = lockr.get('user'), 
+						retObj = {};
+					
+					retObj.name= user.realname;
+					retObj.sex = getText(user.sex);
+					retObj.age = user.age;
+					retObj.country = getText(user.country);
+					retObj.city = getText(user.city);
+					retObj.address = user.address;
+					retObj.mobile = user.mobile;
+					retObj.email = user.mailBox;
+					retObj.weixin = user.wechat;
+					retObj.tour_guide_certificate = getText(user.hasGuideCer);
+					retObj.drive_age = getText(user.drivingExp);
+					retObj.work_age = getText(user.workingExp);
+					retObj.pay_type = getText(user.payType) ;
+					retObj.alipay = user.alipayAcc;
+					retObj.paypal = user.paypalAcc;
+					retObj.bank_user =user.accName;
+					retObj.bank_name =  user.bankName;
+					retObj.bank_code = user.cardNo;
+
+					return retObj;
+				},
+
+				getPostPics:function(){ 
+					var user = lockr.get('user'), retObj = {};
+
+					retObj.passport_pic = user.passportPic || '';
+					retObj.car_pic=  'none';
+					retObj.insurance_pic = 'none';
+					retObj.insurance_pic2 = 'none';
+					retObj.tourcard_pic = user.guidePic || '';
+					retObj.driver_pic = user.licensePic || '';
+
+					return retObj;
+				},
+
+				_uploadUserInfo : function() {
+					return new Promise(function (resolve, reject) {
+						$.ajax({	 
+						  type:'POST',				  
+						  url: '/api/info', 
+						  // data to be added to query string:
+						  data: this.getPostUserInfo(),
+						  // type of data we are expecting in return:
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						  success: function(res){					  	
+						  	if( res.err_code==0) { 
+						  		resolve();					  		
+						  	} else {	
+						  		reject(res.err_msg);						  		
+						  	}
+						    
+						  },
+						  complete:function() {
+						  					  	
+						  },
+						
+						  error: function(){
+						   	reject();
+						  }
+					})
+					}.bind(this));
+				},
+				
+				_uploadPics :function() {
+					return new Promise(function(resolve, reject) {
+						$.ajax({
+							  type:'POST',				  
+							  url: '/api/images', 
+							  data: this.getPostPics(),				 
+							  dataType: 'json',
+							  timeout: 10000,
+							  context: this,
+							 success: function(res){
+							  	if(res.err_code==0){			  		
+							  		resolve();
+							  	} else {	
+							  		if (res.data.length) {
+							  			reject(res.data[0].err_msg);
+							  		}		  		
+							  		reject();
+							  	}
+							    
+							  },
+							  complete:function() {
+							  },
+							
+							  error: function(){
+							   	reject();
+							  }
+						});
+					}.bind(this));
+				},
+
+				onSubmit: function() {				
+					// console.log(this.getPostPics());
+					this.showLoading();
+					
+					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){					
+						this.hideLoading();
+					}.bind(this)).catch(function(msg) {
+						this.hideLoading();
+						this.showToast(msg,true);
+					}.bind(this));								
+				},
+				onPre :function() {
+					nav.goTo('register');
+				},
+				setHeader:function() {
+					var selText = '.stepsContainer.index1 .step1' ;
+									
+					var ela=$(selText+' a'),
+						eltext=$(selText+ ' .text');		
+			 		
+			 		ela.css('width','170px');	  		
+			  		ela.css('background-color','#77c2a5');
+
+			  		eltext.css('display','inline-block');
+			  		eltext.css('opacity','1');	
+				}		
 			},
-			created: function() {
+			created: function() {			
+				
 			},
-			ready: function() {
-				console.log('index ready');
-			},
-			attached: function() {
-				console.log('index attached');
-			},
-			detached: function() {
-				console.log('index detached');
+			resume:function() {
+				this.setHeader();	
+				if (!lockr.get('isRegLegal')) {
+					nav.goTo('notfound');
+					return;
+				}
+
 			}
 		});
 
 		module.exports = View;
 	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
 
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 78:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -469,6 +675,170 @@ webpackJsonp([8],{
 
 	}));
 
+
+/***/ },
+
+/***/ 85:
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root, factory) {
+
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = factory(root, exports);
+	    }
+	  } else if (typeof define === 'function' && define.amd) {
+	    define(['exports'], function(exports) {
+	      root.Lockr = factory(root, exports);
+	    });
+	  } else {
+	    root.Lockr = factory(root, {});
+	  }
+
+	}(this, function(root, Lockr) {
+	  'use strict';
+
+	  if (!Array.prototype.indexOf) {
+	    Array.prototype.indexOf = function(elt /*, from*/)
+	    {
+	      var len = this.length >>> 0;
+
+	      var from = Number(arguments[1]) || 0;
+	      from = (from < 0)
+	      ? Math.ceil(from)
+	      : Math.floor(from);
+	      if (from < 0)
+	        from += len;
+
+	      for (; from < len; from++)
+	      {
+	        if (from in this &&
+	            this[from] === elt)
+	          return from;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  Lockr.prefix = "";
+
+	  Lockr._getPrefixedKey = function(key, options) {
+	    options = options || {};
+
+	    if (options.noPrefix) {
+	      return key;
+	    } else {
+	      return this.prefix + key;
+	    }
+
+	  };
+
+	  Lockr.set = function (key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    try {
+	      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+	    } catch (e) {
+	      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.get = function (key, missing, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+	    if(value === null)
+	      return missing;
+	    else
+	      return (value.data || missing);
+	  };
+
+	  Lockr.sadd = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json;
+
+	    var values = Lockr.smembers(key);
+
+	    if (values.indexOf(value) > -1) {
+	      return null;
+	    }
+
+	    try {
+	      values.push(value);
+	      json = JSON.stringify({"data": values});
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      console.log(e);
+	      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.smembers = function(key, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+
+	    if (value === null)
+	      return [];
+	    else
+	      return (value.data || []);
+	  };
+
+	  Lockr.sismember = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    return Lockr.smembers(key).indexOf(value) > -1;
+	  };
+
+	  Lockr.getAll = function () {
+	    var keys = Object.keys(localStorage);
+
+	    return keys.map(function (key) {
+	      return Lockr.get(key);
+	    });
+	  };
+
+	  Lockr.srem = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json,
+	        index;
+
+	    var values = Lockr.smembers(key, value);
+
+	    index = values.indexOf(value);
+
+	    if (index > -1)
+	      values.splice(index, 1);
+
+	    json = JSON.stringify({"data": values});
+
+	    try {
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+	    }
+	  };
+
+	  Lockr.rm =  function (key) {
+	    localStorage.removeItem(key);
+	  };
+
+	  Lockr.flush = function () {
+	    localStorage.clear();
+	  };
+	  return Lockr;
+
+	}));
 
 /***/ }
 

@@ -1,6 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 68:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 69:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
-	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(76);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(84);
 
 	var M = Vue.extend({
 	});
@@ -66,7 +66,24 @@ webpackJsonp([5],{
 			}
 		},
 
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
 		 showToast:function(message,isError){
+		 	if (!message) return;
+
 			this.hideToast();
 
 			var alert = document.getElementById("toast");		
@@ -103,17 +120,17 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 73:
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)("#userInfo .input-row input{width:65%}#userInfo select{margin-top:5px;width:65%}.input-row label.more{font-size:14px}.input-row button{margin-top:5px;float:right;margin-right:20px}#picUploadPreBtn{display:'inline-block';width:35%}#picUploadBtn{display:'inline-block';width:60%;float:right}");
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)("#userInfo .input-row input{width:65%}#userInfo select{margin-top:5px;width:65%}.input-row label.more{font-size:14px}.input-row button{margin-top:5px;float:right;margin-right:20px}#picUploadPreBtn{display:'inline-block';width:35%}#picUploadBtn{display:'inline-block';width:60%;float:right}");
 	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t  <div>\n\t  \t <form class=\"input-group\">\n\t  \t \t<div v-on=\"click:onChoosePassportPic\" v-component=\"view/picUpload\" v-with=\"title: passportPic.title,cls:'passport'\"></div>\n\t\t\t<div v-on=\"click:onChooselicencePic\" v-component=\"view/picUpload\" v-with=\"title:licensePic.title, cls:'license'\"></div>\t\n\t\t\t<div style=\"display:{{hasGuideCer? 'block':'none'}}\" v-on=\"click:onChooseGuideLicencePic\" v-component=\"view/picUpload\" v-with=\"title:guidePic.title, cls:'guide'\"></div>\t\n\t\t</form>\n\t</div>\n\n\t\n\t<button id=\"picUploadBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步, 填写结算账户信息</button>\n\t<button id=\"picUploadPreBtn\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">上一步</button>";
-	var BasePage = __webpack_require__(69);		
-		var picUpload= __webpack_require__(89);
-		var steps = __webpack_require__(86);
-		var nav = __webpack_require__(65);
-		var lockr = __webpack_require__(88);
-		var util = __webpack_require__(90);
+	var BasePage = __webpack_require__(72);		
+		var picUpload= __webpack_require__(87);
+		var steps = __webpack_require__(78);
+		var nav = __webpack_require__(68);
+		var lockr = __webpack_require__(85);
+		var util = __webpack_require__(86);
 
 		var View = BasePage.extend({
 			title: '上传认证图片',
@@ -229,23 +246,7 @@ webpackJsonp([5],{
 											case 'guide':
 												this.$data.guidePic.url = url;
 											break;
-										}
-										// entity = url;
-										// console.log(JSON.stringify(res));
-										// picEntity.url = res.kld
-
-
-
-										// this.$data.user.driver_avatar = res.body.static_url;
-										// var payload = {
-										//     "driver_avatar": res.body.static_url,
-										// };
-										// this.showLoading();
-										// ajax.put('/service/rest/driver/user/')
-										// .send(payload)
-										// .end(function(err, res) {
-					     //    						this.hideLoading();
-										// }.bind(this));
+										}									
 									}
 								}.bind(this));
 							}.bind(this),
@@ -259,69 +260,9 @@ webpackJsonp([5],{
 				},
 				
 				onSubmit: function() {
-					nav.goTo('accRegister');
-					// this.showLoading();
-					// this._submit().then(function() {
-					// 	this._loadUser().then(function() {
-					// 		this.hideLoading();
-					// 	}.bind(this));
-					// }.bind(this));
+					nav.goTo('accRegister');				
 				},
-				// _submit: function() {
-				// 	var promise1 = new Promise(function(resolve, reject) {
-				// 		var payload = {
-				// 		    "driver_name": this.$data.user.driver_name,
-				// 		    "mobile": this.$data.user.mobile,
-				// 		    "driver_avatar": this.$data.user.driver_avatar,
-				// 		    "driver_driver_license": this.$data.user.driver_driver_license,
-				// 		    // "driver_status": "0",
-				// 		    "driver_contact": this.$data.user.mobile,
-				// 		    "driver_account_no": "account_no",
-				// 		    "driver_account_name": "account_name",
-				// 		    "driver_account_bank": "bank",
-				// 		    "driver_account_bsb_no": "bsb",
-				// 		    "driver_driving_license": "license"
-				// 		};
-				// 		ajax.put('/service/rest/driver/user/')
-				// 		.send(payload)
-				// 		.end(function(err, res) {
-				// 			resolve();
-				// 		});
-				// 	}.bind(this));
-
-				// 	var promise2 = new Promise(function(resolve, reject) {
-				// 		var payload = {
-				//     		"brand": this.$data.vehicle.brand,
-				//     		"model": parseInt(this.$data.vehicle.model.model_id, 10),
-				//     		"plate_no": this.$data.vehicle.plate_no
-				// 		};
-				// 		var vehicleId = this.$data.vehicle.vehicle_id;
-				// 		if(vehicleId) {
-				// 			ajax.put('/service/rest/driver/vehicles/' + vehicleId + '/')
-				// 			.send(payload)
-				// 			.end(function(err, res) {
-				// 				resolve();
-				// 			});
-				// 		} else {
-				// 			ajax.post('/service/rest/driver/vehicles/')
-				// 			.send(payload)
-				// 			.end(function(err, res) {
-				// 				resolve();
-				// 			});
-				// 		}
-				// 	}.bind(this));
-
-				// 	return Promise.all([promise1, promise2]);
-				// },
-				// _uploadAvatar: function(wxMediaId, cb) {
-				// 	ajax.post('/service/rest/common/wxstaticupload/')
-				// 	.type('form')
-				// 	.send({
-				// 		wx_media_id: wxMediaId,
-				// 		upload_to: 'avatar'
-				// 	})
-				// 	.end(cb);
-				// },
+				
 				_uploadPic: function(wxMediaId, cb) {
 					$.ajax({
 						  type:'POST',				  
@@ -422,8 +363,14 @@ webpackJsonp([5],{
 				}			
 			},
 			resume:function() {
-				// this.refreshWX();		
 				this.setHeader();
+				
+				if (!lockr.get('isRegLegal')) {
+					nav.goTo('notfound');
+					return;
+				}
+				// this.refreshWX();		
+				
 
 				var savedUser = lockr.get('user');
 				if (savedUser) {
@@ -442,7 +389,57 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 76:
+/***/ 78:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(71)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:16px;font-weight:700;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
+	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon\">4</span>\n\t      <span class=\"text\">确认提交</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step2\"> \n\t    <a>\n\t      <span class=\"icon\">3</span>\n\t      <span class=\"text\">结算账户</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon\">2</span>\n\t      <span class=\"text\">认证照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon\">1</span>\n\t       <span class=\"text\">我的资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
+	var BaseComponent = __webpack_require__(79);
+		var Vue = __webpack_require__(6);
+
+
+		var View = BaseComponent.extend({
+			title: 'regSteps',	
+			data:  function(){
+				return {
+					step:1
+				};
+			},
+
+			created:function(){
+				
+			}				
+		});
+
+		module.exports = View;
+
+		Vue.component('view/regSteps', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+
+/***/ },
+
+/***/ 79:
+/***/ function(module, exports, __webpack_require__) {
+
+	var Vue = __webpack_require__(6);
+	var M = Vue.extend({
+		onCreate: function() {
+
+		},
+		onResume: function() {
+
+		},
+		onPause: function() {
+
+		}
+	});
+
+	module.exports = M;
+
+/***/ },
+
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -769,57 +766,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 86:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(68)("ul.breadcrumb{display:inline-block;list-style:none;margin:0}ul.breadcrumb li{float:right;padding:5px;background-color:#fff;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;position:relative;margin-left:-50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;margin-top:3px}ul.breadcrumb li a{overflow:hidden;-webkit-border-radius:50px;-moz-border-radius:50px;-ms-border-radius:50px;-o-border-radius:50px;border-radius:50px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;transition:all .2s;text-decoration:none;height:50px;color:#509378;background-color:#65ba99;text-align:center;min-width:50px;display:block;line-height:50px;padding-left:52px;padding-right:33.33px;width:50px}ul.breadcrumb li a .icon{font-size:14px;display:inline-block}ul.breadcrumb li a .text{font-size:16px;font-weight:700;display:none;opacity:0}ul.breadcrumb li:last-child a{padding:0}.stepsContainer{text-align:center}");
-	var __vue_template__ = "<div class=\"stepsContainer index{{step}}\">\n\t<ul class=\"breadcrumb\">\n\t  <li class=\"step1\"> \n\t    <a>\n\t      <span class=\"icon icon-check\"></span>\n\t      <span class=\"text\">提交审核</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step2\"> \n\t    <a>\n\t      <span class=\"icon icon-list\"></span>\n\t      <span class=\"text\">结算账户</span>\n\t    </a>\n\t  </li>\n\t  <li class=\"step3\">\n\t    <a>\n\t      <span class=\"icon icon-pages\"></span>\n\t      <span class=\"text\">认证照片</span>\n\t    </a>\n\t  </li>\t  \n\t  <li class=\"step4\">\n\t    <a>\n\t      <span class=\"icon icon-info\"></span>\n\t       <span class=\"text\">我的资料</span>\n\t    </a>\n\t  </li>\n\t</ul>\t\n</div>";
-	var BaseComponent = __webpack_require__(87);
-		var Vue = __webpack_require__(3);
-
-
-		var View = BaseComponent.extend({
-			title: 'regSteps',	
-			data:  function(){
-				return {
-					step:1
-				};
-			},
-
-			created:function(){
-				
-			}				
-		});
-
-		module.exports = View;
-
-		Vue.component('view/regSteps', View);
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
-
-
-/***/ },
-
-/***/ 87:
-/***/ function(module, exports, __webpack_require__) {
-
-	var Vue = __webpack_require__(3);
-	var M = Vue.extend({
-		onCreate: function() {
-
-		},
-		onResume: function() {
-
-		},
-		onPause: function() {
-
-		}
-	});
-
-	module.exports = M;
-
-/***/ },
-
-/***/ 88:
+/***/ 85:
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(root, factory) {
@@ -983,13 +930,13 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 89:
+/***/ 87:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(68)(".input-row .icon{width:50px;height:50px;margin:3px;font-size:24px;line-height:50px;text-align:center;background-color:#fff;border:1px solid #ddd;border-radius:25px}.input-row.avatar-row{height:150px;text-align:center}.avatar-row .uploadItem{margin-top:35px;opacity:.7}");
+	__webpack_require__(71)(".input-row .icon{width:50px;height:50px;margin:3px;font-size:24px;line-height:50px;text-align:center;background-color:#fff;border:1px solid #ddd;border-radius:25px}.input-row.avatar-row{height:150px;text-align:center}.avatar-row .uploadItem{margin-top:35px;opacity:.7}");
 	var __vue_template__ = "<div class=\"input-row avatar-row {{cls}}\">\t\t\t\t\t\n\t\t<div class=\"uploadItem\">\n\t\t\t<span class=\"icon icon-plus\"></span>\n\t\t\t<p>{{title}}</p>\n\t\t</div>\n\t</div>";
-	var BaseComponent = __webpack_require__(87);
-		var Vue = __webpack_require__(3);
+	var BaseComponent = __webpack_require__(79);
+		var Vue = __webpack_require__(6);
 
 		var View = BaseComponent.extend({
 			title: 'picupload',			

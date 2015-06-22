@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 68:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	var inserted = {};
@@ -29,12 +29,12 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 69:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(65);
-	var Vue = __webpack_require__(3);
-	var $Class = __webpack_require__(76);
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(84);
 
 	var M = Vue.extend({
 	});
@@ -66,7 +66,24 @@ webpackJsonp([3],{
 			}
 		},
 
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
 		 showToast:function(message,isError){
+		 	if (!message) return;
+
 			this.hideToast();
 
 			var alert = document.getElementById("toast");		
@@ -103,21 +120,22 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 71:
+/***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(68)(".paper ul{list-style-type:decimal}.paper li{margin-bottom:20px}.ques-des{font-size:18px;margin-bottom:8px}.ques-option{font-size:16px;width:45%;display:inline-block;height:40px;margin-right:4%}.ques-option input{margin-right:10px}");
-	var __vue_template__ = "<section class=\"paper\">\n    <ul>\n      <li v-repeat=\"q : paper.questions\">\n      \t<div v-if=\"q.type==1 || q.type==2\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"radio\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n        <div v-if=\"q.type==3\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"checkbox\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices[$index]\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n      </li>\n    </ul>\n    <button id=\"paperSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交考卷</button>\n  </section>";
-	var BasePage = __webpack_require__(69);
-		var Vue = __webpack_require__(3);
-		var nav = __webpack_require__(65);
-		var config = __webpack_require__(66);	
-		var lockr = __webpack_require__(88);
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".paper ul{list-style-type:decimal}.paper li{margin-bottom:20px}.ques-des{font-size:18px;margin-bottom:8px}.ques-option{font-size:16px;width:45%;display:inline-block;height:40px;margin-right:4%}.ques-option input{margin-right:10px}.regHeader{text-align:center}.regHeader h3{margin:25px}");
+	var __vue_template__ = "<div class=\"regHeader\">\n\t<img src=\"logo.png\">\n\t<h3>{{paperName}}</h3>\n</div>\n  <section class=\"paper\">\n    <ul>\n      <li v-repeat=\"q : paper.questions\">\n      \t<div v-if=\"q.type==1 || q.type==2\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-on=\"click:onQuestionOptClick(this)\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"radio\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n        <div v-if=\"q.type==3\">\n          <div class=\"ques-des\">\n            {{q.question}}\n          </div>\n          <div>\n          \t<span class=\"ques-option\" v-on=\"click:onQuestionOptClick(this)\" v-repeat=\"o : q.options\">\n          \t\t<input type=\"checkbox\" v-on=\"change:onInputChange\" name=\"{{q.qid}}\" value=\"{{$index}}\" v-model=\"q._choices[$index]\"><label>{{o._text}}</label>\n          \t</span>\n          </div>\n        </div>\n      </li>\n    </ul>\n    <button id=\"paperSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交考卷</button>\n  </section>";
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
+		var nav = __webpack_require__(68);
+		var config = __webpack_require__(69);	
+		var lockr = __webpack_require__(85);	
 
 		var View = BasePage.extend({
 			title: '私导初级考试',
 			data: function() {
 				return {
+					paperName:'',
 					paper: {
 						
 					}
@@ -128,24 +146,36 @@ webpackJsonp([3],{
 				checkSubmitBtn:function () {
 					var answers = this._extractChoices().answers, i;				
 
-					for (i =0 ; i< answers.length; i++) {
-						if (!answers[i].choices.length)
+					for (i =0 ; i< answers.length; i++) {					
+						if (!answers[i].choices.length){						
 							break;
+						}
 					}
 
 					var disabled = (i != answers.length);
 
 					var btn = $('#paperSubmit');
-					if (!disabled) {
+					if (disabled) {
 						btn.attr('disabled','disabled');
 					}else {
 						btn.removeAttr('disabled');
 					}			
 				},
 
+				onQuestionOptClick:function(e) {
+					var inputEl = $(e.$el).find('input'),
+						type = inputEl.prop('type');
+					if (inputEl) {
+						if (type == 'checkbox') {
+							inputEl.prop('checked' , !inputEl.prop('checked'));
+						} else if (type == 'radio') {
+							inputEl.prop('checked', true);
+						}
+					}				
+				},
+
 				onInputChange :function() {
-					var answers = this._extractChoices();
-					console.log(answers);
+					var answers = this._extractChoices();				
 					var paper = {};
 					paper[answers.paper_id] = answers.answers;
 
@@ -154,9 +184,66 @@ webpackJsonp([3],{
 					this.checkSubmitBtn();
 				},
 
-				onSubmit: function() {				
-					var answers = this._extractChoices();
-					console.log(answers);
+				getPostAnswers:function() {
+					var qs = this.$data.paper.questions, retObj = {};
+
+					retObj.id = this.$data.paper.id;
+
+					$.each (qs, function(key, q) {
+						var cs = $.isArray(q._choices)?  q._choices : [q._choices] ;
+						var textArr = $.map(cs,function(index, i) {
+							if (q.type == '3' && index == 'true') {
+								return q.options[i]._text
+							} else if (q.type=='1' || q.type=='2') {
+								return q.options[index]._text;
+							}						
+						});
+						retObj[q.qid] = textArr.join('|');					
+					});
+
+					return retObj;
+
+				},
+
+				_submit : function( ){
+					return new Promise(function(resolve, reject) {
+						$.ajax({
+						 	  type:'POST',				  
+							  url: '/api/answer', 
+							  data:this.getPostAnswers(),				 
+							  dataType: 'json',
+							  timeout: 10000,
+							  context: this,
+							  success: function(body){
+							  	if (body.err_code == 0) {
+							  		if (body.is_pass) {
+							  			resolve('pass');
+							  		} else if (!body.is_pass) {
+							  			resolve('fail');
+							  		}
+							  	} else {					  		
+							  		reject(body.err_msg);	
+							  	}						    
+							  },						
+							  error: function(){
+							   	reject();
+							  }
+						})
+					}.bind(this))
+				},
+				onSubmit: function() {	
+					this.showLoading();
+					this._submit().then(function(result) {
+						this.hideLoading();					
+						if (result == 'pass') {
+							nav.goTo('examResult?r=1')
+						} else if (result == 'fail') {
+							nav.goTo('examResult?r=0')
+						}
+					}.bind(this)).catch(function(err) {
+						this.hideLoading();
+						this.showToast(err,true);
+					}.bind(this));										
 				}, 
 				//extract answers from vm
 				_extractChoices: function() {
@@ -164,7 +251,7 @@ webpackJsonp([3],{
 						paper_id: this.$data.paper.id,
 						answers: []
 					};
-					this.$data.paper.questions.forEach(function(q) {
+					$.each(this.$data.paper.questions,function(key,q) {
 						var answer = {
 							question_id: q.qid,
 							choices: []
@@ -183,21 +270,20 @@ webpackJsonp([3],{
 							}
 						}
 						paper.answers.push(answer);
-					});
+					});				
+					
 					return paper;
 				},
-				_getABCFromIndex: function(idx) {
-					// 'A' = 65
-					return String.fromCharCode(65 + idx);
-				},
+				// _getABCFromIndex: function(idx) {
+				// 	// 'A' = 65
+				// 	return String.fromCharCode(65 + idx);
+				// },
 
 				initData: function() {
 					// var answers = lockr.get('user.paper' + this.$data.paper.paper_id + '.answers');
-					var papers = lockr.get('user.papers');
-					console.log(papers);
+					var papers = lockr.get('user.papers');				
 									
-					var answers = papers && papers[this.$data.paper.id];
-					console.log(answers);
+					var answers = papers && papers[this.$data.paper.id];				
 					var questions = this.$data.paper.questions;
 					
 					if (answers) {				
@@ -222,6 +308,9 @@ webpackJsonp([3],{
 				}
 			},
 			created: function() {
+						
+			},
+			resume: function() {
 				this.showLoading();
 				$.ajax({
 					  type:'POST',				  
@@ -229,11 +318,15 @@ webpackJsonp([3],{
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){					  						  
-					  	if(res.err_code==0){				  		
-							var res = res.data;
-							
+					  success: function(body){
+					  	if (!body.enable)	 {
+					  		nav.goTo('examResult?r=3');
+					  	}else if(body.err_code==0){				  		
+							var res = body.data;						
+							this.$data.paperName = res.name;
+
 							for(var i = 0; i < res.questions.length; ++i) {
+
 								var q = res.questions[i];
 								if(q.type == 3) {
 									q._choices = [];
@@ -244,12 +337,13 @@ webpackJsonp([3],{
 									var o = q.options[j];
 									var idx = j;
 									o.value = idx + 1;
-									o._text = this._getABCFromIndex(idx) + ". " + o.key;
+									o._text = o.key;
 								}
 							}
 							this.$data.paper = res;	
 
 							this.initData();
+							this.checkSubmitBtn();
 							// this.$data.paper.questions[0]._choices=1;
 
 					  	} else {					  		
@@ -264,9 +358,7 @@ webpackJsonp([3],{
 					  error: function(xhr, type){
 					   	
 					  }
-				})		
-			},
-			resume: function() {
+				})
 			},
 			pause: function() {
 			}
@@ -279,7 +371,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 76:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
@@ -606,7 +698,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 88:
+/***/ 85:
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(root, factory) {
