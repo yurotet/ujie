@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="15dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp">
+
+        <View
+            android:id="@+id/my_order_line_top"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/my_order_round_tag"
+            android:layout_marginBottom="-2dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/linecolor_gray" />
+
+        <View
+            android:id="@+id/my_order_line_bottom"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/my_order_round_tag"
+            android:layout_marginTop="-2dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/linecolor_gray" />
+
+        <ImageView
+            android:id="@+id/my_order_round_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_my_order_cur" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/my_order_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:padding="5dp"
+        android:text="2015年07月02日" />
+
+    <TextView
+        android:id="@+id/my_order_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="出价￥2000" />
+
+    <ImageView
+        android:id="@+id/my_order_del_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"
+        android:src="@drawable/icon_my_order_del" />
+</LinearLayout>

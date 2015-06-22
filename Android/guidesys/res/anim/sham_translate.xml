@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 点击Fragment中的GridView的Item时，为了能避免Fragment调用OnPause()方法
+ 销毁掉当前Fragment的UI而执行的一个假的移动动画-->
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+    <translate xmlns:android="http://schemas.android.com/apk/res/android"
+       android:duration="300"
+       android:fromXDelta="0%"
+       android:interpolator="@android:anim/accelerate_interpolator"
+       android:toXDelta="0"/>
+
+</set>

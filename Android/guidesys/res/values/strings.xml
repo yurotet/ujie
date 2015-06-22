@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">GuideSys</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">加载更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="hit_network_failure">网络异常,请检查网络</string>
+    <string name="hit_no_data">抱歉没有相关数据</string>
+    <string name="hit_no_network">网络未连接</string>
+    <string name="hit_load_data_failure">加载失败,点击尝试重新加载</string>
+
+</resources>

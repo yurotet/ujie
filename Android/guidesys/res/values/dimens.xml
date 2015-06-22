@@ -1,0 +1,71 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="margin_1">1dip</dimen>
+    <dimen name="margin_2">2dip</dimen>
+    <dimen name="margin_3">3dip</dimen>
+    <dimen name="margin_5">5dip</dimen>
+    <dimen name="margin_7">7dip</dimen>
+    <dimen name="margin_8">8dip</dimen>
+    <dimen name="margin_10">10dip</dimen>
+    <dimen name="margin_11">11dip</dimen>
+    <dimen name="margin_12">12dip</dimen>
+    <dimen name="margin_13">13dip</dimen>
+    <dimen name="margin_14">14dip</dimen>
+    <dimen name="margin_15">15dip</dimen>
+    <dimen name="margin_16">16dip</dimen>
+    <dimen name="margin_17">17dip</dimen>
+    <dimen name="margin_18">18dip</dimen>
+    <dimen name="margin_20">20dip</dimen>
+    <dimen name="margin_22">22dip</dimen>
+    <dimen name="margin_24">24dip</dimen>
+    <dimen name="margin_26">26dip</dimen>
+    <dimen name="margin_28">28dip</dimen>
+    <dimen name="margin_30">30dip</dimen>
+    <dimen name="margin_40">40dip</dimen>
+    <dimen name="margin_50">50dip</dimen>
+    <dimen name="margin_60">60dip</dimen>
+    <dimen name="margin_70">70dip</dimen>
+    <dimen name="margin_80">80dip</dimen>
+    <dimen name="margin_90">90dip</dimen>
+    <dimen name="margin_100">100dip</dimen>
+    <dimen name="margin_120">120dip</dimen>
+    <dimen name="margin_130">130dip</dimen>
+    <dimen name="margin_140">140dip</dimen>
+    <dimen name="margin_150">150dip</dimen>
+    <dimen name="margin_160">160dip</dimen>
+    <dimen name="margin_170">170dip</dimen>
+    <dimen name="item_title_height">40dip</dimen>
+    <dimen name="line_height">0.1dip</dimen>
+    <dimen name="line_height_thick">1dip</dimen>
+    <dimen name="banner_height">45dp</dimen>
+    <dimen name="textsize7">7sp</dimen>
+    <dimen name="textsize8">8sp</dimen>
+    <dimen name="textsize9">9sp</dimen>
+    <dimen name="textsize10">10sp</dimen>
+    <dimen name="textsize11">11sp</dimen>
+    <dimen name="textsize12">12sp</dimen>
+    <dimen name="textsize13">13sp</dimen>
+    <dimen name="textsize14">14sp</dimen>
+    <dimen name="textsize15">15sp</dimen>
+    <dimen name="textsize16">16sp</dimen>
+    <dimen name="textsize17">17sp</dimen>
+    <dimen name="textsize18">18sp</dimen>
+    <dimen name="textsize19">19sp</dimen>
+    <dimen name="textsize20">20sp</dimen>
+    <dimen name="textsize21">21sp</dimen>
+    <dimen name="textsize22">22sp</dimen>
+    <dimen name="textsize24">24sp</dimen>
+    <dimen name="textsize25">25sp</dimen>
+    <dimen name="textsize26">26sp</dimen>
+    <dimen name="textsize27">27sp</dimen>
+    <dimen name="textsize28">28sp</dimen>
+    <dimen name="textsize30">30sp</dimen>
+    <dimen name="textsize31">31sp</dimen>
+    <dimen name="textsize33">33sp</dimen>
+    <dimen name="textsize35">35sp</dimen>
+    <dimen name="dividerHeight">0.2dip</dimen>
+    
+    <dimen name="round_progress_bar_size">25dip</dimen>
+
+</resources>

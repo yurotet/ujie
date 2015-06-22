@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/background_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:background="@drawable/background_shadow"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_title_height" >
+
+            <TextView
+                android:id="@+id/item_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:text="接机"
+                android:textColor="@color/textcolor_orange"
+                android:textSize="@dimen/textsize18" />
+
+            <TextView
+                android:id="@+id/item_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_2"
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_toRightOf="@id/item_type_tv"
+                android:text="2015年7月20日12:50"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/textsize14" />
+
+            <View
+                android:id="@+id/top_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linecolor_gray" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/line_height"
+                android:layout_above="@id/top_line"
+                android:layout_alignLeft="@id/item_type_tv"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@id/item_type_tv"
+                android:background="@color/textcolor_orange" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40"
+            android:layout_margin="@dimen/margin_10"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/start_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出发地点"
+                android:textColor="@color/textcolor_gray"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/arrive_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/start_tag"
+                android:layout_marginTop="@dimen/margin_8"
+                android:text="送达地点"
+                android:textColor="@color/textcolor_gray"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/start_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_toRightOf="@id/start_tag"
+                android:text="成田国际机场"
+                android:textColor="@color/textcolor_light_black"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/arrive_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/arrive_tag"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_toRightOf="@id/arrive_tag"
+                android:text="成田国际机场"
+                android:textColor="@color/textcolor_light_black"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/order_state_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/textcolor_gray"
+                android:drawableRight="@drawable/arrow_right_gray"
+                android:drawablePadding="@dimen/margin_5"
+                android:textSize="@dimen/textsize12" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/linecolor_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5" >
+
+            <RelativeLayout
+                android:id="@+id/mid_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <View
+                    android:layout_width="@dimen/line_height"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/linecolor_gray" />
+
+                <TextView
+                    android:id="@+id/mid_num_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="26公里"
+                    android:textColor="@color/textcolor_black"
+                    android:textSize="@dimen/textsize18" />
+
+                <TextView
+                    android:id="@+id/mid_tag_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mid_num_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_3"
+                    android:text="预估路程"
+                    android:textColor="@color/textcolor_gray"
+                    android:textSize="@dimen/textsize11" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/price_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" >
+
+                <TextView
+                    android:id="@+id/price_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="¥540"
+                    android:textColor="@color/textcolor_black"
+                    android:textSize="@dimen/textsize18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/price_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_3"
+                    android:text="最高出价"
+                    android:textColor="@color/textcolor_gray"
+                    android:textSize="@dimen/textsize11" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
