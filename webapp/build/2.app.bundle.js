@@ -385,7 +385,7 @@ webpackJsonp([2],{
 				 }	
 			},
 			
-			created: function() {
+			created: function() {alert('created');
 				lockr.set('isRegLegal', false);
 				this._loadCountryInfo().then(this.initData);
 			},
