@@ -330,6 +330,7 @@ webpackJsonp([2],{
 						            timeout: 10000,
 						            context: this,
 						            success: function(body){  
+						            	alert('success'+JSON.stringify(body));
 						              if (body.err_code == 0 ) {				               	
 						               	switch (body.data.guide_auth) {
 						               		case '1': 	//审核通过
@@ -353,7 +354,7 @@ webpackJsonp([2],{
 						                          this.hideLoading();
 						            },
 						          
-						            error: function(xhr, type){
+						            error: function(err){alert(JSON.stringify(err));
 						              reject();
 						            }
 						        }) 
@@ -374,10 +375,11 @@ webpackJsonp([2],{
 				 				nav.goTo("register");
 				 			break;
 				 			default:
+				 				alert('statu code:'+ statusCode);
 				 				nav.goTo('notfound');
 				 			break;
 				 		}
-				 	}).catch(function(err) {console.log(JSON.stringify(err));
+				 	}).catch(function(err) {alert(SON.stringify(err));
 				 		nav.goTo('notfound');
 				 	});
 				 }	
