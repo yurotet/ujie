@@ -64,7 +64,7 @@
 				retObj.insurance_pic2 = 'none';
 				retObj.tourcard_pic = user.guidePic || '';
 				retObj.driver_pic = user.licensePic || '';
-alert('post pic:' +JSON.stringify(retObj));
+
 				return retObj;
 			},
 
@@ -79,7 +79,7 @@ alert('post pic:' +JSON.stringify(retObj));
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){alert('knfo res:'+ JSON.stringify(res));
+					  success: function(res){
 					  	if( res.err_code==0) { 
 					  		resolve();					  		
 					  	} else {	
@@ -91,7 +91,7 @@ alert('post pic:' +JSON.stringify(retObj));
 					  					  	
 					  },
 					
-					  error: function(){alert('info err');
+					  error: function(){
 					   	reject();
 					  }
 				})
@@ -107,7 +107,7 @@ alert('post pic:' +JSON.stringify(retObj));
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						 success: function(res){	alert('pic res:'+ JSON.stringify(res));					 	 
+						 success: function(res){					 	 
 						  	if(res.err_code==0){			  		
 						  		resolve();
 						  	} else {	
@@ -121,7 +121,7 @@ alert('post pic:' +JSON.stringify(retObj));
 						  complete:function() {
 						  },
 						
-						  error: function(){alert("pic error")
+						  error: function(){
 						   	reject();
 						  }
 					});
