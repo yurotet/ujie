@@ -309,6 +309,7 @@ webpackJsonp([8],{
 					
 					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){					
 						this.hideLoading();
+						nav.goTo('downloadAPP');
 					}.bind(this)).catch(function(msg) {
 						this.hideLoading();
 						this.showToast(msg,true);

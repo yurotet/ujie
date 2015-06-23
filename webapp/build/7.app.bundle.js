@@ -124,7 +124,7 @@ webpackJsonp([7],{
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(71)(".cntContainer,.regHeader{text-align:center}.cntContainer h3{margin:25px}.cntContainer p{font-size:16px;margin:40px}");
-	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\n\t<div class=\"cntContainer\">\n\t\t<h3>审核已提交！</h3>\n\t\t<p>您的注册认证信息已提交到蜜柚旅行，快下载蜜柚接单APP查看认证状态吧。</p>\n\t\t<button class=\"btn btn-positive btn-block\">下载蜜柚接单APP</button>\n\t</div>";
+	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\n\t<div class=\"cntContainer\">\n\t\t<h3>收到！</h3>\n\t\t<p>您的注册认证信息已提交到蜜柚旅行，快下载蜜柚接单APP查看认证状态吧。</p>\n\t\t<button class=\"btn btn-positive btn-block\">下载蜜柚接单APP</button>\n\t</div>";
 	var BasePage = __webpack_require__(72);
 		var Vue = __webpack_require__(6);
 
