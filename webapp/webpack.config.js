@@ -9,7 +9,7 @@ module.exports = {
     }, 
     output: {
         path: "./build/",
-        filename: "app.bundle.js",
+        filename: "app.bundle"+(+new Date())+ ".js",
         publicPath: '/ujie/'
     },
     module: {
