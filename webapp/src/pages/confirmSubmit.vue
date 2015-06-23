@@ -84,7 +84,7 @@ alert('post img data:' + JSON.stringify(retObj));
 					  	if( res.err_code==0) { 
 					  		resolve();					  		
 					  	} else {	
-					  		reject(res.err_msg);						  		
+					  		reject(res.data[0].err_msg);						  		
 					  	}
 					    
 					  },
