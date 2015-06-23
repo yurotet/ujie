@@ -64,7 +64,7 @@
 				retObj.insurance_pic2 = 'none';
 				retObj.tourcard_pic = user.guidePic || '';
 				retObj.driver_pic = user.licensePic || '';
-
+alert('post pic:' +JSON.stringify(retObj));
 				return retObj;
 			},
 

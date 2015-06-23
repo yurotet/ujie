@@ -1,4 +1,4 @@
-webpackJsonp([8],{
+webpackJsonp([5],{
 
 /***/ 71:
 /***/ function(module, exports, __webpack_require__) {
@@ -120,6 +120,276 @@ webpackJsonp([8],{
 
 /***/ },
 
+/***/ 76:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)("#userInfo .input-row input{width:65%}#userInfo select{margin-top:5px;width:65%}.input-row label.more{font-size:14px}.input-row button{margin-top:5px;float:right;margin-right:20px}#picUploadPreBtn{display:'inline-block';width:35%}#picUploadBtn{display:'inline-block';width:60%;float:right}");
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t  <div>\n\t  \t <form class=\"input-group\">\n\t  \t \t<div v-on=\"click:onChoosePassportPic\" v-component=\"view/picUpload\" v-with=\"title: passportPic.title,cls:'passport'\"></div>\n\t\t\t<div v-on=\"click:onChooselicencePic\" v-component=\"view/picUpload\" v-with=\"title:licensePic.title, cls:'license'\"></div>\t\n\t\t\t<div style=\"display:{{hasGuideCer? 'block':'none'}}\" v-on=\"click:onChooseGuideLicencePic\" v-component=\"view/picUpload\" v-with=\"title:guidePic.title, cls:'guide'\"></div>\t\n\t\t</form>\n\t</div>\n\n\t\n\t<button id=\"picUploadBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步, 填写结算账户信息</button>\n\t<button id=\"picUploadPreBtn\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">上一步</button>";
+	var BasePage = __webpack_require__(72);		
+		var picUpload= __webpack_require__(87);
+		var steps = __webpack_require__(78);
+		var nav = __webpack_require__(68);
+		var lockr = __webpack_require__(85);
+		var util = __webpack_require__(86);
+
+		var View = BasePage.extend({
+			title: '上传认证图片',
+			data:function(){			
+				return {	
+					curStep:3,
+
+					hasGuideCer: false,
+
+					passportPic:{
+						title:'上传护照 (必传)',
+						url:''
+					},
+
+					licensePic: {
+						title:'上传驾照 (必传)',
+						url:''
+					},						
+									
+					guidePic: {
+						title:'导游证照片 (必传)',
+						url:''
+					}			
+				}
+			},
+
+			watch: {
+				'passportPic.url':function(imageUrl){
+					var el =$('.avatar-row.passport');	 		
+					el.css('background-image', 'url(' + imageUrl + ')');
+					el.css('background-size', '100% 100%');					
+					 
+					 this.savePic('passportPic', imageUrl);						
+
+					this.checkSubmitBtn();
+				},
+				'licensePic.url': function(imageUrl) {
+					var el = $('.avatar-row.license');
+					el.css('background-image', 'url(' + imageUrl + ')');	
+					el.css('background-size', '100% 100%');	
+					
+					this.savePic('licensePic',imageUrl);
+
+					this.checkSubmitBtn();
+				},
+							
+				'guidePic.url': function(imageUrl) {
+					var el = $('.avatar-row.guide');
+					el.css('background-image', 'url(' + imageUrl + ')');	
+					el.css('background-size', '100% 100%');	
+					
+					this.savePic('guidePic', imageUrl);
+
+					this.checkSubmitBtn();
+				}
+
+			},
+
+			methods: {
+				savePic:function(entity, imageUrl){
+					var user = lockr.get('user');				
+					 if (user) {
+					 	user[entity] = imageUrl;				 	
+						 lockr.set('user',user);						 
+					 }
+					 alert(JSON.stringify(user));						
+				},
+				checkSubmitBtn:function(){				
+
+					var disabled = !this.$data.passportPic.url || !this.$data.licensePic.url || (this.$data.hasGuideCer && !this.guidePic.url);
+
+					var btn = $('#picUploadBtn');
+					if (disabled) {
+						btn.attr('disabled','disabled');
+					} else {
+						btn.removeAttr('disabled');
+					}
+				},
+
+				onChoosePassportPic:function () {
+					this.onChoosePhoto('passport');
+				},
+
+				onChooselicencePic:function(){
+					this.onChoosePhoto('license');
+				},
+
+				onChooseGuideLicencePic:function(){
+					this.onChoosePhoto('guide');
+				},
+				
+				onChoosePhoto: function(entity) {								
+					wx.chooseImage({
+					    success: function (res) {
+					        var localIds = res.localIds;
+					        if(localIds.length) {
+					        	var wxMediaId = localIds[0];				        				        
+					        	this.showLoading();
+					        	wx.uploadImage({
+							localId: wxMediaId,
+							isShowProgressTips: 0,
+							success: function(res) {
+								var wxMediaId = res.serverId; // 返回图片的服务器端ID							
+								this._uploadPic(wxMediaId, function(url) {							
+									this.hideLoading();
+									if(url) {									
+										switch (entity) {
+											case 'passport':							
+												this.$data.passportPic.url = url;
+											break ;
+											case 'license':
+												this.$data.licensePic.url = url;
+											break;
+											case 'guide':
+												this.$data.guidePic.url = url;
+											break;
+										}									
+									}
+								}.bind(this));
+							}.bind(this),
+							fail: function() {							
+								this.hideLoading();
+							}
+						});
+					        }
+					    }.bind(this)
+					});
+				},
+				
+				onSubmit: function() {
+					nav.goTo('accRegister');				
+				},
+				
+				_uploadPic: function(wxMediaId, cb) {
+					$.ajax({
+						  type:'POST',				  
+						  url: '/api/upload_img', 
+						  data: {media_id: wxMediaId},				 
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						 success: function(res){	
+						  	if(res.err_code==0){					  		
+						  		cb(res.data.img_url);	
+						  	} else {			  		
+						  		cb(); 
+						  	}
+						    
+						  },
+						  complete:function() {
+						  	
+						  	// this.hideLoading();					  	
+						  },
+						
+						  error: function(xhr, type){
+						   	
+						   	cb();
+						  }
+					});					
+				},
+							
+				setHeader:function(){
+					var selText = '.stepsContainer.index3 .step3' ;
+									
+					var ela=$(selText+' a'),
+						eltext=$(selText+ ' .text');		
+			 		
+			 		ela.css('width','170px');	  		
+			  		ela.css('background-color','#77c2a5');
+
+			  		eltext.css('display','inline-block');
+			  		eltext.css('opacity','1');		
+				},
+				onPre:function () {
+					nav.goTo('register');
+				},
+
+				refreshWX:function() {
+					var nonceStr = util.uuid();
+					var timestamp = +new Date();
+					var url = location.href.split('#')[0];
+					$.ajax({	 
+						  type:'POST',				  
+						  url: '/api/weixin_signature', 
+						  // data to be added to query string:
+						 data: {
+							timestamp: timestamp,
+							noncestr: nonceStr,
+							url: url
+						},
+						  // type of data we are expecting in return:
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						  success: function(body){	
+						  	if (body.err_code == 0 ) {
+						  		var data = body.data;					  		
+						  		var wxConfig = {
+									// debug: true,
+									appId: data.appId,
+									timestamp: data.timestamp,
+									nonceStr: data.nonceStr,
+									signature: data.signature,
+									jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+								}
+
+						  		wx.config(wxConfig);
+						  		
+						  	} else {
+
+						  	}					  						   
+						  },
+						  complete:function() {
+						  					  	
+						  },
+						
+						  error: function(xhr, type){
+						   	
+						  }
+					})	
+				}
+			},
+			created: function() {
+				var savedUser = lockr.get('user');				
+				if (savedUser) {				
+					this.$data.passportPic.url = savedUser.passportPic || '' ;
+					this.$data.guidePic.url = savedUser.guidePic || '';
+					this.$data.licensePic.url = savedUser.licensePic || '';
+					
+					setTimeout(this.checkSubmitBtn,0)
+				}			
+			},
+			resume:function() {
+				this.setHeader();
+				
+				if (!lockr.get('isRegLegal')) {
+					nav.goTo('notfound');
+					return;
+				}
+				// this.refreshWX();		
+				
+
+				var savedUser = lockr.get('user');
+				if (savedUser) {
+					this.$data.hasGuideCer = savedUser.hasGuideCer == 'yes';
+				}
+			},
+			pause:function(){
+
+			}			
+		});
+
+		module.exports = View;
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+
 /***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -167,186 +437,6 @@ webpackJsonp([8],{
 	});
 
 	module.exports = M;
-
-/***/ },
-
-/***/ 81:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".regHeader{text-align:center}.reg-name{font-weight:700;font-size:18px}.confirmMsgContainer{padding:20px}.confirmMsgContainer p{font-size:16px}#modifyInfo{display:'inline-block';width:35%}#regSubmit{display:'inline-block';width:60%;float:right}");
-	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t<div class=\"confirmMsgContainer\">\n\t\t<p>\n\t\t\tHi <span class=\"reg-name\">{{name}}</span>，感谢您完成认证信息的填写。</p>\n\t\t\t<p>请确认您填写的资料真实有效，提交审核后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！\n\t\t</p>\n\t\t\n\t</div>\t\n\n\t<button id=\"regSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交审核</button>\n\t<button id=\"modifyInfo\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">修改资料</button>";
-	var BasePage = __webpack_require__(72);
-		var Vue = __webpack_require__(6);
-		var nav = __webpack_require__(68);
-		var lockr = __webpack_require__(85);	
-		var steps = __webpack_require__(78);
-		var util = __webpack_require__(86);
-
-		var View = BasePage.extend({
-			title: '提交审核',
-			data:function(){ 
-				return {
-					curStep:1,
-					name: lockr.get('user').realname
-				}
-			},	
-			methods: {
-				getPostUserInfo : function() {
-					var infoTransList = lockr.get('infoTransList'),
-						accTransList=  lockr.get('accTransList'),
-						countryTransList=  lockr.get('countryTransList'),
-						cityTransList = lockr.get('cityTransList');
-
-					var transList = util.flatten([infoTransList, accTransList,countryTransList,cityTransList]);
-
-					var getText = function(value) {
-						for ( var i =0;i < transList.length; i++) {
-							if (transList[i].value == value)
-								return transList[i].text;
-						}				
-					}
-
-					var user = lockr.get('user'), 
-						retObj = {};
-					
-					retObj.name= user.realname;
-					retObj.sex = getText(user.sex);
-					retObj.age = user.age;
-					retObj.country = getText(user.country);
-					retObj.city = getText(user.city);
-					retObj.address = user.address;
-					retObj.mobile = user.mobile;
-					retObj.email = user.mailBox;
-					retObj.weixin = user.wechat;
-					retObj.tour_guide_certificate = getText(user.hasGuideCer);
-					retObj.drive_age = getText(user.drivingExp);
-					retObj.work_age = getText(user.workingExp);
-					retObj.pay_type = getText(user.payType) ;
-					retObj.alipay = user.alipayAcc;
-					retObj.paypal = user.paypalAcc;
-					retObj.bank_user =user.accName;
-					retObj.bank_name =  user.bankName;
-					retObj.bank_code = user.cardNo;
-
-					return retObj;
-				},
-
-				getPostPics:function(){ 
-					var user = lockr.get('user'), retObj = {};
-
-					retObj.passport_pic = user.passportPic || '';
-					retObj.car_pic=  'none';
-					retObj.insurance_pic = 'none';
-					retObj.insurance_pic2 = 'none';
-					retObj.tourcard_pic = user.guidePic || '';
-					retObj.driver_pic = user.licensePic || '';
-
-					return retObj;
-				},
-
-				_uploadUserInfo : function() {
-					return new Promise(function (resolve, reject) {
-						$.ajax({	 
-						  type:'POST',				  
-						  url: '/api/info', 
-						  // data to be added to query string:
-						  data: this.getPostUserInfo(),
-						  // type of data we are expecting in return:
-						  dataType: 'json',
-						  timeout: 10000,
-						  context: this,
-						  success: function(res){					  				  
-						  	if( res.err_code==0) { 
-						  		resolve();					  		
-						  	} else {	
-						  		reject(res.data[0].err_msg);						  		
-						  	}
-						    
-						  },
-						  complete:function() {
-						  					  	
-						  },
-						
-						  error: function(){
-						   	reject();
-						  }
-					})
-					}.bind(this));
-				},
-				
-				_uploadPics :function() {
-					return new Promise(function(resolve, reject) {
-						$.ajax({
-							  type:'POST',				  
-							  url: '/api/images', 
-							  data: this.getPostPics(),				 
-							  dataType: 'json',
-							  timeout: 10000,
-							  context: this,
-							 success: function(res){						 	 
-							  	if(res.err_code==0){			  		
-							  		resolve();
-							  	} else {	
-							  		if (res.data.length) {
-							  			reject(res.data[0].err_msg);
-							  		}		  		
-							  		reject();
-							  	}
-							    
-							  },
-							  complete:function() {
-							  },
-							
-							  error: function(){
-							   	reject();
-							  }
-						});
-					}.bind(this));
-				},
-
-				onSubmit: function() {								
-					this.showLoading();
-					
-					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){					
-						this.hideLoading();
-					}.bind(this)).catch(function(msg) {
-						this.hideLoading();
-						this.showToast(msg,true);
-					}.bind(this));								
-				},
-				onPre :function() {
-					nav.goTo('register');
-				},
-				setHeader:function() {
-					var selText = '.stepsContainer.index1 .step1' ;
-									
-					var ela=$(selText+' a'),
-						eltext=$(selText+ ' .text');		
-			 		
-			 		ela.css('width','170px');	  		
-			  		ela.css('background-color','#77c2a5');
-
-			  		eltext.css('display','inline-block');
-			  		eltext.css('opacity','1');	
-				}		
-			},
-			created: function() {			
-				
-			},
-			resume:function() {
-				this.setHeader();	
-				if (!lockr.get('isRegLegal')) {
-					nav.goTo('notfound');
-					return;
-				}
-
-			}
-		});
-
-		module.exports = View;
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
@@ -838,6 +928,28 @@ webpackJsonp([8],{
 	  return Lockr;
 
 	}));
+
+/***/ },
+
+/***/ 87:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(71)(".input-row .icon{width:50px;height:50px;margin:3px;font-size:24px;line-height:50px;text-align:center;background-color:#fff;border:1px solid #ddd;border-radius:25px}.input-row.avatar-row{height:150px;text-align:center}.avatar-row .uploadItem{margin-top:35px;opacity:.7}");
+	var __vue_template__ = "<div class=\"input-row avatar-row {{cls}}\">\t\t\t\t\t\n\t\t<div class=\"uploadItem\">\n\t\t\t<span class=\"icon icon-plus\"></span>\n\t\t\t<p>{{title}}</p>\n\t\t</div>\n\t</div>";
+	var BaseComponent = __webpack_require__(79);
+		var Vue = __webpack_require__(6);
+
+		var View = BaseComponent.extend({
+			title: 'picupload',			
+			created: function() {			
+			},		
+		});
+
+		module.exports = View;
+
+		Vue.component('view/picUpload', View);
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
 
 /***/ }
 
