@@ -248,6 +248,7 @@
 			 				nav.goTo("register");
 			 			break;
 			 			default:
+			 				alert('statu code:'+ statusCode);
 			 				nav.goTo('notfound');
 			 			break;
 			 		}
