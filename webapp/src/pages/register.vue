@@ -203,8 +203,7 @@
 					            dataType: 'json',
 					            timeout: 10000,
 					            context: this,
-					            success: function(body){  
-					            	alert('success'+JSON.stringify(body));
+					            success: function(body){  					            	
 					              if (body.err_code == 0 ) {				               	
 					               	switch (body.data.guide_auth) {
 					               		case '1': 	//审核通过
@@ -228,7 +227,7 @@
 					                          this.hideLoading();
 					            },
 					          
-					            error: function(err){alert(JSON.stringify(err));
+					            error: function(err){
 					              reject();
 					            }
 					        }) 
@@ -248,18 +247,17 @@
 			 			case REG_STATUS.READY_FOR_REG:
 			 				nav.goTo("register");
 			 			break;
-			 			default:
-			 				alert('statu code:'+ statusCode);
+			 			default:			 				
 			 				nav.goTo('notfound');
 			 			break;
 			 		}
-			 	}).catch(function(err) {alert(SON.stringify(err));
+			 	}).catch(function(err) {
 			 		nav.goTo('notfound');
 			 	});
 			 }	
 		},
 		
-		created: function() {alert('created');
+		created: function() {
 			lockr.set('isRegLegal', false);
 			this._loadCountryInfo().then(this.initData);
 		},

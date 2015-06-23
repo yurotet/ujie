@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([2],{
 
 /***/ 71:
 /***/ function(module, exports, __webpack_require__) {
@@ -120,104 +120,281 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 75:
+/***/ 73:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}#linkSec a{text-decoration:underline}#linkSec{text-align:center;margin-top:20px}.regHeader{text-align:center}");
-	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\t  <div class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" v-on=\"input:onUserInput\" placeholder=\"输入用户名 (3-16位字母, 数字或汉字)\" v-model=\"username\">\n\t\t\t    </div>\t\t\t   \n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"password\" v-on=\"input:onPwdInput\" placeholder=\"输入密码 (大于6位)\" v-model=\"pwd\">\n\t\t\t    </div>\n\t\t\t    <div id=\"confirmPwdInput\" class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" v-on=\"input:onConfirmPwdInput\" placeholder=\"确认密码\" v-model=\"confirmPwd\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" placeholder=\"推荐码 (可选)\" v-model=\"recCode\">\n\t\t\t    </div>\n\t\t    </form>\n\t  \n\t\t    <button id=\"regBtn\" class=\"miu-subBtn btn btn-positive btn-block\" disabled=\"disabled\" v-model=\"realName\" v-on=\"click: onSubmit\">注册</button>\t\n\t\t    <div id=\"linkSec\"><p>注册即表示同意<a href=\"http://g.miutour.com/help/gagreement.html\" target=\"_blank\">蜜柚私导协议</a></p></div>    \t\n\t  </div>";
-	var BasePage = __webpack_require__(72);
-		var Vue = __webpack_require__(6);
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".userInfo .input-row input{width:65%;font-size:18px}.userInfo .input-row label{font-size:14px;color:#666}.userInfo select{margin-top:5px;width:65%;font-size:16px}.userInfo .input-row label.more{font-size:14px}");
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n  <div class=\"userInfo\">\n  \t <form class=\"input-group\">\n  \t\t <div class=\"input-row\">\t\t\t\n\t\t\t<label>姓名</label>\t\n\t\t\t<input type=\"text\" v-on=\"input:onInputChange\" placeholder=\"真实姓名 (必填)\" v-model=\"user.realname\">\t\t\t\n\t\t</div>\n  \t \t<div class=\"input-row\">\t\n\t\t\t<label>性别</label>\n\t\t\t<select v-on=\"change:onInputChange\" options=\"sexList\" v-model=\"user.sex\"></select>\t\t\t\n\t\t</div>\n  \t\t<div class=\"input-row\">\t\n  \t\t\t<label>年龄</label>\n\t\t\t<input v-on=\"input:onInputChange\" type=\"number\" min=\"18\" max=\"60\" placeholder=\"年龄 (必填)\" v-model=\"user.age\">\n\t\t</div>\n\t\t\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>地址</label>\t\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"地址 (必填)\" v-model=\"user.address\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>手机</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"手机 (必填)\" v-model=\"user.mobile\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>邮箱</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"邮箱 (必填)\" v-model=\"user.mailBox\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>微信</label>\t\n\t\t\t<input v-on=\"input:onInputChange\" type=\"text\" placeholder=\"微信 (必填)\" v-model=\"user.wechat\">\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\n\t\t\t<label>国家</label>\n\t\t\t<select v-on=\"change:onInputChange\" options=\"countryList\" v-model=\"user.country\"></select>\t\n\t\t</div>\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>城市</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"cityList\" v-model=\"user.city\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>导游证</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yesnoList\" v-model=\"user.hasGuideCer\"></select>\t\n\t\t</div>\t\t\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label>驾龄</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yearRangeList\" v-model=\"user.drivingExp\"></select>\t\n\t\t</div>\n\n\t\t<div class=\"input-row\">\t\n\t\t\t<label class=\"more\">从业时间</label>\t\t\n\t\t\t<select v-on=\"change:onInputChange\" options=\"yearRangeList\" v-model=\"user.workingExp\"></select>\t\n\t\t</div>\t\t\t\n\t</form>\n</div>\n\n<button id=\"userInfoBtn\" class=\"btn btn-positive btn-block\" disabled=\"disabled\" v-on=\"click: onSubmit\">下一步, 上传认证照片</button>";
+	var BasePage = __webpack_require__(72);	
+		var Promise = __webpack_require__(88);
 		var nav = __webpack_require__(68);
-		var config = __webpack_require__(69);	
 		var steps = __webpack_require__(78);
+		var lockr = __webpack_require__(85);
+		var util = __webpack_require__(86);
+
+		var REG_STATUS= {		
+			NOT_REGED:1,
+			GOTO_APP:2,
+			READY_FOR_REG:3
+		};
 
 		var View = BasePage.extend({
-			title: '注册',
+			title: '我的认证',
+			watch: {
+				    'user.country': function (val) {
+				      	this.$data.cityList  = this.$data.allCityList[val];			      	
+				      	this.$data.user.city= this.$data.cityList[0].value;
+				    }
+			  },
 			data: function() {
-				return {				
-					username:'',
-					pwd:'',	
-					confirmPwd:'',
-					recCode:''
+				
+				var sexList = [{
+					value:'male',
+					text: '男'
+				},{
+					value:'female',
+					text:'女'}],
+
+				yesnoList =[{
+					value:'no',
+					text: '无'
+				},{
+					value:'yes',
+					text: '有'
+				}],
+
+				yearRangeList =[{
+					value:'1-3',
+					text: '1-3年'
+				},{
+					value:'3-5',
+					text: '3-5年'
+				},{
+					value:'5+',
+					text:'5年以上'
+				}];
+			
+				var listToSave = util.flatten([sexList, yesnoList, yearRangeList]);
+				lockr.set('infoTransList',listToSave );		
+
+				return {
+					curStep:4,	
+
+					allCityList:{},
+					countryList:[],
+					cityList:[],
+					
+					sexList:sexList,
+					yesnoList:yesnoList,
+					yearRangeList:yearRangeList,
+					
+					user:{					
+						sex:'male',
+						hasGuideCer:'no',
+						drivingExp:'1-3',
+						workingExp:'1-3',
+						city:'',
+						age:'',
+						realname:'',
+						country:'',
+						address:'',
+						mobile:'',
+						wechat:'',					
+						mailBox:'',
+					}		
 				};
 			},
+			
+			methods: { 			
+				checkSubmitBtn:function(){					
+					var disabled  = !this.$data.user.realname || !this.$data.user.age || !this.$data.user.mobile || !this.$data.user.mailBox || ! this.$data.user.wechat;						
+				
+					var btn  = $('#userInfoBtn');
 
-			methods: {
-				checkSubmitBtn: function() {
-					var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
-					
-					var regBtn = $('#regBtn');
-					console.log(disabled);
 					if (disabled) {
-						regBtn.attr('disabled','disabled');
-					}else {
-						regBtn.removeAttr('disabled');					
+						btn.attr('disabled','disabled');
+					} else {
+						btn.removeAttr('disabled');
 					}
-					
-				},
-				onUserInput:function(){
-					this.checkSubmitBtn();
-				},
-				onPwdInput:function() {				
-					this.$data.confirmPwd='';
-					$('#confirmPwdInput').css('background-color','#FFFFFF');
-					this.checkSubmitBtn();
 				},
 
-				onConfirmPwdInput :function(){
-					var input = $('#confirmPwdInput');
-					if  (this.$data.pwd != this.$data.confirmPwd){					
-						input.css('background-color','#FFF2F2');
-					}else {					
-						input.css('background-color','#FFFFFF');
-					}
-
+				onInputChange:function() {
+					lockr.set('user', this.$data.user);				
 					this.checkSubmitBtn();
 				},
-				onSubmit: function() {
-					this.showLoading();						
+				
+				_loadCountryInfo:function() {
+					return new Promise(function(resolve, reject) {
+						this.showLoading();
+			  			$.ajax({
+							  type:'GET',				  
+							  url: '/api/tags', 				 
+							  dataType: 'json',
+							  timeout: 10000,
+							  context: this,
+							  success: function(res){  
+							  	if(res.err_code==0){
+							  		var countryList = [];
+							  		$.each(res.data, function(key,val) {					  			
+							  			countryList.push({
+							  				value:key,
+							  				text:val.name
+							  			});					  			
+
+							  			var cList = [];
+							  			$.each(val.children,function(cKey,cVal) {
+							  				cList.push({
+							  					value:cKey,
+							  					text:cVal
+							  				});					  				
+							  			});
+							  									  			
+							  			this.$data.allCityList[key] =cList;
+							  		}.bind(this));
+
+							  		// save value/text mappings for cities
+							  		var cityTrans = [];
+							  		$.each(this.$data.allCityList,function (key, value) {
+							  			cityTrans = util.flatten([cityTrans, value]);
+							  		})
+							  		lockr.set('cityTransList', cityTrans);
+
+							  		// save value/text mappings for countries
+							  		lockr.set('countryTransList', countryList);
+
+
+							  		this.$data.countryList = countryList;	
+							  		this.$data.user.country = this.$data.countryList [0].value;
+							  		resolve();			  		
+							  	} else {					  		
+							  		this.showToast(res.err_msg,true);
+							  		reject();
+							  	}
+							    
+							  },
+							  complete:function() {
+							  	this.hideLoading();					  	
+							  },
+							
+							  error: function(xhr, type){
+							   	reject();
+							  }
+						})	
+
+					}.bind(this));
 					
-					$.ajax({	 
-						  type:'POST',				  
-						  url: '/api/register', 
-						  // data to be added to query string:
-						  data: { username: this.$data.username,
-						  	passwd:this.$data.pwd,
-						  	recode:this.$data.recCode},
-						  // type of data we are expecting in return:
-						  dataType: 'json',
-						  timeout: 10000,
-						  context: this,
-						  success: function(res){					  	
-						  	if(! res.err_code || res.err_code==0){
-						  		nav.goTo('register');
-						  	} else {					  		
-						  		this.showToast(res.err_msg,true);
-						  	}
-						    
-						  },
-						  complete:function() {
-						  	this.hideLoading();					  	
-						  },
+				},
 						
-						  error: function(xhr, type){
-						   	
-						  }
-					})									
+				onSubmit: function() {
+					lockr.set('isRegLegal',true);
+					nav.goTo('picupdate');				
 				},
 
-				onAgreeClick:function() {
 
-				}			
-			},
-			created: function() {									
+				setHeader:function() {
+					var selText = '.stepsContainer.index4 .step4' ;			
+
+					var el = $(selText),
+						ela=$(selText+' a'),
+						eltext=$(selText+' .text');
 					
+					el.css('padding','3px');
+			 		el.css('margin-top','0');
+			 		
+			 		ela.css('width','100px');
+			  		ela.css('height','60px');
+			 		ela.css('line-height','60px');
+			  		ela.css('background-color','#77c2a5');
+
+			  		eltext.css('display','inline-block');
+			  		eltext.css('opacity','1');
+				},
+
+				initData:function() {
+					$.each(lockr.get('user'), function(key,val) {					
+						if (val != '') {
+							this.$data.user[key]=val;
+						}							
+					}.bind(this));
+					
+					this.checkSubmitBtn();
+				},
+
+				_loadAuthStauts:function() {
+					return new Promise(function(resolve, reject) {					
+						this.showLoading(); 
+						 $.ajax({   
+						            type:'GET', 
+						            url: '/api/info', 					          
+						            dataType: 'json',
+						            timeout: 10000,
+						            context: this,
+						            success: function(body){  					            	
+						              if (body.err_code == 0 ) {				               	
+						               	switch (body.data.guide_auth) {
+						               		case '1': 	//审核通过
+						               		case '3': 	//审核失败
+						               			resolve(REG_STATUS.GOTO_APP);
+						               		break;
+
+						               		case '2'	:	//待审核
+						               			resolve(REG_STATUS.READY_FOR_REG);
+						               		break;
+						               		default:
+						               			resolve(REG_STATUS.NOT_REGED);
+						               		break;					               		
+						               	}					               	
+
+						              } else {	
+						              	resolve(REG_STATUS.NOT_REGED);					                  
+						              }                          
+						            }.bind(this),
+						            complete:function() {
+						                          this.hideLoading();
+						            },
+						          
+						            error: function(err){
+						              reject();
+						            }
+						        }) 
+						}.bind(this));
+				},
+				
+
+				 checkRegStatus : function() {
+				 	this._loadAuthStauts().then(function(statusCode){ 		
+				 		switch (statusCode) {
+				 			case  REG_STATUS.NOT_REGED: 	//  还没有通过微信账号注册过
+				 				nav.goTo('newUser');
+				 			break;
+				 			case REG_STATUS.GOTO_APP: 		//账号已经通过认证了, 引导下载APP补全或者修改认证信息
+				 				nav.goTo('downloadAPP');
+				 			break;	
+				 			case REG_STATUS.READY_FOR_REG:
+				 				nav.goTo("register");
+				 			break;
+				 			default:			 				
+				 				nav.goTo('notfound');
+				 			break;
+				 		}
+				 	}).catch(function(err) {
+				 		nav.goTo('notfound');
+				 	});
+				 }	
 			},
-			resume: function() {			
+			
+			created: function() {
+				lockr.set('isRegLegal', false);
+				this._loadCountryInfo().then(this.initData);
+			},
+
+			resume: function() {
+				this.setHeader();
+				this.checkRegStatus();					
 			},
 			pause:function(){
 
-			}		
+			}			
 		});
 
 		module.exports = View;
@@ -601,6 +778,170 @@ webpackJsonp([4],{
 
 	}));
 
+
+/***/ },
+
+/***/ 85:
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root, factory) {
+
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = factory(root, exports);
+	    }
+	  } else if (typeof define === 'function' && define.amd) {
+	    define(['exports'], function(exports) {
+	      root.Lockr = factory(root, exports);
+	    });
+	  } else {
+	    root.Lockr = factory(root, {});
+	  }
+
+	}(this, function(root, Lockr) {
+	  'use strict';
+
+	  if (!Array.prototype.indexOf) {
+	    Array.prototype.indexOf = function(elt /*, from*/)
+	    {
+	      var len = this.length >>> 0;
+
+	      var from = Number(arguments[1]) || 0;
+	      from = (from < 0)
+	      ? Math.ceil(from)
+	      : Math.floor(from);
+	      if (from < 0)
+	        from += len;
+
+	      for (; from < len; from++)
+	      {
+	        if (from in this &&
+	            this[from] === elt)
+	          return from;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  Lockr.prefix = "";
+
+	  Lockr._getPrefixedKey = function(key, options) {
+	    options = options || {};
+
+	    if (options.noPrefix) {
+	      return key;
+	    } else {
+	      return this.prefix + key;
+	    }
+
+	  };
+
+	  Lockr.set = function (key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    try {
+	      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+	    } catch (e) {
+	      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.get = function (key, missing, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+	    if(value === null)
+	      return missing;
+	    else
+	      return (value.data || missing);
+	  };
+
+	  Lockr.sadd = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json;
+
+	    var values = Lockr.smembers(key);
+
+	    if (values.indexOf(value) > -1) {
+	      return null;
+	    }
+
+	    try {
+	      values.push(value);
+	      json = JSON.stringify({"data": values});
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      console.log(e);
+	      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.smembers = function(key, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+
+	    if (value === null)
+	      return [];
+	    else
+	      return (value.data || []);
+	  };
+
+	  Lockr.sismember = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    return Lockr.smembers(key).indexOf(value) > -1;
+	  };
+
+	  Lockr.getAll = function () {
+	    var keys = Object.keys(localStorage);
+
+	    return keys.map(function (key) {
+	      return Lockr.get(key);
+	    });
+	  };
+
+	  Lockr.srem = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json,
+	        index;
+
+	    var values = Lockr.smembers(key, value);
+
+	    index = values.indexOf(value);
+
+	    if (index > -1)
+	      values.splice(index, 1);
+
+	    json = JSON.stringify({"data": values});
+
+	    try {
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+	    }
+	  };
+
+	  Lockr.rm =  function (key) {
+	    localStorage.removeItem(key);
+	  };
+
+	  Lockr.flush = function () {
+	    localStorage.clear();
+	  };
+	  return Lockr;
+
+	}));
 
 /***/ }
 

@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([8],{
 
 /***/ 71:
 /***/ function(module, exports, __webpack_require__) {
@@ -120,113 +120,6 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 75:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".red{color:red}.dbtap{width:100px;height:100px;background-color:#00f}#linkSec a{text-decoration:underline}#linkSec{text-align:center;margin-top:20px}.regHeader{text-align:center}");
-	var __vue_template__ = "<div class=\"regHeader\">\n\t\t<img src=\"logo.png\">\n\t</div>\n\t  <div class=\"driver-reg\">\n\t\t  <form class=\"input-group\">\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" v-on=\"input:onUserInput\" placeholder=\"输入用户名 (3-16位字母, 数字或汉字)\" v-model=\"username\">\n\t\t\t    </div>\t\t\t   \n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"password\" v-on=\"input:onPwdInput\" placeholder=\"输入密码 (大于6位)\" v-model=\"pwd\">\n\t\t\t    </div>\n\t\t\t    <div id=\"confirmPwdInput\" class=\"input-row\">\t\t\t\t      \n\t\t\t\t      <input type=\"password\" v-on=\"input:onConfirmPwdInput\" placeholder=\"确认密码\" v-model=\"confirmPwd\">\n\t\t\t    </div>\n\t\t\t    <div class=\"input-row\">\n\t\t\t\t      <input type=\"text\" placeholder=\"推荐码 (可选)\" v-model=\"recCode\">\n\t\t\t    </div>\n\t\t    </form>\n\t  \n\t\t    <button id=\"regBtn\" class=\"miu-subBtn btn btn-positive btn-block\" disabled=\"disabled\" v-model=\"realName\" v-on=\"click: onSubmit\">注册</button>\t\n\t\t    <div id=\"linkSec\"><p>注册即表示同意<a href=\"http://g.miutour.com/help/gagreement.html\" target=\"_blank\">蜜柚私导协议</a></p></div>    \t\n\t  </div>";
-	var BasePage = __webpack_require__(72);
-		var Vue = __webpack_require__(6);
-		var nav = __webpack_require__(68);
-		var config = __webpack_require__(69);	
-		var steps = __webpack_require__(78);
-
-		var View = BasePage.extend({
-			title: '注册',
-			data: function() {
-				return {				
-					username:'',
-					pwd:'',	
-					confirmPwd:'',
-					recCode:''
-				};
-			},
-
-			methods: {
-				checkSubmitBtn: function() {
-					var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
-					
-					var regBtn = $('#regBtn');
-					console.log(disabled);
-					if (disabled) {
-						regBtn.attr('disabled','disabled');
-					}else {
-						regBtn.removeAttr('disabled');					
-					}
-					
-				},
-				onUserInput:function(){
-					this.checkSubmitBtn();
-				},
-				onPwdInput:function() {				
-					this.$data.confirmPwd='';
-					$('#confirmPwdInput').css('background-color','#FFFFFF');
-					this.checkSubmitBtn();
-				},
-
-				onConfirmPwdInput :function(){
-					var input = $('#confirmPwdInput');
-					if  (this.$data.pwd != this.$data.confirmPwd){					
-						input.css('background-color','#FFF2F2');
-					}else {					
-						input.css('background-color','#FFFFFF');
-					}
-
-					this.checkSubmitBtn();
-				},
-				onSubmit: function() {
-					this.showLoading();						
-					
-					$.ajax({	 
-						  type:'POST',				  
-						  url: '/api/register', 
-						  // data to be added to query string:
-						  data: { username: this.$data.username,
-						  	passwd:this.$data.pwd,
-						  	recode:this.$data.recCode},
-						  // type of data we are expecting in return:
-						  dataType: 'json',
-						  timeout: 10000,
-						  context: this,
-						  success: function(res){					  	
-						  	if(! res.err_code || res.err_code==0){
-						  		nav.goTo('register');
-						  	} else {					  		
-						  		this.showToast(res.err_msg,true);
-						  	}
-						    
-						  },
-						  complete:function() {
-						  	this.hideLoading();					  	
-						  },
-						
-						  error: function(xhr, type){
-						   	
-						  }
-					})									
-				},
-
-				onAgreeClick:function() {
-
-				}			
-			},
-			created: function() {									
-					
-			},
-			resume: function() {			
-			},
-			pause:function(){
-
-			}		
-		});
-
-		module.exports = View;
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ },
-
 /***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -274,6 +167,186 @@ webpackJsonp([4],{
 	});
 
 	module.exports = M;
+
+/***/ },
+
+/***/ 81:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".regHeader{text-align:center}.reg-name{font-weight:700;font-size:18px}.confirmMsgContainer{padding:20px}.confirmMsgContainer p{font-size:16px}#modifyInfo{display:'inline-block';width:35%}#regSubmit{display:'inline-block';width:60%;float:right}");
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t<div class=\"confirmMsgContainer\">\n\t\t<p>\n\t\t\tHi <span class=\"reg-name\">{{name}}</span>，感谢您完成认证信息的填写。</p>\n\t\t\t<p>请确认您填写的资料真实有效，提交审核后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！\n\t\t</p>\n\t\t\n\t</div>\t\n\n\t<button id=\"regSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交审核</button>\n\t<button id=\"modifyInfo\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">修改资料</button>";
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
+		var nav = __webpack_require__(68);
+		var lockr = __webpack_require__(85);	
+		var steps = __webpack_require__(78);
+		var util = __webpack_require__(86);
+
+		var View = BasePage.extend({
+			title: '提交审核',
+			data:function(){ 
+				return {
+					curStep:1,
+					name: lockr.get('user').realname
+				}
+			},	
+			methods: {
+				getPostUserInfo : function() {
+					var infoTransList = lockr.get('infoTransList'),
+						accTransList=  lockr.get('accTransList'),
+						countryTransList=  lockr.get('countryTransList'),
+						cityTransList = lockr.get('cityTransList');
+
+					var transList = util.flatten([infoTransList, accTransList,countryTransList,cityTransList]);
+
+					var getText = function(value) {
+						for ( var i =0;i < transList.length; i++) {
+							if (transList[i].value == value)
+								return transList[i].text;
+						}				
+					}
+
+					var user = lockr.get('user'), 
+						retObj = {};
+					
+					retObj.name= user.realname;
+					retObj.sex = getText(user.sex);
+					retObj.age = user.age;
+					retObj.country = getText(user.country);
+					retObj.city = getText(user.city);
+					retObj.address = user.address;
+					retObj.mobile = user.mobile;
+					retObj.email = user.mailBox;
+					retObj.weixin = user.wechat;
+					retObj.tour_guide_certificate = getText(user.hasGuideCer);
+					retObj.drive_age = getText(user.drivingExp);
+					retObj.work_age = getText(user.workingExp);
+					retObj.pay_type = getText(user.payType) ;
+					retObj.alipay = user.alipayAcc;
+					retObj.paypal = user.paypalAcc;
+					retObj.bank_user =user.accName;
+					retObj.bank_name =  user.bankName;
+					retObj.bank_code = user.cardNo;
+
+					return retObj;
+				},
+
+				getPostPics:function(){ 
+					var user = lockr.get('user'), retObj = {};
+
+					retObj.passport_pic = user.passportPic || '';
+					retObj.car_pic=  'none';
+					retObj.insurance_pic = 'none';
+					retObj.insurance_pic2 = 'none';
+					retObj.tourcard_pic = user.guidePic || '';
+					retObj.driver_pic = user.licensePic || '';
+
+					return retObj;
+				},
+
+				_uploadUserInfo : function() {
+					return new Promise(function (resolve, reject) {
+						$.ajax({	 
+						  type:'POST',				  
+						  url: '/api/info', 
+						  // data to be added to query string:
+						  data: this.getPostUserInfo(),
+						  // type of data we are expecting in return:
+						  dataType: 'json',
+						  timeout: 10000,
+						  context: this,
+						  success: function(res){					  				  
+						  	if( res.err_code==0) { 
+						  		resolve();					  		
+						  	} else {	
+						  		reject(res.data[0].err_msg);						  		
+						  	}
+						    
+						  },
+						  complete:function() {
+						  					  	
+						  },
+						
+						  error: function(){
+						   	reject();
+						  }
+					})
+					}.bind(this));
+				},
+				
+				_uploadPics :function() {
+					return new Promise(function(resolve, reject) {
+						$.ajax({
+							  type:'POST',				  
+							  url: '/api/images', 
+							  data: this.getPostPics(),				 
+							  dataType: 'json',
+							  timeout: 10000,
+							  context: this,
+							 success: function(res){						 	 
+							  	if(res.err_code==0){			  		
+							  		resolve();
+							  	} else {	
+							  		if (res.data.length) {
+							  			reject(res.data[0].err_msg);
+							  		}		  		
+							  		reject();
+							  	}
+							    
+							  },
+							  complete:function() {
+							  },
+							
+							  error: function(){
+							   	reject();
+							  }
+						});
+					}.bind(this));
+				},
+
+				onSubmit: function() {								
+					this.showLoading();
+					
+					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){					
+						this.hideLoading();
+					}.bind(this)).catch(function(msg) {
+						this.hideLoading();
+						this.showToast(msg,true);
+					}.bind(this));								
+				},
+				onPre :function() {
+					nav.goTo('register');
+				},
+				setHeader:function() {
+					var selText = '.stepsContainer.index1 .step1' ;
+									
+					var ela=$(selText+' a'),
+						eltext=$(selText+ ' .text');		
+			 		
+			 		ela.css('width','170px');	  		
+			  		ela.css('background-color','#77c2a5');
+
+			  		eltext.css('display','inline-block');
+			  		eltext.css('opacity','1');	
+				}		
+			},
+			created: function() {			
+				
+			},
+			resume:function() {
+				this.setHeader();	
+				if (!lockr.get('isRegLegal')) {
+					nav.goTo('notfound');
+					return;
+				}
+
+			}
+		});
+
+		module.exports = View;
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
@@ -601,6 +674,170 @@ webpackJsonp([4],{
 
 	}));
 
+
+/***/ },
+
+/***/ 85:
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root, factory) {
+
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = factory(root, exports);
+	    }
+	  } else if (typeof define === 'function' && define.amd) {
+	    define(['exports'], function(exports) {
+	      root.Lockr = factory(root, exports);
+	    });
+	  } else {
+	    root.Lockr = factory(root, {});
+	  }
+
+	}(this, function(root, Lockr) {
+	  'use strict';
+
+	  if (!Array.prototype.indexOf) {
+	    Array.prototype.indexOf = function(elt /*, from*/)
+	    {
+	      var len = this.length >>> 0;
+
+	      var from = Number(arguments[1]) || 0;
+	      from = (from < 0)
+	      ? Math.ceil(from)
+	      : Math.floor(from);
+	      if (from < 0)
+	        from += len;
+
+	      for (; from < len; from++)
+	      {
+	        if (from in this &&
+	            this[from] === elt)
+	          return from;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  Lockr.prefix = "";
+
+	  Lockr._getPrefixedKey = function(key, options) {
+	    options = options || {};
+
+	    if (options.noPrefix) {
+	      return key;
+	    } else {
+	      return this.prefix + key;
+	    }
+
+	  };
+
+	  Lockr.set = function (key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    try {
+	      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+	    } catch (e) {
+	      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.get = function (key, missing, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+	    if(value === null)
+	      return missing;
+	    else
+	      return (value.data || missing);
+	  };
+
+	  Lockr.sadd = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json;
+
+	    var values = Lockr.smembers(key);
+
+	    if (values.indexOf(value) > -1) {
+	      return null;
+	    }
+
+	    try {
+	      values.push(value);
+	      json = JSON.stringify({"data": values});
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      console.log(e);
+	      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+	    }
+	  };
+
+	  Lockr.smembers = function(key, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        value;
+
+	    try {
+	      value = JSON.parse(localStorage.getItem(query_key));
+	    } catch (e) {
+	      value = null;
+	    }
+
+	    if (value === null)
+	      return [];
+	    else
+	      return (value.data || []);
+	  };
+
+	  Lockr.sismember = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options);
+
+	    return Lockr.smembers(key).indexOf(value) > -1;
+	  };
+
+	  Lockr.getAll = function () {
+	    var keys = Object.keys(localStorage);
+
+	    return keys.map(function (key) {
+	      return Lockr.get(key);
+	    });
+	  };
+
+	  Lockr.srem = function(key, value, options) {
+	    var query_key = this._getPrefixedKey(key, options),
+	        json,
+	        index;
+
+	    var values = Lockr.smembers(key, value);
+
+	    index = values.indexOf(value);
+
+	    if (index > -1)
+	      values.splice(index, 1);
+
+	    json = JSON.stringify({"data": values});
+
+	    try {
+	      localStorage.setItem(query_key, json);
+	    } catch (e) {
+	      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+	    }
+	  };
+
+	  Lockr.rm =  function (key) {
+	    localStorage.removeItem(key);
+	  };
+
+	  Lockr.flush = function () {
+	    localStorage.clear();
+	  };
+	  return Lockr;
+
+	}));
 
 /***/ }
 

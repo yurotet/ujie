@@ -51,7 +51,7 @@
 				retObj.bank_user =user.accName;
 				retObj.bank_name =  user.bankName;
 				retObj.bank_code = user.cardNo;
-alert('user info data:'+ JSON.stringify(retObj));
+
 				return retObj;
 			},
 
@@ -64,7 +64,7 @@ alert('user info data:'+ JSON.stringify(retObj));
 				retObj.insurance_pic2 = 'none';
 				retObj.tourcard_pic = user.guidePic || '';
 				retObj.driver_pic = user.licensePic || '';
-alert('post img data:' + JSON.stringify(retObj));
+
 				return retObj;
 			},
 
@@ -79,8 +79,7 @@ alert('post img data:' + JSON.stringify(retObj));
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){
-					  alert('pic usre info res:' + JSON.stringify(res));					  	
+					  success: function(res){					  				  
 					  	if( res.err_code==0) { 
 					  		resolve();					  		
 					  	} else {	
@@ -108,8 +107,7 @@ alert('post img data:' + JSON.stringify(retObj));
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						 success: function(res){
-						 	 alert('pic upload res:' + JSON.stringify(res));	
+						 success: function(res){						 	 
 						  	if(res.err_code==0){			  		
 						  		resolve();
 						  	} else {	
@@ -130,8 +128,7 @@ alert('post img data:' + JSON.stringify(retObj));
 				}.bind(this));
 			},
 
-			onSubmit: function() {				
-				// console.log(this.getPostPics());
+			onSubmit: function() {								
 				this.showLoading();
 				
 				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){					
