@@ -332,12 +332,13 @@ webpackJsonp([2],{
 						            success: function(body){  					            	
 						              if (body.err_code == 0 ) {				               	
 						               	switch (body.data.guide_auth) {
-						               		case '1': 	//审核通过
-						               		case '3': 	//审核失败
+						               		case '1': 	// 审核通过
+						               		case '3': 	// 审核失败
+						               		case '2':             // 审核中
 						               			resolve(REG_STATUS.GOTO_APP);
 						               		break;
 
-						               		case '2'	:	//待审核
+						               		case '0'	:	//待审核
 						               			resolve(REG_STATUS.READY_FOR_REG);
 						               		break;
 						               		default:
