@@ -255,7 +255,7 @@ webpackJsonp([8],{
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						  success: function(res){					  				  
+						  success: function(res){alert('knfo res:'+ JSON.stringify(res));
 						  	if( res.err_code==0) { 
 						  		resolve();					  		
 						  	} else {	
@@ -267,7 +267,7 @@ webpackJsonp([8],{
 						  					  	
 						  },
 						
-						  error: function(){
+						  error: function(){alert('info err');
 						   	reject();
 						  }
 					})
@@ -283,7 +283,7 @@ webpackJsonp([8],{
 							  dataType: 'json',
 							  timeout: 10000,
 							  context: this,
-							 success: function(res){						 	 
+							 success: function(res){	alert('pic res:'+ JSON.stringify(res));					 	 
 							  	if(res.err_code==0){			  		
 							  		resolve();
 							  	} else {	
@@ -297,7 +297,7 @@ webpackJsonp([8],{
 							  complete:function() {
 							  },
 							
-							  error: function(){
+							  error: function(){alert("pic error")
 							   	reject();
 							  }
 						});

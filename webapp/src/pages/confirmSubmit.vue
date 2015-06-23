@@ -79,7 +79,7 @@ alert('post pic:' +JSON.stringify(retObj));
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){					  				  
+					  success: function(res){alert('knfo res:'+ JSON.stringify(res));
 					  	if( res.err_code==0) { 
 					  		resolve();					  		
 					  	} else {	
@@ -91,7 +91,7 @@ alert('post pic:' +JSON.stringify(retObj));
 					  					  	
 					  },
 					
-					  error: function(){
+					  error: function(){alert('info err');
 					   	reject();
 					  }
 				})
@@ -107,7 +107,7 @@ alert('post pic:' +JSON.stringify(retObj));
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						 success: function(res){						 	 
+						 success: function(res){	alert('pic res:'+ JSON.stringify(res));					 	 
 						  	if(res.err_code==0){			  		
 						  		resolve();
 						  	} else {	
@@ -121,7 +121,7 @@ alert('post pic:' +JSON.stringify(retObj));
 						  complete:function() {
 						  },
 						
-						  error: function(){
+						  error: function(){alert("pic error")
 						   	reject();
 						  }
 					});
