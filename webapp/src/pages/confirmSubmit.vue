@@ -51,7 +51,7 @@
 				retObj.bank_user =user.accName;
 				retObj.bank_name =  user.bankName;
 				retObj.bank_code = user.cardNo;
-
+alert('user info data:'+ JSON.stringify(retObj));
 				return retObj;
 			},
 
@@ -64,7 +64,7 @@
 				retObj.insurance_pic2 = 'none';
 				retObj.tourcard_pic = user.guidePic || '';
 				retObj.driver_pic = user.licensePic || '';
-
+alert('post img data:' + JSON.stringify(retObj));
 				return retObj;
 			},
 
@@ -79,7 +79,8 @@
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){					  	
+					  success: function(res){
+					  alert('pic usre info res:' + JSON.stringify(res));					  	
 					  	if( res.err_code==0) { 
 					  		resolve();					  		
 					  	} else {	
@@ -108,6 +109,7 @@
 						  timeout: 10000,
 						  context: this,
 						 success: function(res){
+						 	 alert('pic upload res:' + JSON.stringify(res));	
 						  	if(res.err_code==0){			  		
 						  		resolve();
 						  	} else {	
