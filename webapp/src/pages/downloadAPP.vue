@@ -39,7 +39,7 @@
 
 	<div class='cntContainer'>
 		<h3>收到！</h3>
-		<p>您的注册认证信息已提交到蜜柚旅行，快下载蜜柚接单APP查看认证状态吧。</p>
+		<p>您已完成注册，请下载APP登录！</p>
 		<button  class="btn btn-positive btn-block">下载蜜柚接单APP</button>
 	</div>	
 </template>
