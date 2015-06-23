@@ -377,7 +377,7 @@ webpackJsonp([2],{
 				 				nav.goTo('notfound');
 				 			break;
 				 		}
-				 	}).catch(function(err) {
+				 	}).catch(function(err) {console.log(JSON.stringify(err));
 				 		nav.goTo('notfound');
 				 	});
 				 }	
