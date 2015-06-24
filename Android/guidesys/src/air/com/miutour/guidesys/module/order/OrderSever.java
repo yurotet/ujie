@@ -135,6 +135,7 @@ public class OrderSever {
     public static void parsePickUpOrder(JSONObject result, OrderBaseInfor baseInfor,List<String> locationDatas, List<String> includeDatas,  List<String> unIncludeDatas) {
         JSONObject data = result.optJSONObject("data");
         if (data != null) {
+            Log.i("czb", data.toString());
             parseBaseInfo(data, baseInfor);
             
             baseInfor.flightNo = data.optString("flight_no");
@@ -145,10 +146,10 @@ public class OrderSever {
             if ("接机".equals(baseInfor.otype)) {
                 baseInfor.destination = baseInfor.hotelName;
                 locationDatas.add(baseInfor.airport);
-                locationDatas.add(baseInfor.hotelName);
+                locationDatas.add(baseInfor.hotelAddress);
             } else {
                 baseInfor.destination = baseInfor.airport;
-                locationDatas.add(baseInfor.hotelName);
+                locationDatas.add(baseInfor.hotelAddress);
                 locationDatas.add(baseInfor.airport);
             }
             JSONArray includeArray = data.optJSONArray("cost_include");
@@ -229,7 +230,7 @@ public class OrderSever {
         }
     }
     
-    private static void parseBaseInfo(JSONObject data, OrderBaseInfor baseInfor) {
+    public static void parseBaseInfo(JSONObject data, OrderBaseInfor baseInfor) {
         if (data != null) {
             baseInfor.id = data.optString("id");
             baseInfor.orderNo = data.optString("ordid");
@@ -277,6 +278,7 @@ public class OrderSever {
             JSONArray carArray = data.optJSONArray("car");
             if (carArray != null) {
                 baseInfor.carInfos = new ArrayList<CarInfo>();
+                baseInfor.carTypes = new ArrayList<String>();
                 CarInfo carInfoItem;
                 JSONObject carInfoObject;
                 for (int i = 0; i < carArray.length(); i++) {
@@ -291,24 +293,31 @@ public class OrderSever {
                         carInfoItem.year = carInfoObject.optString("year");
                         carInfoItem.age = carInfoObject.optString("age");
                         carInfoItem.seatNum = carInfoObject.optString("seatnum");
+                        baseInfor.carTypes.add(carInfoObject.optString("seatnum"));
                         baseInfor.carInfos.add(carInfoItem);
+                        
                     }
                 }
             }
         }
     }
     
-    private void addBidder(String userName, String token, String signature, String orderId, String price, String carModel, String carType, String carSeatNum, final HttpListener listener) {
+    public static void addBidder(String userName, String token, String signature, String orderId, String price, String carModel, String carType, String carSeatNum, final HttpListener listener) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("username", userName);
         params.put("token", token);
-        params.put("signature", signature);
         params.put("id", orderId);
         params.put("price", price);
         params.put("car_models", carModel);
         params.put("car_type", carType);
         params.put("car_seatnum", carSeatNum);
-
+        params.put("nonce", signature);
+        try {
+            params.put("signature", MD5.getSignatureByValue(params, ""));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        params.remove("nonce");
         Map<String, String> header = new HashMap<String, String>();
         header.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
@@ -318,17 +327,13 @@ public class OrderSever {
             public void onSuccess2JsonObject(int statusCode, JSONObject jsonObject) {
                 if (listener==null) return;
                 if (jsonObject!=null) {
-                    if (!TextUtils.isEmpty(jsonObject.optString("0"))) {
-                        listener.onSuccess(jsonObject.optString("0"));
-                    } else {
-                        String content = null;
-                        for (int i = 1; i < 12; i++) {
-                            content = jsonObject.optString("" + i);
-                            if (!TextUtils.isEmpty(content)) {
-                                listener.onFailure(content);
-                                return;
-                            }
+                    if (!TextUtils.isEmpty(jsonObject.optString("err_code"))) {
+                        if (jsonObject.optString("err_code").equals("0")) {
+                            listener.onSuccess(jsonObject);
+                        }else{
+                            listener.onFailure(jsonObject.optString("err_msg"));
                         }
+                        
                     }
                 } else {
                     listener.onFailure("服务器错误");
@@ -344,33 +349,35 @@ public class OrderSever {
         });
     }
     
-    private void deleteMyBidder(String userName, String token, String signature, String id, final HttpListener listener) {
+    public static void deleteMyBidder(String userName, String token, String signature, String id, final HttpListener listener) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("username", userName);
         params.put("token", token);
-        params.put("signature", signature);
+        params.put("nonce", signature);
         params.put("id", id);
-
+        try {
+            params.put("signature", MD5.getSignatureByValue(params, ""));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        params.remove("nonce");
         Map<String, String> header = new HashMap<String, String>();
         header.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
-        String url = "http://testgapi.miutour.com/bidding/price";
+        String url = "http://testgapi.miutour.com/bidding/delprice";
         HttpUtils.getInstance().postJson(url, null, header, params, new HttploadingListener() {
             @Override
             public void onSuccess2JsonObject(int statusCode, JSONObject jsonObject) {
                 if (listener==null) return;
                 if (jsonObject!=null) {
+                    Log.i("czb", jsonObject.toString());
                     if (!TextUtils.isEmpty(jsonObject.optString("err_code"))) {
-                        listener.onSuccess(jsonObject.optString("err_code"));
-                    } else {
-                        String content = null;
-                        for (int i = 1; i < 12; i++) {
-                            content = jsonObject.optString("" + i);
-                            if (!TextUtils.isEmpty(content)) {
-                                listener.onFailure(content);
-                                return;
-                            }
+                        if (jsonObject.optString("err_code").equals("0")) {
+                            listener.onSuccess(jsonObject);
+                        }else{
+                            listener.onFailure(jsonObject.optString("err_msg"));
                         }
+                        
                     }
                 } else {
                     listener.onFailure("服务器错误");
@@ -408,8 +415,6 @@ public class OrderSever {
             e1.printStackTrace();
         }
         param.remove("nonce");
-        Log.i("czb", account.toString());
-        Log.i("czb", param.toString());
         HttpUtils.getInstance().postJson(Urls.ORDER_INFOR, TAG, header, param, new HttploadingListener() {
 
             @Override

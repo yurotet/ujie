@@ -11,6 +11,8 @@ import cn.com.crazydemon.okhttp.HttpUtils;
 import cn.com.crazydemon.okhttp.HttploadingListener;
 import air.com.miutour.R;
 import air.com.miutour.guidesys.common.config.Urls;
+import air.com.miutour.guidesys.model.Account;
+import air.com.miutour.guidesys.model.CarInfo;
 import air.com.miutour.guidesys.model.MyBidderItem;
 import air.com.miutour.guidesys.model.OrderBaseInfor;
 import air.com.miutour.guidesys.module.base.BaseFragmentActivity;
@@ -19,18 +21,23 @@ import air.com.miutour.guidesys.module.order.adapter.CarSelectAdapter;
 import air.com.miutour.guidesys.module.order.adapter.MyBidderListAdapter;
 import air.com.miutour.guidesys.module.order.adapter.OrderInforListAdapter;
 import air.com.miutour.guidesys.module.order.adapter.OrderLocationListAdapter;
+import air.com.miutour.guidesys.util.AccountUtil;
 import air.com.miutour.guidesys.util.ToastUtils;
 import air.com.miutour.guidesys.widget.CustomException;
 import air.com.miutour.guidesys.widget.FixedListView;
 import air.com.miutour.guidesys.widget.CustomException.LoadViewReloadListener;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -79,14 +86,13 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
 
     private View myOrderLayout;
     private FixedListView myOrderListView;
-    private List<MyBidderItem> myOrders;
     private MyBidderListAdapter myOrderListAdapter;
 
+    private Account account;
     private OrderBaseInfor baseInfor = new OrderBaseInfor();// 基本信息
     private List<String> locationDatas;
     private List<String> includeDatas;
     private List<String> unIncludeDatas;
-    private List<String> carTypes;
     private int currentPage = 0;
     private String orderId;
 
@@ -97,8 +103,7 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
         locationDatas = new ArrayList<String>();
         includeDatas = new ArrayList<String>();
         unIncludeDatas = new ArrayList<String>();
-        carTypes = new ArrayList<String>();
-        myOrders = new ArrayList<MyBidderItem>();
+        account = AccountUtil.getLoginAccount(getApplicationContext());
         getInstant();
         initView();
         loadData();
@@ -169,7 +174,7 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
         tripListView.setAdapter(locationListAdapter);
         includeListView.setAdapter(includeListAdapter);
         unIncludeListView.setAdapter(unIncludeListAdapter);
-        mCarSelectAdapter = new CarSelectAdapter(getApplicationContext(), carTypes);
+        mCarSelectAdapter = new CarSelectAdapter(getApplicationContext(), baseInfor.carTypes);
         carSelectViewPager.setAdapter(mCarSelectAdapter);
         carSelectViewPager.setOnPageChangeListener(pageChangeListener);
 
@@ -179,8 +184,35 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
         myOrderListView.setAdapter(myOrderListAdapter);
         myOrderListAdapter.setOnDelClickListener(new MyBidderListAdapter.OnDelClickListener() {
             @Override
-            public void onDelClick(int position) {
-
+            public void onDelClick(final int position) {
+                if (account == null) {
+                    ToastUtils.show(getApplicationContext(), "请先登录", Toast.LENGTH_SHORT);
+                    return;
+                }
+                OrderSever.deleteMyBidder(account.username, account.token, account.nonce, baseInfor.myBidders.get(position).id, new HttpListener() {
+                    
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        int code = result.optInt("err_code");
+                        if (code == 0) {
+                            ToastUtils.show(getApplicationContext(), "删除成功", Toast.LENGTH_LONG);
+                        }else{
+                            ToastUtils.show(getApplicationContext(), "删除失败", Toast.LENGTH_LONG);
+                        }
+                        baseInfor.myBidders.remove(position);
+                        myOrderListAdapter.notifyDataSetChanged();
+                    }
+                    
+                    @Override
+                    public void onSuccess(String content) {
+                        
+                    }
+                    
+                    @Override
+                    public void onFailure(String content) {
+                        
+                    }
+                });
             }
         });
 
@@ -250,6 +282,7 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
         } else {
             myOrderLayout.setVisibility(View.VISIBLE);
         }
+        mCarSelectAdapter.setDatas(baseInfor.carTypes);
         notifyAdapter();
     }
 
@@ -271,10 +304,47 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
             } else if (id == R.id.app_top_banner_right_text) {
 
             } else if (id == R.id.price_bid) {
+                if (account == null) {
+                    ToastUtils.show(getApplicationContext(), "请先登录", Toast.LENGTH_SHORT);
+                    return;
+                }
                 if (priceEdit.getText() != null && !priceEdit.getText().toString().equals("0")) {
                     myPriceTv.setText(priceEdit.getText());
                     baseInfor.myPrice = priceEdit.getText().toString();
-                } else {
+                    final CarInfo car = baseInfor.carInfos.get(currentPage);
+                    final String price = priceEdit.getText().toString();
+                    OrderSever.addBidder(account.username, account.token, account.nonce, orderId,price ,car.model , car.type, car.seatNum, new HttpListener() {
+                        
+                        @Override
+                        public void onSuccess(JSONObject result) {
+                            int code = result.optInt("err_code");
+                            if (code == 0) {
+                                ToastUtils.show(getApplicationContext(), "出价成功", Toast.LENGTH_LONG);
+                                MyBidderItem bidder = new MyBidderItem();
+                                bidder.id = result.optJSONObject("data").optString("id");
+                                bidder.carModel = car.model;
+                                bidder.carType = car.type;
+                                bidder.price = price;
+                                bidder.seatNum = car.seatNum;
+                                baseInfor.myBidders.add(0,bidder);
+                                myOrderListAdapter.notifyDataSetChanged();
+                            }else{
+                                ToastUtils.show(getApplicationContext(), result.optString("err_msg"), Toast.LENGTH_LONG);
+                            }
+                            
+                        }
+                        
+                        @Override
+                        public void onSuccess(String content) {
+                            
+                        }
+                        
+                        @Override
+                        public void onFailure(String content) {
+                            ToastUtils.show(getApplicationContext(), content, Toast.LENGTH_LONG);
+                        }
+                    });
+                }else {
                     ToastUtils.show(getApplicationContext(), "请输入有效价格", Toast.LENGTH_SHORT);
                 }
             } else if (id == R.id.price_down_btn) {
@@ -296,7 +366,7 @@ public class PickUpOrderInforActivity extends BaseFragmentActivity {
     };
 
     private void changePrice(int price) {
-        if (priceEdit.getText() != null && !priceEdit.getText().toString().equals("0")) {
+        if (priceEdit.getText() != null) {
             int editPrice;
             if (priceEdit.getText().toString().equals("")) {
                 editPrice = 0;

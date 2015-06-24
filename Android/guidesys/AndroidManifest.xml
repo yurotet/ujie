@@ -8,7 +8,9 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	
+	
     <application
         android:name="Guidesys"
         android:allowBackup="true"
@@ -28,26 +30,31 @@
         </activity>
         <activity
             android:name="air.com.miutour.guidesys.module.order.CharteredOrderInforActivity"
-            android:label="订单详情页"
+            android:label="包车详情页"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="air.com.miutour.guidesys.module.order.PickUpOrderInforActivity"
-            android:label="订单详情页"
+            android:label="接送机详情页"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="air.com.miutour.guidesys.module.order.MixedOrderInforActivity"
-            android:label="订单详情页"
+            android:label="组合详情页"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".guidesys.module.order.CarPoolOrderInforActivity"
             android:label="拼车详情页"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name="air.com.miutour.guidesys.module.LoginActivity"
             android:label="登录页面"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" >
         </activity>
         <activity

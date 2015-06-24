@@ -15,19 +15,28 @@
             android:layout_height="80dp"
             android:background="@drawable/background_user_tag" />
 
-        <air.com.miutour.guidesys.widget.CircularImage
-            android:id="@+id/user_tag_avatar"
+        <RelativeLayout
+            android:id="@+id/user_tag_avatar_layout"
             android:layout_width="75dp"
-            android:layout_height="79dp"
+            android:layout_height="85dp"
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="17.5dp"
-            android:layout_marginTop="-16dp"
-            android:paddingTop="11dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp"
-            android:background="@drawable/background_user_avatar"
-             />
+            android:layout_marginTop="-16dp">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="85dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/background_user_avatar" />
+
+            <air.com.miutour.guidesys.widget.CircularImage
+                android:id="@+id/user_tag_avatar"
+                android:layout_width="60dp"
+                android:layout_centerInParent="true"
+                android:layout_height="60dp"
+                android:background="@drawable/user_avatar_default" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/user_tag_name"
@@ -35,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:layout_toRightOf="@id/user_tag_avatar"
+            android:layout_toRightOf="@id/user_tag_avatar_layout"
             android:text="曹格非"
             android:textColor="@color/textcolor_black_3e"
             android:textSize="18sp" />

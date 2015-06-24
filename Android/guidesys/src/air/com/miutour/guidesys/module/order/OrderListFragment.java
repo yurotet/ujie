@@ -168,6 +168,9 @@ public class OrderListFragment extends Fragment {
             loadView.setVisible(false, false);
         }
         Account account = AccountUtil.getLoginAccount(getActivity());
+        if (account == null) {
+            return;
+        }
         Map<String, String> header = new HashMap<String, String>();
         header.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
         Map<String, String> param = new HashMap<String, String>();

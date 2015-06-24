@@ -89,7 +89,7 @@ public class MainActivity extends FragmentActivity {
         userTagLayout = findViewById(R.id.user_tag_layout);
         slidingLayer.openLayer(false);
         userTagLayout.measure(0, 0);
-        int bottomHeight = userTagLayout.getMeasuredHeight() - DisplayUtils.convertDIP2PX(this, 18);
+        int bottomHeight = userTagLayout.getMeasuredHeight();
         slidingLayer.setBottomMinHeight(bottomHeight);
 
         View fragmentView = findViewById(R.id.container_order_list_fragment);
@@ -108,6 +108,11 @@ public class MainActivity extends FragmentActivity {
             public void OnScroll(float percent) {
                 userDetailLayout.setAlpha(percent);
                 userTagLayout.setAlpha(1 - percent);
+                if (percent==0) {
+                    userDetailLayout.setVisibility(View.GONE);
+                } else {
+                    userDetailLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
         initUserDetailView();
@@ -142,6 +147,7 @@ public class MainActivity extends FragmentActivity {
         avaliableOrderTab.setOnClickListener(clickListener);
         agreedOrderTab.setOnClickListener(clickListener);
         customServiceBtn.setOnClickListener(clickListener);
+        userTagLayout.setOnClickListener(clickListener);
     }
 
     private void loadAccountInfor() {
@@ -165,6 +171,9 @@ public class MainActivity extends FragmentActivity {
             } else if (view.getId() == R.id.btn_custom_service) {
 //                toCustomService();
                 IntentUtils.startActivity(MainActivity.this, LoginActivity.class,null);
+            } else if (view.getId() == R.id.user_tag_layout) {
+                Log.v("msg", "click");
+                slidingLayer.openLayer(true);
             }
         }
     };

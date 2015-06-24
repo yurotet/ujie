@@ -19,7 +19,6 @@ public class CarSelectAdapter extends PagerAdapter {
     private List<String> datas;
     private Context mContext;
     private Map<Integer, View> views;
-    private List<String> types;
     
     public CarSelectAdapter(Context context,List<String> types) {
         mContext = context;
@@ -28,6 +27,16 @@ public class CarSelectAdapter extends PagerAdapter {
     }
     
     
+    public List<String> getDatas() {
+        return datas;
+    }
+
+
+    public void setDatas(List<String> datas) {
+        this.datas = datas;
+    }
+
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(views.get(position));

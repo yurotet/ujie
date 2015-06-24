@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.JSONObject;
 
 import air.com.miutour.R;
+import air.com.miutour.guidesys.model.Account;
+import air.com.miutour.guidesys.model.CarInfo;
 import air.com.miutour.guidesys.model.MyBidderItem;
 import air.com.miutour.guidesys.model.OrderBaseInfor;
 import air.com.miutour.guidesys.model.OrderItem;
@@ -14,6 +16,7 @@ import air.com.miutour.guidesys.module.order.OrderSever.HttpListener;
 import air.com.miutour.guidesys.module.order.adapter.CarSelectAdapter;
 import air.com.miutour.guidesys.module.order.adapter.MyBidderListAdapter;
 import air.com.miutour.guidesys.module.order.adapter.OrderInforMixedListAdapter;
+import air.com.miutour.guidesys.util.AccountUtil;
 import air.com.miutour.guidesys.util.IntentUtils;
 import air.com.miutour.guidesys.util.ToastUtils;
 import air.com.miutour.guidesys.widget.CustomException;
@@ -65,6 +68,7 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
     private OrderInforMixedListAdapter mixedListAdapter;
     private CarSelectAdapter mCarSelectAdapter;
 
+    private Account account;
     private View myOrderLayout;
     private FixedListView myOrderListView;
     private List<MyBidderItem> myOrders;
@@ -72,7 +76,6 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
     
     private OrderBaseInfor baseInfor = new OrderBaseInfor();//基本信息
     private List<OrderItem> childOrders;
-    private List<String> carTypes;
     private int currentPage = 0;
     private String orderId;
     
@@ -81,8 +84,8 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_infor_mixed);
         childOrders = new ArrayList<OrderItem>();
-        carTypes = new ArrayList<String>();
         myOrders = new ArrayList<MyBidderItem>();
+        account = AccountUtil.getLoginAccount(getApplicationContext());
         getInstant();
         initView();
         loadData();
@@ -145,7 +148,7 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
         mixedListAdapter = new OrderInforMixedListAdapter(getApplicationContext(), childOrders);
         mixedListView.setAdapter(mixedListAdapter);
         mixedListView.setOnItemClickListener(itemClickListener);
-        mCarSelectAdapter = new CarSelectAdapter(getApplicationContext(), carTypes);
+        mCarSelectAdapter = new CarSelectAdapter(getApplicationContext(), baseInfor.carTypes);
         carSelectViewPager.setAdapter(mCarSelectAdapter);
         carSelectViewPager.setOnPageChangeListener(pageChangeListener);
 
@@ -155,8 +158,35 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
         myOrderListView.setAdapter(myOrderListAdapter);
         myOrderListAdapter.setOnDelClickListener(new MyBidderListAdapter.OnDelClickListener() {
             @Override
-            public void onDelClick(int position) {
-
+            public void onDelClick(final int position) {
+                if (account == null) {
+                    ToastUtils.show(getApplicationContext(), "请先登录", Toast.LENGTH_SHORT);
+                    return;
+                }
+                OrderSever.deleteMyBidder(account.username, account.token, account.nonce, baseInfor.myBidders.get(position).id, new HttpListener() {
+                    
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        int code = result.optInt("err_code");
+                        if (code == 0) {
+                            ToastUtils.show(getApplicationContext(), "删除成功", Toast.LENGTH_LONG);
+                        }else{
+                            ToastUtils.show(getApplicationContext(), "删除失败", Toast.LENGTH_LONG);
+                        }
+                        baseInfor.myBidders.remove(position);
+                        myOrderListAdapter.notifyDataSetChanged();
+                    }
+                    
+                    @Override
+                    public void onSuccess(String content) {
+                        
+                    }
+                    
+                    @Override
+                    public void onFailure(String content) {
+                        
+                    }
+                });
             }
         });
 
@@ -214,6 +244,7 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
         } else {
             myOrderLayout.setVisibility(View.VISIBLE);
         }
+        mCarSelectAdapter.setDatas(baseInfor.carTypes);
         notifyAdapter();
     }
 
@@ -234,9 +265,46 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
             }else if (id == R.id.app_top_banner_right_text) {
                 
             }else if (id == R.id.price_bid) {
+                if (account == null) {
+                    ToastUtils.show(getApplicationContext(), "请先登录", Toast.LENGTH_SHORT);
+                    return;
+                }
                 if (priceEdit.getText() != null && !priceEdit.getText().toString().equals("0")) {
                     myPriceTv.setText(priceEdit.getText());
                     baseInfor.myPrice = priceEdit.getText().toString();
+                    final CarInfo car = baseInfor.carInfos.get(currentPage);
+                    final String price = priceEdit.getText().toString();
+                    OrderSever.addBidder(account.username, account.token, account.nonce, orderId,priceEdit.getText().toString() ,car.model , car.type, car.seatNum, new HttpListener() {
+                        
+                        @Override
+                        public void onSuccess(JSONObject result) {
+                            int code = result.optInt("err_code");
+                            if (code == 0) {
+                                ToastUtils.show(getApplicationContext(), "出价成功", Toast.LENGTH_LONG);
+                                MyBidderItem bidder = new MyBidderItem();
+                                bidder.id = result.optJSONObject("data").optString("id");
+                                bidder.carModel = car.model;
+                                bidder.carType = car.type;
+                                bidder.price = price;
+                                bidder.seatNum = car.seatNum;
+                                baseInfor.myBidders.add(0,bidder);
+                                myOrderListAdapter.notifyDataSetChanged();
+                            }else{
+                                ToastUtils.show(getApplicationContext(), result.optString("err_msg"), Toast.LENGTH_LONG);
+                            }
+                            
+                        }
+                        
+                        @Override
+                        public void onSuccess(String content) {
+                            
+                        }
+                        
+                        @Override
+                        public void onFailure(String content) {
+                            
+                        }
+                    });
                 }else {
                     ToastUtils.show(getApplicationContext(), "请输入有效价格", Toast.LENGTH_SHORT);
                 }
@@ -259,7 +327,7 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
     };
     
     private void changePrice(int price){
-        if (priceEdit.getText() != null && !priceEdit.getText().toString().equals("0")) {
+        if (priceEdit.getText() != null) {
             int editPrice;
             if (priceEdit.getText().toString().equals("")) {
                 editPrice = 0;

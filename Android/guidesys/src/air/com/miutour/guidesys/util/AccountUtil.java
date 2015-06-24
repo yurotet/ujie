@@ -15,6 +15,7 @@ import air.com.miutour.guidesys.common.config.Urls;
 import air.com.miutour.guidesys.model.Account;
 import android.app.Activity;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -73,6 +74,8 @@ public class AccountUtil {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("username", username);
         params.put("passwd", password);
+        params.put("devicetoken", ((TelephonyManager) context1.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId());
+        params.put("type", "android");
         params.put("nonce", "miutour.xyz~");
         try {
             params.put("signature", MD5.getSignatureByValue(params, ""));
