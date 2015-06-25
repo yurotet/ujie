@@ -287,6 +287,7 @@ public class MixedOrderInforActivity extends BaseFragmentActivity {
                                 bidder.carType = car.type;
                                 bidder.price = price;
                                 bidder.seatNum = car.seatNum;
+                                bidder.date = result.optString("time");
                                 baseInfor.myBidders.add(0,bidder);
                                 myOrderListAdapter.notifyDataSetChanged();
                             }else{
