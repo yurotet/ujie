@@ -93,8 +93,7 @@
 			},
 
 			initData:function() {					
-				$.each(lockr.get('user'), function(key,val) {
-					console.log(val);
+				$.each(lockr.get('user'), function(key,val) {					
 					if (val != '') {
 						this.$data.user[key]=val;
 					}							

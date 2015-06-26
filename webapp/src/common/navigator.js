@@ -88,12 +88,7 @@ var gotoRoute = function(route) {
 		lastPage && lastPage.$options.pause && lastPage.$options.pause.call(lastPage);
 		page.$options.resume && page.$options.resume.call(page);
 	};
-	if(route == 'index') {
-		require.ensure([], function() {
-			var Page = require('pages/index');
-			ensureCb(Page);
-		});
-	} else if(route == 'register') {
+	 if(route == 'register') {
 		require.ensure([], function() {
 			var Page = require('pages/register');
 			ensureCb(Page);
@@ -126,6 +121,11 @@ var gotoRoute = function(route) {
 	}else if (route=='confirmSubmit') {
 		require.ensure([], function() {
 			var Page = require('pages/confirmSubmit');
+			ensureCb(Page);
+		})
+	}else if (route=='recruit') {
+		require.ensure([], function() {
+			var Page = require('pages/recruit');
 			ensureCb(Page);
 		})
 	}else if (route=='examResult') {

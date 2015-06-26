@@ -21,7 +21,7 @@
 				var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
 				
 				var regBtn = $('#regBtn');
-				console.log(disabled);
+				
 				if (disabled) {
 					regBtn.attr('disabled','disabled');
 				}else {
