@@ -131,13 +131,13 @@
 			onSubmit: function() {								
 				this.showLoading();
 				
-				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){					
+				this._uploadPics().then(this._uploadUserInfo()).then(function(){	
 					this.hideLoading();
 					nav.goTo('downloadAPP');
 				}.bind(this)).catch(function(msg) {
 					this.hideLoading();
 					this.showToast(msg,true);
-				}.bind(this));								
+				}.bind(this));											
 			},
 			onPre :function() {
 				nav.goTo('register');

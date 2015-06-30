@@ -50,7 +50,7 @@
 
 				this.checkSubmitBtn();
 			},
-						
+	
 			'guidePic.url': function(imageUrl) {
 				var el = $('.avatar-row.guide');
 				el.css('background-image', 'url(' + imageUrl + ')');	
@@ -69,7 +69,8 @@
 				 if (user) {
 				 	user[entity] = imageUrl;				 	
 					 lockr.set('user',user);						 
-				 }				 				
+				 }
+				 alert(JSON.stringify(lockr.get('user')));				 				
 			},
 			checkSubmitBtn:function(){				
 
@@ -111,7 +112,7 @@
 								this.hideLoading();
 								if(url) {									
 									switch (entity) {
-										case 'passport':							
+										case 'passport':				
 											this.$data.passportPic.url = url;
 										break ;
 										case 'license':

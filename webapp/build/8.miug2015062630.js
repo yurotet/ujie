@@ -1,1 +1,737 @@
-webpackJsonp([8],{71:function(t,e,n){var i={};t.exports=function(t,e){if(!i[t]){i[t]=!0;var n=document.createElement("style");n.setAttribute("type","text/css"),"textContent"in n?n.textContent=t:n.styleSheet.cssText=t;var r=document.getElementsByTagName("head")[0];e&&e.prepend?r.insertBefore(n,r.childNodes[0]):r.appendChild(n)}}},72:function(t,e,n){(function(e){var i=n(68),r=n(6),o=n(86),s=r.extend({});o.mix(s.prototype,{name:"BagePage",startMode:"newinstance",intervalCounter:0,startPage:function(t){i.goTo(t)},startPageForResult:function(t,e){},back:function(){i.back()},hideToast:function(){var t=document.getElementById("toast");t&&(t.style.opacity=0,t.style.display="none",clearInterval(this.intervalCounter))},getParam:function(t){var e=window.location.hash,n=e.indexOf("?");if(-1!=n){var i=new RegExp("(^|&)"+t+"=([^&]*)(&|$)","i"),r=e.substr(n+1).match(i);if(null!=r)return unescape(r[2])}return null},showToast:function(t,n){if(t){this.hideToast();var i=document.getElementById("toast");if(null==i){var r='<div id="toast">'+t+"</div>";document.body.insertAdjacentHTML("beforeEnd",r)}else e(i).text(t),i.style.display="block",i.style.opacity=.9;intervalCounter=setInterval(this.hideToast,n?2200:1300)}},showLoading:function(){e(".m-load2").css("display","block"),e(".js-loading").addClass("active"),setTimeout(this.hideLoading,1e4)},hideLoading:function(){e(".m-load2").css("display","none"),e(".js-loading").removeClass("active")}}),t.exports=s}).call(e,n(2))},81:function(t,e,n){(function(e){n(71)("body,html{height:100%}.card{margin:0}.pic_footer{height:100px;box-sizing:border-box}.button-area{position:absolute;bottom:0;left:0;width:100%}");var i='<div class="b-lazy" data-src="http://image.mmiyou.com/activities/jobs.jpg">\n	<div class="button-area" v-on="click:onFooterClick"></div>\n</div>',r=n(72),o=(n(6),n(68)),s=n(87),a=r.extend({title:"招募令",methods:{onFooterClick:function(){o.goTo("register")}},created:function(){setTimeout(function(){e(".b-lazy").css("height",e(window).height()+"px"),e(".button-area ").css("height",e(window).height()/3+"px");new s({success:function(t){},error:function(t,e){}})},0)}});t.exports=a,("function"==typeof t.exports?t.exports.options:t.exports).template=i}).call(e,n(2))},86:function(t,e,n){var i,r,o;!function(n,s){r=[],i=s,o="function"==typeof i?i.apply(e,r):i,!(void 0!==o&&(t.exports=o))}(this,function(t){function e(t,e){var n=h(t);return n.constructor=e,n}function n(t,e){for(var n in e)t[n]=e[n];return t}function i(t){return function(){var e=arguments.callee;if(this&&this instanceof e){var n=t.apply(this,arguments);return n&&c(n)?n:this}return f["new"](e,arguments)}}var r=0,o=Object.prototype.toString,s=function(t){return"[object String]"==o.call(t)},a=function(t){return"[object Function]"==o.call(t)},c=function(t){return"[object Object]"==o.call(t)},u=function(t){return"[object Array]"==o.call(t)},l={}.__proto__==Object.prototype,h=function(t){var e,n=function(){};return Object.create?e=Object.create(t):(n.prototype=t,e=new n),e},p={constructorName:"__",autoSuperConstructor:!1,notUseNew:!0,useExtend:!0,useMixin:!0,useSuper:!0,disguise:!1,useConstructor:!0},f={uuid:function(t){return(t||"cls_")+(+new Date).toString(32)+(r++).toString(32)},Base:null,config:function(t){return s(t)?p[t]:c(t)?p=n(p,t):p},create:function(t){return f.inherit(f.Base||Object,t)},"new":function(t,e){if(a(t)){var n=h(t.prototype),i=t.apply(n,e||[]);return i&&c(i)?i:n}throw new Error("fatal error: $Class.new expects a constructor of class.")},inherit:function(t,n,r){if(a(t)){n=n||{},r=r||p.autoSuperConstructor;var o=n[p.constructorName]||function(){};delete n[p.constructorName];var s=function(){r&&t.apply(this,arguments);var e=o.apply(this,arguments);return e&&c(e)?e:void 0};return p.notUseNew&&(s=i(s)),p.disguise&&(s.name=o.name,s.length=o.length,s.toString=function(){return o.toString()}),l?s.prototype.__proto__=t.prototype:s.prototype=e(t.prototype,s),this.include(s,n),p.useSuper&&(s.$super=e(t.prototype,t)),p.useSuper&&(s.$constructor=o),p.useExtend&&(s.$extend=function(t,e){return f.inherit(this,t,e)}),p.useMixin&&(s.$mixin=function(t){return f.include(this,t)}),s}},include:function(t,e){if(a(t)||(t=function(){}),c(e))n(t.prototype,e);else if(u(e))for(var i=0;i<e.length;i++)c(e[i])&&n(t.prototype,e[i]);return t},singleton:function(t){var e,i=t[p.constructorName]||function(){},r={};return r[p.constructorName]=function(){return i.apply(this,arguments),e.$instance instanceof e?e.$instance:e.$instance=this},e=f.create(n(t||{},r))},clone:h,member:function(t){if(a(t)){for(var e=[],n={constructor:1},i=t.prototype;i&&i.constructor;i=i.constructor.prototype){for(var r in i)n[r]=1;if(i.constructor==t||i.constructor==Object)break}for(var o in n)e.push(o);return e}},mix:n};return f.Base=f.inherit(Object),t&&(t.$Class=f),f})},87:function(t,e,n){var i,r;!function(o,s){i=s,r="function"==typeof i?i.call(e,n,e,t):i,!(void 0!==r&&(t.exports=r))}(this,function(){"use strict";function t(t){if(!document.querySelectorAll){var i=document.createStyleSheet();document.querySelectorAll=function(t,e,n,r,o){for(o=document.all,e=[],t=t.replace(/\[for\b/gi,"[htmlFor").split(","),n=t.length;n--;){for(i.addRule(t[n],"k:v"),r=o.length;r--;)o[r].currentStyle.k&&e.push(o[r]);i.removeRule(0)}return e}}y=!0,v=[],d={},f=t||{},f.error=f.error||!1,f.offset=f.offset||100,f.success=f.success||!1,f.selector=f.selector||".b-lazy",f.separator=f.separator||"|",f.container=f.container?document.querySelectorAll(f.container):!1,f.errorClass=f.errorClass||"b-error",f.breakpoints=f.breakpoints||!1,f.successClass=f.successClass||"b-loaded",f.src=p=f.src||"data-src",g=window.devicePixelRatio>1,d.top=0-f.offset,d.left=0-f.offset,b=h(n,25),x=h(a,50),a(),l(f.breakpoints,function(t){return t.width>=window.screen.width?(p=t.src,!1):void 0}),e()}function e(){s(f.selector),y&&(y=!1,f.container&&l(f.container,function(t){c(t,"scroll",b)}),c(window,"resize",x),c(window,"resize",b),c(window,"scroll",b)),n()}function n(){for(var e=0;m>e;e++){var n=v[e];(r(n)||o(n))&&(t.prototype.load(n),v.splice(e,1),m--,e--)}0===m&&t.prototype.destroy()}function i(t,e){if(e||t.offsetWidth>0&&t.offsetHeight>0){var n=t.getAttribute(p)||t.getAttribute(f.src);if(n){var i=n.split(f.separator),r=i[g&&i.length>1?1:0],o=new Image;l(f.breakpoints,function(e){t.removeAttribute(e.src)}),t.removeAttribute(f.src),o.onerror=function(){f.error&&f.error(t,"invalid"),t.className=t.className+" "+f.errorClass},o.onload=function(){"img"===t.nodeName.toLowerCase()?t.src=r:t.style.backgroundImage='url("'+r+'")',t.style.backgroundSize="cover",t.style.backgroundPosition="center",t.className=t.className+" "+f.successClass,f.success&&f.success(t)},o.src=r}else f.error&&f.error(t,"missing"),t.className=t.className+" "+f.errorClass}}function r(t){var e=t.getBoundingClientRect();return e.right>=d.left&&e.bottom>=d.top&&e.left<=d.right&&e.top<=d.bottom}function o(t){return-1!==(" "+t.className+" ").indexOf(" "+f.successClass+" ")}function s(t){var e=document.querySelectorAll(t);m=e.length;for(var n=m;n--;v.unshift(e[n]));}function a(){d.bottom=(window.innerHeight||document.documentElement.clientHeight)+f.offset,d.right=(window.innerWidth||document.documentElement.clientWidth)+f.offset}function c(t,e,n){t.attachEvent?t.attachEvent&&t.attachEvent("on"+e,n):t.addEventListener(e,n,!1)}function u(t,e,n){t.detachEvent?t.detachEvent&&t.detachEvent("on"+e,n):t.removeEventListener(e,n,!1)}function l(t,e){if(t&&e)for(var n=t.length,i=0;n>i&&e(t[i],i)!==!1;i++);}function h(t,e){var n=0;return function(){var i=+new Date;e>i-n||(n=i,t.apply(v,arguments))}}var p,f,d,v,m,g,y,b,x;return t.prototype.revalidate=function(){e()},t.prototype.load=function(t,e){o(t)||i(t,e)},t.prototype.destroy=function(){f.container&&l(f.container,function(t){u(t,"scroll",b)}),u(window,"scroll",b),u(window,"resize",b),u(window,"resize",x),m=0,v.length=0,y=!0},t})}});
+webpackJsonp([8],{
+
+/***/ 71:
+/***/ function(module, exports, __webpack_require__) {
+
+	var inserted = {};
+
+	module.exports = function (css, options) {
+	    if (inserted[css]) return;
+	    inserted[css] = true;
+	    
+	    var elem = document.createElement('style');
+	    elem.setAttribute('type', 'text/css');
+
+	    if ('textContent' in elem) {
+	      elem.textContent = css;
+	    } else {
+	      elem.styleSheet.cssText = css;
+	    }
+	    
+	    var head = document.getElementsByTagName('head')[0];
+	    if (options && options.prepend) {
+	        head.insertBefore(elem, head.childNodes[0]);
+	    } else {
+	        head.appendChild(elem);
+	    }
+	};
+
+
+/***/ },
+
+/***/ 72:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var nav = __webpack_require__(68);
+	var Vue = __webpack_require__(6);
+	var $Class = __webpack_require__(86);
+
+	var M = Vue.extend({
+	});
+
+	$Class.mix(M.prototype, {
+		name: 'BagePage',
+		// startMode: "singleton",
+		startMode: "newinstance",
+
+		intervalCounter : 0,
+
+		startPage: function(route) {
+			nav.goTo(route);
+		},
+		startPageForResult: function(route, cb) {
+		},
+		back: function() {
+			nav.back();
+		},	
+
+		hideToast:function(){
+
+			var alert = document.getElementById("toast");
+
+			if (alert)  {
+				alert.style.opacity = 0;
+				alert.style.display='none';	
+				clearInterval(this.intervalCounter);
+			}
+		},
+
+		getParam :function (name) {
+			var hash = window.location.hash;
+			var cutIndex = hash.indexOf('?');
+			
+			if (cutIndex!= -1) {
+				 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				    var r = hash.substr(cutIndex +1).match(reg);
+				    if (r != null) {
+				        return unescape(r[2]);
+				    }
+			}
+			
+			 return null;
+		},
+
+		 showToast:function(message,isError){
+		 	if (!message) return;
+
+			this.hideToast();
+
+			var alert = document.getElementById("toast");		
+
+			if (alert == null){
+				var toastHTML = '<div id="toast">' + message + '</div>';
+				document.body.insertAdjacentHTML('beforeEnd', toastHTML);
+
+			}
+			else{
+				$(alert).text(message);
+				alert.style.display='block';
+				alert.style.opacity = .9;
+			}		
+
+			intervalCounter = setInterval(this.hideToast,  isError? 2200:1300);
+
+		},
+
+		showLoading: function() {		
+			$('.m-load2').css('display','block');
+			$('.js-loading').addClass('active');
+			setTimeout(this.hideLoading, 10000); // 10 seconds timeout
+		},
+
+		hideLoading: function() {
+			$('.m-load2').css('display','none');
+			$('.js-loading').removeClass('active');
+		}
+	});
+
+	module.exports = M;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+
+/***/ 81:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)("body,html{height:100%}.card{margin:0}.pic_footer{height:100px;box-sizing:border-box}.button-area{position:absolute;bottom:0;left:0;width:100%}");
+	var __vue_template__ = "<div class=\"b-lazy\" data-src=\"http://image.mmiyou.com/activities/jobs.jpg\">\n\t<div class=\"button-area\" v-on=\"click:onFooterClick\"></div>\n</div>";
+	var BasePage = __webpack_require__(72);
+		var Vue = __webpack_require__(6);
+		var nav = __webpack_require__(68);
+		var Blazy = __webpack_require__(87); 
+		
+		var View = BasePage.extend({
+			title: '招募令',
+			methods: {
+				onFooterClick:function() {
+					nav.goTo('register');						
+				}
+			},
+			created: function() {	
+				setTimeout(function() {
+					$('.b-lazy').css('height', $(window).height()+'px');
+					$(".button-area ").css("height",$(window).height() /3+'px');
+
+					 var bLazy = new Blazy({  
+		    				success: function(ele) {
+					            // Image has loaded
+					            // Do your business here
+					        }
+					      ,error: function(ele, msg){
+					            if(msg === 'missing'){
+					                // Data-src is missing
+					            }
+					            else if(msg === 'invalid'){
+					                // Data-src is invalid
+					            }  
+					        }
+					    });
+					},0);			
+			}	
+		});
+
+		module.exports = View;
+	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+
+/***/ 86:
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Class.js 1.4.4
+	// author Tangoboy
+	// http://www.cnblogs.com/tangoboy/archive/2010/08/03/1790412.html
+	// Dual licensed under the MIT or GPL Version 2 licenses.
+
+	(function(root, factory) {
+
+		// Set up $Class appropriately for the environment. Start with AMD or TMD(Im.js)
+		if (true ) {
+
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+		// Next for Node.js or CommonJS.
+		} else if (typeof exports !== 'undefined') {
+
+			factory(exports);
+
+		// Finally, as a browser global.
+		} else {
+
+			factory(root);
+
+		}
+
+	}(this, function(host){
+
+		//不能在严谨代码模式 'use strict';
+
+		var uuid = 0,
+		opt = Object.prototype.toString,
+		isStr = function(s){return opt.call(s)=="[object String]"},
+		isFun = function(f){return opt.call(f)=="[object Function]"},
+		isObj = function(o){return opt.call(o)=="[object Object]"},
+		isArr = function(a){return opt.call(a)=="[object Array]"},
+		isSupport__proto__ = ({}).__proto__ == Object.prototype,//检验__proto__特性
+		clone = function(obj){
+			var newObj,
+				noop = function(){};
+			if (Object.create) {
+				newObj = Object.create(obj);
+			} else {
+				noop.prototype = obj;
+				newObj = new noop();
+			}
+			return newObj;
+		};
+		//创建一个原型对象，创建的是一次克隆
+		function createPrototype(proto, constructor) {
+			var newProto = clone(proto);
+			newProto.constructor = constructor;
+			return newProto;
+		}
+		//混杂
+		function mix(r, s) {
+			for (var i in s) {
+				r[i] = s[i];
+			}
+			return r;
+		}
+		//无new实例化 构造函数包裹 使类同时支持 new A() 或 A() 实例化
+		function wrapConstructor(constructor){
+			return function(){
+				var selfConstructor = arguments.callee;
+				if(this && this instanceof selfConstructor){// && this.constructor == selfConstructor
+					var re = constructor.apply(this, arguments);
+					return re&&isObj(re) ? re : this;
+				} else {
+					return $Class['new'](selfConstructor, arguments);
+				}
+			};
+		}
+
+
+		var config = {
+			constructorName:'__',       //构造方法约定名称，默认约定为双下划线__
+			autoSuperConstructor:false, //当子类被实例化时是否先执行父类构造函数 设置后仅对后面声明的类有效
+			notUseNew:true,             //是否可以不使用关键字new 直接调用方法实例化对象 如：A()
+			useExtend:true,             //是否使用让类拥有拓展继承的方法 如：B = A.$extend({})
+			useMixin:true,              //是否使用让类拥有混入其他原型的方法 如：A.$mixin([C.prototype, D.prototype])
+			useSuper:true,              //是否让类有$super属性访问父类成员 如：B.$super.foo()
+			disguise:false,             //是否让代码生成的构造函数伪装成定义的__:function(){}
+			useConstructor:true         //是否使用B.$constructor来保存定义的__构造函数，这里create inherit生成的构造函数是不等于__的
+		};
+
+
+		var $Class = {
+			
+			/**
+			 * UUID方法 生成唯一的id字符串
+			 *
+			 * @param {String} [prefix] id前缀
+			 * @return {String} 唯一的id字符串
+			 * @doc
+			 */
+			uuid:function(prefix){
+				return (prefix||"cls_") + (+new Date()).toString( 32 ) + (uuid++).toString( 32 );
+			},
+
+			
+			Base:null,//作用见后面赋值
+
+			/**
+			 * 配置方法 对某些功能设置是否开启.  配置说明见config定义
+			 *
+			 * @param {String|Object|null} c 某个配置项名|设置配置项|空值
+			 * @return {Mixed|Object|Object} 取出某个配置项|混合后的设置配置项|取出所有配置
+			 * @doc
+			 */
+			config:function(c){
+				if (isStr(c)){
+					return config[c];
+				} else if (isObj(c)){
+					return config = mix(config, c);
+				}
+				return config;
+			},
+			/**
+			 * 创建一个类  混合构造函数/原型方式.
+			 *
+			 * @param {Object} members 定义类成员的对象
+			 * @return {Function(Class)} 返回创建的类
+			 * @doc
+			 */
+			create: function(members) {
+				return $Class.inherit($Class.Base||Object, members);
+			},
+			/**
+			 * 实例化类 可以替代 new 操作符
+			 *
+			 * @param {Function(Class)} clas 类
+			 * @param {Array} [args] 参数
+			 * @return {Object} 返回构建的实例
+			 * @doc
+			 */
+			"new":function(clas, args){
+				if (isFun(clas)) {
+					var instance = clone(clas.prototype);
+					var re = clas.apply(instance, args||[]);
+					return re&&isObj(re) ? re : instance;
+				} else {
+					throw new Error('fatal error: $Class.new expects a constructor of class.');  
+				}
+			},
+			/**
+			 * 继承  混合对象冒充原型链方式.
+			 *       目前只对构造函数上加上某些属性（如：$super，$constructor，$extend）
+			 *       但类的实例是没有任何污染的
+			 *
+			 * @param {Function(Class)} source 父类
+			 * @param {Object} [extendMembers] 定义类成员的对象
+			 * @param {Boolean} [autoSuperConstructor] 默认false 当子类被实例化时是否先执行父类构造函数
+			 * @return {Function(Class)} 返回创建的子类
+			 * @doc
+			 *
+			 * 差异：
+			 *		1.返回类 !== extendMembers.__
+			 *		2.不支持__proto__的浏览器下 for in 遍历实例会遍历出constructor
+			 */
+			inherit:function(source, extendMembers, autoSuperConstructor) {
+				if (!isFun(source)) return;
+				extendMembers = extendMembers || {};
+				autoSuperConstructor = autoSuperConstructor||config.autoSuperConstructor;
+				var defineConstructor = extendMembers[config.constructorName] || function(){};
+				//过滤构造方法和原型方法
+				delete extendMembers[config.constructorName];
+				//对象冒充
+				var _constructor = function(){
+					if(autoSuperConstructor){
+						source.apply(this, arguments);
+					}
+					var re = defineConstructor.apply(this, arguments);
+					if(re && isObj(re))return re;
+				};
+
+				if (config.notUseNew) {
+					//构造函数包裹 new A 和 A() 可以同时兼容
+					_constructor = wrapConstructor(_constructor);
+				}
+				if (config.disguise) {
+					_constructor.name = defineConstructor.name;
+					_constructor.length = defineConstructor.length;
+					_constructor.toString = function(){return defineConstructor.toString()};//屏蔽了构造函数的实现
+				}
+				//维持原型链 把父类原型赋值到给构造器原型，维持原型链
+				if (isSupport__proto__) { 
+					_constructor.prototype.__proto__ = source.prototype;
+				} else {
+					_constructor.prototype = createPrototype(source.prototype, _constructor);
+				}
+				
+				//原型扩展 把最后配置的成员加入到原型上
+				this.include(_constructor, extendMembers);
+
+				if (config.useSuper) {
+					//添加父类属性
+					_constructor.$super = createPrototype(source.prototype, source);
+				}
+
+				if (config.useSuper) {
+					//添加定义的构造函数
+					_constructor.$constructor = defineConstructor;
+				}
+
+				if (config.useExtend) {
+					_constructor.$extend = function(extendMembers, execsuperc){
+						return $Class.inherit(this, extendMembers, execsuperc);
+					};
+				}
+				
+				if (config.useMixin) {
+					_constructor.$mixin = function(protos){
+						return $Class.include(this, protos);
+					};
+				}
+
+				return _constructor;
+			},
+			/**
+			 * 原型成员扩展.
+			 *
+			 * @param {Function(Class)} target 需要被原型拓展的类
+			 * @param {Object|Array} [protos] 定义原型成员的对象或多个原型对象的数组
+			 * @return {Function(Class)} 返回被拓展的类
+			 * @doc
+			 */
+			include:function(target, protos){
+				if (!isFun(target)) { target = function(){}; }
+				if (isObj(protos)) {
+					mix(target.prototype, protos);
+				} else if (isArr(protos)) {
+					for (var i = 0; i<protos.length; i++) {
+						if (isObj(protos[i])) {
+							mix(target.prototype, protos[i]);
+						}
+					}
+				}
+				return target;
+			},
+			/**
+			 * 创建一个单例类   无论怎么实例化只有一个实例存在
+			 *       此单例类与常用{}作为单例的区别：
+			 *       有前者是标准function类，需要实例化，可以拓展原型，可以继承
+			 *
+			 * @param {Object} members 定义单例类成员的对象 
+			 * @return {Object} singletonClass 单例类
+			 * @doc
+			 */
+			singleton:function(members){
+				var singletonClass;
+				var _constructor = members[config.constructorName] || function(){};
+				var newMembers = {};
+				newMembers[config.constructorName] = function(){
+					_constructor.apply(this, arguments);
+					if (singletonClass.$instance instanceof singletonClass) {
+						return singletonClass.$instance;
+					} else {
+						return singletonClass.$instance = this;
+					}
+				};
+				return singletonClass = $Class.create(mix(members||{}, newMembers));
+			},
+			/**
+			 * 克隆对象.
+			 *
+			 * @param {Object} o 需要克隆的对象
+			 * @return {Object} 返回克隆后的对象
+			 * @doc
+			 */
+			clone:clone,
+			/**
+			 * 获取某个类的成员 会从原型链上遍历获取.
+			 *
+			 * @param {Object} clas 类
+			 * @return {Array} 返回该类整个原型链上的成员
+			 * @doc
+			 */
+			member:function(clas){
+				if (!isFun(clas)) return;
+				var member = [];
+				var m = {constructor:1};
+				for (var chain = clas.prototype; chain && chain.constructor; chain = chain.constructor.prototype) {
+					for (var k in chain) {
+						m[k] = 1;
+					}
+					if (chain.constructor==clas || chain.constructor==Object) {
+						//链为循环 或者 链到达Object 结束
+						//不在Object原型上去循环了Object.prototype.constructor == Object
+						break;
+					}
+				};
+				for (var i in m) {
+					member.push(i);
+				}
+				return member;
+			},
+			/**
+			 * 混杂
+			 *
+			 * @param {Object} r 被混杂的Object
+			 * @param {Object} s 参入的Object
+			 * @return {Object} r 被混杂的Object
+			 * @doc
+			 */
+			mix:mix
+		};
+
+		// Base
+		// 所有$Class.create的类Foo都继承自$Class.Base     Foo <= Base <= Object
+		// 因此你可以通过$Class.Base.prototype拓展所有create出来的类
+		// 你也可以删除$Class.Base 或者 $Class.Base = null 这样就可以改变继承为 Foo <= Object
+		$Class.Base = $Class.inherit(Object);
+
+		if (host) {
+			host.$Class = $Class;
+		}
+
+		return $Class;
+		
+
+	}));
+
+
+/***/ },
+
+/***/ 87:
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  hey, [be]Lazy.js - v1.3.1 - 2015.02.01 
+	  A lazy loading and multi-serving image script
+	  (c) Bjoern Klinggaard - @bklinggaard - http://dinbror.dk/blazy
+	*/
+	;(function(root, blazy) {
+	    if (true) {
+	        // AMD. Register bLazy as an anonymous module
+	        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (blazy), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    } else if (typeof exports === 'object') {
+	        // Node. Does not work with strict CommonJS, but
+	        // only CommonJS-like environments that support module.exports,
+	        // like Node. 
+	        module.exports = blazy();
+	    } else {
+	        // Browser globals. Register bLazy on window
+	        root.Blazy = blazy();
+	    }
+	})(this, function () {
+	    'use strict';
+	    
+	    //vars
+	    var source, options, viewport, images, count, isRetina, destroyed;
+	    //throttle vars
+	    var validateT, saveViewportOffsetT;
+	    
+	    // constructor
+	    function Blazy(settings) {
+	        //IE7- fallback for missing querySelectorAll support
+	        if (!document.querySelectorAll) {
+	            var s=document.createStyleSheet();
+	            document.querySelectorAll = function(r, c, i, j, a) {
+	                a=document.all, c=[], r = r.replace(/\[for\b/gi, '[htmlFor').split(',');
+	                for (i=r.length; i--;) {
+	                    s.addRule(r[i], 'k:v');
+	                    for (j=a.length; j--;) a[j].currentStyle.k && c.push(a[j]);
+	                        s.removeRule(0);
+	                }
+	                return c;
+	            };
+	        }
+	        //init vars
+	        destroyed               = true; 
+	        images                  = [];
+	        viewport                = {};
+	        //options
+	        options                 = settings              || {};
+	        options.error           = options.error         || false;
+	        options.offset          = options.offset        || 100;
+	        options.success         = options.success       || false;
+	        options.selector        = options.selector      || '.b-lazy';
+	        options.separator       = options.separator     || '|';
+	        options.container       = options.container     ?  document.querySelectorAll(options.container) : false;
+	        options.errorClass      = options.errorClass    || 'b-error';
+	        options.breakpoints     = options.breakpoints   || false;
+	        options.successClass    = options.successClass  || 'b-loaded';
+	        options.src = source    = options.src           || 'data-src';
+	        isRetina                = window.devicePixelRatio > 1;
+	        viewport.top            = 0 - options.offset;
+	        viewport.left           = 0 - options.offset;
+	        //throttle, ensures that we don't call the functions too often
+	        validateT               = throttle(validate, 25); 
+	        saveViewportOffsetT         = throttle(saveViewportOffset, 50);
+
+	        saveViewportOffset();   
+	                
+	        //handle multi-served image src
+	        each(options.breakpoints, function(object){
+	            if(object.width >= window.screen.width) {
+	                source = object.src;
+	                return false;
+	            }
+	        });
+	        
+	        // start lazy load
+	        initialize();   
+	    }
+	    
+	    /* public functions
+	    ************************************/
+	    Blazy.prototype.revalidate = function() {
+	        initialize();
+	    };
+	    Blazy.prototype.load = function(element, force){
+	        if(!isElementLoaded(element)) loadImage(element, force);
+	    };
+	    Blazy.prototype.destroy = function(){
+	        if(options.container){
+	            each(options.container, function(object){
+	                unbindEvent(object, 'scroll', validateT);
+	            });
+	        }
+	        unbindEvent(window, 'scroll', validateT);
+	        unbindEvent(window, 'resize', validateT);
+	        unbindEvent(window, 'resize', saveViewportOffsetT);
+	        count = 0;
+	        images.length = 0;
+	        destroyed = true;
+	    };
+	    
+	    /* private helper functions
+	    ************************************/
+	    function initialize(){
+	        // First we create an array of images to lazy load
+	        createImageArray(options.selector);
+	        // Then we bind resize and scroll events if not already binded
+	        if(destroyed) {
+	            destroyed = false;
+	            if(options.container) {
+	                each(options.container, function(object){
+	                    bindEvent(object, 'scroll', validateT);
+	                });
+	            }
+	            bindEvent(window, 'resize', saveViewportOffsetT);
+	            bindEvent(window, 'resize', validateT);
+	            bindEvent(window, 'scroll', validateT);
+	        }
+	        // And finally, we start to lazy load. Should bLazy ensure domready?
+	        validate(); 
+	    }
+	    
+	    function validate() {
+	        for(var i = 0; i<count; i++){
+	            var image = images[i];
+	            if(elementInView(image) || isElementLoaded(image)) {
+	                Blazy.prototype.load(image);
+	                images.splice(i, 1);
+	                count--;
+	                i--;
+	            } 
+	        }
+	        if(count === 0) {
+	            Blazy.prototype.destroy();
+	        }
+	    }
+	    
+	    function loadImage(ele, force){
+	        // if element is visible
+	        if(force || (ele.offsetWidth > 0 && ele.offsetHeight > 0)) {
+	            var dataSrc = ele.getAttribute(source) || ele.getAttribute(options.src); // fallback to default data-src
+	            if(dataSrc) {
+	                var dataSrcSplitted = dataSrc.split(options.separator);
+	                var src = dataSrcSplitted[isRetina && dataSrcSplitted.length > 1 ? 1 : 0];
+	                var img = new Image();
+	                // cleanup markup, remove data source attributes
+	                each(options.breakpoints, function(object){
+	                    ele.removeAttribute(object.src);
+	                });
+	                ele.removeAttribute(options.src);
+	                img.onerror = function() {
+	                    if(options.error) options.error(ele, "invalid");
+	                    ele.className = ele.className + ' ' + options.errorClass;
+	                }; 
+	                img.onload = function() {
+	                    // Is element an image or should we add the src as a background image?
+	                        ele.nodeName.toLowerCase() === 'img' ? ele.src = src : ele.style.backgroundImage = 'url("' + src + '")';    
+	                        ele.style.backgroundSize="cover";
+	                        ele.style.backgroundPosition="center";
+	                    ele.className = ele.className + ' ' + options.successClass; 
+	                    if(options.success) options.success(ele);
+	                };
+	                img.src = src; //preload image
+	            } else {
+	                if(options.error) options.error(ele, "missing");
+	                ele.className = ele.className + ' ' + options.errorClass;
+	            }
+	        }
+	     }
+	            
+	    function elementInView(ele) {
+	        var rect = ele.getBoundingClientRect();
+	        
+	        return (
+	            // Intersection
+	            rect.right >= viewport.left
+	            && rect.bottom >= viewport.top
+	            && rect.left <= viewport.right
+	            && rect.top <= viewport.bottom
+	         );
+	     }
+	     
+	     function isElementLoaded(ele) {
+	         return (' ' + ele.className + ' ').indexOf(' ' + options.successClass + ' ') !== -1;
+	     }
+	     
+	     function createImageArray(selector) {
+	        var nodelist    = document.querySelectorAll(selector);
+	        count           = nodelist.length;
+	        //converting nodelist to array
+	        for(var i = count; i--; images.unshift(nodelist[i])){}            
+	     }
+	     
+	     function saveViewportOffset(){
+	         viewport.bottom = (window.innerHeight || document.documentElement.clientHeight) + options.offset;
+	         viewport.right = (window.innerWidth || document.documentElement.clientWidth) + options.offset;
+	     }
+	     
+	     function bindEvent(ele, type, fn) {
+	         if (ele.attachEvent) {
+	                ele.attachEvent && ele.attachEvent('on' + type, fn);
+	            } else {
+	                   ele.addEventListener(type, fn, false);
+	            }
+	     }
+	     
+	     function unbindEvent(ele, type, fn) {
+	         if (ele.detachEvent) {
+	                ele.detachEvent && ele.detachEvent('on' + type, fn);
+	            } else {
+	                   ele.removeEventListener(type, fn, false);
+	            }
+	     }
+	     
+	     function each(object, fn){
+	        if(object && fn) {
+	            var l = object.length;
+	            for(var i = 0; i<l && fn(object[i], i) !== false; i++){}
+	        }
+	     }
+	     
+	     function throttle(fn, minDelay) {
+	             var lastCall = 0;
+	         return function() {
+	             var now = +new Date();
+	                 if (now - lastCall < minDelay) {
+	                     return;
+	             }
+	                 lastCall = now;
+	                 fn.apply(images, arguments);
+	             };
+	     }
+	    
+	     return Blazy;
+	});
+
+/***/ }
+
+});

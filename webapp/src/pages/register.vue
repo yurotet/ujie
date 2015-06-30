@@ -204,21 +204,22 @@
 					            timeout: 10000,
 					            context: this,
 					            success: function(body){  					            	
-					              if (body.err_code == 0 ) {				               	
-					               	switch (body.data.guide_auth) {
-					               		case '1': 	// 审核通过
-					               		case '3': 	// 审核失败
-					               		case '2':             // 审核中
-					               			resolve(REG_STATUS.GOTO_APP);
-					               		break;
+					              if (body.err_code == 0 ) {	
+					              resolve(REG_STATUS.READY_FOR_REG);			               	
+					               	// switch (body.data.guide_auth) {
+					               	// 	case '1': 	// 审核通过
+					               	// 	case '3': 	// 审核失败
+					               	// 	case '2':             // 审核中
+					               	// 		resolve(REG_STATUS.GOTO_APP);
+					               	// 	break;
 
-					               		case '0'	:	//待审核
-					               			resolve(REG_STATUS.READY_FOR_REG);
-					               		break;
-					               		default:
-					               			resolve(REG_STATUS.NOT_REGED);
-					               		break;					               		
-					               	}					               	
+					               	// 	case '0'	:	//待审核
+					               	// 		resolve(REG_STATUS.READY_FOR_REG);
+					               	// 	break;
+					               	// 	default:
+					               	// 		resolve(REG_STATUS.NOT_REGED);
+					               	// 	break;					               		
+					               	// }					               	
 
 					              } else {	
 					              	resolve(REG_STATUS.NOT_REGED);					                  
