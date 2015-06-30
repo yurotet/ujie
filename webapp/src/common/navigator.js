@@ -133,8 +133,17 @@ var gotoRoute = function(route) {
 			var Page = require('pages/examResult');
 			ensureCb(Page);
 		})
-	}
-	else {
+	}else if (route=='miuprivacy') {
+		require.ensure([], function() {
+			var Page = require('pages/miuprivacy');
+			ensureCb(Page);
+		})
+	}else if (route=='aboutmiu') {
+		require.ensure([], function() {
+			var Page = require('pages/aboutmiu');
+			ensureCb(Page);
+		})
+	}else {
 		require.ensure([], function() {
 			var Page = require('pages/notfound');
 			ensureCb(Page);
