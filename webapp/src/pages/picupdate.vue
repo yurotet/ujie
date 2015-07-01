@@ -95,6 +95,16 @@
 				this.onChoosePhoto('guide');
 			},
 			
+			initPics:function() {
+				var savedUser = lockr.get('user');				
+				if (savedUser) {				
+					this.$data.passportPic.url = savedUser.passportPic || '' ;
+					this.$data.guidePic.url = savedUser.guidePic || '';
+					this.$data.licensePic.url = savedUser.licensePic || '';
+					
+					// setTimeout(this.checkSubmitBtn,0)
+				}
+			},
 			onChoosePhoto: function(entity) {								
 				wx.chooseImage({
 				    success: function (res) {
@@ -227,14 +237,14 @@
 			}
 		},
 		created: function() {
-			var savedUser = lockr.get('user');				
-			if (savedUser) {				
-				this.$data.passportPic.url = savedUser.passportPic || '' ;
-				this.$data.guidePic.url = savedUser.guidePic || '';
-				this.$data.licensePic.url = savedUser.licensePic || '';
+			// var savedUser = lockr.get('user');				
+			// if (savedUser) {				
+			// 	this.$data.passportPic.url = savedUser.passportPic || '' ;
+			// 	this.$data.guidePic.url = savedUser.guidePic || '';
+			// 	this.$data.licensePic.url = savedUser.licensePic || '';
 				
-				setTimeout(this.checkSubmitBtn,0)
-			}			
+			// 	// setTimeout(this.checkSubmitBtn,0)
+			// }			
 		},
 		resume:function() {
 			this.setHeader();
@@ -250,6 +260,9 @@
 			if (savedUser) {
 				this.$data.hasGuideCer = savedUser.hasGuideCer == 'yes';
 			}
+
+			this.initPics();
+			this.checkSubmitBtn();
 		},
 		pause:function(){
 

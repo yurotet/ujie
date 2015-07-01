@@ -231,7 +231,7 @@ webpackJsonp([7],{
 					return retObj;
 				},
 
-				getPostPics:function(){  alert(JSON.stringify(lockr.get('user')));	
+				getPostPics:function(){
 					var user = lockr.get('user'), retObj = {};
 
 					retObj.passport_pic = user.passportPic || '';
