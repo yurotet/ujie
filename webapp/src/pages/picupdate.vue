@@ -96,7 +96,7 @@
 			},
 			
 			initPics:function() {
-				var savedUser = lockr.get('user');alert(JSON.stringify(savedUser));			
+				var savedUser = lockr.get('user');		
 				if (savedUser) {				
 					this.$data.passportPic.url = savedUser.passportPic || '' ;
 					this.$data.guidePic.url = savedUser.guidePic || '';
