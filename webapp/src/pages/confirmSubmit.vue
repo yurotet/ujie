@@ -79,7 +79,7 @@
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){alert('user info success');
+					  success: function(res){
 					  	if( res.err_code==0) { 
 					  		resolve();					  		
 					  	} else {	
@@ -107,7 +107,7 @@
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						 success: function(res){	alert('pic success');				 	 
+						 success: function(res){			 	 
 						  	if(res.err_code==0){			  		
 						  		resolve();
 						  	} else {	

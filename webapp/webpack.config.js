@@ -10,7 +10,7 @@ module.exports = {
     output: {
         path: "./build/",
         // filename: "app.bundle"+(+new Date())+ ".js",
-        filename:'miug2015062630.js' ,
+        filename:'miug20150701.js' ,
         publicPath: '/ujie/'
     },
     module: {
@@ -35,11 +35,11 @@ module.exports = {
             "$": "browserify-zepto",
             // "_": "underscore",
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ],
     devServer: {
         contentBase: "build/"
