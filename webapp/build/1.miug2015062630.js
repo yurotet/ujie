@@ -88,7 +88,7 @@ webpackJsonp([1],{
 			methods: { 			
 				checkSubmitBtn:function(){					
 					var disabled  = !this.$data.user.realname || !this.$data.user.age || !this.$data.user.mobile || !this.$data.user.mailBox || ! this.$data.user.wechat;						
-				
+
 					var btn  = $('#userInfoBtn');
 
 					if (disabled) {
@@ -98,8 +98,14 @@ webpackJsonp([1],{
 					}
 				},
 
-				onInputChange:function() {
-					lockr.set('user', this.$data.user);				
+				onInputChange:function() {				
+					var savedUser = lockr.get('user') || {};
+					$(this.$data.user,function(key, val) {
+						savedUser[key] = val;
+					});
+
+					lockr.set('user', savedUser);
+
 					this.checkSubmitBtn();
 				},
 				
