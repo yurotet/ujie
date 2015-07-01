@@ -100,6 +100,7 @@ webpackJsonp([1],{
 
 				onInputChange:function() {				
 					var savedUser = lockr.get('user') || {};
+					alert(JSON.stringify(this.$data.user));
 					$(this.$data.user,function(key, val) {
 						savedUser[key] = val;
 					});
