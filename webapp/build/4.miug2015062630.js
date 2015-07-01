@@ -222,7 +222,7 @@ webpackJsonp([4],{
 				},
 				
 				initPics:function() {
-					var savedUser = lockr.get('user');				
+					var savedUser = lockr.get('user');alert(JSON.stringify(savedUser));			
 					if (savedUser) {				
 						this.$data.passportPic.url = savedUser.passportPic || '' ;
 						this.$data.guidePic.url = savedUser.guidePic || '';
