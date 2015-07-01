@@ -231,7 +231,7 @@ webpackJsonp([7],{
 					return retObj;
 				},
 
-				getPostPics:function(){ 
+				getPostPics:function(){  alert(JSON.stringify(lockr.get('user')));	
 					var user = lockr.get('user'), retObj = {};
 
 					retObj.passport_pic = user.passportPic || '';
@@ -255,7 +255,7 @@ webpackJsonp([7],{
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						  success: function(res){
+						  success: function(res){console.log('user info success');
 						  	if( res.err_code==0) { 
 						  		resolve();					  		
 						  	} else {	
@@ -283,7 +283,7 @@ webpackJsonp([7],{
 							  dataType: 'json',
 							  timeout: 10000,
 							  context: this,
-							 success: function(res){					 	 
+							 success: function(res){	console.log('pic success');				 	 
 							  	if(res.err_code==0){			  		
 							  		resolve();
 							  	} else {	

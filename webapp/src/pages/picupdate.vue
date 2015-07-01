@@ -69,8 +69,7 @@
 				 if (user) {
 				 	user[entity] = imageUrl;				 	
 					 lockr.set('user',user);						 
-				 }
-				 alert(JSON.stringify(lockr.get('user')));				 				
+				 }							 				
 			},
 			checkSubmitBtn:function(){				
 
