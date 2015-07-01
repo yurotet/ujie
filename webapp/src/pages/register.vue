@@ -93,9 +93,8 @@
 			},
 
 			onInputChange:function() {				
-				var savedUser = lockr.get('user') || {};
-				alert(JSON.stringify(this.$data.user));
-				$(this.$data.user,function(key, val) {
+				var savedUser = lockr.get('user') || {};				
+				$.each(this.$data.user,function(key, val) {
 					savedUser[key] = val;
 				});
 
