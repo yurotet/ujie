@@ -143,7 +143,18 @@ var gotoRoute = function(route) {
 			var Page = require('pages/aboutmiu');
 			ensureCb(Page);
 		})
-	}else {
+	}else if (route=='driverguide') {
+		require.ensure([], function() {
+			var Page = require('pages/driverguide');
+			ensureCb(Page);
+		})
+	}else if (route=='guidedetails') {
+		require.ensure([], function() {
+			var Page = require('pages/guidedetails');
+			ensureCb(Page);
+		})
+	}
+	else {
 		require.ensure([], function() {
 			var Page = require('pages/notfound');
 			ensureCb(Page);

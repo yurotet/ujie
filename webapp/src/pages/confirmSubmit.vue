@@ -5,6 +5,7 @@
 	var lockr = require('common/localstorageutil');	
 	var steps = require('pages/regSteps');
 	var util = require('common/util');
+	var Promise = require('promise');
 
 	var View = BasePage.extend({
 		title: '提交审核',
@@ -80,9 +81,9 @@
 					  timeout: 10000,
 					  context: this,
 					  success: function(res){
-					  	if( res.err_code==0) { 
+					  	if( res.err_code==0) {					  		 
 					  		resolve();					  		
-					  	} else {	
+					  	} else {						  		
 					  		reject(res.data[0].err_msg);						  		
 					  	}
 					    
@@ -113,8 +114,9 @@
 						  	} else {	
 						  		if (res.data.length) {
 						  			reject(res.data[0].err_msg);
-						  		}		  		
-						  		reject();
+						  		} else {
+						  			reject();
+						  		}		  								  		
 						  	}
 						    
 						  },
@@ -131,14 +133,37 @@
 			onSubmit: function() {								
 				this.showLoading();
 				
-				this._uploadPics().then(this._uploadUserInfo()).then(function(){	
+				// this._uploadPics().then(this._uploadUserInfo()).then(function(){	
+				// 	this.hideLoading();
+				// 	nav.goTo('downloadAPP');
+				// }.bind(this)).catch(function(msg) {
+				// 	this.hideLoading();
+				// 	this.showToast(msg,true);
+				// }.bind(this));	
+				// this._uploadPics().then(this._uploadUserInfo(),function(){
+				// 	console.log('1'):
+				// }).then(function(){
+				// 	console.log('2'):
+				// },function(){
+				// 	console.log('3'):
+				// });	
+
+				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
 					this.hideLoading();
-					nav.goTo('downloadAPP');
-				}.bind(this)).catch(function(msg) {
+					nav.goTo('downloadAPP');					
+				}.bind(this),function(msg){
 					this.hideLoading();
 					this.showToast(msg,true);
-				}.bind(this));											
+				}.bind(this));
+
+				// this._uploadUserInfo().then(this._uploadPics(),function(){
+				// 	console.log('3');
+				// }).then(function(){
+				// 	console.log('1')},function(){
+				// 		console.log('2');
+				// 	});								
 			},
+
 			onPre :function() {
 				nav.goTo('register');
 			},
