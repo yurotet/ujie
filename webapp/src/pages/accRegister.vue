@@ -24,7 +24,7 @@
 			lockr.set('accTransList',payTypeList );	
 
 			return {
-				curStep:2,	
+				curStep:4,	
 				
 				payTypeList:payTypeList,
 
@@ -80,16 +80,17 @@
 
 
 			setHeader:function() {
-				var selText = '.stepsContainer.index2 .step2' ;
+				$('.stepInfo').text('填写结算账户信息');
+				// var selText = '.stepsContainer.index2 .step2' ;
 								
-				var ela=$(selText+' a'),
-					eltext=$(selText+ ' .text');		
+				// var ela=$(selText+' a'),
+				// 	eltext=$(selText+ ' .text');		
 		 		
-		 		ela.css('width','170px');	  		
-		  		ela.css('background-color','#77c2a5');
+		 	// 	ela.css('width','170px');	  		
+		  // 		ela.css('background-color','#77c2a5');
 
-		  		eltext.css('display','inline-block');
-		  		eltext.css('opacity','1');	
+		  // 		eltext.css('display','inline-block');
+		  // 		eltext.css('opacity','1');	
 			},
 
 			initData:function() {					
@@ -129,7 +130,7 @@
 	}
 	.userInfo .input-row label{
 		font-size: 14px;
-		color:#666666;
+		color:#aaaaaa;
 	}
 	.userInfo select {
 		margin-top: 5px;

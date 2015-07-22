@@ -82,14 +82,17 @@
 	  padding: 0;
 	}
 	
-	.stepsContainer {	
+	.stepsContainer {
+		margin-top:20px;	
 		text-align: center;
 	}
 </style>
 
 <template>
 <div class="stepsContainer index{{step}}" >
-	<ul class="breadcrumb">
+	<h4 class="stepCounter"> 注册 ({{step}}/5)</h4>
+	<p class="stepInfo"></p>
+	<!-- <ul class="breadcrumb">
 	  <li class="step1"> 
 	    <a>
 	      <span class="icon">4</span>
@@ -114,7 +117,8 @@
 	       <span class="text">我的资料</span>
 	    </a>
 	  </li>
-	</ul>	
+	</ul>	 -->
+
 </div>
 	
 </template>

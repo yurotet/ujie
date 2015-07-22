@@ -27,13 +27,13 @@
 	}
 
 	.input-row.avatar-row	{
-		height:150px;
+		height:200px;
 		text-align: center;
 	}
 
 	.avatar-row .uploadItem {
-		margin-top:35px;
-		opacity: .7
+		margin-top:60px;
+		opacity: 0.8
 	}
 </style>
 

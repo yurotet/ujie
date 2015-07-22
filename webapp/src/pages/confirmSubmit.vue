@@ -11,7 +11,7 @@
 		title: '提交审核',
 		data:function(){ 
 			return {
-				curStep:1,
+				curStep:5,
 				name: lockr.get('user').realname
 			}
 		},	
@@ -168,16 +168,17 @@
 				nav.goTo('register');
 			},
 			setHeader:function() {
-				var selText = '.stepsContainer.index1 .step1' ;
+				// $('.stepInfo').text('确认提交');
+				// var selText = '.stepsContainer.index1 .step1' ;
 								
-				var ela=$(selText+' a'),
-					eltext=$(selText+ ' .text');		
+				// var ela=$(selText+' a'),
+				// 	eltext=$(selText+ ' .text');		
 		 		
-		 		ela.css('width','170px');	  		
-		  		ela.css('background-color','#77c2a5');
+		 	// 	ela.css('width','170px');	  		
+		  // 		ela.css('background-color','#77c2a5');
 
-		  		eltext.css('display','inline-block');
-		  		eltext.css('opacity','1');	
+		  // 		eltext.css('display','inline-block');
+		  // 		eltext.css('opacity','1');	
 			}		
 		},
 		created: function() {			
@@ -227,12 +228,11 @@
 	<div v-component="view/regSteps" v-with="step:curStep"></div>
 	<div class='confirmMsgContainer'>
 		<p>
-			Hi <span class="reg-name">{{name}}</span>，感谢您完成认证信息的填写。</p>
-			<p>请确认您填写的资料真实有效，提交审核后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！
+			<span class="reg-name">{{name}}</span>，请确认您填写的资料真实有效，提交注册后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！
 		</p>
 		
 	</div>	
 
-	<button id="regSubmit" class="btn btn-positive btn-block"  v-on="click: onSubmit">提交审核</button>
+	<button id="regSubmit" class="btn btn-positive btn-block"  v-on="click: onSubmit">提交注册</button>
 	<button id="modifyInfo" class="btn btn-nagtive btn-block" v-on="click: onPre">修改资料</button>
 </template>

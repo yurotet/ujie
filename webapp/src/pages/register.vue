@@ -8,8 +8,12 @@
 
 	var REG_STATUS= {		
 		NOT_REGED:1,
-		GOTO_APP:2,
-		READY_FOR_REG:3
+		REG_IN_PROGRESS:2,
+		READY_FOR_REG:3,
+		REG_FAILED: 4,
+		REG_SUCCESS:5,
+		REG_NOT_LOGIN:6
+
 	};
 
 	var View = BasePage.extend({
@@ -52,7 +56,7 @@
 			lockr.set('infoTransList',listToSave );		
 
 			return {
-				curStep:4,	
+				curStep:2,	
 
 				allCityList:{},
 				countryList:[],
@@ -172,22 +176,23 @@
 
 
 			setHeader:function() {
-				var selText = '.stepsContainer.index4 .step4' ;			
+				$('.stepInfo').text('填写基本信息');
+				// var selText = '.stepsContainer.index4 .step4 ' ;			
 
-				var el = $(selText),
-					ela=$(selText+' a'),
-					eltext=$(selText+' .text');
+				// var el = $(selText),
+				// 	ela=$(selText+' a'),
+				// 	eltext=$(selText+' .text');
 				
-				el.css('padding','3px');
-		 		el.css('margin-top','0');
+				// el.css('padding','3px');
+		 	// 	el.css('margin-top','0');
 		 		
-		 		ela.css('width','100px');
-		  		ela.css('height','60px');
-		 		ela.css('line-height','60px');
-		  		ela.css('background-color','#77c2a5');
+		 	// 	ela.css('width','100px');
+		  // 		ela.css('height','60px');
+		 	// 	ela.css('line-height','60px');
+		  // 		ela.css('background-color','#77c2a5');
 
-		  		eltext.css('display','inline-block');
-		  		eltext.css('opacity','1');
+		  // 		eltext.css('display','inline-block');
+		  // 		eltext.css('opacity','1');
 			},
 
 			initData:function() {
@@ -212,12 +217,17 @@
 					            success: function(body){  					            	
 					              if (body.err_code == 0 ) {	
 					              	
-					              // resolve(REG_STATUS.READY_FOR_REG);			              
+					              // resolve(REG_STATUS.READY_FOR_REG);	
+					              body.data.guide_auth=1;		              
 					               	switch (body.data.guide_auth) {
 					               		case '1': 	// 审核通过
+					               			resovle(REG_STATUS.REG_SUCCESS);
+					               		break;
 					               		case '3': 	// 审核失败
+					               			resolve(REG_STATUS.REG_FAILED);
+					               		break;
 					               		case '2':             // 审核中
-					               			resolve(REG_STATUS.GOTO_APP);
+					               			resolve(REG_STATUS.REG_IN_PROGRESS);
 					               		break;
 
 					               		case '0'	:	//待审核
@@ -245,7 +255,9 @@
 			
 
 			 checkRegStatus : function() {
-			 	this._loadAuthStauts().then(function(statusCode){ 		
+			 	this.showLoading();
+			 	this._loadAuthStauts().then(function(statusCode){ 
+			 		this.hideLoading();
 			 		switch (statusCode) {
 			 			case  REG_STATUS.NOT_REGED: 	//  还没有通过微信账号注册过
 			 				nav.goTo('newUser');
@@ -260,15 +272,16 @@
 			 				nav.goTo('notfound');
 			 			break;
 			 		}
-			 	}).catch(function(err) {
+			 	}.bind(this)).catch(function(err) {			 		
+			 		this.hideLoading();
 			 		nav.goTo('notfound');
-			 	});
+			 	}.bind(this));
 			 }	
 		},
 		
 		created: function() {
 			lockr.set('isRegLegal', false);
-			this._loadCountryInfo().then(this.initData);
+			this._loadCountryInfo().then(this.initData);			
 		},
 
 		resume: function() {
@@ -290,7 +303,7 @@
 	}
 	.userInfo .input-row label{
 		font-size: 14px;
-		color:#666666;
+		color:#aaaaaa;
 	}
 	.userInfo select {
 		margin-top: 5px;
@@ -310,7 +323,7 @@
   	 <form class="input-group">
   		 <div class="input-row" >			
 			<label>姓名</label>	
-			<input type="text" v-on="input:onInputChange" placeholder="真实姓名 (必填)" v-model="user.realname"></input>			
+			<input type="text" v-on="input:onInputChange" placeholder="请填写真实姓名 (必填)" v-model="user.realname"></input>			
 		</div>
   	 	<div class="input-row">	
 			<label>性别</label>
@@ -367,6 +380,6 @@
 	</form>
 </div>
 
-<button id="userInfoBtn" class="btn btn-positive btn-block" disabled="disabled" v-on="click: onSubmit">下一步, 上传认证照片</button>
+<button id="userInfoBtn" class="btn btn-positive btn-block" disabled="disabled" v-on="click: onSubmit">下一步</button>
 
 </template>

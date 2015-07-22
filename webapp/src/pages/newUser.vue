@@ -8,7 +8,8 @@
 	var View = BasePage.extend({
 		title: '注册',
 		data: function() {
-			return {				
+			return {
+				curStep:1,				
 				username:'',
 				pwd:'',	
 				confirmPwd:'',
@@ -17,6 +18,9 @@
 		},
 
 		methods: {
+			setHeader:function() {
+				$('.stepInfo').text('创建账号');
+			},
 			checkSubmitBtn: function() {
 				var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
 				
@@ -87,7 +91,8 @@
 		created: function() {									
 				
 		},
-		resume: function() {			
+		resume: function() {
+			this.setHeader();
 		},
 		pause:function(){
 
@@ -121,16 +126,17 @@
 </style>
 
 <template>	
-	<div class="regHeader">
+	<!-- <div class="regHeader">
 		<img src="logo.png"></img>
-	</div>
+	</div> -->
+	<div v-component="view/regSteps" v-with="step:curStep"></div>
 	  <div class="driver-reg">
 		  <form class="input-group">
 			    <div class="input-row">
-				      <input type="text"  v-on="input:onUserInput" placeholder="输入用户名 (3-16位字母, 数字或汉字)" v-model="username">
+				      <input type="text"  v-on="input:onUserInput" placeholder="用户名 (3-16位字母, 数字或汉字)" v-model="username">
 			    </div>			   
 			    <div class="input-row">
-				      <input type="password" v-on="input:onPwdInput" placeholder="输入密码 (大于6位)" v-model="pwd">
+				      <input type="password" v-on="input:onPwdInput" placeholder="设置密码 (大于6位)" v-model="pwd">
 			    </div>
 			    <div id="confirmPwdInput" class="input-row">				      
 				      <input type="password" v-on="input:onConfirmPwdInput" placeholder="确认密码" v-model="confirmPwd">
@@ -140,7 +146,7 @@
 			    </div>
 		    </form>
 	  
-		    <button  id="regBtn" class="miu-subBtn btn btn-positive btn-block"  disabled="disabled" v-model="realName" v-on="click: onSubmit">注册</button>	
+		    <button  id="regBtn" class="miu-subBtn btn btn-positive btn-block"  disabled="disabled" v-model="realName" v-on="click: onSubmit">下一步</button>	
 		    <div  id="linkSec"><p>注册即表示同意<a href="http://g.miutour.com/help/gagreement.html" target="_blank">蜜柚私导协议</a></p></div>    	
 	  </div>	 
 </template>

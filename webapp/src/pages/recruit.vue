@@ -16,12 +16,15 @@
 				$('.b-lazy').css('height', $(window).height()+'px');
 				$(".button-area ").css("height",$(window).height() /3+'px');
 
+				this.showLoading();
 				 var bLazy = new Blazy({  
 	    				success: function(ele) {
-				            // Image has loaded
-				            // Do your business here
-				        }
+	    					this.hideLoading();
+					            // Image has loaded
+					            // Do your business here
+				        	}
 				      ,error: function(ele, msg){
+				      	this.hideLoading();
 				            if(msg === 'missing'){
 				                // Data-src is missing
 				            }

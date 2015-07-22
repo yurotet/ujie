@@ -176,16 +176,17 @@
 			},
 						
 			setHeader:function(){
-				var selText = '.stepsContainer.index3 .step3' ;
+				$('.stepInfo').text('上传认证照片');
+				// var selText = '.stepsContainer.index3 .step3' ;
 								
-				var ela=$(selText+' a'),
-					eltext=$(selText+ ' .text');		
+				// var ela=$(selText+' a'),
+				// 	eltext=$(selText+ ' .text');		
 		 		
-		 		ela.css('width','170px');	  		
-		  		ela.css('background-color','#77c2a5');
+		 	// 	ela.css('width','170px');	  		
+		  // 		ela.css('background-color','#77c2a5');
 
-		  		eltext.css('display','inline-block');
-		  		eltext.css('opacity','1');		
+		  // 		eltext.css('display','inline-block');
+		  // 		eltext.css('opacity','1');		
 			},
 			onPre:function () {
 				nav.goTo('register');
@@ -294,12 +295,12 @@
 		display: 'inline-block';
 		width : 35%;
 	}
-	#picUploadBtn {
+	/*#picUploadBtn {
 		display: 'inline-block';
 		width: 60%;
 		float: right;
 
-	}
+	}*/
 </style>
 
 <template>
@@ -313,7 +314,6 @@
 	</div>
 
 	
-	<button id="picUploadBtn" class="btn btn-positive btn-block"  disabled="disabled" v-on="click: onSubmit">下一步, 填写结算账户信息</button>
-	<button id="picUploadPreBtn" class="btn btn-nagtive btn-block" v-on="click: onPre">上一步</button>
+	<button id="picUploadBtn" class="btn btn-positive btn-block"  disabled="disabled" v-on="click: onSubmit">下一步</button>	
 
 </template>

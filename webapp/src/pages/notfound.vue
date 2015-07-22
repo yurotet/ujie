@@ -25,7 +25,7 @@
 	}
 	.cntContainer p {
 		font-size: 16px;
-		margin:40px;
+		margin:30px;
 	}
 </style>
 
@@ -34,9 +34,7 @@
 		<img src="logo.png"></img>
 	</div>
 
-	<div class='cntContainer'>
-		<h3>哎呀，出错了！</h3>
-		<p>请确保您的网络连接通畅，或者等会儿再试一下吧！</p>	
-		<button  class="btn btn-positive btn-block">知道了</button>	
+	<div class='cntContainer'>		
+		<p>请确保您的网络连接通畅，稍后再试！</p>			
 	</div>	
 </template>
