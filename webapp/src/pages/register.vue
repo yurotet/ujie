@@ -287,7 +287,7 @@
 		},
 		
 		created: function() {
-			 var strsec = getsec(time); 
+			 // var strsec = getsec(time); 
     var exp = new Date(); 
     // exp.setTime(exp.getTime() + strsec*1); 
     document.cookie = 'openid' + "="+ "11111";
