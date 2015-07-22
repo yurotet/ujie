@@ -218,7 +218,8 @@
 					              if (body.err_code == 0 ) {	
 					              	
 					              // resolve(REG_STATUS.READY_FOR_REG);	
-					              // body.data.guide_auth=1;		              
+					              // body.data.guide_auth=1;		
+					              alert( body.data.refuse_reason);              
 					               	switch (body.data.guide_auth) {
 					               		case '1': 	// 审核通过
 					               			resovle(REG_STATUS.REG_SUCCESS);

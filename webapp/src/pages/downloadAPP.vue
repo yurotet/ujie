@@ -12,6 +12,9 @@
 
 			var realname = user? user.realname: '';
 			var refuseDes = lockr.get('refuse_des') || '';
+			if (refuseDes) {
+				refuseDes = "客服备注：" + refuseDes;
+			}
 
 			return {
 				realname:realname,
