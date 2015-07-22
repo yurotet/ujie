@@ -218,13 +218,13 @@
 					              if (body.err_code == 0 ) {	
 					              	
 					              // resolve(REG_STATUS.READY_FOR_REG);	
-					              body.data.guide_auth=1;		              
+					              // body.data.guide_auth=1;		              
 					               	switch (body.data.guide_auth) {
 					               		case '1': 	// 审核通过
 					               			resovle(REG_STATUS.REG_SUCCESS);
 					               		break;
 					               		case '3': 	// 审核失败
-					               			resolve(REG_STATUS.REG_FAILED);
+					               			resolve(REG_STATUS.REG_FAILED, body.data.refuse_reason);
 					               		break;
 					               		case '2':             // 审核中
 					               			resolve(REG_STATUS.REG_IN_PROGRESS);
@@ -256,17 +256,24 @@
 
 			 checkRegStatus : function() {
 			 	this.showLoading();
-			 	this._loadAuthStauts().then(function(statusCode){ 
-			 		this.hideLoading();
+			 	this._loadAuthStauts().then(function(statusCode,extra){ 
+			 		this.hideLoading();console.log(statusCode);
 			 		switch (statusCode) {
-			 			case  REG_STATUS.NOT_REGED: 	//  还没有通过微信账号注册过
+			 			case  REG_STATUS.NOT_REGED: 	
 			 				nav.goTo('newUser');
 			 			break;
-			 			case REG_STATUS.GOTO_APP: 		//账号已经通过认证了, 引导下载APP补全或者修改认证信息
-			 				nav.goTo('downloadAPP');
+			 			case REG_STATUS.REG_SUCCESS: 		
+			 				nav.goTo('downloadAPP?s=success');
 			 			break;	
+			 			case REG_STATUS.REG_FAILED:
+			 				lockr.set('refuse_des', extra);
+			 				nav.goTo("downloadAPP?s=fail");
+			 			break;
 			 			case REG_STATUS.READY_FOR_REG:
 			 				nav.goTo("register");
+			 			break;
+			 			case REG_STATUS.REG_IN_PROGRESS:
+			 				nav.goTo("downloadAPP?s=ing");
 			 			break;
 			 			default:			 				
 			 				nav.goTo('notfound');
@@ -286,7 +293,9 @@
 
 		resume: function() {
 			this.setHeader();
-			this.checkRegStatus();					
+			if (!this.getParam('s')) {
+				this.checkRegStatus();					
+			}
 		},
 		pause:function(){
 

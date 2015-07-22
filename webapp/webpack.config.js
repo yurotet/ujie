@@ -35,11 +35,11 @@ module.exports = {
             "$": "browserify-zepto",
             // "_": "underscore",
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
     devServer: {
         contentBase: "build/"

@@ -90,7 +90,7 @@
 
 <template>
 <div class="stepsContainer index{{step}}" >
-	<h4 class="stepCounter"> 注册 ({{step}}/5)</h4>
+	<h4 class="stepCounter"> 司导注册 ({{step}}/5)</h4>
 	<p class="stepInfo"></p>
 	<!-- <ul class="breadcrumb">
 	  <li class="step1"> 
