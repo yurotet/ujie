@@ -174,7 +174,7 @@ webpackJsonp([7],{
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(71)(".regHeader{text-align:center}.reg-name{font-weight:700;font-size:18px}.confirmMsgContainer{padding:20px}.confirmMsgContainer p{font-size:16px}#modifyInfo{display:'inline-block';width:35%}#regSubmit{display:'inline-block';width:60%;float:right}");
-	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t<div class=\"confirmMsgContainer\">\n\t\t<p>\n\t\t\t<span class=\"reg-name\">{{name}}</span>，请确认您填写的资料真实有效，提交注册后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！\n\t\t</p>\n\t\t\n\t</div>\t\n\n\t<button id=\"regSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交注册</button>\n\t<button id=\"modifyInfo\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\">修改资料</button>";
+	var __vue_template__ = "<div v-component=\"view/regSteps\" v-with=\"step:curStep\"></div>\n\t<div class=\"confirmMsgContainer\">\n\t\t<p>\n\t\t\t<span class=\"reg-name\">{{name}}</span>，请确认您填写的资料真实有效，提交注册后，客服将在2个工作日内联系您, 请保持您的联系方式畅通！\n\t\t</p>\n\t\t\n\t</div>\t\n\n\t<button id=\"regSubmit\" class=\"btn btn-positive btn-block\" v-on=\"click: onSubmit\">提交注册</button>\n\t<button id=\"modifyInfo\" class=\"btn btn-nagtive btn-block\" v-on=\"click: onPre\"> 重新修改资料</button>";
 	var BasePage = __webpack_require__(72);
 		var Vue = __webpack_require__(6);
 		var nav = __webpack_require__(68);
@@ -341,7 +341,7 @@ webpackJsonp([7],{
 				},
 
 				onPre :function() {
-					nav.goTo('register');
+					nav.goTo('register?s=true');
 				},
 				setHeader:function() {
 					// $('.stepInfo').text('确认提交');

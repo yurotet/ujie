@@ -145,7 +145,7 @@ webpackJsonp([3],{
 
 			methods: {
 				setHeader:function() {
-					$('.stepInfo').text('创建账号');
+					$('.stepInfo').text('创建账号');	
 				},
 				checkSubmitBtn: function() {
 					var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
@@ -194,7 +194,7 @@ webpackJsonp([3],{
 						  context: this,
 						  success: function(res){					  	
 						  	if(! res.err_code || res.err_code==0){
-						  		nav.goTo('register');
+						  		nav.goTo('register?s=true');
 						  	} else {					  		
 						  		this.showToast(res.err_msg,true);
 						  	}
