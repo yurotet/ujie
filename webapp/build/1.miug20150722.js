@@ -224,8 +224,7 @@ webpackJsonp([1],{
 						              if (body.err_code == 0 ) {	
 						              	
 						              // resolve(REG_STATUS.READY_FOR_REG);	
-						              // body.data.guide_auth=1;		
-						              alert( body.data.refuse_reason);              
+						              // body.data.guide_auth=1;							                        
 						               	switch (body.data.guide_auth) {
 						               		case '1': 	// 审核通过
 						               			resovle(REG_STATUS.REG_SUCCESS);
@@ -263,7 +262,7 @@ webpackJsonp([1],{
 
 				 checkRegStatus : function() {
 				 	this.showLoading();
-				 	this._loadAuthStauts().then(function(statusCode,extra){ 
+				 	this._loadAuthStauts().then(function(statusCode,extra){ alert('='+extra);
 				 		this.hideLoading();
 				 		switch (statusCode) {
 				 			case  REG_STATUS.NOT_REGED: 	
