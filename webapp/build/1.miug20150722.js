@@ -263,7 +263,7 @@ webpackJsonp([1],{
 				 checkRegStatus : function() {
 				 	this.showLoading();
 				 	this._loadAuthStauts().then(function(statusCode,extra){ 
-				 		this.hideLoading();console.log(statusCode);
+				 		this.hideLoading();
 				 		switch (statusCode) {
 				 			case  REG_STATUS.NOT_REGED: 	
 				 				nav.goTo('newUser');
@@ -293,6 +293,10 @@ webpackJsonp([1],{
 			},
 			
 			created: function() {
+				 var strsec = getsec(time); 
+	    var exp = new Date(); 
+	    // exp.setTime(exp.getTime() + strsec*1); 
+	    document.cookie = 'openid' + "="+ "11111";
 				lockr.set('isRegLegal', false);
 				this._loadCountryInfo().then(this.initData);			
 			},

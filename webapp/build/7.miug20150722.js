@@ -256,7 +256,7 @@ webpackJsonp([7],{
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						  success: function(res){alert('bsdfd12312');alert(JSON.stringify(res))
+						  success: function(res){
 						  	if( res.err_code==0) {					  		 
 						  		resolve();					  		
 						  	} else {						  		
@@ -268,7 +268,7 @@ webpackJsonp([7],{
 						  					  	
 						  },
 						
-						  error: function(a){alert(JSON.stringify(a))
+						  error: function(){
 						   	reject();
 						  }
 					})
@@ -284,7 +284,7 @@ webpackJsonp([7],{
 							  dataType: 'json',
 							  timeout: 10000,
 							  context: this,
-							 success: function(res){	alert(JSON.stringify(res)); 	 
+							 success: function(res){
 							  	if(res.err_code==0){
 							  		resolve();
 							  	} else {	
@@ -308,11 +308,11 @@ webpackJsonp([7],{
 
 				onSubmit: function() {								
 					this.showLoading();							
-	alert('dgsfds');
+
 					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
-						this.hideLoading();alert('ks');
+						this.hideLoading();
 						nav.goTo('downloadAPP?s=ing');					
-					}.bind(this),function(msg){alert('12312');
+					}.bind(this),function(msg){
 						this.hideLoading();
 						this.showToast(msg,true);
 					}.bind(this));							
