@@ -141,12 +141,12 @@
 		display: 'inline-block';
 		width : 35%;
 	}
-	#accSubBtn {
+	/*#accSubBtn {
 		display: 'inline-block';
 		width: 60%;
 		float: right;
 
-	}
+	}*/
 </style>
 
 <template>
@@ -187,7 +187,6 @@
 	</form>
 </div>
 
-<button id="accSubBtn" class="btn btn-positive btn-block" disabled="disabled" v-on="click: onSubmit">下一步, 提交审核</button>
-<button id="accSubPreBtn" class="btn btn-nagtive btn-block" v-on="click: onPre">上一步</button>
+<button id="accSubBtn" class="btn btn-positive btn-block" disabled="disabled" v-on="click: onSubmit">下一步</button>
 
 </template>

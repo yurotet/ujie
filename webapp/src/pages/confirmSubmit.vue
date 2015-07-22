@@ -165,7 +165,7 @@
 			},
 
 			onPre :function() {
-				nav.goTo('register');
+				nav.goTo('register?s=true');
 			},
 			setHeader:function() {
 				// $('.stepInfo').text('确认提交');
@@ -234,5 +234,5 @@
 	</div>	
 
 	<button id="regSubmit" class="btn btn-positive btn-block"  v-on="click: onSubmit">提交注册</button>
-	<button id="modifyInfo" class="btn btn-nagtive btn-block" v-on="click: onPre">修改资料</button>
+	<button id="modifyInfo" class="btn btn-nagtive btn-block" v-on="click: onPre"> 重新修改资料</button>
 </template>
