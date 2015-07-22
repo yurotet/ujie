@@ -71,6 +71,8 @@
 
 			_uploadUserInfo : function() {
 				return new Promise(function (resolve, reject) {
+					var t=  this.getPostUserInfo();
+					alert(JSON.stringify(t));
 					$.ajax({	 
 					  type:'POST',				  
 					  url: '/api/info', 
