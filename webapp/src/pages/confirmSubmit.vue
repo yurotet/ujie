@@ -72,7 +72,7 @@
 			_uploadUserInfo : function() {
 				return new Promise(function (resolve, reject) {
 					var t=  this.getPostUserInfo();
-					alert(JSON.stringify(t));
+					
 					$.ajax({	 
 					  type:'POST',				  
 					  url: '/api/info', 
@@ -83,7 +83,7 @@
 					  timeout: 10000,
 					  context: this,
 					  success: function(res){
-					  	if( res.err_code==0) {					  		 
+					  	if( res.err_code==0) {
 					  		resolve();					  		
 					  	} else {						  		
 					  		reject(res.data[0].err_msg);						  		
@@ -94,7 +94,7 @@
 					  					  	
 					  },
 					
-					  error: function(a){alert(JSON.stringify(a))
+					  error: function(a){
 					   	reject();
 					  }
 				})
@@ -103,6 +103,7 @@
 			
 			_uploadPics :function() {
 				return new Promise(function(resolve, reject) {
+					alert(JSON.stringify(this.getPostPics()));
 					$.ajax({
 						  type:'POST',				  
 						  url: '/api/images', 
@@ -132,7 +133,7 @@
 				}.bind(this));
 			},
 
-			onSubmit: function() {	alert(document.cookie);							
+			onSubmit: function() {							
 				this.showLoading();							
 
 				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){

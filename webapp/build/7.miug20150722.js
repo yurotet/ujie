@@ -248,7 +248,7 @@ webpackJsonp([7],{
 				_uploadUserInfo : function() {
 					return new Promise(function (resolve, reject) {
 						var t=  this.getPostUserInfo();
-						alert(JSON.stringify(t));
+						
 						$.ajax({	 
 						  type:'POST',				  
 						  url: '/api/info', 
@@ -259,7 +259,7 @@ webpackJsonp([7],{
 						  timeout: 10000,
 						  context: this,
 						  success: function(res){
-						  	if( res.err_code==0) {					  		 
+						  	if( res.err_code==0) {
 						  		resolve();					  		
 						  	} else {						  		
 						  		reject(res.data[0].err_msg);						  		
@@ -270,7 +270,7 @@ webpackJsonp([7],{
 						  					  	
 						  },
 						
-						  error: function(a){alert(JSON.stringify(a))
+						  error: function(a){
 						   	reject();
 						  }
 					})
@@ -279,6 +279,7 @@ webpackJsonp([7],{
 				
 				_uploadPics :function() {
 					return new Promise(function(resolve, reject) {
+						alert(JSON.stringify(this.getPostPics()));
 						$.ajax({
 							  type:'POST',				  
 							  url: '/api/images', 
@@ -308,7 +309,7 @@ webpackJsonp([7],{
 					}.bind(this));
 				},
 
-				onSubmit: function() {	alert(document.cookie);							
+				onSubmit: function() {							
 					this.showLoading();							
 
 					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
