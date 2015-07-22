@@ -132,9 +132,9 @@
 
 			onSubmit: function() {								
 				this.showLoading();							
-
+alert('dgsfds');
 				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
-					this.hideLoading();
+					this.hideLoading();alert('ks');
 					nav.goTo('downloadAPP?s=ing');					
 				}.bind(this),function(msg){
 					this.hideLoading();
