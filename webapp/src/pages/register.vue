@@ -216,9 +216,7 @@
 					            context: this,
 					            success: function(body){  					            	
 					              if (body.err_code == 0 ) {	
-					              	
-					              // resolve(REG_STATUS.READY_FOR_REG);	
-					              // body.data.guide_auth=1;
+					              						         
 					              	this.$data.refuseDes = body.data.refuse_reason;						                        
 					               	switch (body.data.guide_auth) {
 					               		case '1': 	// 审核通过
@@ -287,11 +285,7 @@
 			 }	
 		},
 		
-		created: function() {
-			 // var strsec = getsec(time); 
-    var exp = new Date(); 
-    // exp.setTime(exp.getTime() + strsec*1); 
-    document.cookie = 'openid' + "="+ "11111";
+		created: function() {			
 			lockr.set('isRegLegal', false);
 			this._loadCountryInfo().then(this.initData);			
 		},

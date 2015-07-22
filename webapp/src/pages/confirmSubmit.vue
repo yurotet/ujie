@@ -102,8 +102,7 @@
 			},
 			
 			_uploadPics :function() {
-				return new Promise(function(resolve, reject) {
-					alert(JSON.stringify(this.getPostPics()));
+				return new Promise(function(resolve, reject) {					
 					$.ajax({
 						  type:'POST',				  
 						  url: '/api/images', 
