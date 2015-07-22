@@ -80,7 +80,7 @@
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){alert(JSON.stringify(res))
+					  success: function(res){alert('bsdfd12312');alert(JSON.stringify(res))
 					  	if( res.err_code==0) {					  		 
 					  		resolve();					  		
 					  	} else {						  		
@@ -92,7 +92,7 @@
 					  					  	
 					  },
 					
-					  error: function(){
+					  error: function(a){alert(JSON.stringify(a))
 					   	reject();
 					  }
 				})
@@ -109,7 +109,7 @@
 						  timeout: 10000,
 						  context: this,
 						 success: function(res){	alert(JSON.stringify(res)); 	 
-						  	if(res.err_code==0){			  		
+						  	if(res.err_code==0){
 						  		resolve();
 						  	} else {	
 						  		if (res.data.length) {
