@@ -312,7 +312,7 @@ webpackJsonp([7],{
 					Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
 						this.hideLoading();alert('ks');
 						nav.goTo('downloadAPP?s=ing');					
-					}.bind(this),function(msg){
+					}.bind(this),function(msg){alert('12312');
 						this.hideLoading();
 						this.showToast(msg,true);
 					}.bind(this));							
