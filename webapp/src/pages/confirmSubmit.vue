@@ -80,7 +80,7 @@
 					  dataType: 'json',
 					  timeout: 10000,
 					  context: this,
-					  success: function(res){
+					  success: function(res){alert(JSON.stringify(res))
 					  	if( res.err_code==0) {					  		 
 					  		resolve();					  		
 					  	} else {						  		
@@ -108,7 +108,7 @@
 						  dataType: 'json',
 						  timeout: 10000,
 						  context: this,
-						 success: function(res){			 	 
+						 success: function(res){	alert(JSON.stringify(res)); 	 
 						  	if(res.err_code==0){			  		
 						  		resolve();
 						  	} else {	
