@@ -20,6 +20,9 @@
 			},
 			c4:function() {
 				nav.goTo('guidedetails?c=4')
+			},
+			c5:function() {
+				nav.goTo('guidedetails?c=5')
 			}
 		},
 		created: function() {
@@ -51,4 +54,5 @@
 <button v-on="click:c2" class="btn btn-negative btn-block">派单规则</button>
 <button v-on="click:c3" class="btn btn-negative btn-block">评级规则</button>
 <button v-on="click:c4" class="btn btn-negative btn-block">处罚规则</button>
+<button v-on="click:c5" class="btn btn-negative btn-block">常见问题</button>
 </template>
