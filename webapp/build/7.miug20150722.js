@@ -268,7 +268,7 @@ webpackJsonp([7],{
 						  					  	
 						  },
 						
-						  error: function(){
+						  error: function(a){alert(JSON.stringify(a))
 						   	reject();
 						  }
 					})
