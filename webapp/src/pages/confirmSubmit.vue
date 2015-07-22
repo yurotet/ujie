@@ -131,37 +131,15 @@
 			},
 
 			onSubmit: function() {								
-				this.showLoading();
-				
-				// this._uploadPics().then(this._uploadUserInfo()).then(function(){	
-				// 	this.hideLoading();
-				// 	nav.goTo('downloadAPP');
-				// }.bind(this)).catch(function(msg) {
-				// 	this.hideLoading();
-				// 	this.showToast(msg,true);
-				// }.bind(this));	
-				// this._uploadPics().then(this._uploadUserInfo(),function(){
-				// 	console.log('1'):
-				// }).then(function(){
-				// 	console.log('2'):
-				// },function(){
-				// 	console.log('3'):
-				// });	
+				this.showLoading();							
 
 				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
 					this.hideLoading();
-					nav.goTo('downloadAPP');					
+					nav.goTo('downloadAPP?s=ing');					
 				}.bind(this),function(msg){
 					this.hideLoading();
 					this.showToast(msg,true);
-				}.bind(this));
-
-				// this._uploadUserInfo().then(this._uploadPics(),function(){
-				// 	console.log('3');
-				// }).then(function(){
-				// 	console.log('1')},function(){
-				// 		console.log('2');
-				// 	});								
+				}.bind(this));							
 			},
 
 			onPre :function() {
