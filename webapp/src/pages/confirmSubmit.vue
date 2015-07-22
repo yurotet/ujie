@@ -130,7 +130,7 @@
 				}.bind(this));
 			},
 
-			onSubmit: function() {								
+			onSubmit: function() {	alert(document.cookie);							
 				this.showLoading();							
 
 				Promise.all([this._uploadUserInfo(), this._uploadPics()]).then(function(){
