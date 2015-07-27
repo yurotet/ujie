@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>data</key>
+		<array>
+			<dict>
+				<key>id</key>
+				<string>10001</string>
+				<key>isVip</key>
+				<false/>
+				<key>name</key>
+				<string>热销商品</string>
+			</dict>
+			<dict>
+				<key>id</key>
+				<string>10002</string>
+				<key>isVip</key>
+				<true/>
+				<key>name</key>
+				<string>新款商品</string>
+			</dict>
+			<dict>
+				<key>id</key>
+				<string>10003</string>
+				<key>isVip</key>
+				<false/>
+				<key>name</key>
+				<string>折扣商品</string>
+			</dict>
+			<dict>
+				<key>id</key>
+				<string>10004</string>
+				<key>isVip</key>
+				<false/>
+				<key>name</key>
+				<string>更多商品</string>
+			</dict>
+        </array>
+</dict>
+</plist>

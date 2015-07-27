@@ -1,0 +1,18 @@
+{
+    "version": "1.0",
+    "product_ver": "1.0",
+    "file_ver": "v1",
+    "curr_store_code":"A0001",
+    "cid": "a9d5fe5c-40fe-454c-aef3-31d69c156358",
+    "debug_url": "http://testgapi.miutour.com",
+    "release_url": "http://testgapi.miutour.com",
+    "debug_image_host": "http://testgapi.miutour.com",
+    "release_image_host": "http://testgapi.miutour.com",
+    "debug_image_url":"",
+    "release_image_url":"",
+    "debug_host":"ims.appeme.com",
+    "debug_port":1999,
+    "release_host":"ims.appeme.com",
+    "release_port":1999,
+    "appcode":"sports"
+}

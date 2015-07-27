@@ -1,0 +1,24 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "NIFLog.h"
+#import "EMEFactroyManger.h"
+#import "EMEConfigManager.h"
+#import "EMEConstants.h"
+#import "UserManager.h"
+#import "EMECategoryManager.h"
+#import "UIAlertView+Categories.h"
+#import "NSDate+Categories.h"
+#import "UIImage+Extended.h"
+#import "CommonUtils.h"
+#import "BaseTabFrameHeader.h"
+#import "BaseModelHeader.h"
+#import "StoreManager.h"
+#import "ThemeManager.h"
+#endif

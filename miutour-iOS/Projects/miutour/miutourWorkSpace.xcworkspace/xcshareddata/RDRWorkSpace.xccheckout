@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>DA986E80-45D2-4F42-8C2D-9DC06D9D391F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RDRWorkSpace</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7ecd4c41-5204-4979-aaf0-d4fab465895c++312</key>
+		<string>svn://123.57.74.16/svn/repos</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/RDR/Projects/RDR/RDRWorkSpace.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7ecd4c41-5204-4979-aaf0-d4fab465895c++312</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>7ecd4c41-5204-4979-aaf0-d4fab465895c++312</key>
+		<string>svn://123.57.74.16</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>svn://123.57.74.16/svn/repos/ios/RDR/Projects/RDR/RDRWorkSpace.xcworkspace</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7ecd4c41-5204-4979-aaf0-d4fab465895c++312</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7ecd4c41-5204-4979-aaf0-d4fab465895c++312</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RDRProject</string>
+		</dict>
+	</array>
+</dict>
+</plist>

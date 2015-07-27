@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+   
+   <key>bg_color01</key>
+   <string>#f9f9f9</string>
+   
+   
+   <key>bg_color02</key>
+   <string>#9eb500</string>
+   
+   
+   <key>bg_color03</key>
+   <string>#ff7e00</string>
+   
+  
+   <key>bg_color04</key>
+   <string>#e5e5e5</string>
+   
+      
+   <key>bg_color05</key>
+   <string>#788900</string>
+   
+  
+   <key>bg_color06</key>
+   <string>#606d00</string>
+   
+    <key>bg_color07</key>
+   <string>#000000</string>
+
+   <key>bg_color08</key>
+   <string>#dd0000</string>
+
+   <key>bg_color09</key>
+   <string>#333333</string> 
+  
+   <key>font_color01</key>
+   <string>#ffffff</string>
+     
+   <key>font_color02</key>
+   <string>#333333</string>
+      
+   
+   <key>font_color03</key>
+   <string>#14a700</string>
+   
+   
+   <key>font_color04</key>
+   <string>#666666</string>
+ 
+   
+   <key>font_color05</key>
+   <string>#cccccc</string>
+
+   
+   <key>font_color06</key>
+   <string>#ff7e00</string>
+
+     
+   <key>font_color07</key>
+   <string>#999999</string>
+
+   <key>font_color08</key>
+   <string>#dd0000</string>
+
+   <key>font_color09</key>
+   <string>#9eb500</string>
+
+</dict>
+</plist>
+

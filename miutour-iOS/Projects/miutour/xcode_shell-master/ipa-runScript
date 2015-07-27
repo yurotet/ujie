@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#--------------------------------------------
+# 功能：编译xcode项目并打ipa包
+# 
+# 作者：ccf
+# E-mail:ccf.developer@gmail.com
+# 创建日期：2012/09/24
+#--------------------------------------------
+echo 'toms:'${IS_BAIBU}
+echo 'toms:GCC_PREPROCESSOR_DEFINITIONS is'${GCC_PREPROCESSOR_DEFINITIONS}
+if [ ${IS_BAIBU} = 1 ];then
+appname=baibu
+export GCC_PREPROCESSOR_DEFINITIONS="IS_NIUZAI=1 "
+echo "toms:ISBAIBU=="${IS_BAIBU}" appname is "${appname}
+fi
+if [ ${IS_AIYILING} = 1 ];then
+echo "toms:ISAIYILING=="${IS_AIYILING}
+fi
+if [ ${IS_ALINE} = 1 ];then
+echo "toms:IS_ALINE=="${IS_AIYILING}
+fi
+
+export CODESIGNING_FOLDER_PATH=/Users/juxiangjun/desktop/uicomponenttest/build/Release-iphoneos/${appname}.app
+export CONTENTS_FOLDER_PATH=${appname}.app
+export DOCUMENTATION_FOLDER_PATH=${appname}.app/English.lproj/Documentation
+export DWARF_DSYM_FILE_NAME=${appname}.app.dSYM
+echo "toms:DWARF_DSYM_FILE_NAME is "${DWARF_DSYM_FILE_NAME}
+export EXECUTABLES_FOLDER_PATH=${appname}.app/Executables
+export EXECUTABLE_FOLDER_PATH=${appname}.app
+export EXECUTABLE_NAME=${appname}
+export EXECUTABLE_PATH=${appname}.app/${appname}
+export FRAMEWORKS_FOLDER_PATH=${appname}.app/Frameworks
+export FULL_PRODUCT_NAME=${appname}.app
+export ICON_114_NAME=iphone114_${appname}@2x.png
+export ICON_57_NAME=iphone57_${appname}.png
+export INFOPLIST_PATH=${appname}.app/Info.plist
+export INFOSTRINGS_PATH=${appname}.app/English.lproj/InfoPlist.strings
+export JAVA_FOLDER_PATH=${appname}.app/Java
+export LD_DEPENDENCY_INFO_FILE=/Users/juxiangjun/Library/Developer/Xcode/DerivedData/UiComponentWorkspace-eiibjxffnilcuagpiufqsfiwvuhl/Build/Intermediates/EMEQipuRoad.build/Release-iphoneos/EMEQipuRoad.build/Objects-normal/armv7s/${appname}_dependency_info.dat
+export LD_MAP_FILE_PATH=/Users/juxiangjun/Library/Developer/Xcode/DerivedData/UiComponentWorkspace-eiibjxffnilcuagpiufqsfiwvuhl/Build/Intermediates/EMEQipuRoad.build/Release-iphoneos/EMEQipuRoad.build/${appname}-LinkMap-normal-armv7s.txt
+export LINK_FILE_LIST_normal_armv7=/Users/juxiangjun/Library/Developer/Xcode/DerivedData/UiComponentWorkspace-eiibjxffnilcuagpiufqsfiwvuhl/Build/Intermediates/EMEQipuRoad.build/Release-iphoneos/EMEQipuRoad.build/Objects-normal/armv7/${appname}.LinkFileList
+export LINK_FILE_LIST_normal_armv7s=/Users/juxiangjun/Library/Developer/Xcode/DerivedData/UiComponentWorkspace-eiibjxffnilcuagpiufqsfiwvuhl/Build/Intermediates/EMEQipuRoad.build/Release-iphoneos/EMEQipuRoad.build/Objects-normal/armv7s/${appname}.LinkFileList
+export LOCALIZED_RESOURCES_FOLDER_PATH=${appname}.app/English.lproj
+export PBDEVELOPMENTPLIST_PATH=${appname}.app/pbdevelopment.plist
+export PKGINFO_PATH=${appname}.app/PkgInfo
+export PLUGINS_FOLDER_PATH=${appname}.app/PlugIns
+export PRIVATE_HEADERS_FOLDER_PATH=${appname}.app/PrivateHeaders
+export PRODUCT_NAME=${appname}
+export PUBLIC_HEADERS_FOLDER_PATH=${appname}.app/Headers
+export SCRIPTS_FOLDER_PATH=${appname}.app/Scripts
+export SHARED_FRAMEWORKS_FOLDER_PATH=${appname}.app/SharedFrameworks
+export SHARED_SUPPORT_FOLDER_PATH=${appname}.app/SharedSupport
+export UNLOCALIZED_RESOURCES_FOLDER_PATH=${appname}.app
+export VERSIONPLIST_PATH=${appname}.app/version.plist
+export VERSION_INFO_FILE=${appname}_vers.c
+export VERSION_INFO_STRING="\"@(#)PROGRAM:"${appname}" PROJECT:EMEQipuRoad-\""
+export WRAPPER_NAME=${appname}.app
+export XPCSERVICES_FOLDER_PATH=${appname}.app/XPCServices

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <!-- 背景颜色-->
+        <key>font_size01</key>
+        <!-- 背景颜色值 -->
+        <string>18px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size02</key>
+        <!-- 背景颜色值 -->
+        <string>20px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size03</key>
+        <!-- 背景颜色值 -->
+        <string>22px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size04</key>
+        <!-- 背景颜色值 -->
+        <string>24px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size05</key>
+        <!-- 背景颜色值 -->
+        <string>26px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size06</key>
+        <!-- 背景颜色值 -->
+        <string>28px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size07</key>
+        <!-- 背景颜色值 -->
+        <string>30px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size08</key>
+        <!-- 背景颜色值 -->
+        <string>32px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size09</key>
+        <!-- 背景颜色值 -->
+        <string>34px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size10</key>
+        <!-- 背景颜色值 -->
+        <string>36px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size11</key>
+        <!-- 背景颜色值 -->
+        <string>38px</string> 
+        
+        <!-- 背景颜色-->
+        <key>font_size12</key>
+        <!-- 背景颜色值 -->
+        <string>42px</string>
+        
+        <!-- 背景颜色-->
+        <key>font_size13</key>
+        <!-- 背景颜色值 -->
+        <string>42px</string>
+
+
+    </dict>
+</plist>
