@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		862046EF1B466CAF005FBB40 /* MTGroupBaseInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 862046EE1B466CAF005FBB40 /* MTGroupBaseInfoTableViewCell.m */; };
 		862046F21B46AC5F005FBB40 /* MTSummaryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 862046F11B46AC5F005FBB40 /* MTSummaryModel.m */; };
+		862470A11B673DB9002C3C61 /* MTServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8624709F1B673DB9002C3C61 /* MTServiceViewController.m */; };
+		862470A21B673DB9002C3C61 /* MTServiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 862470A01B673DB9002C3C61 /* MTServiceViewController.xib */; };
 		862BDD701B451D030059DFB2 /* MTChildModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 862BDD6F1B451D030059DFB2 /* MTChildModel.m */; };
 		862BDD731B4544A00059DFB2 /* MTGroupPickupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 862BDD721B4544A00059DFB2 /* MTGroupPickupTableViewCell.m */; };
 		862BDD761B4544AF0059DFB2 /* MTGroupBlockTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 862BDD751B4544AF0059DFB2 /* MTGroupBlockTableViewCell.m */; };
@@ -273,6 +275,9 @@
 		862046EE1B466CAF005FBB40 /* MTGroupBaseInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTGroupBaseInfoTableViewCell.m; sourceTree = "<group>"; };
 		862046F01B46AC5F005FBB40 /* MTSummaryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTSummaryModel.h; sourceTree = "<group>"; };
 		862046F11B46AC5F005FBB40 /* MTSummaryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTSummaryModel.m; sourceTree = "<group>"; };
+		8624709E1B673DB9002C3C61 /* MTServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTServiceViewController.h; sourceTree = "<group>"; };
+		8624709F1B673DB9002C3C61 /* MTServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTServiceViewController.m; sourceTree = "<group>"; };
+		862470A01B673DB9002C3C61 /* MTServiceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MTServiceViewController.xib; sourceTree = "<group>"; };
 		862BDD6E1B451D030059DFB2 /* MTChildModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTChildModel.h; sourceTree = "<group>"; };
 		862BDD6F1B451D030059DFB2 /* MTChildModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTChildModel.m; sourceTree = "<group>"; };
 		862BDD711B4544A00059DFB2 /* MTGroupPickupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTGroupPickupTableViewCell.h; sourceTree = "<group>"; };
@@ -1194,6 +1199,9 @@
 				865BBD911B42DAEF00D08BE8 /* MTGroupOrderDetailViewController.m */,
 				866385F21B4E20F0004CFB12 /* MTMessageDetailViewController.h */,
 				866385F31B4E20F0004CFB12 /* MTMessageDetailViewController.m */,
+				8624709E1B673DB9002C3C61 /* MTServiceViewController.h */,
+				8624709F1B673DB9002C3C61 /* MTServiceViewController.m */,
+				862470A01B673DB9002C3C61 /* MTServiceViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1607,6 +1615,7 @@
 				865BBDA21B43F38E00D08BE8 /* expired_bidder@2x.png in Resources */,
 				F5497F291B2D2FA9001E8D99 /* right_arrow@2x.png in Resources */,
 				866767BD1B4A48AF0038473D /* delete@2x.png in Resources */,
+				862470A21B673DB9002C3C61 /* MTServiceViewController.xib in Resources */,
 				86A5B5F51B51181A007F1643 /* btn_profile@3x.png in Resources */,
 				86BC4DF71B3BF5600029BCB7 /* taking_bg@2x.png in Resources */,
 				F5497F251B2D2FA9001E8D99 /* kid@2x.png in Resources */,
@@ -1730,6 +1739,7 @@
 				866E95CB1B32CBD100A5A32C /* UIView+MJExtension.m in Sources */,
 				F5E4F2051B2B31F600E9ABE9 /* MTNavigationController.m in Sources */,
 				866385F41B4E20F0004CFB12 /* MTMessageDetailViewController.m in Sources */,
+				862470A11B673DB9002C3C61 /* MTServiceViewController.m in Sources */,
 				F5E4F2121B2B31F600E9ABE9 /* main.m in Sources */,
 				865BBD9E1B43E90D00D08BE8 /* MTBidderModel.m in Sources */,
 				865BBD921B42DAEF00D08BE8 /* MTGroupOrderDetailViewController.m in Sources */,
@@ -1896,8 +1906,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: min zhang (B7XZ2GS44J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: min zhang (B7XZ2GS44J)";
 				COMMONLIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMECommonLib\"";
 				COMMONLIB_OTHER_LDFLAGS = "-IEMECommonLib";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1940,7 +1950,7 @@
 					"${SHARELIB_OTHER_LDFLAGS}",
 				);
 				PRODUCT_NAME = miutour;
-				PROVISIONING_PROFILE = "74a6b82a-2c47-482b-a21f-2b8a8701fe08";
+				PROVISIONING_PROFILE = "06765ded-2d42-43ab-8808-acc2a2633156";
 				SHARELIB_FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ThirdParties/SNSSDK/QQ";
 				SHARELIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMEShareLib\"";
 				SHARELIB_LIBRARY_SEARCH_PATHS = "${LIB_ROOT}";
@@ -1956,8 +1966,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: min zhang (B7XZ2GS44J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: min zhang (B7XZ2GS44J)";
 				COMMONLIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMECommonLib\"";
 				COMMONLIB_OTHER_LDFLAGS = "-IEMECommonLib";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2000,7 +2010,7 @@
 					"${SHARELIB_OTHER_LDFLAGS}",
 				);
 				PRODUCT_NAME = miutour;
-				PROVISIONING_PROFILE = "74a6b82a-2c47-482b-a21f-2b8a8701fe08";
+				PROVISIONING_PROFILE = "06765ded-2d42-43ab-8808-acc2a2633156";
 				SHARELIB_FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ThirdParties/SNSSDK/QQ";
 				SHARELIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMEShareLib\"";
 				SHARELIB_LIBRARY_SEARCH_PATHS = "${LIB_ROOT}";

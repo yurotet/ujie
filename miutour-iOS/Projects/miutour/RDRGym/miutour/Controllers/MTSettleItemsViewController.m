@@ -15,6 +15,7 @@
 #import "MTGroupModel.h"
 #import "MTPickupModel.h"
 #import "MTSpliceModel.h"
+#import "MTServiceViewController.h"
 
 
 @interface MTSettleItemsViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
@@ -24,7 +25,6 @@
 @property (nonatomic,strong)NSMutableArray *orderInfoArray;
 
 @end
-
 
 @implementation MTSettleItemsViewController
 
@@ -47,7 +47,10 @@
 
 - (void)call
 {
-    
+    MTServiceViewController *vc = [[MTServiceViewController alloc] initWithNibName:@"MTServiceViewController" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+    return;
+
     UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"联系客服" message:@"您即将拨打蜜柚客服4008350990" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alvertView show];
 }

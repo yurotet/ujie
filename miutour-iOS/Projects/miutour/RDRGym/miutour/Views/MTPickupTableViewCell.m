@@ -244,16 +244,21 @@
     [self.contentView addSubview:self.carTypeLabel];
     [self.contentView addSubview:self.stableCarTypeLabel];
     
-    div = [[UIView alloc] initWithFrame:CGRectMake(110*[ThemeManager themeScreenWidthRate], 110, .5f, 45.f)];
-    div.backgroundColor = [UIColor colorWithBackgroundColorMark:4];
-    [self.contentView addSubview:div];
+    _div1 = [[UIView alloc] initWithFrame:CGRectMake(110*[ThemeManager themeScreenWidthRate], 110, .5f, 45.f)];
+    _div1.backgroundColor = [UIColor colorWithBackgroundColorMark:4];
+    [self.contentView addSubview:_div1];
     
     [self.contentView addSubview:self.distanceLabel];
     [self.contentView addSubview:self.stableDistanceLabel];
     
-    div = [[UIView alloc] initWithFrame:CGRectMake(210*[ThemeManager themeScreenWidthRate], 110, .5f, 45.f)];
-    div.backgroundColor = [UIColor colorWithBackgroundColorMark:4];
-    [self.contentView addSubview:div];
+    _div2 = [[UIView alloc] initWithFrame:CGRectMake(210*[ThemeManager themeScreenWidthRate], 110, .5f, 45.f)];
+    _div2.backgroundColor = [UIColor colorWithBackgroundColorMark:4];
+    [self.contentView addSubview:_div2];
+    
+    _div3 = [[UIView alloc] initWithFrame:CGRectMake(159.5f*[ThemeManager themeScreenWidthRate], 110, .5f, 45.f)];
+    _div3.backgroundColor = [UIColor colorWithBackgroundColorMark:4];
+    _div3.hidden = YES;
+    [self.contentView addSubview:_div3];
     
     [self.contentView addSubview:self.defaultPriceLabel];
     [self.contentView addSubview:self.stableDefaultPriceLabel];
@@ -293,7 +298,7 @@
 
 - (void)resetFrame:(BOOL)showDistance
 {
-    if (showDistance) {
+    if (!showDistance) {
         _div1.hidden = YES;
         _div2.hidden = YES;
         _div3.hidden = NO;
@@ -377,7 +382,7 @@
         self.awardLabel.text = [NSString stringWithFormat:@"￥%@",data.subsidy];
     }
     
-    [self resetFrame:([CommonUtils isEmptyString:data.mile]||[data.mile isEqualToString:@"/"])];
+    [self resetFrame:(!([CommonUtils isEmptyString:data.mile]||[data.mile isEqualToString:@"/"]))];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

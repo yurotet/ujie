@@ -16,8 +16,9 @@
 #import "MTBlockOrderDetailViewController.h"
 #import "MTAlertView.h"
 #import "QRCodeGenerator.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface MTMarkViewController ()<EMEBaseDataManagerDelegate,UITableViewDataSource,UITableViewDelegate,MTSignInDelegate,UIAlertViewDelegate,MTAlertViewDelegate>
+@interface MTMarkViewController ()<EMEBaseDataManagerDelegate,UITableViewDataSource,UITableViewDelegate,MTSignInDelegate,UIAlertViewDelegate,MTAlertViewDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic,strong)UIView *contentView;
 @property (nonatomic,strong)UIImageView *bgImageView;
@@ -36,6 +37,9 @@
 @end
 
 @implementation MTMarkViewController
+{
+    CLLocationManager *locationManager;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -251,6 +255,64 @@
     return _nodeTableView;
 }
 
+
+
+- (CLLocationManager *)locationManager {
+    
+    if([CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied))
+    {
+        if (locationManager == nil) {
+            locationManager=[[CLLocationManager alloc]init];
+            locationManager.delegate=self;
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+            
+            if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+            {
+                [locationManager requestWhenInUseAuthorization];//added NSLocationWhenInUseDescription in info.plist
+            }
+            locationManager.distanceFilter=100;
+        }
+    }
+    else {
+        UIAlertView *alvertView=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"提醒", nil) message:@"请打开地理位置服务" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alvertView show];
+        NIF_DEBUG( @"Cannot Starting CLLocationManager");
+    }
+    return locationManager;
+}
+
+-(void)startLocation
+{
+    [self.locationManager startUpdatingLocation];
+}
+
+-(void)stopLocation
+{
+    locationManager = nil;
+}
+
+#pragma mark -- CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [UserManager shareInstance].user.logitude = [NSString stringWithFormat:@"%f",newLocation.coordinate.longitude];
+    [UserManager shareInstance].user.latitude = [NSString stringWithFormat:@"%f",newLocation.coordinate.latitude];
+    [[UserManager shareInstance] update_to_disk];
+    [self.locationManager stopUpdatingLocation];
+    NIF_DEBUG( @"locationManager update,location is %@",newLocation);
+    [self efMark];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error{
+    [self stopLocation];
+}
+
+- (void)efMark
+{
+    [MTOrderHttpRequestDataManager shareInstance].delegate = self;
+    [[MTOrderHttpRequestDataManager shareInstance] efSigninWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token ordid:_ordid name:_clickNodeName longitude:[UserManager shareInstance].user.logitude latitude:[UserManager shareInstance].user.latitude time:[NSDate stringFromDate:[NSDate date] format:@"yyyy-MM-dd HH:mm:ss"]];
+}
+
 - (void)signInClick:(MTSIgnInTableViewCell*)tableViewCell
 {
     UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"确认要签到%@?",tableViewCell.nodeName]delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -261,8 +323,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        [MTOrderHttpRequestDataManager shareInstance].delegate = self;
-        [[MTOrderHttpRequestDataManager shareInstance] efSigninWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token ordid:_ordid name:_clickNodeName longitude:@"121" latitude:@"31" time:[NSDate stringFromDate:[NSDate date] format:@"yyyy-MM-dd HH:mm:ss"]];
+        [self startLocation];
     }
 }
 

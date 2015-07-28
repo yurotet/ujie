@@ -113,9 +113,9 @@
     self.title = [theWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
     
     //    theWebView.scrollView.scrollEnabled = NO;
-    [_activityIndicator stopAnimating];
-    UIView *view = (UIView*)[self.view viewWithTag:108];
-    [view removeFromSuperview];
+//    [_activityIndicator stopAnimating];
+//    UIView *view = (UIView*)[self.view viewWithTag:108];
+//    [view removeFromSuperview];
     
     return [super webViewDidFinishLoad:theWebView];
 }
@@ -123,26 +123,27 @@
 - (void) webViewDidStartLoad:(UIWebView *)webView
 {
     //创建UIActivityIndicatorView背底半透明View
-    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-    [view setTag:108];
-    [view setBackgroundColor:[UIColor blackColor]];
-    [view setAlpha:0.5];
-    [self.view addSubview:view];
+//    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
+//    [view setTag:108];
+//    [view setBackgroundColor:[UIColor blackColor]];
+//    [view setAlpha:0.5];
+//    [self.view addSubview:view];
     
-    _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 32.0f, 32.0f)];
-    [_activityIndicator setCenter:view.center];
-    [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-    [view addSubview:_activityIndicator];
-    
-    [_activityIndicator startAnimating];
+//    _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 32.0f, 32.0f)];
+//    [_activityIndicator setCenter:view.center];
+//    [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+//    [view addSubview:_activityIndicator];
+//    
+//    [_activityIndicator startAnimating];
     return [super webViewDidStartLoad:webView];
 }
 
 - (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
 {
-    [_activityIndicator stopAnimating];
-    UIView *view = (UIView*)[self.view viewWithTag:108];
-    [view removeFromSuperview];
+//    [_activityIndicator stopAnimating];
+//    UIView *view = (UIView*)[self.view viewWithTag:108];
+//    [view removeFromSuperview];
+    return [super webView:theWebView didFailLoadWithError:error];
 }
 
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType

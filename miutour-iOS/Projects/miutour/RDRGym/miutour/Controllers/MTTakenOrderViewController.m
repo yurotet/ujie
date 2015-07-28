@@ -20,7 +20,6 @@
 #import "MTSpliceOrderDetailViewController.h"
 #import "MTBlockOrderDetailViewController.h"
 #import "MTGroupOrderDetailViewController.h"
-
 #import "MTTakenOrderHttpRequestDataManager.h"
 
 #import "MJRefreshNormalHeader.h"

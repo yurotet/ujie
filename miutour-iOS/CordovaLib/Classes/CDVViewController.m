@@ -45,6 +45,7 @@
 @property (readwrite, assign) BOOL initialized;
 
 @property (atomic, strong) NSURL* openURL;
+@property (nonatomic,strong) UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -208,7 +209,14 @@
 //        appURL = [NSURL URLWithString:self.startPage];
         NSString *urlStr = self.startPage;
         urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        NSRange r = [urlStr rangeOfString:@"%23"];
+        
+        if (r.location != NSNotFound) {
+            urlStr = [urlStr stringByReplacingOccurrencesOfString:@"%23" withString:@"#"];
+        }
         appURL = [NSURL URLWithString:urlStr];
+        
     } else if ([self.wwwFolderName rangeOfString:@"://"].location != NSNotFound) {
         appURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", self.wwwFolderName, self.startPage]];
     } else {
@@ -677,6 +685,33 @@
     NSLog(@"Resetting plugins due to page load.");
     [_commandQueue resetRequestId];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginResetNotification object:self.webView]];
+    
+    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
+    [view setTag:108];
+    [view setBackgroundColor:[UIColor blackColor]];
+    [view setAlpha:0.5];
+    [self.view addSubview:view];
+    
+    [view addSubview:self.activityIndicator];
+    [self.activityIndicator setCenter:view.center];
+
+    [self.activityIndicator startAnimating];
+}
+
+- (UIActivityIndicatorView *)activityIndicator
+{
+    if (_activityIndicator == nil) {
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:self.view.bounds];
+        [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    }
+    return _activityIndicator;
+}
+
+- (void)finishActivityIndicator
+{
+    [self.activityIndicator stopAnimating];
+    UIView *view = (UIView*)[self.view viewWithTag:108];
+    [view removeFromSuperview];
 }
 
 /**
@@ -696,6 +731,8 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPageDidLoadNotification object:self.webView]];
+    
+    [self finishActivityIndicator];
 }
 
 - (void)webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
@@ -711,6 +748,7 @@
         NSLog(@"%@", [errorUrl absoluteString]);
         [theWebView loadRequest:[NSURLRequest requestWithURL:errorUrl]];
     }
+    [self finishActivityIndicator];
 }
 
 - (BOOL)webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType

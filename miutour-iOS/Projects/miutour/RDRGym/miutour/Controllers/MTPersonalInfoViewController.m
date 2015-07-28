@@ -441,13 +441,22 @@
 {
     [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:data.avatar] placeholderImage:nil options:(SDWebImageRetryFailed|SDWebImageLowPriority) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
+
     self.nameLabel.text = data.name;
     
-    CGFloat tmpWidth = [CommonUtils lableWidthWithLable:self.nameLabel];
     CGRect tmpFrame = self.nameLabel.frame;
+    tmpFrame.size.width = 320.f;
+    self.nameLabel.frame = tmpFrame;
+
+    CGFloat tmpWidth = [CommonUtils lableWidthWithLable:self.nameLabel];
     tmpFrame.size.width = tmpWidth;
     tmpFrame.origin.x = [[UIScreen mainScreen] bounds].size.width/2.f - tmpWidth/2.f;
     self.nameLabel.frame = tmpFrame;
+
+    CGRect tFrame = self.setImageView.frame;
+    tFrame.origin.x = self.nameLabel.frame.origin.x + self.nameLabel.frame.size.width;
+    self.setImageView.frame = tFrame;
+    
     tmpFrame.origin.x -= 10;
     tmpFrame.size.width += 20;
     tmpFrame.origin.y -= 10;

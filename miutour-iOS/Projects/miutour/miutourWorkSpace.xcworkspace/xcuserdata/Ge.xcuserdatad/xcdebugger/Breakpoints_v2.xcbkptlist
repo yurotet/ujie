@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTBaseDetailViewController.m"
-            timestampString = "458645934.204557"
+            timestampString = "459755076.798439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "-getCarSeatnumArray:"
             landmarkType = "5">
          </BreakpointContent>
@@ -132,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTBaseDetailViewController.m"
-            timestampString = "458645089.227619"
+            timestampString = "459755076.798439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "-viewWillDisappear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -148,11 +148,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTBaseDetailViewController.m"
-            timestampString = "458644566.544245"
+            timestampString = "459755076.798439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -164,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTHomeViewController.m"
-            timestampString = "458709909.618797"
+            timestampString = "459755605.731401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "926"
-            endingLineNumber = "926"
+            startingLineNumber = "930"
+            endingLineNumber = "930"
             landmarkName = "-panDragView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -180,11 +180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTHomeViewController.m"
-            timestampString = "458709909.618797"
+            timestampString = "459755605.731401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "938"
-            endingLineNumber = "938"
+            startingLineNumber = "942"
+            endingLineNumber = "942"
             landmarkName = "-panDragView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTHomeViewController.m"
-            timestampString = "458709909.618797"
+            timestampString = "459755605.731401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "924"
-            endingLineNumber = "924"
+            startingLineNumber = "928"
+            endingLineNumber = "928"
             landmarkName = "-panDragView:"
             landmarkType = "5">
             <Locations>
@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTHomeViewController.m"
-            timestampString = "458709909.618797"
+            timestampString = "459755605.731401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "936"
-            endingLineNumber = "936"
+            startingLineNumber = "940"
+            endingLineNumber = "940"
             landmarkName = "-panDragView:"
             landmarkType = "5">
             <Locations>
@@ -308,28 +308,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RDRGym/miutour/Controllers/MTHomeViewController.m"
-            timestampString = "458733879.449245"
+            timestampString = "459755076.798439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "573"
-            endingLineNumber = "573"
+            startingLineNumber = "578"
+            endingLineNumber = "578"
             landmarkName = "-didFinishLoadingJSONValue:URLConnection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RDRGym/miutour/MTAppDelegate.m"
-            timestampString = "459081189.629655"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

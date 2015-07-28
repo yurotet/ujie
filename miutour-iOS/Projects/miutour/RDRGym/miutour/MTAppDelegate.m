@@ -267,8 +267,10 @@ fetchCompletionHandler:
         {
             MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
             vc.isTaken = YES;
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
@@ -276,8 +278,10 @@ fetchCompletionHandler:
         {
             MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
             vc.isTaken = YES;
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
@@ -285,8 +289,10 @@ fetchCompletionHandler:
         {
             MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
             vc.isTaken = YES;
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
@@ -294,40 +300,50 @@ fetchCompletionHandler:
         {
             MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
             vc.isTaken = YES;
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
         case SUPPLY_BLOCK:
         {
             MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
         case SUPPLY_PICKUP:
         {
             MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
         case SUPPLY_SPLICE:
         {
             MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
         case SUPPLY_GROUP:
         {
             MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
-            vc.orderId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
             
@@ -335,16 +351,20 @@ fetchCompletionHandler:
         {
             MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
             vc.title = @"消息详情";
-            vc.messageId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.messageId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
         case ACTIVITY:
         {
             MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
             vc.title = @"活动详情";
-            vc.messageId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.messageId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
         case NEWS:
@@ -352,8 +372,10 @@ fetchCompletionHandler:
             NSLog(@"新闻详情");
             MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
             vc.title = @"新闻详情";
-            vc.messageId = theID;
-            [_navigationController pushViewController:vc animated:YES];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.messageId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
         default:

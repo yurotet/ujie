@@ -23,6 +23,7 @@
 #import "APService.h"
 #import "MainViewController.h"
 #import "UIButton+WebCache.h"
+#import "MTServiceViewController.h"
 
 #define VEL_THRESHOLD 4000
 
@@ -459,6 +460,10 @@ static NSString *version = @"3.0.0";
 
 - (void)callButtonClick:(id)sender
 {
+    MTServiceViewController *vc = [[MTServiceViewController alloc] initWithNibName:@"MTServiceViewController" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+    return;
+    
     UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"联系客服" message:@"您即将拨打蜜柚客服4008350990" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alvertView.tag = 1000;
     [alvertView show];
@@ -717,7 +722,6 @@ static NSString *version = @"3.0.0";
     
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 -(UIView *)dragBgView
 {
