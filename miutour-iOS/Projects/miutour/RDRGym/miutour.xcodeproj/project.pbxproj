@@ -1906,8 +1906,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: min zhang (B7XZ2GS44J)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: min zhang (B7XZ2GS44J)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
 				COMMONLIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMECommonLib\"";
 				COMMONLIB_OTHER_LDFLAGS = "-IEMECommonLib";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1950,7 +1950,7 @@
 					"${SHARELIB_OTHER_LDFLAGS}",
 				);
 				PRODUCT_NAME = miutour;
-				PROVISIONING_PROFILE = "06765ded-2d42-43ab-8808-acc2a2633156";
+				PROVISIONING_PROFILE = "74a6b82a-2c47-482b-a21f-2b8a8701fe08";
 				SHARELIB_FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ThirdParties/SNSSDK/QQ";
 				SHARELIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMEShareLib\"";
 				SHARELIB_LIBRARY_SEARCH_PATHS = "${LIB_ROOT}";
@@ -1966,8 +1966,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: min zhang (B7XZ2GS44J)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: min zhang (B7XZ2GS44J)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Micheng Information Technology Co., Ltd";
 				COMMONLIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMECommonLib\"";
 				COMMONLIB_OTHER_LDFLAGS = "-IEMECommonLib";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2010,7 +2010,7 @@
 					"${SHARELIB_OTHER_LDFLAGS}",
 				);
 				PRODUCT_NAME = miutour;
-				PROVISIONING_PROFILE = "06765ded-2d42-43ab-8808-acc2a2633156";
+				PROVISIONING_PROFILE = "74a6b82a-2c47-482b-a21f-2b8a8701fe08";
 				SHARELIB_FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ThirdParties/SNSSDK/QQ";
 				SHARELIB_HEADER_SEARCH_PATHS = "\"${LIB_ROOT}/../include/EMEShareLib\"";
 				SHARELIB_LIBRARY_SEARCH_PATHS = "${LIB_ROOT}";
