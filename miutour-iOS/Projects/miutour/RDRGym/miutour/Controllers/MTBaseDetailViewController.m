@@ -392,6 +392,16 @@
     }
 }
 
+- (void)efGotoPreVC
+{
+    [self performSelector:@selector(executePop) withObject:nil afterDelay:2];
+}
+
+- (void)executePop
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - MTBiddingDelegate
 - (void)biddingClick:(MTBiddingTableViewCell*)tableViewCell
 {

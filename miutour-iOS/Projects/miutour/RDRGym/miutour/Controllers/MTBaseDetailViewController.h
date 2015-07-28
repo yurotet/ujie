@@ -32,6 +32,8 @@
 
 - (void)getCarSeatnumArray:(NSArray *)car;
 - (void)getBidderDataArray:(NSArray *)bidder;
+- (void)efGotoPreVC;
+
 
 
 

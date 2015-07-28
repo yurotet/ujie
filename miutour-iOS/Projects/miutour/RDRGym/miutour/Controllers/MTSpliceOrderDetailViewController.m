@@ -341,10 +341,15 @@
                     [MTIdentityManager shareInstance].delegate = self;
                     [[MTIdentityManager shareInstance] efHandleLogin];
                 }
+                else
+                {
+                    [self efGotoPreVC];
+                }
             }
             else
             {
                 [self.view addHUDActivityViewWithHintsText:@"发生错误"];
+                [self efGotoPreVC];
             }
         }
     }

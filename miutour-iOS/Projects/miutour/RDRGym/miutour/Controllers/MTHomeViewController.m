@@ -138,13 +138,12 @@ static NSString *version = @"3.0.0";
 - (void)reloadPreview
 {
     self.nameLabel.text = [UserManager shareInstance].user.name;
-    CGFloat tmpWidth = [CommonUtils lableWidthWithLable:self.nameLabel];
-    CGRect tmpFrame = self.nameLabel.frame;
-    tmpFrame.size.width = tmpWidth;
-    self.nameLabel.frame = tmpFrame;
+//    CGFloat tmpWidth = [CommonUtils lableWidthWithLable:self.nameLabel];
+//    CGRect tmpFrame = self.nameLabel.frame;
+//    tmpFrame.size.width = tmpWidth;
+//    self.nameLabel.frame = tmpFrame;
     [self.avatarButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[UserManager shareInstance].user.avatar] forState:UIControlStateNormal placeholderImage:nil options:(SDWebImageRetryFailed|SDWebImageLowPriority)];
     [self.bottomAvatarImageView sd_setImageWithURL:[NSURL URLWithString:[UserManager shareInstance].user.avatar] placeholderImage:nil options:(SDWebImageRetryFailed|SDWebImageLowPriority) completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
     }];
     self.positionLabel.text = [NSString stringWithFormat:@"%@导游",[UserManager shareInstance].user.level];
 }
@@ -240,19 +239,18 @@ static NSString *version = @"3.0.0";
 {
     if (_nameLabel == nil) {
         
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(93*[ThemeManager themeScreenWidthRate] , self.profileButton.frame.size.height/2.f - 11, 160, 22)];
-        _nameLabel.textAlignment = NSTextAlignmentCenter;
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(73*[ThemeManager themeScreenWidthRate] , self.profileButton.frame.size.height/2.f - 11, 80, 22)];
+        _nameLabel.textAlignment = NSTextAlignmentLeft;
         _nameLabel.font = [UIFont fontWithFontMark:8];
+        _nameLabel.adjustsFontSizeToFitWidth = YES;
         _nameLabel.text = @"";
-        
         _nameLabel.textColor = [UIColor blackColor];
         _nameLabel.backgroundColor = [UIColor clearColor];
-        
-        CGFloat tmpWidth = [CommonUtils lableWidthWithLable:_nameLabel];
-        CGRect tmpFrame = _nameLabel.frame;
-        tmpFrame.size.width = tmpWidth;
-        _nameLabel.frame = tmpFrame;
-
+//        [_nameLabel sizeToFit];
+//        CGFloat tmpWidth = [CommonUtils lableWidthWithLable:_nameLabel];
+//        CGRect tmpFrame = _nameLabel.frame;
+//        tmpFrame.size.width = tmpWidth;
+//        _nameLabel.frame = tmpFrame;
     }
     return _nameLabel;
 }
@@ -267,7 +265,7 @@ static NSString *version = @"3.0.0";
         tmpSize.width = bottomAvatarImage.size.width *[ThemeManager themeScreenWidthRate];
         tmpSize.height = bottomAvatarImage.size.height *[ThemeManager themeScreenWidthRate];
         
-        _bottomAvatarImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(20.5*[ThemeManager themeScreenWidthRate], [ThemeManager themeScreenWidthRate]*10),tmpSize}];
+        _bottomAvatarImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(12.5*[ThemeManager themeScreenWidthRate], [ThemeManager themeScreenWidthRate]*10),tmpSize}];
         _bottomAvatarImageView.image = bottomAvatarImage;
         
         _bottomAvatarImageView.layer.masksToBounds = YES;
@@ -375,10 +373,12 @@ static NSString *version = @"3.0.0";
 {
     if (_positionLabel == nil) {
         
-        _positionLabel = [[UILabel alloc] initWithFrame:CGRectMake(93*[ThemeManager themeScreenWidthRate], self.profileButton.frame.size.height/2.f+5, 160, 22)];
+        _positionLabel = [[UILabel alloc] initWithFrame:CGRectMake(73*[ThemeManager themeScreenWidthRate], self.profileButton.frame.size.height/2.f+7, 80, 22)];
         _positionLabel.text = @"";
         _positionLabel.font = [UIFont fontWithFontMark:4];
+        _positionLabel.textAlignment = NSTextAlignmentLeft;
         _positionLabel.textColor = [UIColor colorWithTextColorMark:2];
+        _positionLabel.backgroundColor = [UIColor clearColor];
     }
     return _positionLabel;
 }
