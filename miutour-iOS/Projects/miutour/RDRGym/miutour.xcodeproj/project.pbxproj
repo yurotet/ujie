@@ -1928,10 +1928,9 @@
 					"$(PROJECT_DIR)/miutour/Util/",
 					"$(PROJECT_DIR)/miutour/lib",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-ccelffojjzrqzzccbnqvzesvaytx/Build/Products/Debug-iphoneos",
-					/Users/Ge/Downloads/miutour/TalkingData,
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-gbzlnhakgzdjokhdlpoqnfeiwjti/Build/Products/Debug-iphoneos",
-					"/Users/Ge/Downloads/miutour-2/ThirdParties/qrcode/ZBarSDK",
-					"/Users/Ge/Downloads/miutour-2/TalkingData",
+					"$(PROJECT_DIR)/../../../ThirdParties/qrcode/ZBarSDK",
+					"$(PROJECT_DIR)/../../../TalkingData",
 				);
 				LIB_ROOT = "$(BUILT_PRODUCTS_DIR)";
 				ONLY_ACTIVE_ARCH = NO;
@@ -1989,10 +1988,9 @@
 					"$(PROJECT_DIR)/miutour/Util/",
 					"$(PROJECT_DIR)/miutour/lib",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-ccelffojjzrqzzccbnqvzesvaytx/Build/Products/Debug-iphoneos",
-					/Users/Ge/Downloads/miutour/TalkingData,
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-gbzlnhakgzdjokhdlpoqnfeiwjti/Build/Products/Debug-iphoneos",
-					"/Users/Ge/Downloads/miutour-2/ThirdParties/qrcode/ZBarSDK",
-					"/Users/Ge/Downloads/miutour-2/TalkingData",
+					"$(PROJECT_DIR)/../../../ThirdParties/qrcode/ZBarSDK",
+					"$(PROJECT_DIR)/../../../TalkingData",
 				);
 				LIB_ROOT = "$(BUILT_PRODUCTS_DIR)";
 				ONLY_ACTIVE_ARCH = NO;
