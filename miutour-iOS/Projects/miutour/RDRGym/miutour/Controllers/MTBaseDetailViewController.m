@@ -395,7 +395,7 @@
 
 - (void)efGotoPreVC
 {
-    [self performSelector:@selector(executePop) withObject:nil afterDelay:2];
+    [self performSelector:@selector(executePop) withObject:nil afterDelay:.5];
 }
 
 - (void)executePop

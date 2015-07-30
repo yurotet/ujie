@@ -11,7 +11,7 @@
 #import "MTSpliceOrderDetailViewController.h"
 #import "MTBlockOrderDetailViewController.h"
 #import "MTPickupOrderDetailViewController.h"
-
+#import "MTMessageDetailViewController.h"
 
 #import "MTTakenOrderHttpRequestDataManager.h"
 #import "MTMessageTableViewCell.h"
@@ -41,9 +41,11 @@
     [super viewDidLoad];
     
     [self setNavigationTitle];
+    [self.view addSubview:self.messageTableView];
     
     [self efSetNavButtonToCall];
-    [self efQueryMessageList];
+    [self efQueryCommissionList];   // 接单佣金
+    [self efQueryActivityList];  // 活动奖励
 }
 
 - (void)setNavigationTitle
@@ -139,8 +141,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    
-    
     static NSString *CellIdentifier = @"MTMessageTableViewCell";
     MTMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
@@ -150,15 +150,16 @@
     
     
     //  替换数据
-    MTMessageModel *model;
     if (self.segmentView.selectedSegmentIndex == 1){
-        model = [self.activityArray objectAtIndex:indexPath.row];
+        MTMessageModel *model = _activityArray[indexPath.row];
+        [cell efSetCellWithTime:model.time content:model.title];
+    
     }
     else {
-        model = [self.messageArray objectAtIndex:indexPath.row];
+        MTMessageModel *model = _messageArray[indexPath.row];
+        [cell efSetCellWithTime:model.date content:model.content];
     }
     
-    [cell efSetCellWithTime:model.time content:model.content];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
@@ -171,51 +172,81 @@
     contentLabel.numberOfLines = 0;
     
     MTMessageModel *model;
+    CGFloat tmpHeight;
     if (self.segmentView.selectedSegmentIndex == 1){
         model = [self.activityArray objectAtIndex:indexPath.row];
+        contentLabel.text = model.title;
+        tmpHeight = [CommonUtils lableHeightWithLable:contentLabel];
+
     }
     else {
         model = [self.messageArray objectAtIndex:indexPath.row];
+        contentLabel.text = model.content;
+        tmpHeight = [CommonUtils lableHeightWithLable:contentLabel];
     }
+    
 
-    contentLabel.text = model.content;
-    CGFloat tmpHeight = [CommonUtils lableHeightWithLable:contentLabel];
-    return tmpHeight + 40;
+        return tmpHeight + 40;
 }
 
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 进入 订单详情页
-    id data = [self.orderInfoArray objectAtIndex:indexPath.row];
-    if ([[data objectForKey:@"type"] isEqualToString:@"接送机"]) {
-        MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
-        vc.orderId = [data objectForKey:@"id"];
-        vc.biddingView.hidden = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+    
+    if (self.segmentView.selectedSegmentIndex == 0){
+        // 进入 接单佣金页
+        MTMessageModel *model = [self.messageArray objectAtIndex:indexPath.row];
+        if ([model.type isEqualToString:@"接送机"]) {
+            MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
+            vc.orderId = model.ID;
+            vc.isTaken = YES;
+            vc.showBidding = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if ([model.type isEqualToString:@"包车"]) {
+            MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
+            vc.orderId = model.ID;
+            vc.isTaken = YES;
+            vc.showBidding = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if ([model.type isEqualToString:@"组合"]) {
+            MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
+            vc.orderId = model.ID;
+            vc.isTaken = YES;
+            vc.showBidding = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
-    else if ([[data objectForKey:@"type"] isEqualToString:@"包车"]) {
-        MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
-        vc.orderId = [data objectForKey:@"id"];
-        vc.biddingView.hidden = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+    
+    // 进入 活动奖励页
+    else {
+        
+        MTMessageDetailViewController *messageDetailVC = [[MTMessageDetailViewController alloc]init];
+        MTMessageModel *model = _activityArray[indexPath.row];
+        messageDetailVC.messageId = model.ID;
+        messageDetailVC.title = @"活动详情";
+        [self.navigationController pushViewController:messageDetailVC animated:YES];
+    
     }
-    else if ([[data objectForKey:@"type"] isEqualToString:@"组合"]) {
-        MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
-        vc.orderId = [data objectForKey:@"id"];
-        vc.biddingView.hidden = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    
     
     NIF_INFO(@"%@",[self.orderInfoArray objectAtIndex:indexPath.row]);
 }
 
-- (void)efQueryMessageList
+- (void)efQueryCommissionList
 {
     [MTTakenOrderHttpRequestDataManager shareInstance].delegate = self;
-    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryOlistWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:@"1" pageSize:@"20" jstatus:@"0"];
+    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryCommissionListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:@"1" pageSize:@"999"];
 }
+
+- (void)efQueryActivityList
+{
+    [MTTakenOrderHttpRequestDataManager shareInstance].delegate = self;
+    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryActivityListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:@"1" pageSize:@"999"];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -223,20 +254,38 @@
 }
 
 
-- (void)getMessageArray:(NSArray *)data
+- (void)getCommissionListArray:(NSArray *)data
 {
     for (NSDictionary *dic in data) {
         MTMessageModel *model = [[MTMessageModel alloc] init];
-        model.time = [dic objectForKey:@"time"];
-        NSString *tail = @"。";
-        if ([[dic objectForKey:@"subsidy"] intValue] != 0) {
-            tail = [NSString stringWithFormat:@",此单蜜柚奖励%@元！",[dic objectForKey:@"subsidy"]];
-        }
-//        您有一笔｛｛类型｝｝订单于｛｛时间｝｝成功结算｛｛金额｝｝元到您的结算账户．｛｛蜜柚奖励您ｘｘ元｝｝
+        model.ID = dic[@"id"];
+        model.date = dic[@"date"];
+        model.content = dic[@"content"];
+        model.type = dic[@"stype"];
         
-        model.content = [NSString stringWithFormat:@"您有一笔 %@ 订单于 %@ 成功结算 %@ 元到您的结算账户,蜜柚奖励您 %@ 元", [CommonUtils emptyString:[dic objectForKey:@"type"]], model.time, [dic objectForKey:@"payfee"],[dic objectForKey:@"subsidy"]];
+//        model.time = [dic objectForKey:@"time"];
+//        NSString *tail = @"。";
+//        if ([[dic objectForKey:@"subsidy"] intValue] != 0) {
+//            tail = [NSString stringWithFormat:@",此单蜜柚奖励%@元！",[dic objectForKey:@"subsidy"]];
+//        }
+////        您有一笔｛｛类型｝｝订单于｛｛时间｝｝成功结算｛｛金额｝｝元到您的结算账户．｛｛蜜柚奖励您ｘｘ元｝｝
+//        
+//        model.content = [NSString stringWithFormat:@"您有一笔 %@ 订单于 %@ 成功结算 %@ 元到您的结算账户,蜜柚奖励您 %@ 元", [CommonUtils emptyString:[dic objectForKey:@"type"]], model.time, [dic objectForKey:@"payfee"],[dic objectForKey:@"subsidy"]];
 
         [self.messageArray addObject:model];
+    }
+}
+
+- (void)getActivityListArray:(NSArray *)data
+{
+    for (NSDictionary *dic in data) {
+        MTMessageModel *model = [[MTMessageModel alloc] init];
+        model.ID = dic[@"id"];
+        model.type = dic[@"type"];
+        model.title = dic[@"title"];
+        model.time = dic[@"time"];
+        
+        [self.activityArray addObject:model];
     }
 }
 
@@ -255,29 +304,31 @@
         [self.view addHUDActivityViewWithHintsText:NSLocalizedString(@"DATA_OF_RESPONSE_ERROR", nil)];
         return;
     }
-    if (connection.connectionTag == TagForTakenOrderList) {
+    if (connection.connectionTag == TagForCommissionListNew) {
         if ([[CommonUtils emptyString:[dic objectForKey:@"err_code"]] isEqualToString:@"0"])
         {
+            [self.orderInfoArray removeAllObjects];
             NSArray* tmpArray= [dic valueForKeyPath:@"data.list"];
             for (NSDictionary *dic in tmpArray)
             {
                 [self.orderInfoArray addObject:dic];
             }
-            [self getMessageArray:self.orderInfoArray];
-            [self.view addSubview:self.messageTableView];
+            [self getCommissionListArray:tmpArray];
             [self.messageTableView reloadData];
         }
     }
     
     // 活动奖励界面 <NEW>
-    else {
+    else if (connection.connectionTag == TagForActivityListNew) {
         if ([[CommonUtils emptyString:[dic objectForKey:@"err_code"]] isEqualToString:@"0"])
         {
+            [self.orderInfoArray removeAllObjects];
             NSArray* tmpArray= [dic valueForKeyPath:@"data.list"];
             for (NSDictionary *dic in tmpArray)
             {
-                [self.activityArray addObject:dic];
+                [self.orderInfoArray addObject:dic];
             }
+            [self getActivityListArray:tmpArray];
             [self.messageTableView reloadData];
         }
     

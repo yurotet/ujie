@@ -370,10 +370,10 @@
             [self.PScrollView.pageScrollView reloadData];
             
             // 如果已出价, 底部 出价视图 隐藏
-            if (_spliceInfo.ifprice || [self.biddingView isHidden]){
+            if (![_spliceInfo.ifprice intValue] || !self.showBidding){
                 self.biddingView.hidden = YES;
                 CGRect frame = self.orderDetailTableView.frame;
-                frame.size.height += 135;
+                frame.size.height = [UIScreen mainScreen].bounds.size.height - 70;
                 self.orderDetailTableView.frame = frame;
             }
             

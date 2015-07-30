@@ -350,7 +350,7 @@
 
 -(void)efSetCellWithData:(MTPickupModel *)data
 {
-    self.categoryLabel.text = [data.otype length] ? data.otype : @"接送机";
+    self.categoryLabel.text = [data.otype length] ? data.otype : data.type;
     self.timeLabel.text = data.time;
    
     if ([data.otype isEqualToString:@"接机"]) {

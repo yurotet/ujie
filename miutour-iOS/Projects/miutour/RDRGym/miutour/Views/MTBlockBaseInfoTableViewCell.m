@@ -299,11 +299,16 @@
     if ([data.person count]) {
         self.adultNumberLabel.text = [NSString stringWithFormat:@"成人 %@",[data.person objectAtIndex:0]];
         [self.adultNumberLabel setString:@"成人" withColor:[UIColor redColor]];
+    }
+    if ([data.person count] > 1){
         self.kidNumberLabel.text = [NSString stringWithFormat:@"儿童 %@",[data.person objectAtIndex:1]];
         [self.kidNumberLabel setString:@"儿童" withColor:[UIColor redColor]];
+    }
+    if ([data.person count] > 2){
         self.babyNumberLabel.text = [NSString stringWithFormat:@"婴儿 %@",[data.person objectAtIndex:2]];
         [self.babyNumberLabel setString:@"婴儿" withColor:[UIColor redColor]];
     }
+    
     self.realTimeLabel.text = data.time;
     self.realLocLabel.text = data.address;
     

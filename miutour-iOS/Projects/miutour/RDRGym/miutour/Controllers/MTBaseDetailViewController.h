@@ -30,6 +30,8 @@
 @property (nonatomic,assign)BOOL showBidding;
 
 
+
+
 - (void)getCarSeatnumArray:(NSArray *)car;
 - (void)getBidderDataArray:(NSArray *)bidder;
 - (void)efGotoPreVC;
