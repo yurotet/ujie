@@ -17,6 +17,7 @@ typedef enum {
     TagForSignIn = 105,
     TagForActivitylist,
     TagForActivitydetail,
+    TagForOfferPrice
 }MT_OrderHttpRquestTag;
 
 @interface MTOrderHttpRequestDataManager : EMEBaseDataManager
@@ -50,6 +51,20 @@ typedef enum {
 -(void)efQueryBDetailWithUsername:(NSString *)username
                             token:(NSString *)token
                           orderId:(NSString *)orderId;
+
+
+/**
+ *  已出价 <NEW>
+ *
+ *  @param  username => 用户名
+ *  @param  token => 注册登录获取的TOKEN
+ *  @param  signature => 签名认证
+ *  @param  id => ID
+*/
+- (void)efQueryNewsListWithUsername:(NSString *)username
+                              token:(NSString *)token
+                             pageNo:(NSString *)pageNo
+                           pageSize:(NSString *)pageSize;
 
 
 
@@ -141,6 +156,9 @@ typedef enum {
 -(void)efQueryActivityDetailWithUsername:(NSString *)username
                                    token:(NSString *)token
                               activityId:(NSString *)activityId;
+
+
+
 
 
 

@@ -76,6 +76,9 @@
 #define IMAGE_URL(imgurl)                                [NSString stringWithFormat:@"%@%@",[[EMEConfigManager shareConfigManager] getReleaseImageUrl],imgurl]
 #define IMAGSERVERHOST                                   [[EMEConfigManager shareConfigManager] getImageServerHost]
 
+
+
+
 #endif
 
 

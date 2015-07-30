@@ -1,106 +1,86 @@
 //
-//  MTSupplyOrderViewController.m
+//  MTOfferPriceViewController.m
 //  miutour
 //
-//  Created by Dong on 6/13/15.
-//  Copyright (c) 2015 Dong. All rights reserved.
+//  Created by Miutour on 15/7/28.
+//  Copyright (c) 2015年 Dong. All rights reserved.
 //
 
-#import "MTSupplyOrderViewController.h"
+#import "MTOfferPriceViewController.h"
+#import "MTTakenOrderHttpRequestDataManager.h"
 #import "UIScrollView+MJRefresh.h"
 #import "MJRefreshNormalHeader.h"
 #import "MJRefreshBackFooter.h"
-#import "MTPickupTableViewCell.h"
-#import "MTBlockTableViewCell.h"
-#import "MTGroupTableViewCell.h"
-#import "MTSpliceTableViewCell.h"
 
 #import "MTPickupOrderDetailViewController.h"
-#import "MTSpliceOrderDetailViewController.h"
-#import "MTBlockOrderDetailViewController.h"
 #import "MTGroupOrderDetailViewController.h"
+#import "MTBlockOrderDetailViewController.h"
+#import "MTSpliceOrderDetailViewController.h"
 
-#import "MTOrderHttpRequestDataManager.h"
+#import "MTSpliceModel.h"
+#import "MTBlockModel.h"
+#import "MTPickupModel.h"
+#import "MTGroupModel.h"
 
 #import "MJRefreshNormalHeader.h"
 #import "MJRefreshBackNormalFooter.h"
 
-#import "MTBlockModel.h"
-#import "MTGroupModel.h"
-#import "MTPickupModel.h"
-#import "MTSpliceModel.h"
-#import "MJRefreshGifHeader.h"
-#import "TalkingData.h"
+#import "MTSpliceTableViewCell.h"
+#import "MTBlockTableViewCell.h"
+#import "MTGroupTableViewCell.h"
+#import "MTPickupTableViewCell.h"
 
-static const CGFloat MJDuration = 2.0;
 
-@interface MTSupplyOrderViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate>
+@interface MTOfferPriceViewController ()
 
-@property (nonatomic,strong) UITableView *orderTableView;
-@property (nonatomic,strong) NSMutableArray *orderInfoArray;
+{
+    int currPage;
+
+}
+
+@property (nonatomic, strong) NSMutableArray *orderInfoArray;
+
+@property (nonatomic, strong) UITableView *orderTableView;
 
 @end
 
-@implementation MTSupplyOrderViewController
+@interface MTOfferPriceViewController ()<UITableViewDataSource, UITableViewDelegate,  EMEBaseDataManagerDelegate>
+
+@end
+
+@implementation MTOfferPriceViewController
 
 -(id)init
 {
     self=[super init];
     if (self) {
-        self.title = @"接单";//NSLocalizedString(@"SUPPLY_ORDER", nil);
-        self.view.backgroundColor = [UIColor colorWithBackgroundColorMark:6];
+        self.title = @"已出价";//NSLocalizedString(@"SUPPLY_ORDER", nil);
+        
+        // 初始化 当前页数
+        currPage = 1;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.orderTableView];
-    [self addHeader];
+    
+    [self addFooter];
+
 }
 
-- (UITableView *)orderTableView
+- (NSMutableArray *)orderInfoArray
 {
-    if (_orderTableView == nil) {
-        CGRect etFrame = [self efGetContentFrame];
-        UIImage *profileImage = [UIImage imageNamed:@"btn_profile"];
-
-        etFrame.size.height -= 44 + profileImage.size.height;
-        _orderTableView = [[UITableView alloc] initWithFrame:etFrame style:UITableViewStylePlain];
-        _orderTableView.backgroundColor = [UIColor clearColor];
-        _orderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _orderTableView.delegate = self;
-        _orderTableView.dataSource = self;
-        _orderTableView.showsVerticalScrollIndicator = NO;
+    if (_orderInfoArray == nil){
+        _orderInfoArray = [NSMutableArray array];
     }
-    return _orderTableView;
-}
-
-- (void)addHeader
-{
-    __weak typeof(self) weakSelf = self;
-    // 下拉刷新
-    self.orderTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            // 结束刷新
-            [self.orderTableView.header endRefreshing];
-            [weakSelf loadNewData];
-        });
-    }];
-    
-    MJRefreshNormalHeader *header = (MJRefreshNormalHeader *)self.orderTableView.header;
-    header.stateLabel.hidden = YES;
-    header.lastUpdatedTimeLabel.hidden = YES;
-    
-    // 设置自动切换透明度(在导航栏下面自动隐藏)
-    self.orderTableView.header.autoChangeAlpha = YES;
+    return _orderInfoArray;
 }
 
 - (void)addFooter
 {
     __weak typeof(self) weakSelf = self;
-
+    
     // 上拉刷新
     self.orderTableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
@@ -112,98 +92,57 @@ static const CGFloat MJDuration = 2.0;
     }];
 }
 
-#pragma mark - 数据处理相关
-#pragma mark 下拉刷新数据
+
+#pragma mark - 加载新数据
 - (void)loadNewData
 {
-    // 1.添加假数据
-    //    for (int i = 0; i<5; i++) {
-    //        [self.data insertObject:MJRandomData atIndex:0];
-    //    }
-    [self efQueryOrder];
-    
-    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [self.orderTableView reloadData];
-        // 拿到当前的下拉刷新控件，结束刷新状态
-        [self.orderTableView.header endRefreshing];
-    });
+    [self efQueryOrder:currPage];
+
 }
 
-#pragma mark 上拉加载更多数据
 - (void)loadMoreData
 {
-    // 1.添加假数据
-    //    for (int i = 0; i<5; i++) {
-    //        [self.data addObject:MJRandomData];
-    //    }
-    //
-    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [self.orderTableView reloadData];
-        
-        // 拿到当前的上拉刷新控件，结束刷新状态
-        [self.orderTableView.footer endRefreshing];
-    });
+    currPage ++;
+    [self efQueryOrder:currPage];
 }
 
-#pragma mark 加载最后一份数据
-- (void)loadLastData
+
+- (void)efQueryOrder:(int)pageNumber
 {
-    // 1.添加假数据
-    //    for (int i = 0; i<5; i++) {
-    //        [self.data addObject:MJRandomData];
-    //    }
+    [MTTakenOrderHttpRequestDataManager shareInstance].delegate = self;
+
     
-    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [self.orderTableView reloadData];
-    });
-}
-
-#pragma mark 只加载一次数据
-- (void)loadOnceData
-{
-    // 1.添加假数据
-    //    for (int i = 0; i<25; i++) {
-    //        [self.data addObject:MJRandomData];
-    //    }
+    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryNewsListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:[NSString stringWithFormat:@"%d",pageNumber] pageSize:@"20" ];
     
-    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [self.orderTableView reloadData];
+}
+
+#pragma mark - tableView 相关方法
+- (UITableView *)orderTableView
+{
+    if (_orderTableView == nil) {
+        CGRect etFrame = [self efGetContentFrame];
+        UIImage *profileImage = [UIImage imageNamed:@"btn_profile"];
         
-        // 隐藏当前的上拉刷新控件
-        self.orderTableView.footer.hidden = YES;
-    });
-}
-
-- (void)efQueryOrder
-{
-    [MTOrderHttpRequestDataManager shareInstance].delegate = self;
-    [[MTOrderHttpRequestDataManager shareInstance] efQueryBlistWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - UITableViewDataSource Methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
+        etFrame.size.height -= 44 + profileImage.size.height;
+        _orderTableView = [[UITableView alloc] initWithFrame:etFrame style:UITableViewStylePlain];
+        _orderTableView.backgroundColor = [UIColor clearColor];
+        _orderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _orderTableView.delegate = self;
+        _orderTableView.dataSource = self;
+        _orderTableView.showsVerticalScrollIndicator = NO;
+        
+        _orderTableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
+    
+        [self.view addSubview:_orderTableView];
+    }
+    return _orderTableView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.orderInfoArray.count;
+    return [self.orderInfoArray count];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -260,10 +199,26 @@ static const CGFloat MJDuration = 2.0;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([[self.orderInfoArray objectAtIndex:indexPath.row] isKindOfClass:[MTPickupModel class]]){
+        MTPickupModel *model = (MTPickupModel *)_orderInfoArray[indexPath.row];
+        if ([model.bidtime length]) return 162.f + 30;
+    }
+    else if ([[self.orderInfoArray objectAtIndex:indexPath.row] isKindOfClass:[MTBlockModel class]]) {
+        MTBlockModel *model = (MTBlockModel *)_orderInfoArray[indexPath.row];
+        if ([model.bidtime length]) return 162.f + 30;
+    }
+    else if ([[self.orderInfoArray objectAtIndex:indexPath.row] isKindOfClass:[MTSpliceModel class]]) {
+        MTSpliceModel *model = (MTSpliceModel *)_orderInfoArray[indexPath.row];
+        if ([model.bidtime length]) return 162.f + 30;
+    }
+    else if ([[self.orderInfoArray objectAtIndex:indexPath.row] isKindOfClass:[MTGroupModel class]]){
+        MTGroupModel *model = (MTGroupModel *)_orderInfoArray[indexPath.row];
+        if ([model.bidtime length]) return 162.f + 30;
+    }
+    
     return 162.f;
-}
 
-#pragma mark - UITableViewDelegate Methods
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -290,13 +245,17 @@ static const CGFloat MJDuration = 2.0;
     }
 }
 
-- (NSMutableArray *)orderInfoArray
+
+
+
+-(void)efQueryOPlistWithPageNo:(NSString *)pageNo
+                     pageSize:(NSString *)pageSize
+
 {
-    if (_orderInfoArray == nil) {
-        _orderInfoArray = [[NSMutableArray alloc] init];
-    }
-    return _orderInfoArray;
+    [MTTakenOrderHttpRequestDataManager shareInstance].delegate = self;
+    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryNewsListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:pageNo pageSize:pageSize];
 }
+
 
 - (void)didFinishLoadingJSONValue:(NSDictionary *)dic URLConnection:(EMEURLConnection *)connection
 {
@@ -305,11 +264,14 @@ static const CGFloat MJDuration = 2.0;
         [self.view addHUDActivityViewWithHintsText:NSLocalizedString(@"DATA_OF_RESPONSE_ERROR", nil)];
         return;
     }
-    if (connection.connectionTag == TagForOrderList) {
+    if (connection.connectionTag == TagForOfferPriceNew) {
         if ([[CommonUtils emptyString:[dic objectForKey:@"err_code"]] isEqualToString:@"0"])
         {
-            NSArray* tmpArray= [dic valueForKeyPath:@"data"];
-            [self.orderInfoArray removeAllObjects];
+            NSDictionary *tmpDict = [dic valueForKey:@"data"];
+            NSArray* tmpArray= [tmpDict valueForKey:@"list"];
+            if (currPage == 1){
+                [self.orderInfoArray removeAllObjects];
+            }
             for (NSDictionary *dic in tmpArray)
             {
                 if ([[dic objectForKey:@"type"] isEqualToString:@"拼车"]) {
@@ -346,11 +308,24 @@ static const CGFloat MJDuration = 2.0;
             }
         }
     }
+
 }
 
 - (void)didFailWithError:(NSError *)error URLConnection:(EMEURLConnection *)connection
 {
+    NIF_INFO(@"%@",error);
+    if (connection.connectionTag == TagForTakenOrderList) {
+        [self.view addHUDActivityViewWithHintsText:NSLocalizedString(@"ERROR", nil) hideAfterDelay:1.5];
+    }
     
 }
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
 
 @end

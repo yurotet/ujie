@@ -20,6 +20,9 @@
 @property (nonatomic,strong) NSString *time;//" : @"2015年07月14日"
 @property (nonatomic,strong) NSString *title;//" : @"包车"
 @property (nonatomic,strong) NSString *payfee;
+
+@property (nonatomic,copy) NSString *bidtime; // 中标时间 <NEW>
+
 @property (nonatomic,assign) double timeInterval;
 @property (nonatomic,assign) BOOL isServeing;
 @property (nonatomic,strong) NSString *end_time;

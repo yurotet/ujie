@@ -8,26 +8,27 @@
 
 #import "MTBlockBaseInfoTableViewCell.h"
 #import "AttributedLabel.h"
+#import "MTCopyLabel.h"
 
 @interface MTBlockBaseInfoTableViewCell()
 
 @property (nonatomic,strong)UIImageView *bgImageView;
-@property (nonatomic,strong)UILabel *categoryLabel;
-@property (nonatomic,strong)UILabel *peopleNumberLabel;
-@property (nonatomic,strong)UILabel *carTimeLabel;
-@property (nonatomic,strong)UILabel *toLocLabel;
+@property (nonatomic,strong)MTCopyLabel *categoryLabel;
+@property (nonatomic,strong)MTCopyLabel *peopleNumberLabel;
+@property (nonatomic,strong)MTCopyLabel *carTimeLabel;
+@property (nonatomic,strong)MTCopyLabel *toLocLabel;
 @property (nonatomic,strong)AttributedLabel *adultNumberLabel;
 @property (nonatomic,strong)AttributedLabel *kidNumberLabel;
 @property (nonatomic,strong)AttributedLabel *babyNumberLabel;
-@property (nonatomic,strong)UILabel *realTimeLabel;
-@property (nonatomic,strong)UILabel *realLocLabel;
+@property (nonatomic,strong)MTCopyLabel *realTimeLabel;
+@property (nonatomic,strong)MTCopyLabel *realLocLabel;
 
-@property (nonatomic,strong)UILabel *contactNameLabel;
-@property (nonatomic,strong)UILabel *realContactNameLabel;
-@property (nonatomic,strong)UILabel *contactMobileLabel;
-@property (nonatomic,strong)UILabel *realContactMobileLabel;
-@property (nonatomic,strong)UILabel *contactWechatLabel;
-@property (nonatomic,strong)UILabel *realContactWechatLabel;
+@property (nonatomic,strong)MTCopyLabel *contactNameLabel;
+@property (nonatomic,strong)MTCopyLabel *realContactNameLabel;
+@property (nonatomic,strong)MTCopyLabel *contactMobileLabel;
+@property (nonatomic,strong)MTCopyLabel *realContactMobileLabel;
+@property (nonatomic,strong)MTCopyLabel *contactWechatLabel;
+@property (nonatomic,strong)MTCopyLabel *realContactWechatLabel;
 
 @end
 
@@ -42,6 +43,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.contentView.userInteractionEnabled = YES;
         [self initView];
     }
     return self;
@@ -51,7 +53,7 @@
 {
     if (_bgImageView == nil) {
         _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 15, self.frame.size.width - 18, 146)];
-        
+        _bgImageView.userInteractionEnabled = YES;
         CGFloat top = 5; // 顶端盖高度
         CGFloat bottom = 5 ; // 底端盖高度
         CGFloat left = 5; // 左端盖宽度
@@ -66,7 +68,7 @@
 - (UILabel *)categoryLabel
 {
     if (_categoryLabel == nil) {
-        _categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 20, 300, 30)];
+        _categoryLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(23, 20, 300, 30)];
         _categoryLabel.font = [UIFont fontWithFontMark:6];
         _categoryLabel.text = @"基本信息";
     }
@@ -76,7 +78,7 @@
 - (UILabel *)peopleNumberLabel
 {
     if (_peopleNumberLabel == nil) {
-        _peopleNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 55, 300, 25)];
+        _peopleNumberLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 55, 300, 25)];
         _peopleNumberLabel.font = [UIFont fontWithFontMark:4];
         _peopleNumberLabel.text = @"出行人数";
         _peopleNumberLabel.textColor = [UIColor colorWithTextColorMark:2];
@@ -139,7 +141,8 @@
 - (UILabel *)carTimeLabel
 {
     if (_carTimeLabel == nil) {
-        _carTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 80, 300, 25)];
+        _carTimeLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 80, 300, 25)];
+        _carTimeLabel.userInteractionEnabled = YES;
         _carTimeLabel.font = [UIFont fontWithFontMark:4];
         _carTimeLabel.text = @"用车时间";
         _carTimeLabel.backgroundColor = [UIColor clearColor];
@@ -156,7 +159,8 @@
 - (UILabel *)realTimeLabel
 {
     if (_realTimeLabel == nil) {
-        _realTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realTimeLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realTimeLabel.userInteractionEnabled = YES;
         _realTimeLabel.font = [UIFont fontWithFontMark:4];
         _realTimeLabel.textAlignment = NSTextAlignmentLeft;
         _realTimeLabel.text = @"2015-0101 0101(当地时间)";
@@ -168,7 +172,7 @@
 - (UILabel *)toLocLabel
 {
     if (_toLocLabel == nil) {
-        _toLocLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 105, 230, 25)];
+        _toLocLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 105, 230, 25)];
         _toLocLabel.font = [UIFont fontWithFontMark:4];
         _toLocLabel.text = @"接送地点";
         _toLocLabel.textColor = [UIColor colorWithTextColorMark:2];
@@ -181,7 +185,7 @@
 - (UILabel *)realLocLabel
 {
     if (_realLocLabel == nil) {
-        _realLocLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 5, 230, 25)];
+        _realLocLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(55, 5, 230, 25)];
         _realLocLabel.font = [UIFont fontWithFontMark:4];
         _realLocLabel.textAlignment = NSTextAlignmentLeft;
         _realLocLabel.lineBreakMode = NSLineBreakByCharWrapping;
@@ -196,7 +200,7 @@
 - (UILabel *)contactNameLabel
 {
     if (_contactNameLabel == nil) {
-        _contactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 130, 300, 25)];
+        _contactNameLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 130, 300, 25)];
         _contactNameLabel.font = [UIFont fontWithFontMark:4];
         _contactNameLabel.text = @"联系人姓名";
         _contactNameLabel.backgroundColor = [UIColor clearColor];
@@ -209,7 +213,7 @@
 - (UILabel *)realContactNameLabel
 {
     if (_realContactNameLabel == nil) {
-        _realContactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realContactNameLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
         _realContactNameLabel.font = [UIFont fontWithFontMark:4];
         _realContactNameLabel.textAlignment = NSTextAlignmentLeft;
         _realContactNameLabel.text = @"";
@@ -221,7 +225,7 @@
 - (UILabel *)contactMobileLabel
 {
     if (_contactMobileLabel == nil) {
-        _contactMobileLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 155, 300, 25)];
+        _contactMobileLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 155, 300, 25)];
         _contactMobileLabel.font = [UIFont fontWithFontMark:4];
         _contactMobileLabel.text = @"联系人电话";
         _contactMobileLabel.backgroundColor = [UIColor clearColor];
@@ -234,7 +238,7 @@
 - (UILabel *)realContactMobileLabel
 {
     if (_realContactMobileLabel == nil) {
-        _realContactMobileLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realContactMobileLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
         _realContactMobileLabel.font = [UIFont fontWithFontMark:4];
         _realContactMobileLabel.textAlignment = NSTextAlignmentLeft;
         _realContactMobileLabel.text = @"13917780591";
@@ -246,7 +250,7 @@
 - (UILabel *)contactWechatLabel
 {
     if (_contactWechatLabel == nil) {
-        _contactWechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 180, 300, 25)];
+        _contactWechatLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 180, 300, 25)];
         _contactWechatLabel.font = [UIFont fontWithFontMark:4];
         _contactWechatLabel.text = @"联系人微信";
         _contactWechatLabel.backgroundColor = [UIColor clearColor];
@@ -259,7 +263,7 @@
 - (UILabel *)realContactWechatLabel
 {
     if (_realContactWechatLabel == nil) {
-        _realContactWechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realContactWechatLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
         _realContactWechatLabel.font = [UIFont fontWithFontMark:4];
         _realContactWechatLabel.textAlignment = NSTextAlignmentLeft;
         _realContactWechatLabel.text = @"";
@@ -292,12 +296,14 @@
 
 -(void)efSetCellWithData:(MTDetailModel *)data isTaken:(BOOL)isTaken
 {
-    self.adultNumberLabel.text = [NSString stringWithFormat:@"成人 %@",[data.person objectAtIndex:0]];
-    [self.adultNumberLabel setString:@"成人" withColor:[UIColor redColor]];
-    self.kidNumberLabel.text = [NSString stringWithFormat:@"儿童 %@",[data.person objectAtIndex:1]];
-    [self.kidNumberLabel setString:@"儿童" withColor:[UIColor redColor]];
-    self.babyNumberLabel.text = [NSString stringWithFormat:@"婴儿 %@",[data.person objectAtIndex:2]];
-    [self.babyNumberLabel setString:@"婴儿" withColor:[UIColor redColor]];
+    if ([data.person count]) {
+        self.adultNumberLabel.text = [NSString stringWithFormat:@"成人 %@",[data.person objectAtIndex:0]];
+        [self.adultNumberLabel setString:@"成人" withColor:[UIColor redColor]];
+        self.kidNumberLabel.text = [NSString stringWithFormat:@"儿童 %@",[data.person objectAtIndex:1]];
+        [self.kidNumberLabel setString:@"儿童" withColor:[UIColor redColor]];
+        self.babyNumberLabel.text = [NSString stringWithFormat:@"婴儿 %@",[data.person objectAtIndex:2]];
+        [self.babyNumberLabel setString:@"婴儿" withColor:[UIColor redColor]];
+    }
     self.realTimeLabel.text = data.time;
     self.realLocLabel.text = data.address;
     

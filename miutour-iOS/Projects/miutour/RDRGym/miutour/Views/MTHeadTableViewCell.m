@@ -7,11 +7,12 @@
 //
 
 #import "MTHeadTableViewCell.h"
+#import "MTCopyLabel.h"
 
 @interface MTHeadTableViewCell()
 
-@property (nonatomic,strong)UILabel *categoryLabel;
-@property (nonatomic,strong)UILabel *detailLabel;
+@property (nonatomic,strong)MTCopyLabel *categoryLabel;
+@property (nonatomic,strong)MTCopyLabel *detailLabel;
 
 @end
 
@@ -34,7 +35,7 @@
 - (UILabel *)categoryLabel
 {
     if (_categoryLabel == nil) {
-        _categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 0, 300, 50)];
+        _categoryLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(23, 0, 300, 50)];
         _categoryLabel.font = [UIFont fontWithFontMark:8];
         _categoryLabel.text = @"接机  ￥2290";
         _categoryLabel.textColor = [UIColor colorWithTextColorMark:3];
@@ -45,7 +46,7 @@
 - (UILabel *)detailLabel
 {
     if (_detailLabel == nil) {
-        _detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 50, 280, 50)];
+        _detailLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(20, 50, 280, 50)];
         _detailLabel.font = [UIFont fontWithFontMark:4];
         _detailLabel.text = @"";
         _detailLabel.backgroundColor = [UIColor clearColor];

@@ -20,6 +20,7 @@
 #import "MTSpliceOrderDetailViewController.h"
 #import "MTBlockOrderDetailViewController.h"
 #import "MTGroupOrderDetailViewController.h"
+
 #import "MTTakenOrderHttpRequestDataManager.h"
 
 #import "MJRefreshNormalHeader.h"
@@ -54,7 +55,7 @@ static const NSInteger k1Day = 60 * 60 * 24; // 1 days
 {
     self=[super init];
     if (self) {
-        self.title = NSLocalizedString(@"TAKEN_ORDER", nil);
+        self.title = @"服务";//NSLocalizedString(@"TAKEN_ORDER", nil);
         self.view.backgroundColor = [UIColor colorWithBackgroundColorMark:6];
 //        self.isInService = YES;
         _pageNum = 1;

@@ -24,6 +24,7 @@
 @property (nonatomic,strong)UILabel *stableCarTypeLabel;
 @property (nonatomic,strong)UILabel *stableDistanceLabel;
 @property (nonatomic,strong)UILabel *stableDefaultPriceLabel;
+@property (nonatomic, strong) UILabel *orderReceivedLabel;
 
 @property (nonatomic,strong)UIImageView *hurryImageView;
 @property (nonatomic,strong)UIImageView *rewardImageView;
@@ -226,6 +227,25 @@
     return _stableDefaultPriceLabel;
 }
 
+- (UILabel *)orderReceivedLabel
+{
+    if (_orderReceivedLabel == nil){
+        
+        NSInteger Order_X = 10 * [ThemeManager themeScreenWidthRate];
+        _orderReceivedLabel = [[UILabel alloc]initWithFrame:CGRectMake(Order_X, 158, [UIScreen mainScreen].bounds.size.width - 2 * Order_X, 30)];
+        _orderReceivedLabel.text = @"";
+        _orderReceivedLabel.textAlignment = NSTextAlignmentCenter;
+        _orderReceivedLabel.backgroundColor = [UIColor whiteColor];
+        _orderReceivedLabel.textColor = [UIColor colorWithTextColorMark:2];
+        _orderReceivedLabel.layer.borderWidth = 1;
+        _orderReceivedLabel.layer.borderColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1].CGColor;
+        _orderReceivedLabel.font = [UIFont fontWithFontMark:4];
+        
+    }
+    return _orderReceivedLabel;
+}
+
+
 -(void)initView
 {
     CGRect tmpFrame = self.frame;
@@ -269,6 +289,8 @@
 
     [self.contentView addSubview:self.defaultPriceLabel];
     [self.contentView addSubview:self.stableDefaultPriceLabel];
+    
+    [self.contentView addSubview:self.orderReceivedLabel];
     
     UIImage *rewardImage = [UIImage imageNamed:@"reward"];
     _rewardImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(self.frame.size.width-60, 13.5),rewardImage.size}];
@@ -369,6 +391,32 @@
         self.stableAwardLabel.text = @"奖励";
         self.awardLabel.text = [NSString stringWithFormat:@"￥%@",data.subsidy];
     }
+    
+    if ([data.bidtime length]){
+        self.orderReceivedLabel.text = [NSString stringWithFormat:@"%@ 被其他司导接单",data.bidtime];
+        self.orderReceivedLabel.hidden = NO;
+        
+        for (UILabel *subView in self.contentView.subviews) {
+            if ([subView isKindOfClass:[UILabel class]])
+                subView.textColor = [UIColor colorWithTextColorMark:4];
+        }
+    }
+    else
+    {
+        self.orderReceivedLabel.hidden = YES;
+        
+        // 恢复颜色
+        self.categoryLabel.textColor = [UIColor blackColor];
+        self.timeLabel.textColor = [UIColor blackColor];
+        self.distanceLabel.textColor = [UIColor blackColor];
+        self.stableTitleLabel.textColor = [UIColor blackColor];
+        self.carTypeLabel.textColor = [UIColor blackColor];
+        self.defaultPriceLabel.textColor = [UIColor blackColor];
+        self.categoryLabel.textColor = [UIColor colorWithTextColorMark:3];
+        self.markLabel.textColor = [UIColor redColor];
+    }
+    
+    
     [self resetFrame:([CommonUtils isEmptyString:data.mile]||[data.mile isEqualToString:@"/"])];
 }
 

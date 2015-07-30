@@ -22,6 +22,7 @@
 @property(nonatomic,strong)NSString *loginName;
 @property(nonatomic,strong)NSString *password;
 @property(nonatomic,strong)NSString *name;
+@property(nonatomic,strong)NSString *recode;  // 推荐码
 @property(nonatomic,strong)NSString *sCode;
 @property(nonatomic,strong)NSString *mobile;
 @property(nonatomic,strong)NSString *phone;

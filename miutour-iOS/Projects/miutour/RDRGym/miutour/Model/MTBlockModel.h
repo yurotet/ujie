@@ -21,6 +21,9 @@
 @property (nonatomic,strong) NSString *mile;
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic,strong) NSString *payfee;
+
+@property (nonatomic,copy) NSString *bidtime; // 中标时间 <NEW>
+
 @property (nonatomic,assign) double timeInterval;
 @property (nonatomic,assign) BOOL isServeing;
 

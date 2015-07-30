@@ -7,6 +7,7 @@
 //
 
 #import "MTJourneyTableViewCell.h"
+#import "MTCopyLabel.h"
 
 @interface MTJourneyTableViewCell()
 
@@ -63,7 +64,7 @@
 - (void)createLocLabelsWithCount:(NSInteger)count
 {
     for (int i = 0; i < count; i++) {
-        UILabel *locLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 60+30*i, 265, 25)];
+        MTCopyLabel *locLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(40, 60+30*i, 265, 25)];
         locLabel.font = [UIFont fontWithFontMark:4];
         locLabel.textAlignment = NSTextAlignmentLeft;
         locLabel.text = @"";

@@ -369,6 +369,14 @@
             self.psView.maxCount = [_spliceInfo.price intValue];
             [self.PScrollView.pageScrollView reloadData];
             
+            // 如果已出价, 底部 出价视图 隐藏
+            if (_spliceInfo.ifprice || [self.biddingView isHidden]){
+                self.biddingView.hidden = YES;
+                CGRect frame = self.orderDetailTableView.frame;
+                frame.size.height += 135;
+                self.orderDetailTableView.frame = frame;
+            }
+            
             if (![CommonUtils isEmptyString:_spliceInfo.ordid] ) {
                 self.subLabel.text = [NSString stringWithFormat:@"订单编号：%@",_spliceInfo.ordid];
             }

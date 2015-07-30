@@ -24,6 +24,7 @@
 @property (nonatomic,strong) NSString *price;//" : @"1090"
 @property (nonatomic,strong) NSString *urgent;//" : (int)0
 @property (nonatomic,strong) NSString *payfee;
+@property (nonatomic,copy) NSString *bidtime; // 中标时间 <NEW>
 @property (nonatomic,assign) double timeInterval;
 @property (nonatomic,assign) BOOL isServeing;
 

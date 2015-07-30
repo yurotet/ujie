@@ -7,6 +7,7 @@
 //
 
 #import "MTCostContainTableViewCell.h"
+#import "MTCopyLabel.h"
 
 @interface MTCostContainTableViewCell()
 
@@ -62,7 +63,7 @@
 - (void)createLocLabelsWithCount:(NSInteger)count
 {
     for (int i = 0; i < count; i++) {
-        UILabel *costLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 50+15*i, 280, 25)];
+        MTCopyLabel *costLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(20, 50+15*i, 280, 25)];
         costLabel.font = [UIFont fontWithFontMark:4];
         costLabel.textAlignment = NSTextAlignmentLeft;
         costLabel.text = @"";
@@ -104,7 +105,7 @@
 
     CGFloat tmpOriginY = 50;
     for (int i = 0; i < _costCount; i++) {
-        UILabel *lbl = (UILabel *)[self.contentView viewWithTag:(1000+i)];
+        MTCopyLabel *lbl = (MTCopyLabel *)[self.contentView viewWithTag:(1000+i)];
         CGRect tmpFrame = lbl.frame;
         tmpFrame.origin.y = tmpOriginY;
         lbl.frame = tmpFrame;

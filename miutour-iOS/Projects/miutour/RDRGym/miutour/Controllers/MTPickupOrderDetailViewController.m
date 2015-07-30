@@ -322,6 +322,7 @@
 - (void)didFinishLoadingJSONValue:(NSDictionary *)dic URLConnection:(EMEURLConnection *)connection
 {
     NIF_INFO(@"%@",dic);
+    
     if (!dic && [dic count] == 0 ) {
         NIF_ERROR(@"数据响应出错");
         return;
@@ -329,6 +330,14 @@
     if (connection.connectionTag == TagForOrderDetail) {
         if (dic && [[dic objectForKey:@"err_code"] intValue] == 0) {
             [_pickupInfo setAttributes:[dic objectForKey:@"data"]];
+            
+            // 如果已出价, 底部 出价视图 隐藏
+            if (_pickupInfo.ifprice || [self.biddingView isHidden]){
+                self.biddingView.hidden = YES;
+                CGRect frame = self.orderDetailTableView.frame;
+                frame.size.height += 135;
+                self.orderDetailTableView.frame = frame;
+            }
             
             _pickupInfo.airport = [CommonUtils emptyString:_pickupInfo.airport];
             _pickupInfo.hotel_name = [CommonUtils emptyString:_pickupInfo.hotel_name];
@@ -352,7 +361,7 @@
             [self.view addSubview:self.orderDetailTableView];
             
             if (!self.isTaken&&self.showBidding) {
-                
+                    
                 if ([_pickupInfo.urgent intValue]==1) {
                     [self.view addSubview:self.directView];
                 }

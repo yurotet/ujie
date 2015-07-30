@@ -18,6 +18,7 @@
     EMEURLConnection *_signInConnection;
     EMEURLConnection *_activitylistConnection;
     EMEURLConnection *_activityDetailConnection;
+    EMEURLConnection *_offerPriceConnection; //<NEW>
 }
 @end
 
@@ -158,6 +159,36 @@ static MTOrderHttpRequestDataManager *s_orderHttpDataManager = nil;
     
     _signInListConnection = [self postHttpRequestWithParameterDic:paramDic ServiceType:EMEServiceTypeForBuyer WithURLConnection:nil FunctionName:@"order/signinlist" WithTag:TagForSignInList isHiddenLoading:NO isCache:NO];
 }
+
+#pragma mark - 已出价订单列表
+- (void)efQueryNewsListWithUsername:(NSString *)username
+                              token:(NSString *)token
+                             pageNo:(NSString *)pageNo
+                           pageSize:(NSString *)pageSize
+{
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES];
+    NSArray *descriptors = [NSArray arrayWithObject:descriptor];
+    NSArray *myDataArray = [NSArray arrayWithObjects:username, token, pageNo, pageSize, [UserManager shareInstance].user.nonce, nil];
+    NSArray *resultArray = [myDataArray sortedArrayUsingDescriptors:descriptors];
+    NSLog(@"%@", resultArray);
+    
+    NSString * string = [resultArray componentsJoinedByString:@""];
+    
+    NSString *signature = [CommonUtils generateMD5:string];
+    
+    NSDictionary * tDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [CommonUtils emptyString:username],@"username",
+                                  [CommonUtils emptyString:token],@"token",
+                                  [CommonUtils emptyString:pageNo],@"pageNo",
+                                  [CommonUtils emptyString:pageSize],@"pageSize",
+                                  [CommonUtils emptyString:signature],@"signature",nil];
+    
+    paramDic = [NSDictionary dictionaryWithDictionary:tDictionary];
+    
+    _offerPriceConnection = [self postHttpRequestWithParameterDic:paramDic ServiceType:EMEServiceTypeForBuyer WithURLConnection:nil FunctionName:@"order/plist" WithTag:TagForOfferPrice isHiddenLoading:NO isCache:NO];
+    
+}
+
 
 
 -(void)efSigninWithUsername:(NSString *)username

@@ -28,6 +28,10 @@
 @property (nonatomic,strong)UIButton *avatarButton;
 @property (nonatomic,strong)UIButton *setImageView;
 
+// 推荐码
+@property (nonatomic, strong) UILabel *recodeLabel;
+
+
 @property (nonatomic,strong)MTSummaryModel *summaryInfo;
 
 @end
@@ -67,6 +71,7 @@
     [self.contentView addSubview:self.settleingLabel];
     [self.contentView addSubview:self.allIncomeLabel];
     [self.contentView addSubview:self.closeButton];
+    [self.contentView addSubview:self.recodeLabel];
     [self addStableLabel];
 }
 
@@ -253,6 +258,20 @@
     return _allIncomeLabel;
 }
 
+- (UILabel *)recodeLabel
+{
+    if (_recodeLabel == nil){
+        _recodeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _recodeLabel.textAlignment = NSTextAlignmentCenter;
+        _recodeLabel.font = [UIFont fontWithFontMark:4];
+        _recodeLabel.text = @"3GKOFK";
+        _recodeLabel.textColor = [UIColor colorWithTextColorMark:6];
+        _recodeLabel.backgroundColor = [UIColor clearColor];
+    }
+    return _recodeLabel;
+}
+
+
 - (void)addStableLabel
 {
     UILabel *stableLabel = [[UILabel alloc] initWithFrame:CGRectMake([ThemeManager themeScreenWidthRate]*95, 205 - 60, 30, 15)];
@@ -318,6 +337,8 @@
 
     tmpFrame.origin.x += tmpFrame.size.width;
     self.allIncomeLabel.frame = tmpFrame;
+    
+    
     
     tmpFrame.origin.x = 0;
     tmpFrame.origin.y += tmpFrame.size.height + 10;
@@ -463,11 +484,14 @@
     tmpFrame.size.height += 20;
     self.avatarButton.frame = tmpFrame;
 
+    self.recodeLabel.frame = CGRectMake(0, 205 - 80, [UIScreen mainScreen].bounds.size.width, 20);
+    
     self.levelLabel.text = data.level;
     self.evaluationLabel.text = data.star;
     self.willSettleLabel.text = data.js_0;
     self.settleingLabel.text = data.js_1;
     self.allIncomeLabel.text = data.js_total;
+    self.recodeLabel.text = [NSString stringWithFormat:@"推荐码:%@",data.recode];
     
     NSDictionary *dic0 = [data.message objectAtIndex:0];
     NSDictionary *dic1 = [data.message objectAtIndex:1];
@@ -519,6 +543,7 @@
             [UserManager shareInstance].user.name = _summaryInfo.name;
             [UserManager shareInstance].user.level = _summaryInfo.level;
             [UserManager shareInstance].user.avatar = _summaryInfo.avatar;
+            [UserManager shareInstance].user.recode = _summaryInfo.recode;
             [[UserManager shareInstance] update_to_disk];
             [self reloadUIWithData:_summaryInfo];
             MTHomeViewController *vc = (MTHomeViewController *)self.parentViewController;

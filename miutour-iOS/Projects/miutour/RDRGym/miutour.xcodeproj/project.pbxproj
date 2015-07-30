@@ -142,6 +142,10 @@
 		86BC4DFE1B3C09D50029BCB7 /* MTMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BC4DFD1B3C09D50029BCB7 /* MTMarkViewController.m */; };
 		86BC80AC1B47D1ED007008B4 /* MTSettleItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BC80AB1B47D1ED007008B4 /* MTSettleItemsViewController.m */; };
 		86BC80AF1B47D1FD007008B4 /* MTMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BC80AE1B47D1FD007008B4 /* MTMessagesViewController.m */; };
+		86C2DB551B69D09200A7120D /* MTCopyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C2DB541B69D09200A7120D /* MTCopyLabel.m */; };
+		86C2DB591B69D0B000A7120D /* MTOfferPriceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C2DB581B69D0B000A7120D /* MTOfferPriceViewController.m */; };
+		86C2DB5F1B69D0ED00A7120D /* MTMessageInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C2DB5D1B69D0ED00A7120D /* MTMessageInfoModel.m */; };
+		86C2DB621B69D13100A7120D /* MTMessageInfoNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C2DB611B69D13100A7120D /* MTMessageInfoNewCell.m */; };
 		86D2AE531B4A7A7E00C9C2AF /* MTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D2AE521B4A7A7E00C9C2AF /* MTWebViewController.m */; };
 		86D2AE561B4A907D00C9C2AF /* filter_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86D2AE541B4A907D00C9C2AF /* filter_ok@2x.png */; };
 		86D2AE571B4A907D00C9C2AF /* filter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86D2AE551B4A907D00C9C2AF /* filter@2x.png */; };
@@ -506,6 +510,14 @@
 		86BC80AB1B47D1ED007008B4 /* MTSettleItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTSettleItemsViewController.m; sourceTree = "<group>"; };
 		86BC80AD1B47D1FD007008B4 /* MTMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMessagesViewController.h; sourceTree = "<group>"; };
 		86BC80AE1B47D1FD007008B4 /* MTMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessagesViewController.m; sourceTree = "<group>"; };
+		86C2DB531B69D09200A7120D /* MTCopyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTCopyLabel.h; sourceTree = "<group>"; };
+		86C2DB541B69D09200A7120D /* MTCopyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTCopyLabel.m; sourceTree = "<group>"; };
+		86C2DB571B69D0B000A7120D /* MTOfferPriceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTOfferPriceViewController.h; sourceTree = "<group>"; };
+		86C2DB581B69D0B000A7120D /* MTOfferPriceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTOfferPriceViewController.m; sourceTree = "<group>"; };
+		86C2DB5C1B69D0ED00A7120D /* MTMessageInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMessageInfoModel.h; sourceTree = "<group>"; };
+		86C2DB5D1B69D0ED00A7120D /* MTMessageInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessageInfoModel.m; sourceTree = "<group>"; };
+		86C2DB601B69D13100A7120D /* MTMessageInfoNewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMessageInfoNewCell.h; sourceTree = "<group>"; };
+		86C2DB611B69D13100A7120D /* MTMessageInfoNewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessageInfoNewCell.m; sourceTree = "<group>"; };
 		86D2AE511B4A7A7E00C9C2AF /* MTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTWebViewController.h; sourceTree = "<group>"; };
 		86D2AE521B4A7A7E00C9C2AF /* MTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTWebViewController.m; sourceTree = "<group>"; };
 		86D2AE541B4A907D00C9C2AF /* filter_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter_ok@2x.png"; sourceTree = "<group>"; };
@@ -1202,6 +1214,8 @@
 				8624709E1B673DB9002C3C61 /* MTServiceViewController.h */,
 				8624709F1B673DB9002C3C61 /* MTServiceViewController.m */,
 				862470A01B673DB9002C3C61 /* MTServiceViewController.xib */,
+				86C2DB571B69D0B000A7120D /* MTOfferPriceViewController.h */,
+				86C2DB581B69D0B000A7120D /* MTOfferPriceViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1251,6 +1265,8 @@
 				866767B81B4A35170038473D /* MTMessageModel.m */,
 				867073831B4FE6CE0013FB82 /* MTActivityModel.h */,
 				867073841B4FE6CE0013FB82 /* MTActivityModel.m */,
+				86C2DB5C1B69D0ED00A7120D /* MTMessageInfoModel.h */,
+				86C2DB5D1B69D0ED00A7120D /* MTMessageInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1454,6 +1470,10 @@
 				86D2AE691B4AAAD200C9C2AF /* MTDatePickerView.m */,
 				86A5B5E41B50CE5E007F1643 /* MTAlertView.h */,
 				86A5B5E51B50CE5E007F1643 /* MTAlertView.m */,
+				86C2DB531B69D09200A7120D /* MTCopyLabel.h */,
+				86C2DB541B69D09200A7120D /* MTCopyLabel.m */,
+				86C2DB601B69D13100A7120D /* MTMessageInfoNewCell.h */,
+				86C2DB611B69D13100A7120D /* MTMessageInfoNewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1678,6 +1698,7 @@
 				F5497EC51B2B5A10001E8D99 /* MTNavTabBarController.m in Sources */,
 				F527CB791B2D747A005778B1 /* MTPlusSubtractionView.m in Sources */,
 				86BC80AC1B47D1ED007008B4 /* MTSettleItemsViewController.m in Sources */,
+				86C2DB5F1B69D0ED00A7120D /* MTMessageInfoModel.m in Sources */,
 				866E95CA1B32CBD100A5A32C /* UIScrollView+MJRefresh.m in Sources */,
 				86A111841B4CF97C00FD5108 /* MTBaseDetailViewController.m in Sources */,
 				866E95C91B32CBD100A5A32C /* UIScrollView+MJExtension.m in Sources */,
@@ -1700,6 +1721,7 @@
 				F5497EC71B2B5A10001E8D99 /* MTPopView.m in Sources */,
 				86A5B5D71B50C46E007F1643 /* qrencode.c in Sources */,
 				866E95481B3287CA00A5A32C /* MTOrderHttpRequestDataManager.m in Sources */,
+				86C2DB551B69D09200A7120D /* MTCopyLabel.m in Sources */,
 				865BBD421B413CE900D08BE8 /* MTCarTypePageScrollView.m in Sources */,
 				865BBCF81B3A3B5100D08BE8 /* OpenUDID.m in Sources */,
 				862BDD701B451D030059DFB2 /* MTChildModel.m in Sources */,
@@ -1723,6 +1745,7 @@
 				86D2AEB61B4BAC1C00C9C2AF /* CDVWebViewDelegate.m in Sources */,
 				F5E4F2131B2B31F600E9ABE9 /* MTBlockModel.m in Sources */,
 				F5E4F2161B2B31F600E9ABE9 /* MTSpliceModel.m in Sources */,
+				86C2DB591B69D0B000A7120D /* MTOfferPriceViewController.m in Sources */,
 				866767C21B4A559F0038473D /* MTNewsViewController.m in Sources */,
 				86A5B5DB1B50C46E007F1643 /* split.c in Sources */,
 				F5497ECA1B2B6811001E8D99 /* MTSupplyOrderViewController.m in Sources */,
@@ -1732,6 +1755,7 @@
 				86D2AE531B4A7A7E00C9C2AF /* MTWebViewController.m in Sources */,
 				86D2AEB91B4BAC1C00C9C2AF /* NSData+Base64.m in Sources */,
 				86BC4DE81B3BEECE0029BCB7 /* MTTakenPickupTableViewCell.m in Sources */,
+				86C2DB621B69D13100A7120D /* MTMessageInfoNewCell.m in Sources */,
 				866E95BF1B32CBD100A5A32C /* MJRefreshAutoNormalFooter.m in Sources */,
 				865BBD301B3ED9C600D08BE8 /* MTTakenGroupTableViewCell.m in Sources */,
 				866767B91B4A35170038473D /* MTMessageModel.m in Sources */,

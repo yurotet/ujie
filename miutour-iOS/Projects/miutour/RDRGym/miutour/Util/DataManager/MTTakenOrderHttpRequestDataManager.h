@@ -12,6 +12,7 @@ typedef enum {
     TagForTakenOrderDetail = 100+1,
     TagForNewslist,
     TagForNewsdetail,
+    TagForOfferPriceNew,   // <NEW>
 }MT_TakenOrderHttpRquestTag;
 
 @interface MTTakenOrderHttpRequestDataManager : EMEBaseDataManager
@@ -59,6 +60,25 @@ typedef enum {
                            type:(NSString *)type
                           sdate:(NSString *)sdate
                           edate:(NSString *)edate;
+
+
+/**
+ *  已出价列表
+ *
+ *  @param  username => 用户名
+ *  @param  token => 注册登录获取的TOKEN
+ *  @param  signature => 签名认证
+ *  @param  pageNo => pageNo（从1开始）
+ *  @param  pageSize => pageSize
+  */
+- (void)efQueryOPlistlistWithUsername:(NSString *)username
+                           token:(NSString *)token
+                          pageNo:(NSString *)pageNo
+                        pageSize:(NSString *)pageSize;
+
+
+
+
 
 /**
  *  查询接单详情

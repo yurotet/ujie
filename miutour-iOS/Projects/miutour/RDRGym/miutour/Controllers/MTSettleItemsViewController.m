@@ -7,6 +7,12 @@
 //
 
 #import "MTSettleItemsViewController.h"
+#import "MTGroupOrderDetailViewController.h"
+#import "MTSpliceOrderDetailViewController.h"
+#import "MTBlockOrderDetailViewController.h"
+#import "MTPickupOrderDetailViewController.h"
+
+
 #import "MTTakenOrderHttpRequestDataManager.h"
 #import "MTMessageTableViewCell.h"
 #import "MTIdentityManager.h"
@@ -23,17 +29,40 @@
 @property (nonatomic,strong)UITableView *messageTableView;
 @property (nonatomic,strong)NSMutableArray *messageArray;
 @property (nonatomic,strong)NSMutableArray *orderInfoArray;
+@property (nonatomic, strong) NSMutableArray *activityArray; // 活动奖励 <NEW>
+@property (nonatomic, strong) UISegmentedControl *segmentView;  // 头部选项按钮
 
 @end
+
 
 @implementation MTSettleItemsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"结算明细";
+    
+    [self setNavigationTitle];
+    
     [self efSetNavButtonToCall];
     [self efQueryMessageList];
 }
+
+- (void)setNavigationTitle
+{
+    // 导航头部的 两个按钮
+    _segmentView = [[UISegmentedControl alloc]initWithItems:@[@"接单佣金",@"活动奖励"]];
+    _segmentView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width * 0.5, 29);
+    _segmentView.tintColor = [UIColor whiteColor];
+    _segmentView.selectedSegmentIndex = 0;
+    [_segmentView addTarget:self action:@selector(segmentViewChangedValue:) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.titleView = _segmentView;
+
+}
+
+- (void)segmentViewChangedValue:(UISegmentedControl *)segment
+{
+    [_messageTableView reloadData];
+}
+
 
 -(void)efSetNavButtonToCall
 {
@@ -85,6 +114,13 @@
     return _messageArray;
 }
 
+- (NSMutableArray *)activityArray
+{
+    if (_activityArray == nil){
+        _activityArray = [NSMutableArray array];
+    }
+    return _activityArray;
+}
 
 #pragma mark - UITableViewDataSource Methods
 
@@ -95,18 +131,33 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.segmentView.selectedSegmentIndex == 1) return self.activityArray.count;
+    
     return self.messageArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    
+    
     static NSString *CellIdentifier = @"MTMessageTableViewCell";
     MTMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[MTMessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    MTMessageModel *model = [self.messageArray objectAtIndex:indexPath.row];
+    
+    
+    //  替换数据
+    MTMessageModel *model;
+    if (self.segmentView.selectedSegmentIndex == 1){
+        model = [self.activityArray objectAtIndex:indexPath.row];
+    }
+    else {
+        model = [self.messageArray objectAtIndex:indexPath.row];
+    }
+    
     [cell efSetCellWithTime:model.time content:model.content];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
@@ -119,7 +170,13 @@
     contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
     contentLabel.numberOfLines = 0;
     
-    MTMessageModel *model = [self.messageArray objectAtIndex:indexPath.row];
+    MTMessageModel *model;
+    if (self.segmentView.selectedSegmentIndex == 1){
+        model = [self.activityArray objectAtIndex:indexPath.row];
+    }
+    else {
+        model = [self.messageArray objectAtIndex:indexPath.row];
+    }
 
     contentLabel.text = model.content;
     CGFloat tmpHeight = [CommonUtils lableHeightWithLable:contentLabel];
@@ -130,7 +187,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 进入 订单详情页
+    id data = [self.orderInfoArray objectAtIndex:indexPath.row];
+    if ([[data objectForKey:@"type"] isEqualToString:@"接送机"]) {
+        MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
+        vc.orderId = [data objectForKey:@"id"];
+        vc.biddingView.hidden = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([[data objectForKey:@"type"] isEqualToString:@"包车"]) {
+        MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
+        vc.orderId = [data objectForKey:@"id"];
+        vc.biddingView.hidden = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([[data objectForKey:@"type"] isEqualToString:@"组合"]) {
+        MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
+        vc.orderId = [data objectForKey:@"id"];
+        vc.biddingView.hidden = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
+    NIF_INFO(@"%@",[self.orderInfoArray objectAtIndex:indexPath.row]);
 }
 
 - (void)efQueryMessageList
@@ -154,8 +232,10 @@
         if ([[dic objectForKey:@"subsidy"] intValue] != 0) {
             tail = [NSString stringWithFormat:@",此单蜜柚奖励%@元！",[dic objectForKey:@"subsidy"]];
         }
+//        您有一笔｛｛类型｝｝订单于｛｛时间｝｝成功结算｛｛金额｝｝元到您的结算账户．｛｛蜜柚奖励您ｘｘ元｝｝
         
-        model.content = [NSString stringWithFormat:@"您的订单【订单号：%@】%@已成功结算%@元到您结算账户%@",[dic objectForKey:@"ordid"],[CommonUtils emptyString:[dic objectForKey:@"title"]],[dic objectForKey:@"payfee"],tail];
+        model.content = [NSString stringWithFormat:@"您有一笔 %@ 订单于 %@ 成功结算 %@ 元到您的结算账户,蜜柚奖励您 %@ 元", [CommonUtils emptyString:[dic objectForKey:@"type"]], model.time, [dic objectForKey:@"payfee"],[dic objectForKey:@"subsidy"]];
+
         [self.messageArray addObject:model];
     }
 }
@@ -188,6 +268,21 @@
             [self.messageTableView reloadData];
         }
     }
+    
+    // 活动奖励界面 <NEW>
+    else {
+        if ([[CommonUtils emptyString:[dic objectForKey:@"err_code"]] isEqualToString:@"0"])
+        {
+            NSArray* tmpArray= [dic valueForKeyPath:@"data.list"];
+            for (NSDictionary *dic in tmpArray)
+            {
+                [self.activityArray addObject:dic];
+            }
+            [self.messageTableView reloadData];
+        }
+    
+    }
+    
 }
 
 - (void)didFailWithError:(NSError *)error URLConnection:(EMEURLConnection *)connection

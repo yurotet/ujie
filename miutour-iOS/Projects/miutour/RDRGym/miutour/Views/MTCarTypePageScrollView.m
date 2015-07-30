@@ -21,9 +21,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         // Initialization code
         [self initializeValue];
         [self reloadData];
+        
     }
     return self;
 }
@@ -68,12 +70,12 @@
         UIView * cell = [self.dataSource pageScrollView:self viewForRowAtIndex:i];
         cell.frame = CGRectMake(startX, topY, _cellSize.width, _cellSize.height);
         [self addSubview:cell];
-        startX += self.padding + _cellSize.width;
+        startX += self.padding + _cellSize.width + 20; // 改动 +20
         [self.viewsInPage addObject:cell];
     }
     
     float scrollViewSizeWith = startX - self.padding + (self.frame.size.width - _cellSize.width)/2;
-    self.contentSize = CGSizeMake(scrollViewSizeWith, 1);
+    self.contentSize = CGSizeMake(scrollViewSizeWith , 1);
 }
 
 - (UIView*)viewForRowAtIndex:(NSInteger)index

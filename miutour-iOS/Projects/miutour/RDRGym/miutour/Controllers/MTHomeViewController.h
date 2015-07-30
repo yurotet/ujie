@@ -22,6 +22,7 @@ typedef NS_ENUM(NSUInteger, XLSlidingContainerMovementType){
 - (void) maximizedController:(CGFloat) diff;
 - (void) updateFrameForYPct:(CGFloat)y absolute:(CGFloat)diff;
 
+
 @end
 
 

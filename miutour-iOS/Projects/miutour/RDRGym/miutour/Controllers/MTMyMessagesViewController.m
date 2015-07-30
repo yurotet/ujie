@@ -11,6 +11,9 @@
 #import "MTMessageTableViewCell.h"
 #import "MTIdentityManager.h"
 #import "MTMessageDetailViewController.h"
+#import "MTMessageInfoModel.h"
+#import "MTMessageInfoNewCell.h"
+#import "MTBlockOrderDetailViewController.h"
 
 @interface MTMyMessagesViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
 
@@ -75,18 +78,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MTMessageTableViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    NSDictionary *dic = [self.messageArray objectAtIndex:indexPath.row];
-//    [cell efSetCellWithTime:[dic objectForKey:@"time"] content:[dic objectForKey:@"content"]];
-    cell.textLabel.text = [dic objectForKey:@"type"];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
+
+    MTMessageInfoNewCell *cell = [MTMessageInfoNewCell cellWithTableView:tableView];
+    
+    cell.countRowHeight = NO;
+    cell.modelDatas = self.messageArray[indexPath.row];
+    
     return cell;
 }
 
@@ -101,7 +98,12 @@
 //    contentLabel.text = [dic objectForKey:@"title"];
 //    CGFloat tmpHeight = [CommonUtils lableHeightWithLable:contentLabel];
 //    return tmpHeight + 40;
-    return 40;
+    
+    MTMessageInfoNewCell *cell = [MTMessageInfoNewCell cellWithTableView:tableView];
+    
+    cell.modelDatas = self.messageArray[indexPath.row];
+    
+    return cell.rowHeight;
 }
 
 
@@ -109,11 +111,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    MTMessageInfoModel *model = _messageArray[indexPath.row];
+    
+    if ([model.type isEqualToString:@"招标订单推送"]){
+        MTBlockOrderDetailViewController *blockVC = [[MTBlockOrderDetailViewController alloc]init];
+        blockVC.orderId = model.ID;
+        [self.navigationController pushViewController:blockVC animated:YES];
+        return;
+    }
+    
+    
     MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
     vc.title = @"消息详情";
     
-    NSDictionary *dic = [self.messageArray objectAtIndex:indexPath.row];
-    vc.messageId = [dic objectForKey:@"id"];
+    vc.messageId = model.ID;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -141,7 +154,11 @@
         if (dic && [[dic objectForKey:@"err_code"] intValue] == 0) {
             
             for (NSDictionary *tmpDic in [[dic objectForKey:@"data"] objectForKey:@"list"]) {
-                [self.messageArray addObject:tmpDic];
+                
+                // 加载模型数据
+                MTMessageInfoModel *model = [MTMessageInfoModel modelWithDict:tmpDic];
+                
+                [self.messageArray addObject:model];
             }
             
             [self.view addSubview:self.messageTableView];

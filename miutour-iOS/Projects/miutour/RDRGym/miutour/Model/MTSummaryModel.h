@@ -20,4 +20,7 @@
 @property (nonatomic,strong)NSString *js_total;// => 总收入
 @property (nonatomic,strong)NSArray *message;// => 最新消息
 
+@property (nonatomic,copy)NSString *recode;// => 推荐号
+
+
 @end

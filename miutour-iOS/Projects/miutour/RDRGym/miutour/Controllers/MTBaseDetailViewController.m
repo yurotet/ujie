@@ -47,7 +47,7 @@
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [self efGetContentFrame].size.width/2.5f, 44)];
     titleView.backgroundColor = [UIColor clearColor];
     [titleView addSubview:l];
-    [titleView addSubview:self.subLabel];
+    //[titleView addSubview:self.subLabel];
     self.navigationItem.titleView = titleView;
     [self efSetNavButtonToCall];
 }
@@ -219,12 +219,12 @@
 - (MTCarTypePageView *)PScrollView
 {
     if (_PScrollView == nil) {
-        _PScrollView = [[MTCarTypePageView alloc] initWithFrame:CGRectMake(100, 50, 160, 30)];
+        _PScrollView = [[MTCarTypePageView alloc] initWithFrame:CGRectMake(100, 50, 200, 30)];
         _PScrollView.pageScrollView.dataSource = self;
         _PScrollView.pageScrollView.delegate = self;
         _PScrollView.pageScrollView.padding = 0;
         _PScrollView.pageScrollView.leftRightOffset = 0;
-        _PScrollView.pageScrollView.frame = CGRectMake(0, 0, 160, 30);
+        _PScrollView.pageScrollView.frame = CGRectMake(0, 0, 180, 30);
         _PScrollView.clipsToBounds = YES;
         _PScrollView.backgroundColor = [UIColor clearColor];
     }
@@ -308,18 +308,19 @@
 #pragma mark MTCarTypePageScrollViewDataSource
 
 - (UIView*)pageScrollView:(MTCarTypePageScrollView*)pageScrollView viewForRowAtIndex:(int)index{
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, 100)];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 180, 100)];
     cell.backgroundColor = [UIColor clearColor];
     UIImage *carImage = [UIImage imageNamed:@"car"];
-    UIImageView *carImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(40, 40), carImage.size}];
+    UIImageView *carImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(10, 40), carImage.size}];
     carImageView.image = carImage;
     [cell addSubview:carImageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, cell.frame.size.width-40, cell.frame.size.height - 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(60, 20, cell.frame.size.width-60, cell.frame.size.height - 40)];
+    label.adjustsFontSizeToFitWidth = YES;
     label.font = [UIFont fontWithFontMark:4];
     
     MTCarModel *model = self.carTypeDataArray[index];
-    label.text = [NSString stringWithFormat:@"%@座",model.seatnum];
+    label.text = [NSString stringWithFormat:@"%@ %@ %@座",model.models,model.type,model.seatnum];
     label.textColor = [UIColor colorWithTextColorMark:2];
     [cell addSubview:label];
     return cell;

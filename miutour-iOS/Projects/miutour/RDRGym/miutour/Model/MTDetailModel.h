@@ -41,5 +41,7 @@
 @property (nonatomic,strong)NSString *uemail;// => 联系人邮箱
 @property (nonatomic,strong)NSString *uweixin;// => 联系人微信
 
+@property (nonatomic, copy) NSString *ifprice; // 是否可出价
+
 @property (nonatomic,assign)NSInteger index;
 @end

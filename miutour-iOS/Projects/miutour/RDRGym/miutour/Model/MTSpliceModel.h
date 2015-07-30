@@ -21,6 +21,9 @@
 @property (nonatomic,strong) NSString *urgent;//是否紧急订单（0为否1为是）
 @property (nonatomic,strong) NSString *subsidy;//订单奖励金额（0为无奖励）
 @property (nonatomic,strong) NSString *payfee;
+
+@property (nonatomic,copy) NSString *bidtime; // 中标时间 <NEW>
+
 @property (nonatomic,assign) double timeInterval;
 @property (nonatomic,assign) BOOL isServeing;
 

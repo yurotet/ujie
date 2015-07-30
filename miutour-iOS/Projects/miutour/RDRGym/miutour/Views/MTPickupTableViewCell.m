@@ -31,6 +31,8 @@
 @property (nonatomic,strong)UILabel *stableAwardLabel;
 @property (nonatomic,strong)UILabel *awardLabel;
 
+@property (nonatomic, strong) UILabel *orderReceivedLabel; // <NEW>
+
 @property (nonatomic,strong)UIView *div1;
 @property (nonatomic,strong)UIView *div2;
 @property (nonatomic,strong)UIView *div3;
@@ -78,7 +80,7 @@
 - (UILabel *)categoryLabel
 {
     if (_categoryLabel == nil) {
-        _categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 20, 30, 20)];
+        _categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 20, 45, 20)];
         _categoryLabel.font = [UIFont fontWithFontMark:6];
         _categoryLabel.textColor = [UIColor colorWithTextColorMark:3];
         NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"接机"];
@@ -102,7 +104,8 @@
 - (AttributedLabel *)fromLocLabel
 {
     if (_fromLocLabel == nil) {
-        _fromLocLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(24, 55, 230, 25)];
+        _fromLocLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(24, 55, 210, 25)];
+        _fromLocLabel.adjustsFontSizeToFitWidth = YES;
         _fromLocLabel.font = [UIFont fontWithFontMark:4];
         _fromLocLabel.text = @"出发地点  成田国际机场（NRT）";
         _fromLocLabel.backgroundColor = [UIColor clearColor];
@@ -114,7 +117,8 @@
 - (AttributedLabel *)toLocLabel
 {
     if (_toLocLabel == nil) {
-        _toLocLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(24, 80, 230, 25)];
+        _toLocLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(24, 80, 210, 25)];
+        _toLocLabel.adjustsFontSizeToFitWidth = YES;
         _toLocLabel.font = [UIFont fontWithFontMark:4];
         _toLocLabel.text = @"送达地点  成田国际机场（NRT）";
         _toLocLabel.backgroundColor = [UIColor clearColor];
@@ -219,6 +223,25 @@
     return _stableDefaultPriceLabel;
 }
 
+- (UILabel *)orderReceivedLabel
+{
+    if (_orderReceivedLabel == nil){
+    
+        NSInteger Order_X = 10 * [ThemeManager themeScreenWidthRate];
+        _orderReceivedLabel = [[UILabel alloc]initWithFrame:CGRectMake(Order_X, 158, [UIScreen mainScreen].bounds.size.width - 2 * Order_X, 30)];
+        _orderReceivedLabel.text = @"";
+        _orderReceivedLabel.textAlignment = NSTextAlignmentCenter;
+        _orderReceivedLabel.backgroundColor = [UIColor whiteColor];
+        _orderReceivedLabel.textColor = [UIColor colorWithTextColorMark:2];
+        _orderReceivedLabel.layer.borderWidth = 1;
+        _orderReceivedLabel.layer.borderColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1].CGColor;
+        _orderReceivedLabel.font = [UIFont fontWithFontMark:4];
+        
+    }
+    return _orderReceivedLabel;
+}
+
+
 -(void)initView
 {
     CGRect tmpFrame = self.frame;
@@ -262,6 +285,8 @@
     
     [self.contentView addSubview:self.defaultPriceLabel];
     [self.contentView addSubview:self.stableDefaultPriceLabel];
+    
+    [self.contentView addSubview:self.orderReceivedLabel];
     
     UIImage *rewardImage = [UIImage imageNamed:@"reward"];
     _rewardImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(self.frame.size.width-60, 13.5),rewardImage.size}];
@@ -325,7 +350,7 @@
 
 -(void)efSetCellWithData:(MTPickupModel *)data
 {
-    self.categoryLabel.text = data.otype;
+    self.categoryLabel.text = [data.otype length] ? data.otype : @"接送机";
     self.timeLabel.text = data.time;
    
     if ([data.otype isEqualToString:@"接机"]) {
@@ -380,6 +405,37 @@
         self.rewardImageView.image = [UIImage imageNamed:@"reward"];
         self.stableAwardLabel.text = @"奖励";
         self.awardLabel.text = [NSString stringWithFormat:@"￥%@",data.subsidy];
+    }
+    
+    if ([data.bidtime length]){
+        self.orderReceivedLabel.text = [NSString stringWithFormat:@"%@ 被其他司导接单",data.bidtime];
+        self.orderReceivedLabel.hidden = NO;
+        
+        for (UILabel *subView in self.contentView.subviews) {
+            if ([subView isKindOfClass:[UILabel class]])
+            subView.textColor = [UIColor colorWithTextColorMark:4];
+        }
+    }
+    else
+    {
+        self.orderReceivedLabel.hidden = YES;
+        
+        // 恢复颜色
+        self.categoryLabel.textColor = [UIColor blackColor];
+        self.timeLabel.textColor = [UIColor blackColor];
+        self.distanceLabel.textColor = [UIColor blackColor];
+        
+        self.fromLocLabel.textColor = [UIColor blackColor];
+        [self.fromLocLabel setString:@"出发地点" withColor:[UIColor colorWithTextColorMark:4]];
+        
+        self.toLocLabel.textColor = [UIColor blackColor];
+        [self.toLocLabel setString:@"送达地点" withColor:[UIColor colorWithTextColorMark:4]];
+        
+        self.carTypeLabel.textColor = [UIColor blackColor];
+        self.defaultPriceLabel.textColor = [UIColor blackColor];
+        self.categoryLabel.textColor = [UIColor colorWithTextColorMark:3];
+        self.markLabel.textColor = [UIColor redColor];
+        
     }
     
     [self resetFrame:(!([CommonUtils isEmptyString:data.mile]||[data.mile isEqualToString:@"/"]))];

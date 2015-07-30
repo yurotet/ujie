@@ -10,6 +10,8 @@
 #import "MTNavTabBarController.h"
 #import "MTSupplyOrderViewController.h"
 #import "MTTakenOrderViewController.h"
+#import "MTOfferPriceViewController.h"
+
 #import "MTUserHttpRequestDataManager.h"
 #import "MTAppDelegate.h"
 #import "MTPersonalInfoViewController.h"
@@ -33,6 +35,7 @@ static NSString *version = @"3.0.0";
 
 @property (nonatomic,strong) MTSupplyOrderViewController *supplyViewController;
 @property (nonatomic,strong) MTTakenOrderViewController *takenViewController;
+@property (nonatomic, strong) MTOfferPriceViewController *offerPriceViewController;
 @property (nonatomic,strong) UIButton *profileButton;
 @property (nonatomic,strong) UILabel *positionLabel;
 @property (nonatomic,strong) UIImageView *bottomMessageImageView;
@@ -385,11 +388,13 @@ static NSString *version = @"3.0.0";
 
 - (void)addChildVC
 {
+#pragma mark - subViewController 数组
     _supplyViewController = [[MTSupplyOrderViewController alloc] init];
     _takenViewController = [[MTTakenOrderViewController alloc] init];
-
+    _offerPriceViewController = [[MTOfferPriceViewController alloc]init];
+    
     _navTabBarController = [[MTNavTabBarController alloc] init];
-    _navTabBarController.subViewControllers = @[_supplyViewController, _takenViewController];
+    _navTabBarController.subViewControllers = @[_supplyViewController, _offerPriceViewController, _takenViewController];
     _navTabBarController.showArrowButton = NO;
     _navTabBarController.navTabBarColor = [UIColor colorWithBackgroundColorMark:5];
     [_navTabBarController addParentController:self];
@@ -437,11 +442,17 @@ static NSString *version = @"3.0.0";
     return _callButton;
 }
 
+#pragma mark - 在导航的 tab 上选择控制器 时 的回调方法
 - (void)itemDidSelectedWithIndex:(NSInteger)index
 {
     if (index == 0) {
         self.filterButton.hidden = YES;
         self.filterButton.userInteractionEnabled = NO;
+    }
+    else if (index == 1){
+        self.filterButton.hidden = YES;
+        self.filterButton.userInteractionEnabled = NO;
+        [_offerPriceViewController loadNewData];
     }
     else
     {
@@ -722,6 +733,7 @@ static NSString *version = @"3.0.0";
     
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 
 -(UIView *)dragBgView
 {
