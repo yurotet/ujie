@@ -33,6 +33,7 @@
 @property (nonatomic,strong)NSString *oid;
 @property (nonatomic,strong)NSString *clickNodeName;
 @property (nonatomic,strong)UIButton *doneButton;
+@property (nonatomic,assign)BOOL isMarked;
 
 @end
 
@@ -274,9 +275,15 @@
         }
     }
     else {
-        UIAlertView *alvertView=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"提醒", nil) message:@"请打开地理位置服务" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alvertView show];
-        NIF_DEBUG( @"Cannot Starting CLLocationManager");
+//        UIAlertView *alvertView=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"提醒", nil) message:@"请打开地理位置服务" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alvertView show];
+//        NIF_DEBUG( @"Cannot Starting CLLocationManager");
+        
+        [UserManager shareInstance].user.logitude = @"0";
+        [UserManager shareInstance].user.latitude = @"0";
+        [[UserManager shareInstance] update_to_disk];
+        [self.locationManager stopUpdatingLocation];
+        [self efMark];
     }
     return locationManager;
 }
@@ -284,6 +291,20 @@
 -(void)startLocation
 {
     [self.locationManager startUpdatingLocation];
+    _isMarked = NO;
+    [self performSelector:@selector(executeMarking) withObject:nil afterDelay:5];
+}
+
+- (void)executeMarking
+{
+    if (!_isMarked) {
+        [UserManager shareInstance].user.logitude = @"0";
+        [UserManager shareInstance].user.latitude = @"0";
+        [[UserManager shareInstance] update_to_disk];
+        [self.locationManager stopUpdatingLocation];
+        [self efMark];
+        _isMarked = YES;
+    }
 }
 
 -(void)stopLocation
@@ -294,12 +315,15 @@
 #pragma mark -- CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    [UserManager shareInstance].user.logitude = [NSString stringWithFormat:@"%f",newLocation.coordinate.longitude];
-    [UserManager shareInstance].user.latitude = [NSString stringWithFormat:@"%f",newLocation.coordinate.latitude];
-    [[UserManager shareInstance] update_to_disk];
-    [self.locationManager stopUpdatingLocation];
-    NIF_DEBUG( @"locationManager update,location is %@",newLocation);
-    [self efMark];
+    if (!_isMarked) {
+        [UserManager shareInstance].user.logitude = [NSString stringWithFormat:@"%f",newLocation.coordinate.longitude];
+        [UserManager shareInstance].user.latitude = [NSString stringWithFormat:@"%f",newLocation.coordinate.latitude];
+        [[UserManager shareInstance] update_to_disk];
+        [self.locationManager stopUpdatingLocation];
+        NIF_DEBUG( @"locationManager update,location is %@",newLocation);
+        [self efMark];
+        _isMarked = YES;
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager

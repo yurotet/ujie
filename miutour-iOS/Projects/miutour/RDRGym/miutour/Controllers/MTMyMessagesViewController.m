@@ -115,12 +115,13 @@
     
     MTMessageInfoModel *model = _messageArray[indexPath.row];
     
-    if ([model.type isEqualToString:@"招标订单推送"]){
-        MTBlockOrderDetailViewController *blockVC = [[MTBlockOrderDetailViewController alloc]init];
-        blockVC.orderId = model.ID;
-        [self.navigationController pushViewController:blockVC animated:YES];
-        return;
-    }
+    // 不需要跳转了,  改需求时 再放开
+//    if ([model.type isEqualToString:@"招标订单推送"]){
+//        MTBlockOrderDetailViewController *blockVC = [[MTBlockOrderDetailViewController alloc]init];
+//        blockVC.orderId = model.ID;
+//        [self.navigationController pushViewController:blockVC animated:YES];
+//        return;
+//    }
     
     
     MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];

@@ -98,7 +98,6 @@
 		8691EC5C1B33F4A500D6C272 /* reward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8691EC5B1B33F4A500D6C272 /* reward@2x.png */; };
 		86A1117D1B4CE5D200FD5108 /* icon_set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86A1117C1B4CE5D200FD5108 /* icon_set@2x.png */; };
 		86A111841B4CF97C00FD5108 /* MTBaseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A111831B4CF97C00FD5108 /* MTBaseDetailViewController.m */; };
-		86A5B5A31B502882007F1643 /* libEMEShareLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A5B5A21B502882007F1643 /* libEMEShareLib.a */; };
 		86A5B5D41B50C46E007F1643 /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 86A5B5A61B50C46E007F1643 /* bitstream.c */; };
 		86A5B5D51B50C46E007F1643 /* mask.c in Sources */ = {isa = PBXBuildFile; fileRef = 86A5B5A81B50C46E007F1643 /* mask.c */; };
 		86A5B5D61B50C46E007F1643 /* QRCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A5B5AB1B50C46E007F1643 /* QRCodeGenerator.m */; };
@@ -127,6 +126,7 @@
 		86B43C0C1B363FFA003C808E /* MTRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B43C0B1B363FFA003C808E /* MTRegisterViewController.m */; };
 		86B43C0F1B36403B003C808E /* MTFindPWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B43C0E1B36403B003C808E /* MTFindPWViewController.m */; };
 		86B43C121B3640C1003C808E /* MTIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B43C111B3640C1003C808E /* MTIntroView.m */; };
+		86B5F7F71B6B4D7300E3757A /* libEMEShareLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86B5F7F61B6B4D7300E3757A /* libEMEShareLib.a */; };
 		86B6CD381B3D459A00A6A33B /* clue_doing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86B6CD341B3D459A00A6A33B /* clue_doing@2x.png */; };
 		86B6CD391B3D459A00A6A33B /* clue_done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86B6CD351B3D459A00A6A33B /* clue_done@2x.png */; };
 		86B6CD3A1B3D459A00A6A33B /* clue_will_do@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86B6CD361B3D459A00A6A33B /* clue_will_do@2x.png */; };
@@ -490,6 +490,7 @@
 		86B43C0E1B36403B003C808E /* MTFindPWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTFindPWViewController.m; sourceTree = "<group>"; };
 		86B43C101B3640C1003C808E /* MTIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTIntroView.h; sourceTree = "<group>"; };
 		86B43C111B3640C1003C808E /* MTIntroView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTIntroView.m; sourceTree = "<group>"; };
+		86B5F7F61B6B4D7300E3757A /* libEMEShareLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEMEShareLib.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/miutourWorkSpace-helbtafmponxjwdoleeuqlesuaom/Build/Products/Debug-iphoneos/libEMEShareLib.a"; sourceTree = "<group>"; };
 		86B6CD341B3D459A00A6A33B /* clue_doing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clue_doing@2x.png"; sourceTree = "<group>"; };
 		86B6CD351B3D459A00A6A33B /* clue_done@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clue_done@2x.png"; sourceTree = "<group>"; };
 		86B6CD361B3D459A00A6A33B /* clue_will_do@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clue_will_do@2x.png"; sourceTree = "<group>"; };
@@ -705,10 +706,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86B5F7F71B6B4D7300E3757A /* libEMEShareLib.a in Frameworks */,
 				86A5B5EC1B50D180007F1643 /* CoreMedia.framework in Frameworks */,
 				86A5B5EA1B50D17A007F1643 /* CoreVideo.framework in Frameworks */,
 				86A5B5E81B50D16B007F1643 /* QuartzCore.framework in Frameworks */,
-				86A5B5A31B502882007F1643 /* libEMEShareLib.a in Frameworks */,
 				86D2AED31B4BD93900C9C2AF /* AdSupport.framework in Frameworks */,
 				86A5B5DC1B50C46E007F1643 /* libzbar.a in Frameworks */,
 				86A5B5F31B50D6E1007F1643 /* libTalkingData.a in Frameworks */,
@@ -1059,6 +1060,7 @@
 		F51DE56F1A45C35600E330DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				86B5F7F61B6B4D7300E3757A /* libEMEShareLib.a */,
 				86A5B5ED1B50D191007F1643 /* SenTestingKit.framework */,
 				86A5B5EB1B50D180007F1643 /* CoreMedia.framework */,
 				86A5B5E91B50D17A007F1643 /* CoreVideo.framework */,
@@ -1961,10 +1963,9 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/miutour/Util/",
 					"$(PROJECT_DIR)/miutour/lib",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-ccelffojjzrqzzccbnqvzesvaytx/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-gbzlnhakgzdjokhdlpoqnfeiwjti/Build/Products/Debug-iphoneos",
 					"$(PROJECT_DIR)/../../../ThirdParties/qrcode/ZBarSDK",
 					"$(PROJECT_DIR)/../../../TalkingData",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-helbtafmponxjwdoleeuqlesuaom/Build/Products/Debug-iphoneos",
 				);
 				LIB_ROOT = "$(BUILT_PRODUCTS_DIR)";
 				ONLY_ACTIVE_ARCH = NO;
@@ -2021,10 +2022,9 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/miutour/Util/",
 					"$(PROJECT_DIR)/miutour/lib",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-ccelffojjzrqzzccbnqvzesvaytx/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-gbzlnhakgzdjokhdlpoqnfeiwjti/Build/Products/Debug-iphoneos",
 					"$(PROJECT_DIR)/../../../ThirdParties/qrcode/ZBarSDK",
 					"$(PROJECT_DIR)/../../../TalkingData",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-helbtafmponxjwdoleeuqlesuaom/Build/Products/Debug-iphoneos",
 				);
 				LIB_ROOT = "$(BUILT_PRODUCTS_DIR)";
 				ONLY_ACTIVE_ARCH = NO;

@@ -87,7 +87,6 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             // 结束刷新
             [self.orderTableView.header endRefreshing];
-            currPage = 1;
             [weakSelf loadNewData];
         });
     }];
@@ -120,6 +119,7 @@
 #pragma mark - 加载新数据
 - (void)loadNewData
 {
+    currPage = 1;
     [self efQueryOrder:currPage];
 
 }

@@ -83,7 +83,7 @@
 - (UILabel *)peopleNumberLabel
 {
     if (_peopleNumberLabel == nil) {
-        _peopleNumberLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 55, 300, 25)];
+        _peopleNumberLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 80, 300, 25)];
         _peopleNumberLabel.font = [UIFont fontWithFontMark:4];
         _peopleNumberLabel.text = @"出行人数";
         _peopleNumberLabel.textColor = [UIColor colorWithTextColorMark:2];
@@ -146,7 +146,7 @@
 - (UILabel *)carTimeLabel
 {
     if (_carTimeLabel == nil) {
-        _carTimeLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 80, 300, 25)];
+        _carTimeLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 105, 300, 25)];
         _carTimeLabel.font = [UIFont fontWithFontMark:4];
         _carTimeLabel.text = @"用车时间";
         _carTimeLabel.backgroundColor = [UIColor clearColor];
@@ -175,7 +175,7 @@
 - (UILabel *)flightLabel
 {
     if (_flightLabel == nil) {
-        _flightLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 105, 230, 25)];
+        _flightLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 130, 230, 25)];
         _flightLabel.font = [UIFont fontWithFontMark:4];
         _flightLabel.text = @"航班信息";
         _flightLabel.textColor = [UIColor colorWithTextColorMark:2];
@@ -207,7 +207,7 @@
 - (UILabel *)orderInfoLabel
 {
     if (_orderInfoLabel == nil){
-        _orderInfoLabel = [[MTCopyLabel alloc]initWithFrame:CGRectMake(14, 130, 100, 25)];
+        _orderInfoLabel = [[MTCopyLabel alloc]initWithFrame:CGRectMake(14, 55, 100, 25)];
         _orderInfoLabel.font = [UIFont fontWithFontMark:4];;
         _orderInfoLabel.text = @"订单编号:";
         _orderInfoLabel.textColor = [UIColor colorWithTextColorMark:2];
@@ -222,7 +222,7 @@
     if (_realOrderInfoLabel == nil){
         _realOrderInfoLabel = [[MTCopyLabel alloc]initWithFrame:CGRectMake(80, 5, 200, 15)];
         _realOrderInfoLabel.font = [UIFont fontWithFontMark:4];
-        _realOrderInfoLabel.text = @"123123123";
+        _realOrderInfoLabel.text = @"";
         _realOrderInfoLabel.textColor = [UIColor blackColor];
         _realOrderInfoLabel.backgroundColor = [UIColor clearColor];
 
@@ -264,7 +264,7 @@
 - (UILabel *)contactNameLabel
 {
     if (_contactNameLabel == nil) {
-        _contactNameLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 135, 300, 25)];
+        _contactNameLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 135 + 15, 300, 25)];
         _contactNameLabel.font = [UIFont fontWithFontMark:4];
         _contactNameLabel.text = @"联系人姓名";
         _contactNameLabel.backgroundColor = [UIColor clearColor];
@@ -289,7 +289,7 @@
 - (UILabel *)contactMobileLabel
 {
     if (_contactMobileLabel == nil) {
-        _contactMobileLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 160, 300, 25)];
+        _contactMobileLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 160 + 15, 300, 25)];
         _contactMobileLabel.font = [UIFont fontWithFontMark:4];
         _contactMobileLabel.text = @"联系人电话";
         _contactMobileLabel.backgroundColor = [UIColor clearColor];
@@ -314,7 +314,7 @@
 - (UILabel *)contactWechatLabel
 {
     if (_contactWechatLabel == nil) {
-        _contactWechatLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 185, 300, 25)];
+        _contactWechatLabel = [[MTCopyLabel alloc] initWithFrame:CGRectMake(14, 185 + 15, 300, 25)];
         _contactWechatLabel.font = [UIFont fontWithFontMark:4];
         _contactWechatLabel.text = @"联系人微信";
         _contactWechatLabel.backgroundColor = [UIColor clearColor];

@@ -121,6 +121,7 @@ static const CGFloat MJDuration = 2.0;
     //        [self.data insertObject:MJRandomData atIndex:0];
     //    }
     [self efQueryOrder];
+    [self.orderInfoArray removeAllObjects];
     
     // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

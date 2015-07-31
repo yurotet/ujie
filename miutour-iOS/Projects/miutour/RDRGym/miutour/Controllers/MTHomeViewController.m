@@ -300,7 +300,7 @@ static NSString *version = @"3.0.0";
         _itemButton =[UIButton buttonWithType:UIButtonTypeSystem];
         
         UIImage *profileImage = [UIImage imageNamed:@"btn_profile"];
-        _itemButton.frame = CGRectMake(160*[ThemeManager themeScreenWidthRate], (profileImage.size.height/1.5f - 15*[ThemeManager themeScreenWidthRate]), 60*[ThemeManager themeScreenWidthRate], 30*[ThemeManager themeScreenWidthRate]);
+        _itemButton.frame = CGRectMake(240*[ThemeManager themeScreenWidthRate], (profileImage.size.height/1.5f - 15*[ThemeManager themeScreenWidthRate]), 60*[ThemeManager themeScreenWidthRate], 30*[ThemeManager themeScreenWidthRate]);
         _itemButton.titleLabel.font = [UIFont fontWithFontMark:6];
         [_itemButton setTitle:@"结算明细" forState:UIControlStateNormal];
         [_itemButton setTitleColor:[UIColor colorWithBackgroundColorMark:8] forState:UIControlStateNormal];
@@ -337,11 +337,11 @@ static NSString *version = @"3.0.0";
     if (_messageButton == nil) {
         _messageButton =[UIButton buttonWithType:UIButtonTypeSystem];
         UIImage *profileImage = [UIImage imageNamed:@"btn_profile"];
-        _messageButton.frame = CGRectMake(240*[ThemeManager themeScreenWidthRate], (profileImage.size.height/1.5f - 15*[ThemeManager themeScreenWidthRate]), 60*[ThemeManager themeScreenWidthRate], 30*[ThemeManager themeScreenWidthRate]);
+        _messageButton.frame = CGRectMake(160*[ThemeManager themeScreenWidthRate], (profileImage.size.height/1.5f - 15*[ThemeManager themeScreenWidthRate]), 60*[ThemeManager themeScreenWidthRate], 30*[ThemeManager themeScreenWidthRate]);
 
         _messageButton.titleLabel.font = [UIFont fontWithFontMark:6];
         [_messageButton setTitle:@"我的消息" forState:UIControlStateNormal];
-        [_messageButton setTitleColor:[UIColor colorWithBackgroundColorMark:8] forState:UIControlStateNormal];
+        [_messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_messageButton sizeToFit];
         
         CGRect tFrame = _messageButton.frame;
@@ -351,7 +351,7 @@ static NSString *version = @"3.0.0";
         _messageButton.frame = tFrame;
 
 
-        _messageButton.backgroundColor =[UIColor colorWithTextColorMark:1];
+        _messageButton.backgroundColor =[UIColor redColor];
         [_messageButton setBackgroundImage:[UIImage ImageWithUIcolor:[UIColor colorWithBackgroundColorMark:31]] forState:UIControlStateNormal];
         [_messageButton setBackgroundImage:[UIImage ImageWithUIcolor:[UIColor colorWithBackgroundColorMark:31]] forState:UIControlStateHighlighted];
         _messageButton.layer.masksToBounds = YES;
@@ -419,7 +419,7 @@ static NSString *version = @"3.0.0";
 {
     if (_callButton == nil) {
         _callButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _callButton.frame = (CGRect){CGPointMake(260, 30), CGSizeMake(15, 7.5f)};
+        _callButton.frame = (CGRect){CGPointMake(270, 30), CGSizeMake(15, 7.5f)};
         
         _callButton.titleLabel.font = [UIFont fontWithFontMark:3];
         [_callButton setTitle:@"客服" forState:UIControlStateNormal];
@@ -494,6 +494,7 @@ static NSString *version = @"3.0.0";
 
 - (void)filterButtonClick:(id)sender
 {
+    [TalkingData trackEvent:@"点击筛选按钮"];
     _navTabBarController.navigationBarHidden = NO;
     MTFilterViewController *vc = [[MTFilterViewController alloc] init];
     vc.delegate = self;

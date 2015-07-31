@@ -10,6 +10,7 @@
 #import "MTOrderFilterTableViewCell.h"
 #import "MTSettleFilterTableViewCell.h"
 #import "MTDatePickerView.h"
+#import "TalkingData.h"
 
 @interface MTFilterViewController ()<UITableViewDataSource,UITableViewDelegate,MTDatePickerViewDelegate,UITextFieldDelegate,MTOrderFilterDelegate>
 
@@ -285,6 +286,7 @@
     
 }
 
+
 - (void)filterButtonClick:(UIButton*)button
 {
     if (button.selected) {
@@ -292,11 +294,13 @@
             case 0:
             {
                 [_type appendString:@"car,"];
+                [TalkingData trackEvent:@"选中包车"];
             }
                 break;
             case 1:
             {
                 [_type appendString:@"traffic,"];
+                [TalkingData trackEvent:@"选中接送机"];
             }
                 break;
             case 2:
@@ -307,21 +311,25 @@
                 self.svi.userInteractionEnabled = YES;
                 self.evi.backgroundColor = [UIColor colorWithBackgroundColorMark:9];
                 self.evi.userInteractionEnabled = YES;
+                [TalkingData trackEvent:@"选中拼车/组合"];
             }
                 break;
             case 3:
             {
                 [_jstatus appendString:@"1,"];
+                [TalkingData trackEvent:@"选中待结算"];
             }
                 break;
             case 4:
             {
                 [_jstatus appendString:@"2,"];
+                [TalkingData trackEvent:@"选中结算中"];
             }
                 break;
             case 5:
             {
                 [_jstatus appendString:@"3,"];
+                [TalkingData trackEvent:@"选中已结算"];
             }
                 break;
                 
@@ -337,6 +345,7 @@
                 NSRange substr = [_type rangeOfString:@"car,"];
                 if (substr.location != NSNotFound) {
                     [_type deleteCharactersInRange:substr];
+                    [TalkingData trackEvent:@"取消选择包车"];
                 }
             }
                 break;
@@ -345,6 +354,7 @@
                 NSRange substr = [_type rangeOfString:@"traffic,"];
                 if (substr.location != NSNotFound) {
                     [_type deleteCharactersInRange:substr];
+                    [TalkingData trackEvent:@"取消选择接送机"];
                 }
             }
                 break;
@@ -358,6 +368,7 @@
                     self.svi.userInteractionEnabled = NO;
                     self.evi.backgroundColor = [UIColor clearColor];
                     self.evi.userInteractionEnabled = NO;
+                    [TalkingData trackEvent:@"取消选择拼车/组合"];
                 }
             }
                 break;
@@ -366,6 +377,7 @@
                 NSRange substr = [_jstatus rangeOfString:@"1,"];
                 if (substr.location != NSNotFound) {
                     [_jstatus deleteCharactersInRange:substr];
+                    [TalkingData trackEvent:@"取消选择待结算"];
                 }
             }
                 break;
@@ -374,6 +386,7 @@
                 NSRange substr = [_jstatus rangeOfString:@"2,"];
                 if (substr.location != NSNotFound) {
                     [_jstatus deleteCharactersInRange:substr];
+                    [TalkingData trackEvent:@"取消选择结算中"];
                 }
             }
                 break;
@@ -382,6 +395,7 @@
                 NSRange substr = [_jstatus rangeOfString:@"3,"];
                 if (substr.location != NSNotFound) {
                     [_jstatus deleteCharactersInRange:substr];
+                    [TalkingData trackEvent:@"取消选择已结算"];
                 }
             }
                 break;
@@ -545,6 +559,14 @@
     _currentTextField = (UITextField *)textField;
     MTDatePickerView* datePicker = (MTDatePickerView*)self.birthdayDatePicker;
     _currentTextField.text = [self formatDate:datePicker.date];
+    
+    if (_currentTextField == _startDateTextField) {
+        [TalkingData trackEvent:@"选择开始日期"];
+    }
+    else if (_currentTextField == _endDateTextField)
+    {
+        [TalkingData trackEvent:@"选择结束日期"];
+    }
 }
 
 -(void)textFieldResignFirstResponder

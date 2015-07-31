@@ -298,25 +298,6 @@ static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
 
 }
 
-// 将结束时间改为 第二天的 早7:00
-- (NSString *)newEndDateWithEndDate:(NSString *)endDate
-{
-    NSString *newEndDate = [NSString stringWithString:endDate];
-    
-    NSRange MMRange = NSMakeRange(8, 2);
-    
-    NSRange ddRange = NSMakeRange(15, 2);
-    
-    int MM = [[newEndDate substringWithRange:MMRange] intValue ];
-    NSString *addMM = [NSString stringWithFormat:@"%2d", MM++] ;
-    
-    
-    newEndDate = [newEndDate stringByReplacingCharactersInRange:MMRange withString:addMM];
-    
-    newEndDate = [newEndDate stringByReplacingCharactersInRange:ddRange withString:@"07"];
-    
-    return newEndDate;
-}
 
 
 -(void)efSetCellWithData:(MTBlockModel *)data
@@ -331,7 +312,8 @@ static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
     
     NSDate *tDate = [CommonUtils dateFromString:data.time];
     
-    NSString *dateString = [NSDate stringFromDate:[NSDate date] format:@"yyyy-MM-dd 00:00:00"];
+    // 结束时间 和 第二天的早上七点相比较
+    NSString *dateString = [NSDate stringFromDate:[NSDate dateWithTimeIntervalSinceNow:3600 * 24] format:@"yyyy-MM-dd 07:00:00"];
     
     NSDate *dateInterval = [CommonUtils standardDateFromString:dateString];
     

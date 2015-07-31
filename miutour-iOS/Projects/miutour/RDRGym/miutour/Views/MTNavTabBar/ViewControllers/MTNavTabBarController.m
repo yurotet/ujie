@@ -10,6 +10,8 @@
 #import "CommonMacro.h"
 #import "MTNavTabBar.h"
 #import "MTHomeViewController.h"
+#import "MTMessagesViewController.h"
+#import "TalkingData.h"
 
 @interface MTNavTabBarController () <UIScrollViewDelegate, MTNavTabBarDelegate>
 {
@@ -217,7 +219,20 @@
     _currentIndex = scrollView.contentOffset.x / SCREEN_WIDTH;
     _navTabBar.currentItemIndex = _currentIndex;
     if ([self.parentViewController isKindOfClass:[MTHomeViewController class]]) {
-        [(MTHomeViewController *)self.parentViewController itemDidSelectedWithIndex:_currentIndex];;
+        [(MTHomeViewController *)self.parentViewController itemDidSelectedWithIndex:_currentIndex];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if ([self.parentViewController isKindOfClass:[MTHomeViewController class]]) {
+        NSArray *events = @[@"接单",@"已出价",@"服务"];
+        [TalkingData trackEvent:[events objectAtIndex:_currentIndex]];
+    }
+    else if ([self.parentViewController isKindOfClass:[MTMessagesViewController class]])
+    {
+        NSArray *events = @[@"消息",@"活动",@"新闻"];
+        [TalkingData trackEvent:[events objectAtIndex:_currentIndex]];
     }
 }
 
@@ -226,7 +241,16 @@
 - (void)itemDidSelectedWithIndex:(NSInteger)index
 {
     [_mainView setContentOffset:CGPointMake(index * SCREEN_WIDTH, DOT_COORDINATE) animated:_scrollAnimation];
-
+    
+    if ([self.parentViewController isKindOfClass:[MTHomeViewController class]]) {
+        NSArray *events = @[@"接单",@"已出价",@"服务"];
+        [TalkingData trackEvent:[events objectAtIndex:index]];
+    }
+    else if ([self.parentViewController isKindOfClass:[MTMessagesViewController class]])
+    {
+        NSArray *events = @[@"消息",@"活动",@"新闻"];
+        [TalkingData trackEvent:[events objectAtIndex:index]];
+    }
 }
 
 - (void)shouldPopNavgationItemMenu:(BOOL)pop height:(CGFloat)height

@@ -68,7 +68,7 @@
 {
     if (_deleteButton == nil) {
         UIImage *deleteImage = [UIImage imageNamed:@"delete"];
-        CGRect tmpFrame = (CGRect){CGPointMake(([[UIScreen mainScreen] bounds].size.width - deleteImage.size.width - 20), 0),deleteImage.size};
+        CGRect tmpFrame = (CGRect){CGPointMake(([[UIScreen mainScreen] bounds].size.width - deleteImage.size.width - 30), -8), 40, 40};
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
         _deleteButton.frame = tmpFrame;

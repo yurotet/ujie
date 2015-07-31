@@ -38,18 +38,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self efGetContentFrame].size.width/2.5f, 30)];
-    l.textColor = [UIColor whiteColor];
-    l.textAlignment = NSTextAlignmentCenter;
-    l.backgroundColor = [UIColor clearColor];
-    l.font = [UIFont fontWithFontMark:6];
-    l.text = @"订单详情";
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [self efGetContentFrame].size.width/2.5f, 44)];
-    titleView.backgroundColor = [UIColor clearColor];
-    [titleView addSubview:l];
-    //[titleView addSubview:self.subLabel];
-    self.navigationItem.titleView = titleView;
+//    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self efGetContentFrame].size.width/2.5f, 30)];
+//    l.textColor = [UIColor whiteColor];
+//    l.textAlignment = NSTextAlignmentCenter;
+//    l.backgroundColor = [UIColor clearColor];
+//    l.font = [UIFont fontWithFontMark:6];
+//    l.text = @"订单详情";
+//    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [self efGetContentFrame].size.width/2.5f, 44)];
+//    titleView.backgroundColor = [UIColor clearColor];
+//    [titleView addSubview:l];
+//    //[titleView addSubview:self.subLabel];
+//    self.navigationItem.titleView = titleView;
+    
+    self.title = @"订单详情";
+    
     [self efSetNavButtonToCall];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -292,7 +296,7 @@
 {
     MTCarModel *model =[self.carTypeDataArray objectAtIndex:self.PScrollView.pageScrollView.selectedIndex];
     
-    UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"此单确认要用%@座车出价%d?",model.seatnum,self.psView.count]delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"此单确认要用%@%@%@座车出价%d?",model.models,model.type,model.seatnum,self.psView.count]delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alvertView.tag = 1001;
     [alvertView show];
 }
@@ -395,7 +399,7 @@
 
 - (void)efGotoPreVC
 {
-    [self performSelector:@selector(executePop) withObject:nil afterDelay:.5];
+    [self performSelector:@selector(executePop) withObject:nil afterDelay:.2];
 }
 
 - (void)executePop

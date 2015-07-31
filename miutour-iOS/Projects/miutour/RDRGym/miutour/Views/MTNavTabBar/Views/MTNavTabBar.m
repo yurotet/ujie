@@ -95,7 +95,7 @@
     CGFloat buttonX = 0;//DOT_COORDINATE;
     
     if (!_showAverage) {
-        buttonX = 40.f/320.f*[[UIScreen mainScreen] bounds].size.width;//DOT_COORDINATE;
+        buttonX = 30.f/320.f*[[UIScreen mainScreen] bounds].size.width;//DOT_COORDINATE;
     }
 
     for (NSInteger index = 0; index < [_itemTitles count]; index++)
