@@ -130,7 +130,7 @@
         cell.backgroundColor = [UIColor clearColor];
         return cell;
     }
-    else if ((self.childrenArray.count + 2 - indexPath.row) > 0)
+    else if ((self.childrenArray.count) > (indexPath.row - 2))
     {
         static NSString *CellIdentifier = @"MTBlockTouristTableViewCell";
         
@@ -140,7 +140,7 @@
             cell = [[MTBlockTouristTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        _spliceInfo.index = indexPath.row - 1;
+        _spliceInfo.index = indexPath.row - 2;
         
         [cell efSetCellWithData:_spliceInfo isTaken:self.isTaken];
         cell.backgroundColor = [UIColor clearColor];
@@ -166,9 +166,9 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.delegate = self;
         }
-        MTBidderModel *model = [self.bidderDataArray objectAtIndex:(indexPath.row - (self.childrenArray.count + self.bidderDataArray.count + 3))];
+        MTBidderModel *model = [self.bidderDataArray objectAtIndex:(indexPath.row - (self.childrenArray.count + 3))];
         [cell efSetCellWithData:model positionState:positionMiddlerState];
-        [cell efSetCellHighlight:(indexPath.row == self.childrenArray.count + self.bidderDataArray.count + 3)];
+        [cell efSetCellHighlight:(indexPath.row == self.childrenArray.count + 3)];
         cell.bidderid = model.id;
         cell.backgroundColor = [UIColor clearColor];
         return cell;
@@ -182,9 +182,9 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.delegate = self;
         }
-        MTBidderModel *model = [self.bidderDataArray objectAtIndex:(indexPath.row - (self.childrenArray.count + self.bidderDataArray.count + 3))];
+        MTBidderModel *model = [self.bidderDataArray objectAtIndex:(indexPath.row - (self.childrenArray.count + 3))];
         [cell efSetCellWithData:model positionState:positionFooterState];
-        [cell efSetCellHighlight:(indexPath.row == self.childrenArray.count + self.bidderDataArray.count + 3)];
+        [cell efSetCellHighlight:(indexPath.row == self.childrenArray.count + 3)];
         cell.bidderid = model.id;
         cell.backgroundColor = [UIColor clearColor];
         return cell;
@@ -208,15 +208,15 @@
     else if (indexPath.row == 1) {
         return 162.f;// + (self.isTaken?70:0);
     }
-    else if ((self.childrenArray.count + 2 - indexPath.row) > 0)
+    else if (self.childrenArray.count > (indexPath.row - 2))
     {
         return self.isTaken?180:120;
     }
-    else if (indexPath.row == self.childrenArray.count + 2)
+    else if (self.childrenArray.count == (indexPath.row - 2))
     {
         return 55;
     }
-    else if ((self.childrenArray.count + self.bidderDataArray.count + 2 - indexPath.row) > 0)
+    else if (self.bidderDataArray.count > (indexPath.row - 2 - self.childrenArray.count))
     {
         return 20;
     }
@@ -234,11 +234,14 @@
 {
     
     if (indexPath.row == 0) {
+        
     }
     else if (indexPath.row == 1) {
+        
     }
-    else if ((self.childrenArray.count + 2 - indexPath.row) > 0)
+    else if (self.childrenArray.count > (indexPath.row - 2))
     {
+        NIF_DEBUG(@"indexpath.row is %d",indexPath.row);
         static NSString *CellIdentifier = @"MTBlockTouristTableViewCell";
         
         MTBlockTouristTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -247,7 +250,7 @@
             cell = [[MTBlockTouristTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        _spliceInfo.index = indexPath.row - 1;
+        _spliceInfo.index = indexPath.row - 2;
         [cell efSetCellWithData:_spliceInfo isTaken:self.isTaken];
 
         MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];

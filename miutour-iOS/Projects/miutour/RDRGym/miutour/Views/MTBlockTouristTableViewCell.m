@@ -276,7 +276,7 @@
 -(void)efSetCellWithData:(MTDetailModel *)data isTaken:(BOOL)isTaken
 {
     MTChildModel * childModel = [[MTChildModel alloc] init];
-    [childModel setAttributes:[data.children objectAtIndex:(data.index - 1)]];
+    [childModel setAttributes:[data.children objectAtIndex:data.index]];
     self.orderId = childModel.id;
     self.adultNumberLabel.text = [NSString stringWithFormat:@"成人 %@",[childModel.person objectAtIndex:0]];
     [self.adultNumberLabel setString:@"成人" withColor:[UIColor redColor]];
