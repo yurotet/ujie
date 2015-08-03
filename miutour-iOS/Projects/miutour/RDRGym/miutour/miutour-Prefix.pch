@@ -16,5 +16,6 @@
 #import <CoreData/CoreData.h>
 #import "BaseViewController.h"
 #import <EMECommonLib.h>
+#import "CommonMacro.h"
 //#import <EMEShare.h>
 #endif

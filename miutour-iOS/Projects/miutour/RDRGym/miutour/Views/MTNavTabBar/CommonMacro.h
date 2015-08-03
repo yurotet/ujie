@@ -75,5 +75,12 @@
 
 #define MTNavTabbarSourceName(file) [MTNavTabbarBundleName stringByAppendingPathComponent:file]
 
+#define k3Days (60 * 60 * 24 * 3)
+#define k2Day (60 * 60 * 24 * 2)
+#define k1Day (60 * 60 * 24)
+#define k7Hour (60 * 60 * 7)
+
+#define MTOVERTIME [NSDate stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-k1Day-k7Hour] format:@"yyyy-MM-dd hh:00:00"]
+
 #endif
 

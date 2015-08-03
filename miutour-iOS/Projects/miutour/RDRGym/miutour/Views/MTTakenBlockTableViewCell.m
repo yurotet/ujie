@@ -9,9 +9,6 @@
 #import "MTTakenBlockTableViewCell.h"
 #import "AttributedLabel.h"
 
-static const NSInteger k3Days = 60 * 60 * 24 * 3; // 3 days
-static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
-
 @interface MTTakenBlockTableViewCell()
 
 @property (nonatomic,strong)UIImageView *bgImageView;
@@ -313,7 +310,7 @@ static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
     NSDate *tDate = [CommonUtils dateFromString:data.time];
     
     // 结束时间 和 第二天的早上七点相比较
-    NSString *dateString = [NSDate stringFromDate:[NSDate dateWithTimeIntervalSinceNow:3600 * 24] format:@"yyyy-MM-dd 07:00:00"];
+    NSString *dateString = MTOVERTIME;
     
     NSDate *dateInterval = [CommonUtils standardDateFromString:dateString];
     

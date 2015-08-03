@@ -8,10 +8,6 @@
 
 #import "MTTakenSpliceTableViewCell.h"
 
-static const NSInteger k3Days = 60 * 60 * 24 * 3; // 3 days
-static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
-
-
 @interface MTTakenSpliceTableViewCell()
 
 @property (nonatomic,strong)UIImageView *bgImageView;
@@ -298,7 +294,7 @@ static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
     
     NSDate *tDate = [CommonUtils dateFromString:data.time];
     
-    NSString *dateString = [NSDate stringFromDate:[NSDate date] format:@"yyyy-MM-dd 00:00:00"];
+    NSString *dateString = MTOVERTIME;
     
     NSDate *dateInterval = [CommonUtils standardDateFromString:dateString];
     
@@ -312,6 +308,7 @@ static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
     CGFloat right = 5; // 右端盖宽度
     UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
     // 指定为拉伸模式，伸缩后重新赋值
+
     if (timeInterval < 0) {
         self.serverHintImageView.image = [[UIImage imageNamed:@"wating_bg"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
         self.serverHintLabel.text = @"服务已结束";
@@ -326,7 +323,6 @@ static const NSInteger k1Day = 60 * 60 * 24 * 1; // 1 days
         self.serverHintImageView.image = [[UIImage imageNamed:@"wating_bg"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
         self.serverHintLabel.text = [NSString stringWithFormat:@"距离服务还有%ld天",((long)timeInterval)/k1Day];
     }
-    
 }
 
 - (NSString *)getStatusStr:(NSInteger)status

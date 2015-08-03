@@ -33,9 +33,6 @@
 #import "MTMarkViewController.h"
 
 static const CGFloat MJDuration = 2.0;
-static const NSInteger k3Days = 60 * 60 * 24 * 3; // 3 days
-static const NSInteger k1Day = 60 * 60 * 24; // 1 days
-
 
 @interface MTTakenOrderViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate>
 
@@ -401,7 +398,7 @@ static const NSInteger k1Day = 60 * 60 * 24; // 1 days
         }
 
         NSDate *tDate = [CommonUtils dateFromString:tTime];
-        NSString *dateString = [NSDate stringFromDate:[NSDate date] format:@"yyyy-MM-dd 00:00:00"];
+        NSString *dateString = MTOVERTIME;
         
         NSDate *dateInterval = [CommonUtils standardDateFromString:dateString];
         
