@@ -26,7 +26,7 @@
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
         
         _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(Space, 10, 300, 20)];
-        _titleLabel.font = [UIFont systemFontOfSize:14];
+        _titleLabel.font = [UIFont fontWithFontMark:4];
         [self.contentView addSubview:_titleLabel];
         
         _detailInfoLabel = [[UILabel alloc]init];
@@ -51,7 +51,7 @@
     _detailInfoLabel.frame = CGRectMake(Space, CGRectGetMaxY(_titleLabel.frame) + 5, detailSize.width, detailSize.height);
     
     if ( !_countRowHeight ){
-        _titleLabel.text = [NSString stringWithFormat:_modelDatas.type,_modelDatas.time];
+        _titleLabel.text = [NSString stringWithFormat:@"%@ %@",_modelDatas.type,_modelDatas.time];
         
         _detailInfoLabel.text = _modelDatas.content;
     }

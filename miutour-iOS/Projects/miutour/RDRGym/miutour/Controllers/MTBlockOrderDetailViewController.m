@@ -201,6 +201,8 @@
         [cell efSetCellWithData:model positionState:positionFooterState];
         [cell efSetCellHighlight:(indexPath.row == 6)];
         
+        cell.bidderid = model.id;
+        cell.delegate = self;
         cell.backgroundColor = [UIColor clearColor];
         return cell;
     }

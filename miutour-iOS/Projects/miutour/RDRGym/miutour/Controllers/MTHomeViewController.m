@@ -330,6 +330,7 @@ static NSString *version = @"3.0.0";
     
     MTSettleItemsViewController *vc = [[MTSettleItemsViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (UIButton *)messageButton

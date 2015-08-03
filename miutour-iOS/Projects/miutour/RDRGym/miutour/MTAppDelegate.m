@@ -122,7 +122,7 @@ typedef enum {
                                                    UIRemoteNotificationTypeAlert)
                                        categories:nil];
     [APService setupWithOption:launchOptions];
-    
+        
     return YES;
 }
 
@@ -191,6 +191,9 @@ typedef enum {
 - (void)            application:(UIApplication*)application
     didReceiveLocalNotification:(UILocalNotification*)notification
 {
+    // 模拟远程推送
+    [self testReceiveMessage:notification];
+    
     // re-post ( broadcast )
     [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
     [APService showLocalNotificationAtFront:notification identifierKey:nil];
@@ -425,5 +428,137 @@ fetchCompletionHandler:
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
+
+
+
+#pragma mark - 测试 远程推送的代码
+- (void)testReceiveMessage:(UILocalNotification *)locationInfo
+{
+    NSDictionary *userInfo = locationInfo.userInfo;
+    
+    NSString *theID = [NSString stringWithFormat:@"%@",[userInfo valueForKeyPath:@"id"]];
+    switch ([[userInfo valueForKeyPath:@"type"] intValue]) {
+        case TAKEN_BLOCK:
+        {
+            MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
+            vc.isTaken = YES;
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case TAKEN_PICKUP:
+        {
+            MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
+            vc.isTaken = YES;
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case TAKEN_SPLICE:
+        {
+            MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
+            vc.isTaken = YES;
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case TAKEN_GROUP:
+        {
+            MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
+            vc.isTaken = YES;
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case SUPPLY_BLOCK:
+        {
+            MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case SUPPLY_PICKUP:
+        {
+            MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case SUPPLY_SPLICE:
+        {
+            MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case SUPPLY_GROUP:
+        {
+            MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.orderId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+            
+        case MESSAGE:
+        {
+            MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+            vc.title = @"消息详情";
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.messageId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        case ACTIVITY:
+        {
+            MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+            vc.title = @"活动详情";
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.messageId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        case NEWS:
+        {
+            NSLog(@"新闻详情");
+            MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+            vc.title = @"新闻详情";
+            if (![CommonUtils isEmptyString:theID]) {
+                vc.messageId = theID;
+                [_navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+
+
+}
+
 
 @end

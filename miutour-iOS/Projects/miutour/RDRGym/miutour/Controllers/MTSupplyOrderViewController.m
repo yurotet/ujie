@@ -313,6 +313,9 @@ static const CGFloat MJDuration = 2.0;
             [self.orderInfoArray removeAllObjects];
             for (NSDictionary *dic in tmpArray)
             {
+                // 直接隐藏 已出价的订单
+//                if ([dic[@"myprice"] intValue]) continue;
+                
                 if ([[dic objectForKey:@"type"] isEqualToString:@"拼车"]) {
                     MTSpliceModel *orderInfo = [[MTSpliceModel alloc] init];
                     [orderInfo setAttributes:dic];

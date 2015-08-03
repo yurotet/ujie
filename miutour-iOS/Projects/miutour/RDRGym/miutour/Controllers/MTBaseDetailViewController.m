@@ -21,6 +21,12 @@
 @property (nonatomic,assign) NSInteger keyboardhight;
 @property (nonatomic,strong) NSString *delBidderId;
 
+@property (nonatomic, weak) UIButton *activityBtn;
+@property (nonatomic, weak) UIButton *notiongBtn;
+
+// 我要接单 按钮
+@property (nonatomic, weak) UIButton *actionBtn;
+
 @end
 
 @implementation MTBaseDetailViewController
@@ -169,6 +175,9 @@
     {
         [self efDeletePrice:_delBidderId];
     }
+    else if (alertView.tag == 2000){
+        [self addCarButtonClick:nil];
+    }
 }
 
 
@@ -195,12 +204,24 @@
         UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *fieldImage = [UIImage imageNamed:@"field"];
         [actionButton setBackgroundImage: fieldImage forState:UIControlStateNormal];
-        [actionButton setTitle:@"出价" forState:UIControlStateNormal];
         [actionButton setTitleColor:[UIColor colorWithBackgroundColorMark:2] forState:UIControlStateNormal];
-        [actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (self.carTypeDataArray.count){
+            [actionButton setTitle:@"出价" forState:UIControlStateNormal];
+            [actionButton removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
+            [actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        else {
+            [actionButton setTitle:@"添加车辆" forState:UIControlStateNormal];
+            [actionButton addTarget:self action:@selector(addCarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        
         actionButton.frame = (CGRect){CGPointMake(224, 80), fieldImage.size};
         actionButton.backgroundColor = [UIColor clearColor];
         [_biddingView addSubview:actionButton];
+        _activityBtn = actionButton;
+        
         [_biddingView addSubview:self.psView];
         [_biddingView addSubview:self.doneButton];
         UIImage *biddingDivImage = [UIImage imageNamed:@"bidding_div"];
@@ -294,6 +315,13 @@
 
 - (void)actionButtonClick:(id)sender
 {
+    if (self.carTypeDataArray.count == 0){
+        UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有添加车辆,请添加车辆." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        alvertView.tag = 2000;
+        [alvertView show];
+        return;
+    }
+    
     MTCarModel *model =[self.carTypeDataArray objectAtIndex:self.PScrollView.pageScrollView.selectedIndex];
     
     UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"此单确认要用%@%@%@座车出价%d?",model.models,model.type,model.seatnum,self.psView.count]delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -365,18 +393,28 @@
     }
     [self.carTypeDataArray addObjectsFromArray:[dict allValues]];
     
+    // 改需求, 改需求: 在没有车辆的时候, "出价"按钮 改为 "添加车辆" , 实现添加车辆功能,  车辆信息为 "无";
     if (self.carTypeDataArray.count == 0) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         CGRect tFrame = self.PScrollView.frame;
         tFrame.origin = CGPointMake(0, 0);
         btn.frame = tFrame;
-        [btn setTitle:@"点击添加车辆" forState:UIControlStateNormal];
+        [btn setTitle:@"无" forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont fontWithFontMark:4];
         btn.backgroundColor = [UIColor clearColor];
         [btn addTarget:self action:@selector(addCarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.PScrollView addSubview:btn];
+        _notiongBtn = btn;
     }
+    else {
+        
+        [_notiongBtn removeFromSuperview];
+        [_activityBtn setTitle:@"出价" forState:0];
+        [_activityBtn removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
+        [_activityBtn addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+   
 }
 
 - (void)addCarButtonClick:(id)sender
@@ -447,6 +485,10 @@
         [actionButton setTitle:@"我要接单" forState:UIControlStateNormal];
         [actionButton setTitleColor:[UIColor colorWithBackgroundColorMark:2] forState:UIControlStateNormal];
         [actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _actionBtn = actionButton;
+
+        
+        
         actionButton.frame = (CGRect){CGPointMake(160 - fieldImage.size.width/2.f, 80), fieldImage.size};
         actionButton.backgroundColor = [UIColor clearColor];
         [_directView addSubview:actionButton];

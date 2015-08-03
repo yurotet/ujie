@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"客服页";
+    self.title = @"客服";
     [TalkingData trackEvent:@"客服"];
 }
 

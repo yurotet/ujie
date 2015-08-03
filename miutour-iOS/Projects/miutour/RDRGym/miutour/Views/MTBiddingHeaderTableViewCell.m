@@ -35,7 +35,7 @@
 - (UIImageView *)bgImageView
 {
     if (_bgImageView == nil) {
-        _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 15, self.frame.size.width - 18, 40)];
+        _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 15, self.frame.size.width - 18, 30)];
         
         CGFloat top = 5; // 顶端盖高度
         CGFloat bottom = 5 ; // 底端盖高度

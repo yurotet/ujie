@@ -95,14 +95,14 @@
     CGFloat buttonX = 0;//DOT_COORDINATE;
     
     if (!_showAverage) {
-        buttonX = 30.f/320.f*[[UIScreen mainScreen] bounds].size.width;//DOT_COORDINATE;
+        buttonX = 50.f/320.f*[[UIScreen mainScreen] bounds].size.width;//DOT_COORDINATE;
     }
 
     for (NSInteger index = 0; index < [_itemTitles count]; index++)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = [UIColor clearColor];
-        button.frame = CGRectMake(buttonX , STATUS_BAR_HEIGHT, [widths[index] floatValue], NAV_TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT);
+        button.frame = CGRectMake(buttonX , STATUS_BAR_HEIGHT, [widths[index] floatValue] , NAV_TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT);
         [button setTitle:_itemTitles[index] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithFontMark:7];
 //        button.titleLabel.backgroundColor = [UIColor redColor];
@@ -118,7 +118,7 @@
         }
         else
         {
-            buttonX += [widths[index] floatValue] + 0.f/320.f*[[UIScreen mainScreen] bounds].size.width;
+            buttonX += [widths[index] floatValue] + 0.f/320.f*[[UIScreen mainScreen] bounds].size.width - 15;
         }
     }
     

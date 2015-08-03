@@ -26,6 +26,7 @@
     if (self) {
         // Initialization code
         [self initView];
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return self;
 }
@@ -54,7 +55,7 @@
 - (UILabel *)contentLabel
 {
     if (_contentLabel == nil) {
-        _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*[ThemeManager themeScreenWidthRate], 30, 280*[ThemeManager themeScreenWidthRate], 1000)];
+        _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20*[ThemeManager themeScreenWidthRate], 30, 270*[ThemeManager themeScreenWidthRate], 1000)];
         _contentLabel.font = [UIFont fontWithFontMark:6];
         _contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
         _contentLabel.numberOfLines = 0;
@@ -67,6 +68,13 @@
 {
     self.timeLabel.text = time;
     self.contentLabel.text = content;
+    
+    if (time == nil) {
+        self.contentLabel.frame = CGRectMake(20*[ThemeManager themeScreenWidthRate], 15, 270*[ThemeManager themeScreenWidthRate], 1000);
+    }
+    else {
+        self.contentLabel.frame = CGRectMake(20*[ThemeManager themeScreenWidthRate], 30, 270*[ThemeManager themeScreenWidthRate], 1000);
+    }
     
     CGFloat tmpHeight = [CommonUtils lableHeightWithLable:self.contentLabel];
     CGRect tmpFrame = self.contentLabel.frame;

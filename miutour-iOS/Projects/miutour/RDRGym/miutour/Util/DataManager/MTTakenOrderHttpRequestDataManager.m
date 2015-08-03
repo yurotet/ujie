@@ -186,7 +186,7 @@ static MTTakenOrderHttpRequestDataManager *s_takenOrderHttpDataManager = nil;
     
     paramDic = [NSDictionary dictionaryWithDictionary:tDictionary];
     
-    _takenOrderListConnection = [self postHttpRequestWithParameterDic:paramDic ServiceType:EMEServiceTypeForBuyer WithURLConnection:nil FunctionName:@"activity/alist" WithTag:TagForActivityListNew isHiddenLoading:NO isCache:NO];
+    _takenOrderListConnection = [self postHttpRequestWithParameterDic:paramDic ServiceType:EMEServiceTypeForBuyer WithURLConnection:nil FunctionName:@"activity/jlist" WithTag:TagForActivityListNew isHiddenLoading:NO isCache:NO];
 
 
 }

@@ -28,6 +28,12 @@
         
         if (![dict[@"time"] isKindOfClass:[NSNull class]])
             _time = dict[@"time"];
+        
+        if (![dict[@"msid"] isKindOfClass:[NSNull class]])
+            _msid = dict[@"msid"];
+        
+        if (![dict[@"mstype"] isKindOfClass:[NSNull class]])
+            _mstype = dict[@"mstype"];
     
     }
     return self;

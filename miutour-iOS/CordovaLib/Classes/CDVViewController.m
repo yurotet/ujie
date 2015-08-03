@@ -686,7 +686,7 @@
     [_commandQueue resetRequestId];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginResetNotification object:self.webView]];
     
-    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
     [view setTag:108];
     [view setBackgroundColor:[UIColor blackColor]];
     [view setAlpha:0.5];
@@ -701,7 +701,7 @@
 - (UIActivityIndicatorView *)activityIndicator
 {
     if (_activityIndicator == nil) {
-        _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:self.view.bounds];
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
         [_activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     }
     return _activityIndicator;
@@ -725,6 +725,7 @@
 
     self.title = [theWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
 
+    theWebView.frame = CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64);
     /*
      * Hide the Top Activity THROBBER in the Battery Bar
      */

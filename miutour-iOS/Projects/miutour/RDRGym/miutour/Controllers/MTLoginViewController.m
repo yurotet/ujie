@@ -39,6 +39,9 @@ static NSString *version = @"3.0.0";
     [super viewDidLoad];
     [self initView];
     
+    // 增加 键盘弹出事件 监听
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardFrameDicChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
     _evTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textFieldResignFirstResponder)];
     _evTapGestureRecognizer.numberOfTapsRequired = 1;
     _evTapGestureRecognizer.numberOfTouchesRequired = 1;
@@ -236,13 +239,13 @@ replacementString:(NSString *)string
     {
         [self eftextFieldBecomeFirstResponder:self.passWordTextField
                                      HintsMsg:@"密码不能为空"
-                                    withDelay:1.5];
+                                    withDelay:3];
     }
     else if ((([CommonUtils stringLengthWithString:self.passWordTextField.text] < 6)||([CommonUtils stringLengthWithString:self.passWordTextField.text] > 18)))
     {
         [self eftextFieldBecomeFirstResponder:self.passWordTextField
                                      HintsMsg:@"密码必须为6-18为字符"
-                                    withDelay:1.5];
+                                    withDelay:3];
     }
     else
     {
@@ -308,6 +311,19 @@ replacementString:(NSString *)string
     [MTUserHttpRequestDataManager shareInstance].delegate = self;
     [[MTUserHttpRequestDataManager shareInstance]efLogin:_usernnameTextField.text password:_passWordTextField.text];
 }
+
+#pragma mark - 监听键盘弹出事件
+- (void)keyboardFrameDicChanged:(NSNotification *)not
+{
+    
+    CGRect frame = [[not.userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"] CGRectValue];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.transform = CGAffineTransformMakeTranslation(0, - (self.view.frame.size.height - frame.origin.y) * 0.12 );
+    }];
+
+}
+
 
 #pragma mark - EMEBaseDataManagerDelegate
 

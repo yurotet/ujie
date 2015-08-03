@@ -275,7 +275,7 @@
     [self addHUDActivityViewToView:nil
                          HintsText:hintsText
                              Image:nil
-                    hideAfterDelay:.5f
+                    hideAfterDelay:2.0f
                            HaveDim:NO];
 }
 

@@ -152,12 +152,17 @@
     //  替换数据
     if (self.segmentView.selectedSegmentIndex == 1){
         MTMessageModel *model = _activityArray[indexPath.row];
-        [cell efSetCellWithTime:model.time content:model.title];
+        [cell efSetCellWithTime:nil content:model.title];
+
+//        cell.accessoryType = UITableViewCellAccessoryNone;
     
     }
     else {
         MTMessageModel *model = _messageArray[indexPath.row];
         [cell efSetCellWithTime:model.date content:model.content];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
     }
     
     cell.backgroundColor = [UIColor clearColor];
@@ -281,9 +286,8 @@
     for (NSDictionary *dic in data) {
         MTMessageModel *model = [[MTMessageModel alloc] init];
         model.ID = dic[@"id"];
-        model.type = dic[@"type"];
-        model.title = dic[@"title"];
-        model.time = dic[@"time"];
+        model.title = dic[@"content"];
+        model.time = dic[@"date"];
         
         [self.activityArray addObject:model];
     }

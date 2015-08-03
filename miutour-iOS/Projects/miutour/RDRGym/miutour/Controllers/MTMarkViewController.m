@@ -235,6 +235,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(70, 40, 150, 150)];
     imageView.image = [QRCodeGenerator qrImageForString:[NSString stringWithFormat:@"%@/order/over/id/%@.html",EMERequestURL,_orderId] imageSize:imageView.bounds.size.width];
     
+    NSLog(@"zbar__%@",[NSString stringWithFormat:@"%@/order/over/id/%@.html",EMERequestURL,_orderId]);
     [demoView addSubview:imageView];
 //    demoView.backgroundColor = [UIColor colorWithBackgroundColorMark:4];
     

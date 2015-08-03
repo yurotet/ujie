@@ -30,6 +30,15 @@
  * 日期时间 */
 @property (nonatomic, copy) NSString *time;
 
+/**
+ * ms类型 */
+@property (nonatomic, copy) NSString *mstype;
+
+/**
+ * msid */
+@property (nonatomic, copy) NSString *msid;
+
+
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 + (instancetype)modelWithDict:(NSDictionary *)dict;

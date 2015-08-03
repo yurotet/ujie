@@ -13,7 +13,12 @@
 #import "MTMessageDetailViewController.h"
 #import "MTMessageInfoModel.h"
 #import "MTMessageInfoNewCell.h"
+
 #import "MTBlockOrderDetailViewController.h"
+#import "MTGroupOrderDetailViewController.h"
+#import "MTPickupOrderDetailViewController.h"
+#import "MTSpliceOrderDetailViewController.h"
+
 
 @interface MTMyMessagesViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
 
@@ -115,21 +120,39 @@
     
     MTMessageInfoModel *model = _messageArray[indexPath.row];
     
-    // 不需要跳转了,  改需求时 再放开
-//    if ([model.type isEqualToString:@"招标订单推送"]){
-//        MTBlockOrderDetailViewController *blockVC = [[MTBlockOrderDetailViewController alloc]init];
-//        blockVC.orderId = model.ID;
-//        [self.navigationController pushViewController:blockVC animated:YES];
-//        return;
-//    }
+//     不需要跳转了,  改需求时 再放开
+    if ([model.type isEqualToString:@"招标订单推送"]){
+        
+        if ([model.mstype isEqualToString:@"7"] ){
+            MTGroupOrderDetailViewController *groupVC = [[MTGroupOrderDetailViewController alloc]init];
+            groupVC.orderId = model.msid;
+            [self.navigationController pushViewController:groupVC animated:YES];
+        }
+        
+        else if ([model.mstype isEqualToString:@"5"]){
+            MTBlockOrderDetailViewController *blockVC = [[MTBlockOrderDetailViewController alloc]init];
+            blockVC.orderId = model.msid;
+            [self.navigationController pushViewController:blockVC animated:YES];
+        }
+        
+        else if ([model.mstype isEqualToString:@"6"]){
+            MTPickupOrderDetailViewController *pickupVC = [[MTPickupOrderDetailViewController alloc]init];
+            pickupVC.orderId = model.msid;
+            [self.navigationController pushViewController:pickupVC animated:YES];
+        }
+        
+    }
     
-    
-    MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
-    vc.title = @"消息详情";
-    
-    vc.messageId = model.ID;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    else {
+        
+        MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+        vc.title = @"消息详情";
+        
+        vc.messageId = model.ID;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }
 }
 
 - (void)efQueryMessageList

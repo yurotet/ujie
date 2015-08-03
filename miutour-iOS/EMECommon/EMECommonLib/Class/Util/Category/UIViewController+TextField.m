@@ -19,11 +19,11 @@
 -(void)eftextFieldBecomeFirstResponder:(UITextField *)textField   HintsMsg:(NSString*)hintsMsg withDelay:(NSTimeInterval)delay
 {
     if (hintsMsg) {
-        [self.view addHUDActivityViewWithHintsText:hintsMsg hideAfterDelay:delay];
+        [self.view addHUDActivityViewWithHintsText:hintsMsg hideAfterDelay:3];
     }
     
     if (textField) {
-        [textField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:delay];
+        [textField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:3];
     }
 }
 @end

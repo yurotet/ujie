@@ -130,6 +130,7 @@
     [self.view removeHUDActivityView];
     
     self.title = [theWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
+
     
     //    theWebView.scrollView.scrollEnabled = NO;
     return [super webViewDidFinishLoad:theWebView];
