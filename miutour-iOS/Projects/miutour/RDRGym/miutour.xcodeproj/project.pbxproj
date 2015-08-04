@@ -96,6 +96,7 @@
 		8691EC581B33CA3400D6C272 /* hurry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8691EC571B33CA3400D6C272 /* hurry@2x.png */; };
 		8691EC5A1B33CC6B00D6C272 /* bg_hurrycontent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8691EC591B33CC6B00D6C272 /* bg_hurrycontent@2x.png */; };
 		8691EC5C1B33F4A500D6C272 /* reward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8691EC5B1B33F4A500D6C272 /* reward@2x.png */; };
+		8699C6571B6F69B900635F72 /* MTTestTokenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8699C6561B6F69B900635F72 /* MTTestTokenViewController.m */; };
 		86A1117D1B4CE5D200FD5108 /* icon_set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86A1117C1B4CE5D200FD5108 /* icon_set@2x.png */; };
 		86A111841B4CF97C00FD5108 /* MTBaseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A111831B4CF97C00FD5108 /* MTBaseDetailViewController.m */; };
 		86A5B5D41B50C46E007F1643 /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 86A5B5A61B50C46E007F1643 /* bitstream.c */; };
@@ -422,6 +423,8 @@
 		8691EC571B33CA3400D6C272 /* hurry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hurry@2x.png"; sourceTree = "<group>"; };
 		8691EC591B33CC6B00D6C272 /* bg_hurrycontent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_hurrycontent@2x.png"; sourceTree = "<group>"; };
 		8691EC5B1B33F4A500D6C272 /* reward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reward@2x.png"; sourceTree = "<group>"; };
+		8699C6551B6F69B900635F72 /* MTTestTokenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTestTokenViewController.h; sourceTree = "<group>"; };
+		8699C6561B6F69B900635F72 /* MTTestTokenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTestTokenViewController.m; sourceTree = "<group>"; };
 		86A1117C1B4CE5D200FD5108 /* icon_set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_set@2x.png"; sourceTree = "<group>"; };
 		86A111821B4CF97C00FD5108 /* MTBaseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTBaseDetailViewController.h; sourceTree = "<group>"; };
 		86A111831B4CF97C00FD5108 /* MTBaseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTBaseDetailViewController.m; sourceTree = "<group>"; };
@@ -1145,6 +1148,8 @@
 				86D2AEC71B4BAD9300C9C2AF /* MainViewController.xib */,
 				86D2AEC41B4BAD6300C9C2AF /* MainViewController.h */,
 				86D2AEC51B4BAD6300C9C2AF /* MainViewController.m */,
+				8699C6551B6F69B900635F72 /* MTTestTokenViewController.h */,
+				8699C6561B6F69B900635F72 /* MTTestTokenViewController.m */,
 				F5E4F14B1B2B31F600E9ABE9 /* MTAppDelegate.h */,
 				F5E4F14C1B2B31F600E9ABE9 /* MTAppDelegate.m */,
 				86D2AEC91B4BADCD00C9C2AF /* TestAppDelegate.h */,
@@ -1683,6 +1688,7 @@
 				86D2AEC61B4BAD6300C9C2AF /* MainViewController.m in Sources */,
 				866E95C01B32CBD100A5A32C /* MJRefreshAutoStateFooter.m in Sources */,
 				F5497F0E1B2D2789001E8D99 /* MTCostContainTableViewCell.m in Sources */,
+				8699C6571B6F69B900635F72 /* MTTestTokenViewController.m in Sources */,
 				865BBD8F1B42DADA00D08BE8 /* MTSpliceOrderDetailViewController.m in Sources */,
 				862046F21B46AC5F005FBB40 /* MTSummaryModel.m in Sources */,
 				865BBDAB1B441C8500D08BE8 /* MTPickupTouristTableViewCell.m in Sources */,
@@ -1965,7 +1971,6 @@
 					"$(PROJECT_DIR)/miutour/lib",
 					"$(PROJECT_DIR)/../../../ThirdParties/qrcode/ZBarSDK",
 					"$(PROJECT_DIR)/../../../TalkingData",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-helbtafmponxjwdoleeuqlesuaom/Build/Products/Debug-iphoneos",
 				);
 				LIB_ROOT = "$(BUILT_PRODUCTS_DIR)";
 				ONLY_ACTIVE_ARCH = NO;
@@ -2024,7 +2029,6 @@
 					"$(PROJECT_DIR)/miutour/lib",
 					"$(PROJECT_DIR)/../../../ThirdParties/qrcode/ZBarSDK",
 					"$(PROJECT_DIR)/../../../TalkingData",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/miutourWorkSpace-helbtafmponxjwdoleeuqlesuaom/Build/Products/Debug-iphoneos",
 				);
 				LIB_ROOT = "$(BUILT_PRODUCTS_DIR)";
 				ONLY_ACTIVE_ARCH = NO;

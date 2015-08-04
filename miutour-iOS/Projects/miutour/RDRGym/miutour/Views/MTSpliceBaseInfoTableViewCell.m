@@ -85,15 +85,15 @@
         _peopleNumberLabel.textColor = [UIColor colorWithTextColorMark:2];
         _peopleNumberLabel.backgroundColor = [UIColor clearColor];
         UIImage *adultImage = [UIImage imageNamed:@"adult"];
-        UIImageView *stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(55, 5),adultImage.size}];
+        UIImageView *stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(70, 5),adultImage.size}];
         stableImageView.image = adultImage;
         [_peopleNumberLabel addSubview:stableImageView];
         UIImage *kidImage = [UIImage imageNamed:@"kid"];
-        stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(115, 7 ),kidImage.size}];
+        stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(130, 7 ),kidImage.size}];
         stableImageView.image = kidImage;
         [_peopleNumberLabel addSubview:stableImageView];
         UIImage *babyImage = [UIImage imageNamed:@"baby"];
-        stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(175, 10),babyImage.size}];
+        stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(190, 10),babyImage.size}];
         stableImageView.image = babyImage;
         [_peopleNumberLabel addSubview:stableImageView];
         [_peopleNumberLabel addSubview:self.adultNumberLabel];
@@ -106,7 +106,7 @@
 - (AttributedLabel *)adultNumberLabel
 {
     if (_adultNumberLabel == nil) {
-        _adultNumberLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(70, 5, 40, 25)];
+        _adultNumberLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(85, 5, 40, 25)];
         _adultNumberLabel.font = [UIFont fontWithFontMark:4];
         _adultNumberLabel.textAlignment = NSTextAlignmentLeft;
         _adultNumberLabel.text = @"0";
@@ -118,7 +118,7 @@
 - (AttributedLabel *)kidNumberLabel
 {
     if (_kidNumberLabel == nil) {
-        _kidNumberLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(130, 5, 230, 25)];
+        _kidNumberLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(145, 5, 230, 25)];
         _kidNumberLabel.font = [UIFont fontWithFontMark:4];
         _adultNumberLabel.textAlignment = NSTextAlignmentLeft;
         _kidNumberLabel.text = @"0";
@@ -130,7 +130,7 @@
 - (AttributedLabel *)babyNumberLabel
 {
     if (_babyNumberLabel == nil) {
-        _babyNumberLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(190, 5, 230, 25)];
+        _babyNumberLabel = [[AttributedLabel alloc] initWithFrame:CGRectMake(205, 5, 230, 25)];
         _babyNumberLabel.font = [UIFont fontWithFontMark:4];
         _adultNumberLabel.textAlignment = NSTextAlignmentLeft;
         _babyNumberLabel.text = @"0";
@@ -148,7 +148,7 @@
         _carTimeLabel.backgroundColor = [UIColor clearColor];
         _carTimeLabel.textColor = [UIColor colorWithTextColorMark:2];
         UIImage *babyImage = [UIImage imageNamed:@"calendar"];
-        UIImageView *stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(55, 8),babyImage.size}];
+        UIImageView *stableImageView = [[UIImageView alloc] initWithFrame:(CGRect){CGPointMake(70, 8),babyImage.size}];
         stableImageView.image = babyImage;
         [_carTimeLabel addSubview:stableImageView];
         [_carTimeLabel addSubview:self.realTimeLabel];
@@ -159,7 +159,7 @@
 - (UILabel *)realTimeLabel
 {
     if (_realTimeLabel == nil) {
-        _realTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 5, 200, 15)];
         _realTimeLabel.font = [UIFont fontWithFontMark:4];
         _realTimeLabel.textAlignment = NSTextAlignmentLeft;
         _realTimeLabel.text = @"2015-0101 0101(当地时间)";
@@ -184,7 +184,7 @@
 - (UILabel *)realCarTypeLabel
 {
     if (_realCarTypeLabel == nil) {
-        _realCarTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realCarTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 200, 15)];
         _realCarTypeLabel.font = [UIFont fontWithFontMark:4];
         _realCarTypeLabel.textAlignment = NSTextAlignmentLeft;
         _realCarTypeLabel.text = @"";
@@ -210,7 +210,7 @@
 - (UILabel *)realGroupNumberLabel
 {
     if (_realGroupNumberLabel == nil) {
-        _realGroupNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 200, 25)];
+        _realGroupNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 200, 25)];
         _realGroupNumberLabel.font = [UIFont fontWithFontMark:4];
         _realGroupNumberLabel.textAlignment = NSTextAlignmentLeft;
         _realGroupNumberLabel.text = @"3组";
@@ -236,7 +236,7 @@
 - (UILabel *)realContactNameLabel
 {
     if (_realContactNameLabel == nil) {
-        _realContactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realContactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 200, 15)];
         _realContactNameLabel.font = [UIFont fontWithFontMark:4];
         _realContactNameLabel.textAlignment = NSTextAlignmentLeft;
         _realContactNameLabel.text = @"";
@@ -261,7 +261,7 @@
 - (UILabel *)realContactMobileLabel
 {
     if (_realContactMobileLabel == nil) {
-        _realContactMobileLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realContactMobileLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 200, 15)];
         _realContactMobileLabel.font = [UIFont fontWithFontMark:4];
         _realContactMobileLabel.textAlignment = NSTextAlignmentLeft;
         _realContactMobileLabel.text = @"13917780591";
@@ -286,7 +286,7 @@
 - (UILabel *)realContactWechatLabel
 {
     if (_realContactWechatLabel == nil) {
-        _realContactWechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 5, 200, 15)];
+        _realContactWechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 200, 15)];
         _realContactWechatLabel.font = [UIFont fontWithFontMark:4];
         _realContactWechatLabel.textAlignment = NSTextAlignmentLeft;
         _realContactWechatLabel.text = @"";

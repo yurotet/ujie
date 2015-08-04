@@ -317,6 +317,20 @@
     //    [self efQueryDetail];
 }
 
+// 含有游客信息的 订单详情页 跳转
+- (void)receiveOrder
+{
+    MTBaseDetailViewController *vc;
+    
+    vc = [[MTBlockOrderDetailViewController alloc] init];
+    
+    vc.orderId = self.orderId;
+    vc.isTaken = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+
 #pragma mark - EMEBaseDataManagerDelegate
 
 - (void)didFinishLoadingJSONValue:(NSDictionary *)dic URLConnection:(EMEURLConnection *)connection
@@ -391,6 +405,15 @@
     }
     else if (connection.connectionTag == TagForPrice) {
         if (dic && [[dic objectForKey:@"err_code"] intValue] == 0) {
+            
+            // 如果 字段为可跳转字段, 跳转
+            if ([[dic[@"data"] objectForKey:@"jump"] isEqualToString:@"order"]){
+                self.orderId = [dic[@"data"] objectForKey:@"id"];
+                [self receiveOrder];
+                return;
+            }
+
+            
             [self.view addHUDActivityViewWithHintsText:@"出价成功"];
             [self efQueryDetail];
         }

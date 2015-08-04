@@ -29,7 +29,7 @@
 @property (nonatomic,strong) NSMutableArray *bidderDataArray;
 @property (nonatomic,assign)BOOL showBidding;
 
-
+@property (nonatomic, copy) NSString *type;
 
 
 - (void)getCarSeatnumArray:(NSArray *)car;

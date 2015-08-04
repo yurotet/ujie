@@ -16,6 +16,11 @@
 #import "MTAddCarViewController.h"
 #import "MTServiceViewController.h"
 
+#import "MTPickupOrderDetailViewController.h"
+#import "MTSpliceOrderDetailViewController.h"
+#import "MTBlockOrderDetailViewController.h"
+#import "MTGroupOrderDetailViewController.h"
+
 @interface MTBaseDetailViewController ()<MTPlusSubtractionViewDelegate,MTCarTypePageScrollViewDataSource,MTCarTypePageScrollViewDelegate,EMEBaseDataManagerDelegate>
 
 @property (nonatomic,assign) NSInteger keyboardhight;
@@ -26,6 +31,9 @@
 
 // 我要接单 按钮
 @property (nonatomic, weak) UIButton *actionBtn;
+
+// 接单状态 (是否为接单状态)
+@property (nonatomic, assign, getter=isAction) BOOL action;
 
 @end
 
@@ -43,6 +51,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 初始为 我要接单 状态为NO
+    self.action = NO;
+    
     
 //    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self efGetContentFrame].size.width/2.5f, 30)];
 //    l.textColor = [UIColor whiteColor];
@@ -327,6 +339,11 @@
     UIAlertView *alvertView =[[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"此单确认要用%@%@%@座车出价%d?",model.models,model.type,model.seatnum,self.psView.count]delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alvertView.tag = 1001;
     [alvertView show];
+    
+    // 如果点击的按钮为我要接单
+    UIButton *tempButton = (UIButton *)sender;
+    self.action = [[tempButton titleForState:0] isEqualToString:@"我要接单"];
+    
 }
 
 - (void)efCommitPrice
@@ -486,7 +503,6 @@
         [actionButton setTitleColor:[UIColor colorWithBackgroundColorMark:2] forState:UIControlStateNormal];
         [actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         _actionBtn = actionButton;
-
         
         
         actionButton.frame = (CGRect){CGPointMake(160 - fieldImage.size.width/2.f, 80), fieldImage.size};

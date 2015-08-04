@@ -13,6 +13,12 @@
 #import "MTPickupOrderDetailViewController.h"
 #import "MTMessageDetailViewController.h"
 
+#import "UIScrollView+MJRefresh.h"
+#import "MJRefreshNormalHeader.h"
+#import "MJRefreshBackFooter.h"
+#import "MJRefreshNormalHeader.h"
+#import "MJRefreshBackNormalFooter.h"
+
 #import "MTTakenOrderHttpRequestDataManager.h"
 #import "MTMessageTableViewCell.h"
 #import "MTIdentityManager.h"
@@ -25,6 +31,12 @@
 
 
 @interface MTSettleItemsViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
+{
+    // 佣金的页数
+    int commissionPage;
+    // 活动奖励的 分页
+    int activityPage;
+}
 
 @property (nonatomic,strong)UITableView *messageTableView;
 @property (nonatomic,strong)NSMutableArray *messageArray;
@@ -40,12 +52,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 初始 页数
+    commissionPage = 1;
+    activityPage = 1;
+    
     [self setNavigationTitle];
     [self.view addSubview:self.messageTableView];
     
     [self efSetNavButtonToCall];
     [self efQueryCommissionList];   // 接单佣金
     [self efQueryActivityList];  // 活动奖励
+    
+    [self addFooter];
 }
 
 - (void)setNavigationTitle
@@ -94,11 +112,40 @@
     }
 }
 
+
+- (void)addFooter
+{
+    __weak typeof(self) weakSelf = self;
+    
+    // 上拉刷新
+    self.messageTableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 结束刷新
+            [self.messageTableView.footer endRefreshing];
+            [weakSelf loadMoreData];
+        });
+    }];
+}
+
+- (void)loadMoreData
+{
+    if (_segmentView.selectedSegmentIndex == 0){
+        commissionPage ++;
+        [self efQueryCommissionList];
+    }
+    else {
+        activityPage ++;
+        [self efQueryActivityList];
+    }
+}
+
+
 - (UITableView *)messageTableView
 {
     if (_messageTableView == nil) {
         CGRect etFrame = [self efGetContentFrame];
-        _messageTableView = [[UITableView alloc] initWithFrame:etFrame style:UITableViewStylePlain];
+        _messageTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64) style:UITableViewStylePlain];
         _messageTableView.backgroundColor = [UIColor clearColor];
         _messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _messageTableView.delegate = self;
@@ -243,13 +290,13 @@
 - (void)efQueryCommissionList
 {
     [MTTakenOrderHttpRequestDataManager shareInstance].delegate = self;
-    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryCommissionListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:@"1" pageSize:@"999"];
+    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryCommissionListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:[NSString stringWithFormat:@"%d",commissionPage] pageSize:@"20"];
 }
 
 - (void)efQueryActivityList
 {
     [MTTakenOrderHttpRequestDataManager shareInstance].delegate = self;
-    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryActivityListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:@"1" pageSize:@"999"];
+    [[MTTakenOrderHttpRequestDataManager shareInstance] efQueryActivityListWithUsername:[UserManager shareInstance].user.loginName token:[UserManager shareInstance].user.token pageNo:[NSString stringWithFormat:@"%d",activityPage] pageSize:@"20"];
 }
 
 
@@ -311,7 +358,7 @@
     if (connection.connectionTag == TagForCommissionListNew) {
         if ([[CommonUtils emptyString:[dic objectForKey:@"err_code"]] isEqualToString:@"0"])
         {
-            [self.orderInfoArray removeAllObjects];
+//            [self.orderInfoArray removeAllObjects];
             NSArray* tmpArray= [dic valueForKeyPath:@"data.list"];
             for (NSDictionary *dic in tmpArray)
             {
@@ -334,6 +381,7 @@
             }
             [self getActivityListArray:tmpArray];
             [self.messageTableView reloadData];
+            
         }
     
     }

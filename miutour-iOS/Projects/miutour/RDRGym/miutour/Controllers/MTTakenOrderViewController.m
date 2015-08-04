@@ -32,9 +32,11 @@
 #import "MTSpliceModel.h"
 #import "MTMarkViewController.h"
 
+#import "MTIdentityManager.h"
+
 static const CGFloat MJDuration = 2.0;
 
-@interface MTTakenOrderViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate>
+@interface MTTakenOrderViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
 
 @property (nonatomic,strong) UITableView *orderTableView;
 @property (nonatomic,strong) UILabel *nameLabel;
@@ -574,6 +576,8 @@ static const CGFloat MJDuration = 2.0;
         {
             if (dic && (![CommonUtils isEmptyString:[dic objectForKey:@"err_msg"]])) {
                 [self.view addHUDActivityViewWithHintsText:[dic objectForKey:@"err_msg"]];
+                [MTIdentityManager shareInstance].delegate = self;
+                [[MTIdentityManager shareInstance] efHandleLogin];
             }
             else
             {
@@ -589,6 +593,9 @@ static const CGFloat MJDuration = 2.0;
     [self.view addHUDActivityViewWithHintsText:@"连接失败"];
     [self.orderTableView.header endRefreshing];
     [self.orderTableView.footer endRefreshing];
+    
+    [MTIdentityManager shareInstance].delegate = self;
+    [[MTIdentityManager shareInstance] efHandleLogin];
 }
 
 @end

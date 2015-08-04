@@ -32,9 +32,12 @@
 #import "MJRefreshGifHeader.h"
 #import "TalkingData.h"
 
+#import "MTIdentityManager.h"
+
+
 static const CGFloat MJDuration = 2.0;
 
-@interface MTSupplyOrderViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate>
+@interface MTSupplyOrderViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
 
 @property (nonatomic,strong) UITableView *orderTableView;
 @property (nonatomic,strong) NSMutableArray *orderInfoArray;
@@ -57,6 +60,11 @@ static const CGFloat MJDuration = 2.0;
     [super viewDidLoad];
     [self.view addSubview:self.orderTableView];
     [self addHeader];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.orderTableView.header beginRefreshing];
 }
 
 - (UITableView *)orderTableView
@@ -272,21 +280,25 @@ static const CGFloat MJDuration = 2.0;
     if ([data isKindOfClass:[MTPickupModel class]]) {
         MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
         vc.orderId = ((MTPickupModel *)data).id;
+        vc.type = @"接送机";
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if ([data isKindOfClass:[MTSpliceModel class]]) {
         MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
         vc.orderId = ((MTSpliceModel *)data).id;
+        vc.type = @"拼车";
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if ([data isKindOfClass:[MTBlockModel class]]) {
         MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
         vc.orderId = ((MTBlockModel *)data).id;
+        vc.type = @"包车";
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if ([data isKindOfClass:[MTGroupModel class]]) {
         MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
         vc.orderId = ((MTGroupModel *)data).id;
+        vc.type = @"组合";
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -314,7 +326,7 @@ static const CGFloat MJDuration = 2.0;
             for (NSDictionary *dic in tmpArray)
             {
                 // 直接隐藏 已出价的订单
-//                if ([dic[@"myprice"] intValue]) continue;
+                if ([dic[@"myprice"] intValue]) continue;
                 
                 if ([[dic objectForKey:@"type"] isEqualToString:@"拼车"]) {
                     MTSpliceModel *orderInfo = [[MTSpliceModel alloc] init];
@@ -343,6 +355,8 @@ static const CGFloat MJDuration = 2.0;
         {
             if (dic && (![CommonUtils isEmptyString:[dic objectForKey:@"err_msg"]])) {
                 [self.view addHUDActivityViewWithHintsText:[dic objectForKey:@"err_msg"]];
+                [MTIdentityManager shareInstance].delegate = self;
+                [[MTIdentityManager shareInstance] efHandleLogin];
             }
             else
             {
@@ -354,7 +368,8 @@ static const CGFloat MJDuration = 2.0;
 
 - (void)didFailWithError:(NSError *)error URLConnection:(EMEURLConnection *)connection
 {
-    
+    [MTIdentityManager shareInstance].delegate = self;
+    [[MTIdentityManager shareInstance] efHandleLogin];
 }
 
 @end

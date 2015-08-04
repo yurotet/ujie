@@ -30,6 +30,8 @@
 #import "MTGroupTableViewCell.h"
 #import "MTPickupTableViewCell.h"
 
+#import "MTIdentityManager.h"
+
 
 @interface MTOfferPriceViewController ()
 
@@ -44,7 +46,7 @@
 
 @end
 
-@interface MTOfferPriceViewController ()<UITableViewDataSource, UITableViewDelegate,  EMEBaseDataManagerDelegate>
+@interface MTOfferPriceViewController ()<UITableViewDataSource, UITableViewDelegate,  EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
 
 @end
 
@@ -325,6 +327,9 @@
         {
             if (dic && (![CommonUtils isEmptyString:[dic objectForKey:@"err_msg"]])) {
                 [self.view addHUDActivityViewWithHintsText:[dic objectForKey:@"err_msg"]];
+                // 返回登录状态
+                [MTIdentityManager shareInstance].delegate = self;
+                [[MTIdentityManager shareInstance] efHandleLogin];
             }
             else
             {
@@ -340,6 +345,8 @@
     NIF_INFO(@"%@",error);
     if (connection.connectionTag == TagForTakenOrderList) {
         [self.view addHUDActivityViewWithHintsText:NSLocalizedString(@"ERROR", nil) hideAfterDelay:1.5];
+        [MTIdentityManager shareInstance].delegate = self;
+        [[MTIdentityManager shareInstance] efHandleLogin];
     }
     
 }

@@ -27,11 +27,13 @@
 #import "UIButton+WebCache.h"
 #import "MTServiceViewController.h"
 
+#import "MTIdentityManager.h"
+
 #define VEL_THRESHOLD 4000
 
 static NSString *version = @"3.0.0";
 
-@interface MTHomeViewController ()<EMEBaseDataManagerDelegate,filterDelegate,MTAlertViewDelegate,UIGestureRecognizerDelegate>
+@interface MTHomeViewController ()<EMEBaseDataManagerDelegate,filterDelegate,MTAlertViewDelegate,UIGestureRecognizerDelegate,MTIdentityManagerDelegate>
 
 @property (nonatomic,strong) MTSupplyOrderViewController *supplyViewController;
 @property (nonatomic,strong) MTTakenOrderViewController *takenViewController;
@@ -634,6 +636,8 @@ static NSString *version = @"3.0.0";
             
             if (dic && (![CommonUtils isEmptyString:[dic objectForKey:@"err_msg"]])) {
                 [self.view addHUDActivityViewWithHintsText:[dic objectForKey:@"err_msg"]];
+                [MTIdentityManager shareInstance].delegate = self;
+                [[MTIdentityManager shareInstance] efHandleLogin];
             }
             else
             {
@@ -647,6 +651,8 @@ static NSString *version = @"3.0.0";
 {
     if (connection.connectionTag == TagForLogin) {
         [self.view addHUDActivityViewWithHintsText:NSLocalizedString(@"ERROR", nil) hideAfterDelay:1.5];
+            [MTIdentityManager shareInstance].delegate = self;
+            [[MTIdentityManager shareInstance] efHandleLogin];
     }
 }
 

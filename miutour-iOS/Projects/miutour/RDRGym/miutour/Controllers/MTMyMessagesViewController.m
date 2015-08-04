@@ -19,6 +19,8 @@
 #import "MTPickupOrderDetailViewController.h"
 #import "MTSpliceOrderDetailViewController.h"
 
+#import "MTAppDelegate.h"
+
 
 @interface MTMyMessagesViewController ()<UITableViewDataSource,UITableViewDelegate,EMEBaseDataManagerDelegate,MTIdentityManagerDelegate>
 
@@ -123,23 +125,128 @@
 //     不需要跳转了,  改需求时 再放开
     if ([model.type isEqualToString:@"招标订单推送"]){
         
-        if ([model.mstype isEqualToString:@"7"] ){
-            MTGroupOrderDetailViewController *groupVC = [[MTGroupOrderDetailViewController alloc]init];
-            groupVC.orderId = model.msid;
-            [self.navigationController pushViewController:groupVC animated:YES];
+        NSString *theID = model.msid;
+        switch ([model.mstype intValue]) {
+            case TAKEN_BLOCK:
+            {
+                MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
+                vc.isTaken = YES;
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case TAKEN_PICKUP:
+            {
+                MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
+                vc.isTaken = YES;
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case TAKEN_SPLICE:
+            {
+                MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
+                vc.isTaken = YES;
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case TAKEN_GROUP:
+            {
+                MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
+                vc.isTaken = YES;
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case SUPPLY_BLOCK:
+            {
+                MTBlockOrderDetailViewController *vc = [[MTBlockOrderDetailViewController alloc] init];
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case SUPPLY_PICKUP:
+            {
+                MTPickupOrderDetailViewController *vc = [[MTPickupOrderDetailViewController alloc] init];
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case SUPPLY_SPLICE:
+            {
+                MTSpliceOrderDetailViewController *vc = [[MTSpliceOrderDetailViewController alloc] init];
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case SUPPLY_GROUP:
+            {
+                MTGroupOrderDetailViewController *vc = [[MTGroupOrderDetailViewController alloc] init];
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.orderId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            case MESSAGE:
+            {
+                MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+                vc.title = @"消息详情";
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.messageId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+            case ACTIVITY:
+            {
+                MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+                vc.title = @"活动详情";
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.messageId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+            case NEWS:
+            {
+                NSLog(@"新闻详情");
+                MTMessageDetailViewController *vc = [[MTMessageDetailViewController alloc] init];
+                vc.title = @"新闻详情";
+                if (![CommonUtils isEmptyString:theID]) {
+                    vc.messageId = theID;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+                break;
+                
+            default:
+                break;
         }
         
-        else if ([model.mstype isEqualToString:@"5"]){
-            MTBlockOrderDetailViewController *blockVC = [[MTBlockOrderDetailViewController alloc]init];
-            blockVC.orderId = model.msid;
-            [self.navigationController pushViewController:blockVC animated:YES];
-        }
-        
-        else if ([model.mstype isEqualToString:@"6"]){
-            MTPickupOrderDetailViewController *pickupVC = [[MTPickupOrderDetailViewController alloc]init];
-            pickupVC.orderId = model.msid;
-            [self.navigationController pushViewController:pickupVC animated:YES];
-        }
         
     }
     
