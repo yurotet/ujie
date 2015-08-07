@@ -33,14 +33,12 @@
 
 				var user = lockr.get('user'), 
 					retObj = {};
-				
-				retObj.name= user.realname;
+								
 				retObj.sex = getText(user.sex);
 				retObj.age = user.age;
 				retObj.country = getText(user.country);
 				retObj.city = getText(user.city);
-				retObj.address = user.address;
-				retObj.mobile = user.mobile;
+				retObj.address = user.address;				
 				retObj.email = user.mailBox;
 				retObj.weixin = user.wechat;
 				retObj.tour_guide_certificate = getText(user.hasGuideCer);

@@ -72,11 +72,9 @@
 					drivingExp:'1-3',
 					workingExp:'1-3',
 					city:'',
-					age:'',
-					realname:'',
+					age:'',					
 					country:'',
-					address:'',
-					mobile:'',
+					address:'',					
 					wechat:'',					
 					mailBox:'',
 				}		
@@ -85,7 +83,7 @@
 		
 		methods: { 			
 			checkSubmitBtn:function(){					
-				var disabled  = !this.$data.user.realname || !this.$data.user.age || !this.$data.user.mobile || !this.$data.user.mailBox || ! this.$data.user.wechat;						
+				var disabled  = !this.$data.user.age || !this.$data.user.mailBox || ! this.$data.user.wechat;						
 
 				var btn  = $('#userInfoBtn');
 
@@ -329,10 +327,7 @@
 <div v-component="view/regSteps" v-with="step:curStep"></div>
   <div class='userInfo'>
   	 <form class="input-group">
-  		 <div class="input-row" >			
-			<label>姓名</label>	
-			<input type="text" v-on="input:onInputChange" placeholder="请填写真实姓名 (必填)" v-model="user.realname"></input>			
-		</div>
+  		 
   	 	<div class="input-row">	
 			<label>性别</label>
 			<select   v-on="change:onInputChange" options="sexList" v-model="user.sex"></select>			
@@ -345,12 +340,7 @@
 		<div class="input-row">	
 			<label>地址</label>		
 			<input  v-on="input:onInputChange" type="text"  placeholder="地址 (必填)" v-model="user.address"></input>	
-		</div>
-
-		<div class="input-row">	
-			<label>手机</label>	
-			<input  v-on="input:onInputChange" type="text"  placeholder="手机 (必填)" v-model="user.mobile"></input>	
-		</div>
+		</div>		
 
 		<div class="input-row">	
 			<label>邮箱</label>	

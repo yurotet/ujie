@@ -4,6 +4,7 @@
 	var nav = require('common/navigator');
 	var config = require('config');	
 	var steps = require('pages/regSteps');
+	var lockr = require('common/localstorageutil');	
 
 	var View = BasePage.extend({
 		title: '注册',
@@ -11,7 +12,9 @@
 			return {
 				curStep:1,				
 				username:'',
+				realname:'',
 				pwd:'',	
+				mobile:'',
 				confirmPwd:'',
 				recCode:''
 			};
@@ -22,7 +25,7 @@
 				$('.stepInfo').text('创建账号');	
 			},
 			checkSubmitBtn: function() {
-				var disabled =  !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
+				var disabled =!this.$data.realname || !this.$data.mobile ||   !this.$data.username || !this.$data.pwd  || (this.$data.pwd && (this.$data.pwd != this.$data.confirmPwd));				
 				
 				var regBtn = $('#regBtn');
 				
@@ -53,6 +56,11 @@
 				this.checkSubmitBtn();
 			},
 			onSubmit: function() {
+				// save new user
+				var  user=  lockr.get('user') || {};
+				user.realname = this.$data.realname;				
+				lockr.set('user', user);
+
 				this.showLoading();						
 				
 				$.ajax({	 
@@ -61,6 +69,8 @@
 					  // data to be added to query string:
 					  data: { username: this.$data.username,
 					  	passwd:this.$data.pwd,
+					  	name:this.$data.realname,
+					  	mobile:this.$data.mobile,
 					  	recode:this.$data.recCode},
 					  // type of data we are expecting in return:
 					  dataType: 'json',
@@ -134,19 +144,24 @@
 		  <form class="input-group">
 			    <div class="input-row">
 				      <input type="text"  v-on="input:onUserInput" placeholder="用户名 (3-16位字母, 数字或汉字)" v-model="username">
+			    </div> 
+			    <div class="input-row">
+				      <input type="text"  v-on="input:onUserInput" placeholder="真实姓名" v-model="realname">
 			    </div>			   
 			    <div class="input-row">
 				      <input type="password" v-on="input:onPwdInput" placeholder="设置密码 (大于6位)" v-model="pwd">
 			    </div>
 			    <div id="confirmPwdInput" class="input-row">				      
 				      <input type="password" v-on="input:onConfirmPwdInput" placeholder="确认密码" v-model="confirmPwd">
+			    </div> <div class="input-row">
+				      <input type="text"  v-on="input:onUserInput" placeholder="手机号" v-model="mobile">
 			    </div>
 			    <div class="input-row">
 				      <input type="text" placeholder="推荐码 (可选)" v-model="recCode">
 			    </div>
 		    </form>
 	  
-		    <button  id="regBtn" class="miu-subBtn btn btn-positive btn-block"  disabled="disabled" v-model="realName" v-on="click: onSubmit">下一步</button>	
+		    <button  id="regBtn" class="miu-subBtn btn btn-positive btn-block"  disabled="disabled"  v-on="click: onSubmit">下一步</button>	
 		    <div  id="linkSec"><p>注册即表示同意<a href="http://g.miutour.com/help/gagreement.html" target="_blank">蜜柚私导协议</a></p></div>    	
 	  </div>	 
 </template>
