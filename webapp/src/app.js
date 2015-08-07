@@ -1,7 +1,7 @@
 var Vue = require('vue');
 var nav = require('common/navigator');
 var FastClick = require('fastclick');
-var vueTouch = require('vue-touch');
+// var vueTouch = require('vue-touch');
 var util = require('common/util');
 var Promise = require('promise');
 
@@ -52,14 +52,14 @@ var _refreshWx = function() {
   });
 }
 
-FastClick.attach(document.body);
+// FastClick.attach(document.body);
 
 // Vue.config.debug = true;
-vueTouch.registerCustomEvent('doubletap', {
-  type: 'tap',
-  taps: 2
-});
-Vue.use(vueTouch);
+// vueTouch.registerCustomEvent('doubletap', {
+//   type: 'tap',
+//   taps: 2
+// });
+// Vue.use(vueTouch);
 
 
 // nav.init();
